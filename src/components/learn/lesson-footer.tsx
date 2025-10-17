@@ -14,6 +14,7 @@ import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import pipClass from "../../classes/pip-class"
 import { cn } from "../../lib/shadcn/utils"
+import normalizeSandboxJson from "../../utils/sandbox/normalize-sandbox-json"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
@@ -27,7 +28,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const isSendDisabled = isEmpty(currentCppCode) || pipClass.isSendingCppToPip
 
 	// Get the correct answer for display
-	const getCorrectAnswer = (): { codingBlock: CodingBlock; codingBlockId: string } | null => {
+	const getCorrectAnswer = (): { codingBlock: CodingBlock; codingBlockId: string } | string | null => {
 		if (!currentQuestion) return null
 
 		if (currentQuestion.questionType === "FUNCTION_TO_BLOCK" && currentQuestion.functionToBlockFlashcard) {
@@ -44,10 +45,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			const correctChoice = currentQuestion.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
 				(choice): boolean => choice.isCorrect
 			)
-			return correctChoice ? {
-				codingBlock: currentQuestion.blockToFunctionFlashcard.codingBlock,
-				codingBlockId: currentQuestion.blockToFunctionFlashcard.codingBlock.codingBlockId.toString()
-			} : null
+			return correctChoice ? correctChoice.functionDescriptionText : null
 		}
 
 		return null
@@ -104,6 +102,51 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		return "bg-questionIncorrectRed !border-questionIncorrectRed"
 	}, [isInConfirmationStage, lastAnswerWasCorrect])
 
+	// eslint-disable-next-line complexity
+	function ShowIncorrectAnswerContent(): React.ReactNode {
+		if (currentQuestion?.questionType === "FILL_IN_BLANK") {
+			return (
+				<div className="flex items-center gap-3">
+					<X className="size-10 text-cardinal" />
+					<span className="text-xl font-medium text-cardinal text-center max-w-[48ch]">
+						{currentQuestion.fillInBlankFeedback || "Incorrect. Try again!"}
+					</span>
+				</div>
+			)
+		} else if (currentQuestion?.questionType === "FUNCTION_TO_BLOCK") {
+			return (
+				<div className="flex items-center gap-3">
+
+					<X className="size-10 text-cardinal" />
+					<span className="text-3xl font-semibold text-questionIncorrectRed-2">Correct solution:</span>
+					{correctAnswer && typeof correctAnswer === "object" && (
+						<div className="relative h-32 w-96">
+							<LearnMiniSandbox
+								blocklyJson={normalizeSandboxJson(correctAnswer.codingBlock.codingBlockJson)}
+								className="w-full h-full"
+							/>
+						</div>
+					)}
+				</div>
+			)
+		} else if (currentQuestion?.questionType === "BLOCK_TO_FUNCTION") {
+			return (
+				<div className="flex items-center gap-3">
+					<X className="size-10 text-cardinal" />
+					<div className="flex flex-col items-center justify-center gap-2">
+						<span className="text-3xl font-semibold text-questionIncorrectRed-2">Correct solution:</span>
+						{correctAnswer && typeof correctAnswer === "string" && (
+							<div className="relative h-32 w-96">
+								{correctAnswer}
+							</div>
+						)}
+					</div>
+				</div>
+			)
+		}
+		return null
+	}
+
 	return (
 		<footer
 			className={cn(
@@ -137,29 +180,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 							<span className="text-3xl font-semibold text-questionCorrectGreen-2">Correct!</span>
 						</>
 					) : (
-						<div className="flex items-center gap-3">
-							<X className="size-10 text-cardinal" />
-							<div className="flex flex-col items-center">
-								{currentQuestion?.questionType === "FILL_IN_BLANK" && (
-									<span className="text-xl font-medium text-cardinal text-center max-w-[48ch]">
-										{currentQuestion.fillInBlankFeedback || "Incorrect. Try again!"}
-									</span>
-								)}
-								{currentQuestion?.questionType !== "FILL_IN_BLANK" && (
-									<>
-										<span className="text-3xl font-semibold text-questionIncorrectRed-2">Correct solution:</span>
-										{correctAnswer && (
-											<div className="relative h-24 w-32">
-												<LearnMiniSandbox
-													codingBlock={correctAnswer.codingBlock}
-													className="w-full h-full"
-												/>
-											</div>
-										)}
-									</>
-								)}
-							</div>
-						</div>
+						<ShowIncorrectAnswerContent />
 					)}
 				</div>
 			)}

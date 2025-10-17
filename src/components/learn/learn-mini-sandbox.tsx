@@ -51,7 +51,7 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 
 		// Center workspace after blocks are loaded
 		if (workspace.getAllBlocks().length > 0 && !isCentered) {
-			setTimeout(() => {
+			setTimeout((): void => {
 				centerWorkspace()
 			}, 100)
 		}
