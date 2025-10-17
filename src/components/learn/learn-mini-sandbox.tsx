@@ -1,23 +1,24 @@
 "use client"
 
-import { toJS } from "mobx"
 import * as Blockly from "blockly"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { CodingBlock } from "@lever-labs/common-ts/types/learn"
+import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { cn } from "../../lib/shadcn/utils"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
+import { toolboxConfig } from "../../utils/blockly/toolbox-config"
 
 interface LearnMiniSandboxProps {
-	codingBlock: CodingBlock
+	blocklyJson: BlocklyJson
 	className?: string
 }
 
-function LearnMiniSandbox({ codingBlock, className = "" }: LearnMiniSandboxProps): React.ReactNode {
+function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps): React.ReactNode {
+	console.log("blocklyJson", blocklyJson)
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
@@ -53,7 +54,7 @@ function LearnMiniSandbox({ codingBlock, className = "" }: LearnMiniSandboxProps
 
 	useEffect((): void => {
 		setIsCentered(false)
-	}, [codingBlock.codingBlockJson])
+	}, [blocklyJson])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect((): void => {
@@ -68,12 +69,11 @@ function LearnMiniSandbox({ codingBlock, className = "" }: LearnMiniSandboxProps
 		}, 100) // Small delay to ensure workspace is fully rendered
 
 		return (): void => clearTimeout(timer)
-	}, [centerWorkspace, codingBlock.codingBlockJson, isCentered, isCentering, pathname])
+	}, [centerWorkspace, blocklyJson, isCentered, isCentering, pathname])
 
 	useEffect((): void => {
 		if (workspaceRef.current) {
 			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
-
 		}
 	}, [isDarkMode])
 
@@ -94,24 +94,17 @@ function LearnMiniSandbox({ codingBlock, className = "" }: LearnMiniSandboxProps
 	}, [])
 
 	useEffect((): void => {
-		if (workspaceRef.current) {
-			workspaceRef.current.setTheme(isDarkMode ? darkTheme : lightTheme)
-		}
-	}, [isDarkMode])
-
-	useEffect((): void => {
 		void initializeBlocks()
 	}, [])
 
-	console.log("codingBlock.codingBlockId", toJS(codingBlock.codingBlockId))
 	return (
 		<div
 			ref={containerRef}
-			className={cn("relative z-0 rounded-3xl overflow-hidden border-swan border-b-2 h-full flex-1", className)}
+			className={cn("relative z-0 rounded-3xl overflow-hidden h-full flex-1", className)}
 		>
 			<BlocklyWorkspace
-				key={codingBlock.codingBlockId}
-				initialJson={codingBlock.codingBlockJson}
+				initialJson={blocklyJson}
+				toolboxConfiguration={toolboxConfig}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"
 				onWorkspaceChange={handleWorkspaceChange}

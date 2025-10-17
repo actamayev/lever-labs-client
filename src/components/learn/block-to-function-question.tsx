@@ -8,6 +8,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import LearnMiniSandbox from "./learn-mini-sandbox"
 import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
 import { cn } from "../../lib/shadcn/utils"
+import normalizeSandboxJson from "../../utils/sandbox/normalize-sandbox-json"
 
 function BlockToFunctionQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
@@ -58,10 +59,10 @@ function BlockToFunctionQuestion(): React.ReactNode {
 			</h2>
 
 			{/* Question: Show the block */}
-			<div className="flex justify-center mb-8">
-				<div className="relative h-32 w-48">
+			<div className="flex justify-center">
+				<div className="relative h-48 w-96">
 					<LearnMiniSandbox
-						codingBlock={codingBlock}
+						blocklyJson={normalizeSandboxJson(codingBlock.codingBlockJson)}
 						className="w-full h-full"
 					/>
 				</div>
