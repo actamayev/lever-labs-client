@@ -45,7 +45,7 @@ function BlockToFunctionQuestion(): React.ReactNode {
 		return null
 	}
 
-	const { codingBlock, blockToFunctionAnswerChoice } = currentQuestionState.question.blockToFunctionFlashcard
+	const { codingBlock, blockToFunctionAnswerChoice, questionText } = currentQuestionState.question.blockToFunctionFlashcard
 	const { selectedAnswerId } = currentQuestionState
 
 	// Sort answer choices by order
@@ -55,7 +55,7 @@ function BlockToFunctionQuestion(): React.ReactNode {
 		<div>
 			{/* Question text */}
 			<h2 className="text-3xl font-semibold text-questionText mb-8">
-				What can I do with this block?
+				{questionText}
 			</h2>
 
 			{/* Question: Show the block */}

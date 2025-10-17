@@ -18,16 +18,16 @@ interface LearnMiniSandboxProps {
 }
 
 function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps): React.ReactNode {
-	console.log("blocklyJson", blocklyJson)
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const pathname = usePathname()
 	const [isCentered, setIsCentered] = useState(false)
 	const [isCentering, setIsCentering] = useState(false)
+	const [blocksInitialized, setBlocksInitialized] = useState(false)
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
-		return getWorkspaceConfig(isDarkMode, true, 0.5, true)
+		return getWorkspaceConfig(isDarkMode, true, 1, true)
 	}, [isDarkMode])
 
 	const centerWorkspace = useCallback((): void => {
@@ -94,8 +94,23 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 	}, [])
 
 	useEffect((): void => {
-		void initializeBlocks()
+		const initBlocks = async (): Promise<void> => {
+			await initializeBlocks()
+			setBlocksInitialized(true)
+		}
+		void initBlocks()
 	}, [])
+
+	console.log("Blocks initialized:", blocksInitialized)
+	console.log("Workspace changed, blocks in workspace:", workspaceRef.current?.getAllBlocks().length)
+
+	if (!blocksInitialized) {
+		return (
+			<div className={cn("relative z-0 rounded-3xl overflow-hidden h-full flex-1 flex items-center justify-center", className)}>
+				<p className="text-gray-500">Loading blocks...</p>
+			</div>
+		)
+	}
 
 	return (
 		<div
@@ -103,6 +118,7 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 			className={cn("relative z-0 rounded-3xl overflow-hidden h-full flex-1", className)}
 		>
 			<BlocklyWorkspace
+				key={`${blocksInitialized}-${JSON.stringify(blocklyJson)}`}
 				initialJson={blocklyJson}
 				toolboxConfiguration={toolboxConfig}
 				workspaceConfiguration={workspaceConfiguration}
