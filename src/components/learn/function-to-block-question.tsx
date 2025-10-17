@@ -94,27 +94,28 @@ function FunctionToBlockQuestion(): React.ReactNode {
 					const cardNumber = index + 1
 
 					return (
-						<div className="relative" key={choice.functionToBlockAnswerChoiceId}>
-							<div
-								className={cn(
-									"w-96 h-48 cursor-pointer rounded-t-3xl duration-0",
-									isSelected ? "border-2 border-macaw" : "border-2 border-transparent hover:border-macaw/50",
-									isInConfirmationStage ? "cursor-default" : "cursor-pointer"
-								)}
-								onClick={(): void => {
-									if (!isInConfirmationStage) {
-										learnClass.setSelectedAnswer(choice.functionToBlockAnswerChoiceId)
-									}
-								}}
-							>
+						<div
+							className={cn(
+								"relative w-96 cursor-pointer rounded-3xl duration-0",
+								isSelected ? "outline-2 outline-macaw" : "outline-2 outline-transparent hover:outline-macaw/50",
+								isInConfirmationStage ? "cursor-default" : "cursor-pointer"
+							)}
+							onClick={(): void => {
+								if (!isInConfirmationStage) {
+									learnClass.setSelectedAnswer(choice.functionToBlockAnswerChoiceId)
+								}
+							}}
+							key={choice.functionToBlockAnswerChoiceId}
+						>
+							<div className="h-48 rounded-t-3xl overflow-hidden">
 								<LearnMiniSandbox
 									blocklyJson={normalizeSandboxJson(choice.codingBlock.codingBlockJson)}
-									className="w-full h-full"
+									className="w-full h-full rounded-t-3xl rounded-b-none"
 								/>
 							</div>
 							{/* Number lip below the sandbox */}
 							<div className={cn(
-								"w-96 h-8 rounded-b-3xl flex items-center justify-center text-lg font-bold",
+								"h-8 rounded-b-3xl flex items-center justify-center text-lg font-bold",
 								isSelected ? "bg-macaw text-white" : "bg-swan text-hare"
 							)}>
 								{cardNumber}
