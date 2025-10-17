@@ -206,7 +206,7 @@ function FillInBlankQuestion(): React.ReactNode {
 
 			<div
 				ref={containerRef}
-				className={cn("relative z-0 rounded-3xl border-2 border-swan h-[500px]")}
+				className={cn("relative z-0 rounded-3xl overflow-hidden border-swan border-2  h-[500px] flex-1")}
 			>
 				{/* Reset Workspace Button */}
 				<Button
