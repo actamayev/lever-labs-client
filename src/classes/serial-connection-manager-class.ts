@@ -11,7 +11,7 @@ import pipClass from "./pip-class"
 import setSerialConnectionStatus from "../utils/pip/set-serial-connection-status"
 import sensorDataClass from "./sensor-data-class"
 
-export class SerialConnectionManagerClass {
+class SerialConnectionManagerClass {
 	public port: SerialPort | null = null
 	public reader: ReadableStreamDefaultReader<Uint8Array> | null = null
 	public writer: WritableStreamDefaultWriter<Uint8Array> | null = null
