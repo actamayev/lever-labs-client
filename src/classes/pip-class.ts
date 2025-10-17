@@ -5,6 +5,7 @@ import { PipUUID } from "@lever-labs/common-ts/types/utils"
 import { PipConnectionUpdate } from "@lever-labs/common-ts/types/socket"
 import { ClientPipConnectionStatus } from "@lever-labs/common-ts/types/pip"
 import { isNull } from "lodash-es"
+import sensorDataClass from "./sensor-data-class"
 
 interface PipSearchResult {
 	pipName: string
@@ -32,6 +33,7 @@ class PipClass {
 
 	public deletePip(): void {
 		this.setSelectedPip(null)
+		sensorDataClass.deleteSensorData()
 	}
 
 	public updatePipConnectionStatus(data: PipConnectionUpdate): void {

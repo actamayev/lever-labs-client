@@ -75,7 +75,8 @@ class SensorDataClass {
 		this.dataVersion++ // Increment version for reactivity
 	})
 
-	public logout(): void {
+	// call this when we unplug pip, turn pip off, or disconnect from the internet
+	public deleteSensorData = action((): void => {
 		this.leftWheelRPM = []
 		this.rightWheelRPM = []
 		this.irSensorData = []
@@ -103,6 +104,10 @@ class SensorDataClass {
 		this.leftSideTofCounts = []
 		this.rightSideTofCounts = []
 		this.distanceGrid = Array.from({ length: 8 }, (): number[] => Array(8).fill(0))
+	})
+
+	public logout(): void {
+		this.deleteSensorData()
 	}
 }
 

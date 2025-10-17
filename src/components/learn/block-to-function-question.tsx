@@ -5,9 +5,10 @@ import { observer } from "mobx-react"
 import { useEffect } from "react"
 import learnClass from "../../classes/learn-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import BlockVisualization from "./block-visualization"
+import LearnMiniSandbox from "./learn-mini-sandbox"
 import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
 import { cn } from "../../lib/shadcn/utils"
+import normalizeSandboxJson from "../../utils/sandbox/normalize-sandbox-json"
 
 function BlockToFunctionQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
@@ -44,7 +45,7 @@ function BlockToFunctionQuestion(): React.ReactNode {
 		return null
 	}
 
-	const { codingBlock, blockToFunctionAnswerChoice } = currentQuestionState.question.blockToFunctionFlashcard
+	const { codingBlock, blockToFunctionAnswerChoice, questionText } = currentQuestionState.question.blockToFunctionFlashcard
 	const { selectedAnswerId } = currentQuestionState
 
 	// Sort answer choices by order
@@ -54,14 +55,14 @@ function BlockToFunctionQuestion(): React.ReactNode {
 		<div>
 			{/* Question text */}
 			<h2 className="text-3xl font-semibold text-questionText mb-8">
-				What can I do with this block?
+				{questionText}
 			</h2>
 
 			{/* Question: Show the block */}
-			<div className="flex justify-center mb-8">
-				<div className="relative h-32 w-48">
-					<BlockVisualization
-						codingBlock={codingBlock}
+			<div className="flex justify-center">
+				<div className="relative h-48 w-96">
+					<LearnMiniSandbox
+						blocklyJson={normalizeSandboxJson(codingBlock.codingBlockJson)}
 						className="w-full h-full"
 					/>
 				</div>
@@ -104,7 +105,7 @@ function BlockToFunctionQuestion(): React.ReactNode {
 							>
 								{choiceNumber}
 							</div>
-							<span className="text-left text-eel ml-10">
+							<span className={cn("text-left text-eel ml-10", isSelected ? "text-macaw" : "text-eel")}>
 								{choice.functionDescriptionText}
 							</span>
 						</TactileButton>

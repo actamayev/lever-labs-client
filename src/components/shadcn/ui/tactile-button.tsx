@@ -9,10 +9,11 @@ type TactileButtonProps = Omit<ButtonProps, 'variant'> & {
   shadowClass?: string      // New approach - Tailwind classes like "shadow-humpback-2"
   shadowHeight?: 2 | 4
   shouldHoverPushButton?: boolean
+  disableOpacityOnDisabled?: boolean  // Control whether disabled state reduces opacity
 }
 
 const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
-  ({ className, shadowColor, shadowClass, shadowHeight = 4, style, shouldHoverPushButton = true, ...props }, ref) => {
+  ({ className, shadowColor, shadowClass, shadowHeight = 4, style, shouldHoverPushButton = true, disableOpacityOnDisabled = true, ...props }, ref) => {
     
     // Determine which shadow approach to use
     const useNewSystem = shadowClass && !shadowColor
@@ -42,6 +43,7 @@ const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
             baseShadowClass,
             hoverClass,
             activeShadowClass,
+            !disableOpacityOnDisabled && "disabled:opacity-100",
             className
           )}
           style={{
@@ -72,6 +74,7 @@ const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
             shadowClass,
             hoverClass,
             activeShadowClass,
+            !disableOpacityOnDisabled && "disabled:opacity-100",
             className
           )}
           style={{

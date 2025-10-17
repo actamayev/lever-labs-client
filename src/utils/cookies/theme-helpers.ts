@@ -4,7 +4,7 @@
 import { SiteThemes } from "@lever-labs/common-ts/types/utils"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
-export const THEME_COOKIE_NAME = "site_theme"
+const THEME_COOKIE_NAME = "site_theme"
 
 export const setThemeCookie = (theme: SiteThemes): void => {
 	if (typeof document !== "undefined") {

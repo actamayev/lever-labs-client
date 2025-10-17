@@ -51,17 +51,17 @@ function FillInBlankQuestion(): React.ReactNode {
 
 	// Create toolbox config from fillInTheBlankBlockBank
 	const toolboxConfig = useMemo((): Blockly.utils.toolbox.ToolboxDefinition => {
-		if (!fillInTheBlank?.fillInTheBlankBlockBank) {
+		if (!fillInTheBlank?.availableBlocks) {
 			return { kind: "flyoutToolbox", contents: [] }
 		}
 		const blockNames = Array.from(new Set(
-			fillInTheBlank.fillInTheBlankBlockBank.map((block): BlockNames => block.codingBlock.blockName)
+			fillInTheBlank.availableBlocks.map((block): BlockNames => block.blockName)
 		))
 
 		// Use createChallengeToolbox to generate the toolbox
 		const blockData = createChallengeToolbox(blockNames)
 		return blockData.toolboxConfig
-	}, [fillInTheBlank?.fillInTheBlankBlockBank])
+	}, [fillInTheBlank?.availableBlocks])
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, false)
