@@ -49,7 +49,7 @@ function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	return (
 		<div className="h-screen flex flex-col">
 			<LessonHeader lessonId={lessonId} />
-			<main className="flex-1 overflow-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-[650px] py-6">
+			<main className="flex-1 overflow-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-24 py-6">
 				<LessonQuestions lessonId={lessonId} />
 			</main>
 			<LessonFooter lessonId={lessonId} />
