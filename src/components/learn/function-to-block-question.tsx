@@ -88,7 +88,10 @@ function FunctionToBlockQuestion(): React.ReactNode {
 				{questionText}
 			</h2>
 
-			<div className="flex justify-start gap-4" style={{ transform: "translateY(5rem)" }}>
+			<div
+				className="flex flex-col lg:flex-row justify-center lg:justify-start gap-4 px-4 lg:px-0"
+				style={{ transform: "translateY(5rem)" }}
+			>
 				{sortedChoices.map((choice, index): React.ReactNode => {
 					const isSelected = selectedAnswerId === choice.functionToBlockAnswerChoiceId
 					const cardNumber = index + 1
@@ -96,7 +99,7 @@ function FunctionToBlockQuestion(): React.ReactNode {
 					return (
 						<div
 							className={cn(
-								"relative w-96 cursor-pointer rounded-3xl duration-0",
+								"relative w-full max-w-sm lg:w-96 cursor-pointer rounded-3xl duration-0 flex-shrink-0",
 								isSelected ? "outline-2 outline-macaw" : "outline-2 outline-transparent hover:outline-macaw/50",
 								isInConfirmationStage ? "cursor-default" : "cursor-pointer"
 							)}
