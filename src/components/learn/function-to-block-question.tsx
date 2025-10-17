@@ -3,7 +3,7 @@ import { observer } from "mobx-react"
 import { useCallback, useEffect } from "react"
 import learnClass from "../../classes/learn-class"
 import { TactileButton } from "../shadcn/ui/tactile-button"
-import BlockVisualization from "./block-visualization"
+import LearnMiniSandbox from "./learn-mini-sandbox"
 import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
 import { cn } from "../../lib/shadcn/utils"
 
@@ -109,7 +109,7 @@ function FunctionToBlockQuestion(): React.ReactNode {
 							disabled={isInConfirmationStage}
 							disableOpacityOnDisabled={false}
 						>
-							<BlockVisualization
+							<LearnMiniSandbox
 								codingBlock={choice.codingBlock}
 								className="w-full h-full p-4"
 							/>

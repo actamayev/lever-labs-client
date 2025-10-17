@@ -7,7 +7,7 @@ import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import { Check, X } from "lucide-react"
 import { useCallback, useMemo, useState } from "react"
-import BlockVisualization from "./block-visualization"
+import LearnMiniSandbox from "./learn-mini-sandbox"
 import { CodingBlock } from "@lever-labs/common-ts/types/learn"
 import isEmpty from "lodash-es/isEmpty"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
@@ -150,7 +150,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 										<span className="text-3xl font-semibold text-questionIncorrectRed-2">Correct solution:</span>
 										{correctAnswer && (
 											<div className="relative h-24 w-32">
-												<BlockVisualization
+												<LearnMiniSandbox
 													codingBlock={correctAnswer.codingBlock}
 													className="w-full h-full"
 												/>
