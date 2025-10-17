@@ -109,7 +109,6 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		void initBlocks()
 	}, [])
 
-	console.log("Blocks initialized:", blocksInitialized)
 	console.log("Workspace changed, blocks in workspace:", workspaceRef.current?.getAllBlocks().length)
 
 	if (!blocksInitialized) {
