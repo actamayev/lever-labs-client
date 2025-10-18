@@ -76,6 +76,7 @@ class SandboxClass {
 		if (isUndefined(project)) return
 
 		project.projectName = newName
+		project.updatedAt = new Date()
 	})
 
 	public updateProjectNotes = action((projectUUID: SandboxProjectUUID, newNotes: string): void => {

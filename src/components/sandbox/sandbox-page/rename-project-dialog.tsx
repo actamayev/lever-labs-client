@@ -34,7 +34,7 @@ function RenameProjectDialog(): React.ReactNode {
 		} else if (e.key === "Enter") {
 			handleSaveRename()
 		}
-	}, [ handleSaveRename])
+	}, [handleSaveRename])
 
 	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
 		sandboxClass.setNewProjectName(e.target.value)
@@ -54,7 +54,7 @@ function RenameProjectDialog(): React.ReactNode {
 					placeholder="Project name"
 					className="w-full !text-xl h-10"
 					onKeyDown={handleKeyDown}
-					autoFocus
+					autoFocus={true}
 					maxLength={50}
 				/>
 				<DialogFooter className="flex justify-end gap-2">
