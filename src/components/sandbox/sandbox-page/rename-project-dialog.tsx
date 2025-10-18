@@ -15,6 +15,7 @@ import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { cn } from "../../../lib/shadcn/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
+import { observer } from "mobx-react"
 
 interface Props {
 	project: SandboxProject
@@ -24,7 +25,7 @@ interface Props {
 	setNewProjectName: Dispatch<SetStateAction<string>>
 }
 
-export default function RenameProjectDialog(props: Props): React.ReactNode {
+function RenameProjectDialog(props: Props): React.ReactNode {
 	const { project, isRenameDialogOpen, setIsRenameDialogOpen, newProjectName, setNewProjectName } = props
 
 	const colors = getDuolingoColors("humpback")
@@ -38,6 +39,14 @@ export default function RenameProjectDialog(props: Props): React.ReactNode {
 		setIsRenameDialogOpen(false)
 	}, [project.sandboxProjectUUID, newProjectName, setIsRenameDialogOpen])
 
+	const handleKeyDown = useCallback((e: React.KeyboardEvent): void => {
+		if (e.key === "Escape") {
+			handleCancelRename()
+		} else if (e.key === "Enter") {
+			handleSaveRename()
+		}
+	}, [handleCancelRename, handleSaveRename])
+
 	return (
 		<Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
 			<DialogContent className="w-96 border-none" onClick={(e): void => e.stopPropagation()}>
@@ -47,18 +56,14 @@ export default function RenameProjectDialog(props: Props): React.ReactNode {
 				</DialogHeader>
 				<div>
 					<Input
+						id="projectName"
 						value={newProjectName}
 						onChange={(e): void => setNewProjectName(e.target.value)}
 						placeholder="Project name"
 						className="w-full !text-xl h-10"
-						onKeyDown={(e): void => {
-							if (e.key === "Escape") {
-								handleCancelRename()
-							} else if (e.key === "Enter") {
-								handleSaveRename()
-							}
-						}}
+						onKeyDown={handleKeyDown}
 						autoFocus
+						maxLength={50}
 					/>
 				</div>
 				<DialogFooter className="flex justify-end gap-2">
@@ -83,3 +88,5 @@ export default function RenameProjectDialog(props: Props): React.ReactNode {
 		</Dialog>
 	)
 }
+
+export default observer(RenameProjectDialog)
