@@ -12,7 +12,7 @@ import { PipUUID } from "@lever-labs/common-ts/types/utils"
 import pipClass from "../../classes/pip-class"
 import { RetrieveIsPipUUIDValidResponse } from "@lever-labs/common-ts/types/api"
 import searchPipByUUIDUtil from "../../utils/pip/search-pip-by-uuid-util"
-import { ACCEPTABLE_PIP_ID_CHARACTERS } from "@lever-labs/common-ts/types/utils/constants"
+// import { ACCEPTABLE_PIP_ID_CHARACTERS } from "@lever-labs/common-ts/types/utils/constants"
 
 // eslint-disable-next-line max-lines-per-function
 function WifiConnectionSection(): React.ReactNode {
@@ -21,12 +21,12 @@ function WifiConnectionSection(): React.ReactNode {
 
 	const handleInputChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
 		const value = e.target.value
-		const characters = ACCEPTABLE_PIP_ID_CHARACTERS
+		// const characters = ACCEPTABLE_PIP_ID_CHARACTERS
 
 		// Filter to only allowed characters
 		const filteredValue = value
 			.split("")
-			.filter((char): boolean => characters.includes(char))
+			// .filter((char): boolean => characters.includes(char))
 			.slice(0, 5) // Maximum 5 characters
 			.join("")
 
