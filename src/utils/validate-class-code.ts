@@ -1,6 +1,7 @@
 "use client"
 
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
+import { ACCEPTABLE_CLASS_CODE_CHARACTERS } from "@lever-labs/common-ts/types/utils/constants"
 
 export function isValidClassCode(input: string): input is ClassCode {
 	// Check if the input is exactly 5 characters long
@@ -8,9 +9,6 @@ export function isValidClassCode(input: string): input is ClassCode {
 		return false
 	}
 
-	// Define the allowed characters (same as in generateClassroomCode)
-	const allowedCharacters = /^[A-Za-z0-9]{5}$/
-
-	// Test if the input matches the pattern
-	return allowedCharacters.test(input)
+	// Check if all characters are in the allowed set
+	return input.split("").every((char): boolean => ACCEPTABLE_CLASS_CODE_CHARACTERS.includes(char))
 }

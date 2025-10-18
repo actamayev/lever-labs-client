@@ -8,12 +8,29 @@ import getDuolingoColors from "../../utils/get-duolingo-colors"
 import joinClassroom from "../../utils/student/join-classroom"
 import { isValidClassCode } from "../../utils/validate-class-code"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
+import { ACCEPTABLE_CLASS_CODE_CHARACTERS } from "@lever-labs/common-ts/types/utils/constants"
 
 export default function JoinClassroom(): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const [classCode, setClassCode] = useState("")
 	const [error, setError] = useState("")
 	const [success, setSuccess] = useState("")
+
+	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
+		const value = e.target.value
+		const characters = ACCEPTABLE_CLASS_CODE_CHARACTERS
+
+		// Filter to only allowed characters
+		const filteredValue = value
+			.split("")
+			.filter((char): boolean => characters.includes(char))
+			.slice(0, 5) // Maximum 5 characters
+			.join("")
+
+		setClassCode(filteredValue)
+		setError("")
+		setSuccess("")
+	}, [])
 
 	const submit = useCallback(async (): Promise<void> => {
 		if (!isValidClassCode(classCode)) return
@@ -41,11 +58,7 @@ export default function JoinClassroom(): React.ReactNode {
 				<Input
 					id="class-code"
 					value={classCode}
-					onChange={(e): void => {
-						setClassCode(e.target.value)
-						setError("")
-						setSuccess("")
-					}}
+					onChange={handleInputChange}
 					className={cn(
 						"w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light shadow-none",
 						// eslint-disable-next-line no-nested-ternary
@@ -56,7 +69,6 @@ export default function JoinClassroom(): React.ReactNode {
 								: "border-swan"
 					)}
 					maxLength={5}
-					placeholder="APPLE"
 				/>
 
 				{/* Error/Success Area */}
