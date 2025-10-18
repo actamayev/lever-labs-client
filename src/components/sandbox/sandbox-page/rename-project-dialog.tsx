@@ -54,18 +54,16 @@ function RenameProjectDialog(props: Props): React.ReactNode {
 					<DialogTitle className="text-2xl">Rename</DialogTitle>
 					<DialogClose />
 				</DialogHeader>
-				<div>
-					<Input
-						id="projectName"
-						value={newProjectName}
-						onChange={(e): void => setNewProjectName(e.target.value)}
-						placeholder="Project name"
-						className="w-full !text-xl h-10"
-						onKeyDown={handleKeyDown}
-						autoFocus
-						maxLength={50}
-					/>
-				</div>
+				<Input
+					id="projectName"
+					value={newProjectName}
+					onChange={(e): void => setNewProjectName(e.target.value)}
+					placeholder="Project name"
+					className="w-full !text-xl h-10"
+					onKeyDown={handleKeyDown}
+					autoFocus
+					maxLength={50}
+				/>
 				<DialogFooter className="flex justify-end gap-2">
 					<TactileButton
 						onClick={handleCancelRename}
