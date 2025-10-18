@@ -252,6 +252,10 @@ class SandboxClass {
 	public closeRenameDialog = action((): void => {
 		this.isRenameDialogOpen = false
 		this.renameDialogProjectUUID = null
+		// Don't clear newProjectName immediately - let the dialog handle it after animation
+	})
+
+	public clearRenameDialogData = action((): void => {
 		this.newProjectName = ""
 	})
 

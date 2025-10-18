@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback } from "react"
+import { useCallback, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import {
 	Dialog,
@@ -19,6 +19,7 @@ import sandboxClass from "../../../classes/sandbox-class"
 
 function RenameProjectDialog(): React.ReactNode {
 	const colors = getDuolingoColors("humpback")
+	const inputRef = useRef<HTMLInputElement>(null)
 
 	const handleSaveRename = useCallback(async (): Promise<void> => {
 		if (!sandboxClass.renameDialogProjectUUID) return
@@ -37,6 +38,30 @@ function RenameProjectDialog(): React.ReactNode {
 		sandboxClass.setNewProjectName(e.target.value)
 	}, [])
 
+	// Focus the input when dialog opens - using requestAnimationFrame for instant feel
+	useEffect((): (() => void) | void => {
+		if (sandboxClass.isRenameDialogOpen) {
+			const focusInput = (): void => {
+				if (inputRef.current) {
+					inputRef.current.focus()
+					inputRef.current.select()
+				}
+			}
+
+			// Use double requestAnimationFrame for maximum speed
+			requestAnimationFrame((): void => {
+				requestAnimationFrame(focusInput)
+			})
+		} else {
+			// Dialog is closing - clear the name after animation completes
+			const timer = setTimeout((): void => {
+				sandboxClass.clearRenameDialogData()
+			}, 200) // Match the dialog's exit animation duration
+			return (): void => clearTimeout(timer)
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [sandboxClass.isRenameDialogOpen])
+
 	return (
 		<Dialog open={sandboxClass.isRenameDialogOpen} onOpenChange={sandboxClass.closeRenameDialog}>
 			<DialogContent className="w-96 border-none" onClick={(e): void => e.stopPropagation()}>
@@ -45,13 +70,13 @@ function RenameProjectDialog(): React.ReactNode {
 					<DialogClose />
 				</DialogHeader>
 				<Input
+					ref={inputRef}
 					id="projectName"
 					value={sandboxClass.newProjectName}
 					onChange={handleInputChange}
 					placeholder="Project name"
 					className="w-full !text-xl h-10"
 					onKeyDown={handleKeyDown}
-					autoFocus
 					maxLength={50}
 				/>
 				<DialogFooter className="flex justify-end gap-2">
