@@ -7,6 +7,7 @@ import { SandboxProject } from "@lever-labs/common-ts/types/sandbox"
 import { Folder, PlusCircle, Star, Search } from "lucide-react"
 import { Input } from "../../shadcn/ui/input"
 import SingleProjectCard from "./single-project-card"
+import RenameProjectDialog from "./rename-project-dialog"
 import sandboxClass from "../../../classes/sandbox-class"
 import WorkbenchLayout from "../../layouts/workbench-layout"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
@@ -179,6 +180,7 @@ function TheSandboxPage(): React.ReactNode {
 				</div>
 			</div>
 
+			<RenameProjectDialog />
 		</WorkbenchLayout>
 	)
 }

@@ -1,7 +1,7 @@
 "use client"
 
-import { SandboxProject } from "@lever-labs/common-ts/types/sandbox"
-import { Dispatch, SetStateAction, useCallback } from "react"
+import { useCallback } from "react"
+import { observer } from "mobx-react"
 import {
 	Dialog,
 	DialogContent,
@@ -15,40 +15,33 @@ import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-
 import { TactileButton } from "../../shadcn/ui/tactile-button"
 import { cn } from "../../../lib/shadcn/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
-import { observer } from "mobx-react"
+import sandboxClass from "../../../classes/sandbox-class"
 
-interface Props {
-	project: SandboxProject
-	isRenameDialogOpen: boolean
-	setIsRenameDialogOpen: Dispatch<SetStateAction<boolean>>
-	newProjectName: string
-	setNewProjectName: Dispatch<SetStateAction<string>>
-}
-
-function RenameProjectDialog(props: Props): React.ReactNode {
-	const { project, isRenameDialogOpen, setIsRenameDialogOpen, newProjectName, setNewProjectName } = props
-
+function RenameProjectDialog(): React.ReactNode {
 	const colors = getDuolingoColors("humpback")
 
-	const handleCancelRename = useCallback((): void => {
-		setIsRenameDialogOpen(false)
-	}, [setIsRenameDialogOpen])
-
 	const handleSaveRename = useCallback(async (): Promise<void> => {
-		await editSandboxProjectName(project.sandboxProjectUUID, newProjectName)
-		setIsRenameDialogOpen(false)
-	}, [project.sandboxProjectUUID, newProjectName, setIsRenameDialogOpen])
+		if (!sandboxClass.renameDialogProjectUUID) return
+
+		await editSandboxProjectName(sandboxClass.renameDialogProjectUUID, sandboxClass.newProjectName)
+		sandboxClass.updateProjectName(sandboxClass.renameDialogProjectUUID, sandboxClass.newProjectName)
+		sandboxClass.closeRenameDialog()
+	}, [])
 
 	const handleKeyDown = useCallback((e: React.KeyboardEvent): void => {
 		if (e.key === "Escape") {
-			handleCancelRename()
+			sandboxClass.closeRenameDialog()
 		} else if (e.key === "Enter") {
 			handleSaveRename()
 		}
-	}, [handleCancelRename, handleSaveRename])
+	}, [ handleSaveRename])
+
+	const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>): void => {
+		sandboxClass.setNewProjectName(e.target.value)
+	}, [])
 
 	return (
-		<Dialog open={isRenameDialogOpen} onOpenChange={setIsRenameDialogOpen}>
+		<Dialog open={sandboxClass.isRenameDialogOpen} onOpenChange={sandboxClass.closeRenameDialog}>
 			<DialogContent className="w-96 border-none" onClick={(e): void => e.stopPropagation()}>
 				<DialogHeader>
 					<DialogTitle className="text-2xl">Rename</DialogTitle>
@@ -56,8 +49,8 @@ function RenameProjectDialog(props: Props): React.ReactNode {
 				</DialogHeader>
 				<Input
 					id="projectName"
-					value={newProjectName}
-					onChange={(e): void => setNewProjectName(e.target.value)}
+					value={sandboxClass.newProjectName}
+					onChange={handleInputChange}
 					placeholder="Project name"
 					className="w-full !text-xl h-10"
 					onKeyDown={handleKeyDown}
@@ -66,7 +59,7 @@ function RenameProjectDialog(props: Props): React.ReactNode {
 				/>
 				<DialogFooter className="flex justify-end gap-2">
 					<TactileButton
-						onClick={handleCancelRename}
+						onClick={sandboxClass.closeRenameDialog}
 						className="flex-1 h-10 rounded-xl text-lg text-white bg-eel dark:bg-swan"
 						shadowHeight={4}
 						shadowClass="shadow-hare"
