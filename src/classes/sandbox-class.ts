@@ -14,6 +14,9 @@ class SandboxClass {
 	public sandboxProjects: Map<SandboxProjectUUID, SandboxProjectWithStreaming> = new Map()
 	public retrievingSingleProjects: Map<SandboxProjectUUID, boolean> = new Map()
 	public currentStreamIds: Map<SandboxProjectUUID, string | null> = new Map()
+	public isRenameDialogOpen = false
+	public renameDialogProjectUUID: SandboxProjectUUID | null = null
+	public newProjectName = ""
 
 	constructor() {
 		makeAutoObservable(this)
@@ -73,6 +76,7 @@ class SandboxClass {
 		if (isUndefined(project)) return
 
 		project.projectName = newName
+		project.updatedAt = new Date()
 	})
 
 	public updateProjectNotes = action((projectUUID: SandboxProjectUUID, newNotes: string): void => {
@@ -235,6 +239,30 @@ class SandboxClass {
 		return this.currentStreamIds.get(projectUUID) || null
 	}
 
+	// Rename dialog management
+	public openRenameDialog = action((projectUUID: SandboxProjectUUID): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+
+		this.renameDialogProjectUUID = projectUUID
+		this.newProjectName = project.projectName || ""
+		this.isRenameDialogOpen = true
+	})
+
+	public closeRenameDialog = action((): void => {
+		this.isRenameDialogOpen = false
+		this.renameDialogProjectUUID = null
+		// Don't clear newProjectName immediately - let the dialog handle it after animation
+	})
+
+	public clearRenameDialogData = action((): void => {
+		this.newProjectName = ""
+	})
+
+	public setNewProjectName = action((name: string): void => {
+		this.newProjectName = name
+	})
+
 	// Update logout method to clear stream IDs:
 	public logout(): void {
 		this.setIsRetrievingAllSandboxProjects(false)
@@ -242,6 +270,9 @@ class SandboxClass {
 		this.sandboxProjects = new Map()
 		this.retrievingSingleProjects = new Map()
 		this.currentStreamIds.clear()
+		this.isRenameDialogOpen = false
+		this.renameDialogProjectUUID = null
+		this.newProjectName = ""
 	}
 }
 
