@@ -3,7 +3,6 @@
 import { useCallback, useState, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import { BotIcon, WifiHighIcon } from "lucide-react"
-import { OTPInput } from "input-otp"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
@@ -13,6 +12,7 @@ import pipClass from "../../classes/pip-class"
 import { RetrieveIsPipUUIDValidResponse } from "@lever-labs/common-ts/types/api"
 import searchPipByUUIDUtil from "../../utils/pip/search-pip-by-uuid-util"
 import { ACCEPTABLE_PIP_ID_CHARACTERS } from "@lever-labs/common-ts/types/utils/constants"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../shadcn/ui/input-otp"
 
 // eslint-disable-next-line max-lines-per-function
 function WifiConnectionSection(): React.ReactNode {
@@ -37,12 +37,9 @@ function WifiConnectionSection(): React.ReactNode {
 	}, [])
 
 	const handleSlotClick = useCallback((): void => {
-		console.log("Slot clicked!")
-		const input = document.querySelector("[data-input-otp]") as HTMLInputElement
-		console.log("Found input:", input)
+		const input = document.querySelector("input[autocomplete='one-time-code']") as HTMLInputElement
 		if (input) {
 			input.focus()
-			console.log("Focused input")
 		}
 	}, [])
 
@@ -51,7 +48,7 @@ function WifiConnectionSection(): React.ReactNode {
 		if (!pipClass.isConnectPipDialogOpen || !sectionRef.current) return
 
 		const focusInput = (): void => {
-			const input = document.querySelector("[data-input-otp]") as HTMLInputElement
+			const input = document.querySelector("input[autocomplete='one-time-code']") as HTMLInputElement
 			if (input) {
 				input.focus()
 			}
@@ -144,38 +141,52 @@ function WifiConnectionSection(): React.ReactNode {
 					Pip ID
 				</label>
 				<div onClick={handleSlotClick} className="cursor-text">
-					<OTPInput
+					<InputOTP
+						maxLength={5}
 						value={pipClass.pipUUIDSearchTerm}
 						onChange={handleInputChange}
-						maxLength={5}
 						pattern={`[${ACCEPTABLE_PIP_ID_CHARACTERS}]`}
 						onKeyDown={handleKeyDown}
-						containerClassName="flex gap-2 justify-center"
-						autoFocus
-						render={({ slots }): React.ReactNode => (
-							<>
-								{slots.map((slot, idx): React.ReactNode => (
-									<div
-										key={idx}
-										className={cn(
-											"relative w-12 h-14 text-xl",
-											"flex items-center justify-center",
-											"border-2 border-swan rounded-lg",
-											"transition-all",
-											slot.isActive && "border-humpback"
-										)}
-									>
-										{slot.char !== null && <div>{slot.char}</div>}
-										{slot.hasFakeCaret && (
-											<div className="absolute inset-0 flex items-center justify-center">
-												<div className="w-px h-8 bg-humpback animate-[blink_1s_ease-in-out_infinite]" />
-											</div>
-										)}
-									</div>
-								))}
-							</>
-						)}
-					/>
+						containerClassName="justify-center"
+					>
+						<InputOTPGroup className="gap-2">
+							<InputOTPSlot
+								index={0}
+								className={cn(
+									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"transition-all"
+								)}
+							/>
+							<InputOTPSlot
+								index={1}
+								className={cn(
+									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"transition-all"
+								)}
+							/>
+							<InputOTPSlot
+								index={2}
+								className={cn(
+									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"transition-all"
+								)}
+							/>
+							<InputOTPSlot
+								index={3}
+								className={cn(
+									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"transition-all"
+								)}
+							/>
+							<InputOTPSlot
+								index={4}
+								className={cn(
+									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"transition-all"
+								)}
+							/>
+						</InputOTPGroup>
+					</InputOTP>
 				</div>
 				{pipClass.isSearching && (
 					<p className="text-sm text-wolf mt-2">Searching...</p>
