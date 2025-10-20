@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
-    "@lever-labs/common-ts": "^1.0.0",
+    "@lever-labs/common-ts": "^1.0.323",
     "@radix-ui/react-avatar": "^1.1.10",
     "@radix-ui/react-checkbox": "^1.1.3",
     "@radix-ui/react-collapsible": "^1.1.11",
@@ -97,7 +97,7 @@
     "validate": "npm run lint; npm run type-check; npm run test",
     "analyze": "ANALYZE=true next build",
     "postinstall": "next telemetry disable",
-    "updateCommon": "sudo npm update @lever-labs/common-ts",
+    "updateCommon": "sudo npm install @lever-labs/common-ts@latest",
     "check-unused": "ts-unused-exports tsconfig.json --excludePathsFromReport=\"test|spec|\\.next|middleware\\.ts|app/(manifest|robots|sitemap).ts|app/(layout|not-found).tsx|src/components/shadcn|app/.*/page\\.tsx\""
   },
   "browserslist": {
