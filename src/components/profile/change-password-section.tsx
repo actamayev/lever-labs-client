@@ -12,6 +12,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
+
 // eslint-disable-next-line max-lines-per-function
 function ChangePasswordSection(): React.ReactNode {
 	const [currentPassword, setCurrentPassword] = useState("")
