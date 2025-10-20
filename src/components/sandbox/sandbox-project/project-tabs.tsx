@@ -60,6 +60,10 @@ function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): Reac
 		debouncedSaveNotes(projectUUID, newNotes)
 	}
 
+	const projectNotes = useMemo((): string => {
+		return sandboxClass.getProjectNotes(projectUUID)
+	}, [projectUUID, sandboxClass.sandboxProjects.get(projectUUID)?.projectNotes])
+
 	return (
 		<Tabs defaultValue="code" className="w-full h-full flex flex-col">
 			<TabsList className="mb-2 bg-polar">
@@ -78,7 +82,7 @@ function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): Reac
 				<Textarea
 					placeholder="Add notes about your project here..."
 					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded"
-					value={sandboxClass.getProjectNotes(projectUUID) || ""}
+					value={projectNotes || ""}
 					onChange={handleNotesChange}
 				/>
 			</TabsContent>
