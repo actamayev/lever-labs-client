@@ -1,9 +1,9 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useRef, useState } from "react"
 import { observer } from "mobx-react"
 import { BotIcon, WifiHighIcon } from "lucide-react"
-import { Input } from "../shadcn/ui/input"
+import { OTPInput } from "input-otp"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
@@ -17,29 +17,29 @@ import { ACCEPTABLE_PIP_ID_CHARACTERS } from "@lever-labs/common-ts/types/utils/
 // eslint-disable-next-line max-lines-per-function
 function WifiConnectionSection(): React.ReactNode {
 	const [isConnecting, setIsConnecting] = useState(false)
+	const otpInputRef = useRef<HTMLInputElement>(null)  // ← ADD THIS
 	const colors = getDuolingoColors("humpback")
 
-	const handleInputChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
-		const value = e.target.value
-		const characters = ACCEPTABLE_PIP_ID_CHARACTERS
+	const handleInputChange = useCallback(async (value: string): Promise<void> => {
+		console.log("handleInputChange called with:", value)
 
-		// Filter to only allowed characters
-		const filteredValue = value
-			.split("")
-			.filter((char): boolean => characters.includes(char))
-			.slice(0, 5) // Maximum 5 characters
-			.join("")
-
-		pipClass.setPipUUIDSearchTerm(filteredValue)
+		pipClass.setPipUUIDSearchTerm(value)
 		pipClass.setSearchResult(null)
 		pipClass.setErrorMessage("")
 
-		// Auto-search when 5 characters are entered
-		if (filteredValue.length !== 5) return
-		await searchPipByUUIDUtil(filteredValue, (): void => {
-			// Only blur the input if we found a result
-			e.target.blur()
-		})
+		if (value.length === 5) {
+			await searchPipByUUIDUtil(value)
+		}
+	}, [])
+
+	const handleSlotClick = useCallback((): void => {
+		console.log("Slot clicked!")
+		const input = document.querySelector("[data-input-otp]") as HTMLInputElement
+		console.log("Found input:", input)
+		if (input) {
+			input.focus()
+			console.log("Focused input")
+		}
 	}, [])
 
 	const handleConnectToPip = useCallback(async (): Promise<void> => {
@@ -106,17 +106,39 @@ function WifiConnectionSection(): React.ReactNode {
 				<label htmlFor="pipUUID" className="block text-sm font-medium text-wolf mb-2">
 					Pip ID
 				</label>
-				<Input
-					id="pipUUID"
-					value={pipClass.pipUUIDSearchTerm}
-					onChange={handleInputChange}
-					placeholder="Enter 5-character Pip ID"
-					className="w-full !text-xl h-10"
-					onKeyDown={handleKeyDown}
-					autoFocus
-					maxLength={5}
-					autoComplete="one-time-code"
-				/>
+				<div onClick={handleSlotClick} className="cursor-text">
+					<OTPInput
+						value={pipClass.pipUUIDSearchTerm}
+						onChange={handleInputChange}
+						maxLength={5}
+						pattern={`[${ACCEPTABLE_PIP_ID_CHARACTERS}]`}
+						onKeyDown={handleKeyDown}
+						containerClassName="flex gap-2 justify-center"
+						render={({ slots }) => (
+							<>
+								{slots.map((slot, idx) => (
+									<div
+										key={idx}
+										className={cn(
+											"relative w-12 h-14 text-xl",
+											"flex items-center justify-center",
+											"border-2 border-swan rounded-lg",
+											"transition-all",
+											slot.isActive && "border-humpback"
+										)}
+									>
+										{slot.char !== null && <div>{slot.char}</div>}
+										{slot.hasFakeCaret && (
+											<div className="absolute inset-0 flex items-center justify-center">
+												<div className="w-px h-8 bg-humpback animate-pulse" />
+											</div>
+										)}
+									</div>
+								))}
+							</>
+						)}
+					/>
+				</div>
 				{pipClass.isSearching && (
 					<p className="text-sm text-wolf mt-2">Searching...</p>
 				)}
