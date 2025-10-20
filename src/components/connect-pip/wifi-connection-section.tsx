@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useRef, useState } from "react"
+import { useCallback, useState } from "react"
 import { observer } from "mobx-react"
 import { BotIcon, WifiHighIcon } from "lucide-react"
 import { OTPInput } from "input-otp"
@@ -17,18 +17,21 @@ import { ACCEPTABLE_PIP_ID_CHARACTERS } from "@lever-labs/common-ts/types/utils/
 // eslint-disable-next-line max-lines-per-function
 function WifiConnectionSection(): React.ReactNode {
 	const [isConnecting, setIsConnecting] = useState(false)
-	const otpInputRef = useRef<HTMLInputElement>(null)  // ← ADD THIS
 	const colors = getDuolingoColors("humpback")
 
 	const handleInputChange = useCallback(async (value: string): Promise<void> => {
-		console.log("handleInputChange called with:", value)
+		// Manually filter to only allowed characters
+		const filteredValue = value
+			.split("")
+			.filter((char): boolean => ACCEPTABLE_PIP_ID_CHARACTERS.includes(char))
+			.join("")
 
-		pipClass.setPipUUIDSearchTerm(value)
+		pipClass.setPipUUIDSearchTerm(filteredValue)
 		pipClass.setSearchResult(null)
 		pipClass.setErrorMessage("")
 
-		if (value.length === 5) {
-			await searchPipByUUIDUtil(value)
+		if (filteredValue.length === 5) {
+			await searchPipByUUIDUtil(filteredValue)
 		}
 	}, [])
 
@@ -114,9 +117,9 @@ function WifiConnectionSection(): React.ReactNode {
 						pattern={`[${ACCEPTABLE_PIP_ID_CHARACTERS}]`}
 						onKeyDown={handleKeyDown}
 						containerClassName="flex gap-2 justify-center"
-						render={({ slots }) => (
+						render={({ slots }): React.ReactNode => (
 							<>
-								{slots.map((slot, idx) => (
+								{slots.map((slot, idx): React.ReactNode => (
 									<div
 										key={idx}
 										className={cn(
