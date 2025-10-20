@@ -117,6 +117,7 @@ function WifiConnectionSection(): React.ReactNode {
 						pattern={`[${ACCEPTABLE_PIP_ID_CHARACTERS}]`}
 						onKeyDown={handleKeyDown}
 						containerClassName="flex gap-2 justify-center"
+						autoFocus
 						render={({ slots }): React.ReactNode => (
 							<>
 								{slots.map((slot, idx): React.ReactNode => (
@@ -133,7 +134,7 @@ function WifiConnectionSection(): React.ReactNode {
 										{slot.char !== null && <div>{slot.char}</div>}
 										{slot.hasFakeCaret && (
 											<div className="absolute inset-0 flex items-center justify-center">
-												<div className="w-px h-8 bg-humpback animate-pulse" />
+												<div className="w-px h-8 bg-humpback animate-[blink_1s_ease-in-out_infinite]" />
 											</div>
 										)}
 									</div>
