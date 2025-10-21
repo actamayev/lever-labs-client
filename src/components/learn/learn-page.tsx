@@ -1,17 +1,17 @@
 "use client"
 import { observer } from "mobx-react"
 import { useCallback, useEffect, useMemo } from "react"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import { Lesson } from "@lever-labs/common-ts/types/learn"
-import learnClass from "../../classes/learn-class"
-import retrieveDetailedLesson from "../../utils/learn/retrieve-detailed-lesson"
+import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import LessonHeader from "./lesson-header"
 import LessonFooter from "./lesson-footer"
 import LessonQuestions from "./lesson-questions"
+import learnClass from "../../classes/learn-class"
 import ExitLessonDialog from "./exit-lesson-dialog"
-import { soundManager } from "../../classes/utility/sound-manager-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
+import { soundManager } from "../../classes/utility/sound-manager-class"
 import stopCareerTrigger from "../../utils/career-quest/stop-career-trigger"
+import retrieveDetailedLesson from "../../utils/learn/retrieve-detailed-lesson"
 
 function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
