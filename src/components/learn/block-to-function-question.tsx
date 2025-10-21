@@ -8,6 +8,7 @@ import { TactileButton } from "../shadcn/ui/tactile-button"
 import LearnMiniSandbox from "./learn-mini-sandbox"
 import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
 import { cn } from "../../lib/shadcn/utils"
+import isOtpInputFocused from "../../utils/check-otp-input-focused"
 
 function BlockToFunctionQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
@@ -25,6 +26,8 @@ function BlockToFunctionQuestion(): React.ReactNode {
 		const handleKeyDown = (event: KeyboardEvent): void => {
 			const key = event.key
 			if (key !== "1" && key !== "2" && key !== "3") return
+			// Don't handle keyboard events if OTP input is focused
+			if (isOtpInputFocused()) return
 			const choiceIndex = parseInt(key, 10) - 1 // Convert to 0-based index
 			const flashcard = currentQuestionState.question.blockToFunctionFlashcard
 			if (!flashcard) return
