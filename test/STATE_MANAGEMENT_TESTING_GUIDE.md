@@ -280,25 +280,25 @@ mockReader.read.mockResolvedValue({ done: false, value: new Uint8Array([1, 2, 3]
 ### **Individual Test Files**
 ```bash
 # Run specific test file
-npm test src/classes/__tests__/career-quest-class.test.ts
+pnpm test src/classes/__tests__/career-quest-class.test.ts
 
 # Run with watch mode
-npm run test:watch src/classes/__tests__/career-quest-class.test.ts
+pnpm run test:watch src/classes/__tests__/career-quest-class.test.ts
 ```
 
 ### **All State Management Tests**
 ```bash
 # Run all class tests
-npm test src/classes/__tests__/
+pnpm test src/classes/__tests__/
 
 # Run with coverage
-npm run test:coverage src/classes/__tests__/
+pnpm run test:coverage src/classes/__tests__/
 ```
 
 ### **Test UI**
 ```bash
 # Open test UI for interactive testing
-npm run test:ui
+pnpm run test:ui
 ```
 
 ## Coverage Goals

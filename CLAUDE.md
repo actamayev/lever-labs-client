@@ -74,14 +74,14 @@ import { careerQuestDataService } from "@/services/career-quest-data-service"
 ## Development Commands
 ```bash
 # Development
-npm run dev --turbo    # Start dev server with Turbo
+pnpm run dev --turbo    # Start dev server with Turbo
 
 # Code Quality  
-npm run type-check     # TypeScript check
+pnpm run type-check     # TypeScript check
 
 # Build
-npm run build          # Production build
-npm run analyze        # Bundle analysis
+pnpm run build          # Production build
+pnpm run analyze        # Bundle analysis
 ```
 
 ## Key Features
