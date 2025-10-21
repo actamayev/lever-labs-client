@@ -1,7 +1,6 @@
 "use client"
 
 import * as Blockly from "blockly"
-import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { usePathname } from "next/navigation"
@@ -13,39 +12,16 @@ import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
 // 🔧 FIX: Override flyout init to force autoClose = false
-if (typeof window !== "undefined" && !window.__blocklyAutoCloseFixed) {
-	window.__blocklyAutoCloseFixed = true
-
-	// Override VerticalFlyout init
+if (typeof window !== "undefined") {
 	if (Blockly.VerticalFlyout) {
 		const originalVerticalInit = Blockly.VerticalFlyout.prototype.init
-		Blockly.VerticalFlyout.prototype.init = function(targetWorkspace: Blockly.WorkspaceSvg) {
+		Blockly.VerticalFlyout.prototype.init = function(targetWorkspace: Blockly.WorkspaceSvg): void {
 			// Call original init
 			const result = originalVerticalInit.call(this, targetWorkspace)
 			// Force autoClose to false AFTER Blockly sets it to true
 			this.autoClose = false
-			console.log("✅ Forced VerticalFlyout autoClose = false after init")
 			return result
 		}
-	}
-
-	// Override HorizontalFlyout init
-	if (Blockly.HorizontalFlyout) {
-		const originalHorizontalInit = Blockly.HorizontalFlyout.prototype.init
-		Blockly.HorizontalFlyout.prototype.init = function(targetWorkspace: Blockly.WorkspaceSvg) {
-			// Call original init
-			const result = originalHorizontalInit.call(this, targetWorkspace)
-			// Force autoClose to false AFTER Blockly sets it to true
-			this.autoClose = false
-			console.log("✅ Forced HorizontalFlyout autoClose = false after init")
-			return result
-		}
-	}
-}
-
-declare global {
-	interface Window {
-		__blocklyAutoCloseFixed?: boolean
 	}
 }
 
