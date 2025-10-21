@@ -148,6 +148,7 @@ function WifiConnectionSection(): React.ReactNode {
 						pattern={`[${ACCEPTABLE_PIP_ID_CHARACTERS}]`}
 						onKeyDown={handleKeyDown}
 						containerClassName="justify-center"
+						autoComplete="one-time-code"
 					>
 						<InputOTPGroup className="gap-2">
 							<InputOTPSlot
