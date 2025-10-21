@@ -12,6 +12,43 @@ import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 
+// 🔧 FIX: Override flyout init to force autoClose = false
+if (typeof window !== "undefined" && !window.__blocklyAutoCloseFixed) {
+	window.__blocklyAutoCloseFixed = true
+
+	// Override VerticalFlyout init
+	if (Blockly.VerticalFlyout) {
+		const originalVerticalInit = Blockly.VerticalFlyout.prototype.init
+		Blockly.VerticalFlyout.prototype.init = function(targetWorkspace: Blockly.WorkspaceSvg) {
+			// Call original init
+			const result = originalVerticalInit.call(this, targetWorkspace)
+			// Force autoClose to false AFTER Blockly sets it to true
+			this.autoClose = false
+			console.log("✅ Forced VerticalFlyout autoClose = false after init")
+			return result
+		}
+	}
+
+	// Override HorizontalFlyout init
+	if (Blockly.HorizontalFlyout) {
+		const originalHorizontalInit = Blockly.HorizontalFlyout.prototype.init
+		Blockly.HorizontalFlyout.prototype.init = function(targetWorkspace: Blockly.WorkspaceSvg) {
+			// Call original init
+			const result = originalHorizontalInit.call(this, targetWorkspace)
+			// Force autoClose to false AFTER Blockly sets it to true
+			this.autoClose = false
+			console.log("✅ Forced HorizontalFlyout autoClose = false after init")
+			return result
+		}
+	}
+}
+
+declare global {
+	interface Window {
+		__blocklyAutoCloseFixed?: boolean
+	}
+}
+
 interface BlocklyComponentProps {
 	toolboxConfig: Blockly.utils.toolbox.ToolboxDefinition
 	initialBlocklyJson: BlocklyJson
@@ -47,7 +84,6 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 			return
 		}
 
-		// Center the workspace (isCentering flag prevents onChange from firing)
 		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
 		workspace.scrollCenter()
 
@@ -59,12 +95,10 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
 
-		// Don't notify parent component if we're switching modes
 		if (!isSwitchingMode && !isCentering) {
 			onJsonChange(newJson)
 		}
 
-		// Center workspace on first initialization
 		if (!isCentered) {
 			centerWorkspace()
 		}
@@ -74,10 +108,8 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 	// @ts-expect-error - Not all code paths return a value, but this is intentional
 	useEffect((): () => void => {
 		if (isSwitchingMode) {
-			// Force re-centering when switching modes
 			setIsCentered(false)
 		} else {
-			// After switching is complete, center the workspace
 			const timer = setTimeout((): void => {
 				centerWorkspace()
 			}, 100)
@@ -92,17 +124,15 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 		centerWorkspace()
 	}, [isSwitchingMode, searchTerm, centerWorkspace])
 
-	// Reset isCentered when pathname changes (navigation)
 	useEffect((): void => {
 		setIsCentered(false)
 	}, [pathname])
 
-	// Add effect to center workspace after it's initialized and when blocks change
 	useEffect((): () => void => {
 		if (isCentered || isCentering) return (): void => {}
 		const timer = setTimeout((): void => {
 			centerWorkspace()
-		}, 100) // Small delay to ensure workspace is fully rendered
+		}, 100)
 
 		return (): void => clearTimeout(timer)
 	}, [centerWorkspace, initialBlocklyJson, isCentered, isCentering, pathname])
@@ -129,25 +159,11 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 		}
 	}, [isDarkMode])
 
-	// This keeps the category from having a blue border when clicked
-	const setupToolbox = useCallback((): void => {
-		if (!workspaceRef.current) return
-
-		const toolbox = workspaceRef.current.getToolbox()
-		if (!toolbox) return
-
-		const flyout = toolbox.getFlyout()
-		if (isNull(flyout)) return
-		flyout.autoClose = false
-	}, [])
-
 	useEffect((): void => {
 		void initializeBlocks()
-		setupToolbox()
 		// TODO 12/1/24: Fix, not working
-
 		// (Blockly.Tooltip as any).HOVER_MS = 0 // Set the tooltip delay to be instant
-	}, [setupToolbox])
+	}, [])
 
 	return (
 		<div
