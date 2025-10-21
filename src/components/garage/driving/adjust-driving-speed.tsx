@@ -19,7 +19,7 @@ const getSliderColors = (isDisabled: boolean): {
 	thumbDetailColor: isDisabled ? "bg-gray-600" : "bg-blue-900"
 })
 
-function AdjustMaxDrivingSpeed(): React.ReactNode {
+function AdjustDrivingSpeed(): React.ReactNode {
 	// Check if driving should be disabled
 	const isDisabled = !garageClass.garageDrivingStatus
 	const colors = getSliderColors(isDisabled)
@@ -106,7 +106,7 @@ function AdjustMaxDrivingSpeed(): React.ReactNode {
 		return (
 			<CustomTooltip
 				tooltipTrigger={sliderContent}
-				tooltipContent="Adjust max driving speed"
+				tooltipContent="Adjust driving speed"
 			/>
 		)
 	}
@@ -115,4 +115,4 @@ function AdjustMaxDrivingSpeed(): React.ReactNode {
 	return sliderContent
 }
 
-export default observer(AdjustMaxDrivingSpeed)
+export default observer(AdjustDrivingSpeed)

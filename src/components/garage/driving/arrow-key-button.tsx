@@ -31,8 +31,8 @@ const getTooltipContent = (isDisabled: boolean, direction: MotorDirection): stri
 	const keyMap: Record<MotorDirection, string> = {
 		up: "Move forward (W/↑)",
 		down: "Move backward (S/↓)",
-		left: "Turn left (A/←)",
-		right: "Turn right (D/→)"
+		left: "Turn counter-clockwise (A/←)",
+		right: "Turn clockwise (D/→)"
 	}
 
 	return keyMap[direction]
