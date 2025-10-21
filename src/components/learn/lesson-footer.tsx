@@ -150,6 +150,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		<footer
 			className={cn(
 				"h-[20vh] border-t-2 border-swan flex items-center justify-between",
+				"-mx-4 sm:-mx-6 md:-mx-8 lg:-mx-12 xl:-mx-60 2xl:-mx-96",
 				"px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96",
 				footerBackgroundColor
 			)}

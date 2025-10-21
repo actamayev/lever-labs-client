@@ -72,7 +72,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 
 	return (
 		<>
-			<header className="h-[15vh] flex items-center justify-between px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96">
+			<header className="h-[15vh] flex items-center justify-between">
 				{/* Left: Back button */}
 				<button
 					onClick={handleBack}
