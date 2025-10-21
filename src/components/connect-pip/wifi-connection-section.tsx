@@ -201,7 +201,7 @@ function WifiConnectionSection(): React.ReactNode {
 			)}
 
 			{pipClass.searchResult && (
-				<div className="border rounded-lg p-4 space-y-3">
+				<div className="border-2 border-swan rounded-lg p-4 space-y-3">
 					<div className="flex items-center gap-3">
 						<BotIcon className="h-6 w-6 text-wolf" />
 						<div className="flex-1">
