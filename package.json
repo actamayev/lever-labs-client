@@ -94,10 +94,10 @@
     "test:watch": "vitest --watch",
     "test:ui": "vitest --ui",
     "test:coverage": "vitest --coverage",
-    "validate": "npm run lint; npm run type-check; npm run test",
+    "validate": "pnpm run lint && pnpm run type-check && pnpm test",
     "analyze": "ANALYZE=true next build",
     "postinstall": "next telemetry disable",
-    "updateCommon": "sudo npm install @lever-labs/common-ts@latest",
+    "updateCommon": "pnpm add @lever-labs/common-ts@latest",
     "check-unused": "ts-unused-exports tsconfig.json --excludePathsFromReport=\"test|spec|\\.next|middleware\\.ts|app/(manifest|robots|sitemap).ts|app/(layout|not-found).tsx|src/components/shadcn|app/.*/page\\.tsx\""
   },
   "browserslist": {

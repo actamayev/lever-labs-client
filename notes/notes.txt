@@ -6,4 +6,4 @@ To kill process running on port 3000:
 	sudo lsof -ti:3000 | xargs sudo kill -9
 
 To scan the whole repo for unused exports:
-	npm run check-unused
+	pnpm run check-unused
