@@ -22,7 +22,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 				}}
 				className="rounded-xl bg-eel h-9 px-3 w-full"
 				disabled={!serialConnectionManagerClass.pipTurnedOn}
-				title="WiFi Settings"
+				title="Wi-Fi Settings"
 			>
 				<Settings className="h-4 w-4 mr-2" />
 				Wi-Fi Settings...
@@ -79,7 +79,7 @@ function NetworkContent({ setIsHoverCardOpen }: { setIsHoverCardOpen: (isHoverCa
 					}}
 					className="rounded-xl bg-eel h-9 px-3 w-full"
 					disabled={!serialConnectionManagerClass.pipTurnedOn}
-					title="WiFi Settings"
+					title="Wi-Fi Settings"
 				>
 					<Settings className="h-4 w-4 mr-2" />
 					Wi-Fi Settings...

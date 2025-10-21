@@ -11,7 +11,6 @@ import {
 } from "../shadcn/ui/dialog"
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "../shadcn/ui/tabs"
 import pipClass from "../../classes/pip-class"
-import BrowserCompatibility from "./browser-compatibility"
 import UsbConnectionSection from "./usb-connection-section"
 import WifiConnectionSection from "./wifi-connection-section"
 
@@ -27,7 +26,7 @@ function ConnectToPipDialog(): React.ReactNode {
 					<TabsList className="mb-4 bg-polar w-full grid grid-cols-2">
 						<TabsTrigger value="wifi" className="flex items-center justify-center gap-2">
 							<WifiHighIcon className="h-4 w-4 mb-1" />
-							WiFi
+							Wi-Fi
 						</TabsTrigger>
 						<TabsTrigger value="usb" className="flex items-center justify-center gap-2">
 							<UsbIcon className="h-4 w-4" />
@@ -39,9 +38,8 @@ function ConnectToPipDialog(): React.ReactNode {
 						<WifiConnectionSection />
 					</TabsContent>
 
-					<TabsContent value="usb" className="space-y-4">
+					<TabsContent value="usb">
 						<UsbConnectionSection />
-						<BrowserCompatibility />
 					</TabsContent>
 				</Tabs>
 			</DialogContent>
