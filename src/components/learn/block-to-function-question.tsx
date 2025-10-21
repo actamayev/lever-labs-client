@@ -10,6 +10,7 @@ import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-
 import { cn } from "../../lib/shadcn/utils"
 import isOtpInputFocused from "../../utils/check-otp-input-focused"
 
+// eslint-disable-next-line max-lines-per-function
 function BlockToFunctionQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage

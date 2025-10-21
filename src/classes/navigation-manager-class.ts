@@ -499,7 +499,6 @@ export class NavigationManagerClass {
 		this.setMorphingIndex(careerUUID, morphingTextId, prevIndex)
 	})
 
-	// eslint-disable-next-line complexity
 	public executeNavigationCommand = action((
 		careerUUID: CareerUUID,
 		navigationCommand: string,
@@ -509,7 +508,7 @@ export class NavigationManagerClass {
 		onPrevMain?: () => Promise<void>,
 		onNextText?: () => void,
 		onPrevText?: () => void
-
+	// eslint-disable-next-line complexity
 	): boolean => {
 		const navigation = this.getNavigation(careerUUID)
 		if (!navigation) return false
