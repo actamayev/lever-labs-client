@@ -1,9 +1,8 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useState, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import { BotIcon, WifiHighIcon } from "lucide-react"
-import { Input } from "../shadcn/ui/input"
 import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
@@ -13,33 +12,68 @@ import pipClass from "../../classes/pip-class"
 import { RetrieveIsPipUUIDValidResponse } from "@lever-labs/common-ts/types/api"
 import searchPipByUUIDUtil from "../../utils/pip/search-pip-by-uuid-util"
 import { ACCEPTABLE_PIP_ID_CHARACTERS } from "@lever-labs/common-ts/types/utils/constants"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../shadcn/ui/input-otp"
 
 // eslint-disable-next-line max-lines-per-function
 function WifiConnectionSection(): React.ReactNode {
 	const [isConnecting, setIsConnecting] = useState(false)
 	const colors = getDuolingoColors("humpback")
+	const sectionRef = useRef<HTMLDivElement>(null)
 
-	const handleInputChange = useCallback(async (e: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
-		const value = e.target.value
-		const characters = ACCEPTABLE_PIP_ID_CHARACTERS
-
-		// Filter to only allowed characters
+	const handleInputChange = useCallback(async (value: string): Promise<void> => {
+		// Manually filter to only allowed characters
 		const filteredValue = value
 			.split("")
-			.filter((char): boolean => characters.includes(char))
-			.slice(0, 5) // Maximum 5 characters
+			.filter((char): boolean => ACCEPTABLE_PIP_ID_CHARACTERS.includes(char))
 			.join("")
 
 		pipClass.setPipUUIDSearchTerm(filteredValue)
 		pipClass.setSearchResult(null)
 		pipClass.setErrorMessage("")
 
-		// Auto-search when 5 characters are entered
-		if (filteredValue.length !== 5) return
-		await searchPipByUUIDUtil(filteredValue, (): void => {
-			// Only blur the input if we found a result
-			e.target.blur()
-		})
+		if (filteredValue.length === 5) {
+			await searchPipByUUIDUtil(filteredValue)
+		}
+	}, [])
+
+	const handleSlotClick = useCallback((): void => {
+		const input = document.querySelector("input[autocomplete='one-time-code']") as HTMLInputElement
+		if (input) {
+			input.focus()
+		}
+	}, [])
+
+	// Auto-focus the input when dialog opens or when WiFi tab becomes active
+	useEffect((): (() => void) | void => {
+		if (!pipClass.isConnectPipDialogOpen || !sectionRef.current) return
+
+		const focusInput = (): void => {
+			const input = document.querySelector("input[autocomplete='one-time-code']") as HTMLInputElement
+			if (input) {
+				input.focus()
+			}
+		}
+
+		// Use IntersectionObserver to detect when the WiFi section becomes visible
+		const intersectionObserver = new IntersectionObserver(
+			(entries): void => {
+				entries.forEach((entry): void => {
+					if (entry.isIntersecting) {
+						// Use double requestAnimationFrame for maximum speed
+						requestAnimationFrame((): void => {
+							requestAnimationFrame(focusInput)
+						})
+					}
+				})
+			},
+			{ threshold: 0.1 }
+		)
+
+		intersectionObserver.observe(sectionRef.current)
+
+		return (): void => {
+			intersectionObserver.disconnect()
+		}
 	}, [])
 
 	const handleConnectToPip = useCallback(async (): Promise<void> => {
@@ -101,22 +135,59 @@ function WifiConnectionSection(): React.ReactNode {
 	}
 
 	return (
-		<div className="space-y-4">
+		<div ref={sectionRef} className="space-y-4">
 			<div>
 				<label htmlFor="pipUUID" className="block text-sm font-medium text-wolf mb-2">
 					Pip ID
 				</label>
-				<Input
-					id="pipUUID"
-					value={pipClass.pipUUIDSearchTerm}
-					onChange={handleInputChange}
-					placeholder="Enter 5-character Pip ID"
-					className="w-full !text-xl h-10"
-					onKeyDown={handleKeyDown}
-					autoFocus
-					maxLength={5}
-					autoComplete="one-time-code"
-				/>
+				<div onClick={handleSlotClick} className="cursor-text">
+					<InputOTP
+						maxLength={5}
+						value={pipClass.pipUUIDSearchTerm}
+						onChange={handleInputChange}
+						pattern={`[${ACCEPTABLE_PIP_ID_CHARACTERS}]`}
+						onKeyDown={handleKeyDown}
+						containerClassName="justify-center"
+					>
+						<InputOTPGroup className="gap-2">
+							<InputOTPSlot
+								index={0}
+								className={cn(
+									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"transition-all"
+								)}
+							/>
+							<InputOTPSlot
+								index={1}
+								className={cn(
+									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"transition-all"
+								)}
+							/>
+							<InputOTPSlot
+								index={2}
+								className={cn(
+									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"transition-all"
+								)}
+							/>
+							<InputOTPSlot
+								index={3}
+								className={cn(
+									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"transition-all"
+								)}
+							/>
+							<InputOTPSlot
+								index={4}
+								className={cn(
+									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"transition-all"
+								)}
+							/>
+						</InputOTPGroup>
+					</InputOTP>
+				</div>
 				{pipClass.isSearching && (
 					<p className="text-sm text-wolf mt-2">Searching...</p>
 				)}

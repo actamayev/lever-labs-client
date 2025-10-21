@@ -12,6 +12,7 @@ import { cn } from "../../lib/shadcn/utils"
 import { TactileButton } from "../shadcn/ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
+
 // eslint-disable-next-line max-lines-per-function
 function ChangePasswordSection(): React.ReactNode {
 	const [currentPassword, setCurrentPassword] = useState("")
@@ -104,11 +105,6 @@ function ChangePasswordSection(): React.ReactNode {
 							className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl shadow-none
 							bg-polar !text-eel font-light border-swan"
 						/>
-						{newPassword.length > 0 && newPassword.length < 6 && (
-							<p className="text-sm text-cardinal">
-								Password must be at least 6 characters.
-							</p>
-						)}
 						<Button
 							type="button"
 							variant="ghost"
@@ -123,6 +119,11 @@ function ChangePasswordSection(): React.ReactNode {
 							)}
 						</Button>
 					</div>
+					{newPassword.length > 0 && newPassword.length < 6 && (
+						<p className="text-sm text-cardinal">
+							Password must be at least 6 characters.
+						</p>
+					)}
 				</div>
 				{passwordError && (
 					<p className="text-sm text-cardinal mt-1">

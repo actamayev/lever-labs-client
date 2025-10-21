@@ -62,6 +62,7 @@ function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): Reac
 
 	const projectNotes = useMemo((): string => {
 		return sandboxClass.getProjectNotes(projectUUID)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [projectUUID, sandboxClass.sandboxProjects.get(projectUUID)?.projectNotes])
 
 	return (
