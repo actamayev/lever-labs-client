@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import learnClass from "../../classes/learn-class"
+import isOtpInputFocused from "../../utils/check-otp-input-focused"
 
 /**
  * Custom hook to handle Enter key presses for question components
@@ -15,6 +16,8 @@ export default function useQuestionKeyboardHandler(): void {
 
 		const handleKeyDown = (event: KeyboardEvent): void => {
 			if (event.key !== "Enter") return
+			// Don't handle keyboard events if OTP input is focused
+			if (isOtpInputFocused()) return
 			if (currentQuestionState.selectedAnswerId !== null && !isInConfirmationStage) {
 				// Check answer if not in confirmation stage
 				const lesson = Array.from(learnClass.lessonsById.values()).find((l): boolean =>
