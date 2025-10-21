@@ -6,8 +6,6 @@ import learnClass from "../../classes/learn-class"
 import LearnMiniSandbox from "./learn-mini-sandbox"
 import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
 import { cn } from "../../lib/shadcn/utils"
-import normalizeSandboxJson from "../../utils/sandbox/normalize-sandbox-json"
-
 
 function FunctionToBlockQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
@@ -112,7 +110,7 @@ function FunctionToBlockQuestion(): React.ReactNode {
 						>
 							<div className="h-48 rounded-t-3xl overflow-hidden">
 								<LearnMiniSandbox
-									blocklyJson={normalizeSandboxJson(choice.codingBlock.codingBlockJson)}
+									blocklyJson={choice.codingBlock.codingBlockJson}
 									className="w-full h-full rounded-t-3xl rounded-b-none"
 								/>
 							</div>

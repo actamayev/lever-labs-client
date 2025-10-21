@@ -2,7 +2,6 @@
 
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
-import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
 import { BlocklyJson, SandboxProject } from "@lever-labs/common-ts/types/sandbox"
 import { SandboxChatMessage, SandboxChatbotStreamChunkEvent,
@@ -37,17 +36,15 @@ class SandboxClass {
 	})
 
 	public addSandboxProject = action(async (sandboxProject: SandboxProject): Promise<void> => {
-		// Normalize the sandboxJson to ensure consistent format
-		const normalizedSandboxJson = normalizeSandboxJson(sandboxProject.sandboxJson)
 		const { default: getCppGenerator } = await import("../utils/cpp/cpp-generator")
 		// Add streaming state to the project
 		const projectWithStreaming: SandboxProjectWithStreaming = {
 			...sandboxProject,
-			sandboxJson: normalizedSandboxJson,
+			sandboxJson: sandboxProject.sandboxJson,
 			isStreaming: false,
 			isWaitingForResponse: false,
 			currentStreamingMessageId: null,
-			cppCode: await getCppGenerator().generateCppFromJson(normalizedSandboxJson)
+			cppCode: await getCppGenerator().generateCppFromJson(sandboxProject.sandboxJson)
 		}
 		this.setSandboxProject(sandboxProject.sandboxProjectUUID, projectWithStreaming)
 		this.setIsRetrievingSingleProject(sandboxProject.sandboxProjectUUID, false)
