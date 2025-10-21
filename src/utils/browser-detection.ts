@@ -96,7 +96,7 @@ export function detectBrowser(): BrowserInfo {
 		return {
 			type: "opera",
 			name: "Opera",
-			isUsbSerialSupported: false
+			isUsbSerialSupported: true
 		}
 	}
 
@@ -149,18 +149,4 @@ export function detectBrowser(): BrowserInfo {
  */
 export function isUsbSerialSupported(): boolean {
 	return detectBrowser().isUsbSerialSupported
-}
-
-/**
- * Gets a user-friendly message for unsupported browsers
- */
-export function getUnsupportedBrowserMessage(): string {
-	const browser = detectBrowser()
-
-	if (browser.isUsbSerialSupported) {
-		return ""
-	}
-
-	return "Please use one of the following browsers to connect to Pip over USB and upload your Wi-Fi credentials: " +
-		"Google Chrome, Microsoft Edge, Brave, Samsung Internet, Vivaldi, or Yandex Browser."
 }
