@@ -80,17 +80,17 @@ function ConnectToPipDialog(): React.ReactNode {
 					<div className="text-sm text-orange-800 dark:text-orange-200 font-medium mb-3">
 						{browserInfo.name} Not Supported
 					</div>
-					<div className="text-sm text-orange-700 dark:text-orange-300 mb-3">
+					<div className="text-sm text-fox-2 mb-3">
 						Please use one of the following browsers to connect to Pip over USB and upload your WiFi credentials:
 					</div>
 					<div className="flex items-center gap-3">
 						<div className="flex items-center gap-2">
 							<CustomChrome size={20} />
-							<span className="text-sm text-orange-700 dark:text-orange-300">Google Chrome</span>
+							<span className="text-sm text-fox-2">Google Chrome</span>
 						</div>
 						<div className="flex items-center gap-2">
 							<CustomEdge size={20} />
-							<span className="text-sm text-orange-700 dark:text-orange-300">Microsoft Edge</span>
+							<span className="text-sm text-fox-2">Microsoft Edge</span>
 						</div>
 					</div>
 				</div>
