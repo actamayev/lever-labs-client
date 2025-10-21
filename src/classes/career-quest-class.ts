@@ -9,7 +9,6 @@ import {
 } from "@lever-labs/common-ts/types/utils"
 import type { Swiper as SwiperType } from "swiper"
 import { action, makeAutoObservable, observable } from "mobx"
-import normalizeSandboxJson from "../utils/sandbox/normalize-sandbox-json"
 import saveCareerProgress from "../utils/career-quest/save-career-progress"
 // Dynamic import - career definitions will be loaded on-demand
 import { getLeftContentComponent } from "../utils/career-quest/career-quest-left-content/all-career-quest-left-content"
@@ -520,7 +519,7 @@ class CareerQuestClass {
 		let normalizedJson: BlocklyJson
 		let cppCode: string
 		if (sandboxJson) {
-			normalizedJson = normalizeSandboxJson(sandboxJson)
+			normalizedJson = sandboxJson
 			cppCode = await getCppGenerator().generateCppFromJson(normalizedJson)
 		} else {
 			// Get initial data from chat manager

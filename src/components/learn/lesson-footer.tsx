@@ -14,7 +14,6 @@ import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import pipClass from "../../classes/pip-class"
 import { cn } from "../../lib/shadcn/utils"
-import normalizeSandboxJson from "../../utils/sandbox/normalize-sandbox-json"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
@@ -122,7 +121,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 					{correctAnswer && typeof correctAnswer === "object" && (
 						<div className="relative h-32 w-96">
 							<LearnMiniSandbox
-								blocklyJson={normalizeSandboxJson(correctAnswer.codingBlock.codingBlockJson)}
+								blocklyJson={correctAnswer.codingBlock.codingBlockJson}
 								className="w-full h-full"
 							/>
 						</div>
