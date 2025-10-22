@@ -7,7 +7,7 @@ interface AuthenticatedLayoutProps {
 }
 
 // Server component that gets auth state and handles both layout decision AND auth logic
-export default async function AuthenticatedLayout({ children }: AuthenticatedLayoutProps): Promise<JSX.Element> {
+export default async function AuthenticatedLayout({ children }: AuthenticatedLayoutProps): Promise<React.ReactElement> {
 	const authState = await getAuthState()
 
 	return (

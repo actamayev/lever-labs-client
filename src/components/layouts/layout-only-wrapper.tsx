@@ -5,7 +5,7 @@ interface LayoutOnlyWrapperProps {
 	children: React.ReactNode
 }
 
-export default async function LayoutOnlyWrapper({ children }: LayoutOnlyWrapperProps): Promise<JSX.Element> {
+export default async function LayoutOnlyWrapper({ children }: LayoutOnlyWrapperProps): Promise<React.ReactElement> {
 	const authState = await getAuthState()
 
 	return (

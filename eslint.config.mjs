@@ -1,13 +1,8 @@
-import { dirname } from "path"
-import { fileURLToPath } from "url"
 import stylistic from "@stylistic/eslint-plugin"
 import typescript from "@typescript-eslint/eslint-plugin"
 import typescriptParser from "@typescript-eslint/parser"
 import react from "eslint-plugin-react"
 import reactHooks from "eslint-plugin-react-hooks"
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
 
 const eslintConfig = [
 	{
@@ -50,6 +45,11 @@ const eslintConfig = [
 			"@typescript-eslint": typescript,
 			"react": react,
 			"react-hooks": reactHooks,
+		},
+		settings: {
+			react: {
+				version: "detect",
+			},
 		},
 		rules: {
 			"linebreak-style": ["warn", "unix"],

@@ -15,7 +15,7 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 		{ enterDelayMs: 100, enabled: true }
 	)
 	const canvasRef = useRef<HTMLCanvasElement>(null)
-	const animationRef = useRef<number>()
+	const animationRef = useRef<number | undefined>(undefined)
 	const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number; value: number } | null>(null)
 
 	// Canvas configuration

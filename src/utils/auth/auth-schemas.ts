@@ -2,6 +2,9 @@
 
 import { z } from "zod"
 
+// Email regex pattern
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
 export const loginSchema = z.object({
 	contact: z.string()
 		.min(3, "Please enter your username or email (at least 3 characters)")
@@ -15,10 +18,7 @@ export const registerUsernameSchema = z.object({
 	username: z.string()
 		.min(3, "Choose a username that's at least 3 characters")
 		.max(100, "Could you pick a shorter username?"),
-	age: z.number({
-		required_error: "Please enter your age",
-		invalid_type_error: "Age must be a number",
-	})
+	age: z.number({ message: "Age must be a number" })
 		.max(120, "Please enter a valid age")
 		.nullable()
 		.refine((val): boolean => val !== null, {
@@ -30,14 +30,13 @@ export const emailUpdatesSchema = z.object({
 	email: z.string()
 		.min(3, "Please enter your email to stay updated")
 		.max(100, "That's a bit long for an email - could you check it?")
-		.email("Hmm, that email format doesn't look quite right")
+		.refine((val): boolean => emailRegex.test(val), {
+			message: "Hmm, that email format doesn't look quite right",
+		}),
 })
 
 export const registerSchema = z.object({
-	age: z.number({
-		required_error: "Please enter your age",
-		invalid_type_error: "Age must be a number",
-	})
+	age: z.number({ message: "Age must be a number" })
 		.max(120, "Please enter a valid age")
 		.nullable()
 		.refine((val): boolean => val !== null, {
@@ -46,7 +45,9 @@ export const registerSchema = z.object({
 	email: z.string()
 		.min(3, "Please enter your email to create your account")
 		.max(100, "That's a bit long for an email - could you check it?")
-		.email("Hmm, that email format doesn't look quite right"),
+		.refine((val): boolean => emailRegex.test(val), {
+			message: "Hmm, that email format doesn't look quite right",
+		}),
 	username: z.string()
 		.min(3, "Choose a username that's at least 3 characters")
 		.max(100, "Could you pick a shorter username?"),

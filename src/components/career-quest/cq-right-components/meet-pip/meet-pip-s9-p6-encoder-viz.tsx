@@ -16,8 +16,8 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 	)
 	const leftWheelRef = useRef<HTMLCanvasElement>(null)
 	const rightWheelRef = useRef<HTMLCanvasElement>(null)
-	const leftAnimationRef = useRef<number>()
-	const rightAnimationRef = useRef<number>()
+	const leftAnimationRef = useRef<number | undefined>(undefined)
+	const rightAnimationRef = useRef<number | undefined>(undefined)
 	const [leftRotation, setLeftRotation] = useState(0)
 	const [rightRotation, setRightRotation] = useState(0)
 

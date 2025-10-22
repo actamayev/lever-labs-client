@@ -78,7 +78,7 @@ const getBorderClasses = (isDisabled: boolean, extraClasses?: string): string =>
 
 // Helper function to render the tooltip trigger
 const renderTooltipTrigger = (params: {
-	buttonRef: React.RefObject<HTMLButtonElement>
+	buttonRef: React.RefObject<HTMLButtonElement | null>
 	isDisabled: boolean
 	extraClasses: SoundActionButtonProps["extraClasses"]
 	handleButtonDown: () => void

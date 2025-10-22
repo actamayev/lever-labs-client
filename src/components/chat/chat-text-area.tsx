@@ -10,7 +10,7 @@ import { cn } from "../../lib/shadcn/utils"
 import CustomTooltip from "../custom-tooltip"
 
 interface Props {
-	inputRef: RefObject<HTMLTextAreaElement>
+	inputRef: RefObject<HTMLTextAreaElement | null>
 	handleSendMessage: () => Promise<void>
 	onStopStreaming: () => Promise<void>
 	inputValue: string
