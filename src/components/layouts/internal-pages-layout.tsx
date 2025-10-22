@@ -1,7 +1,7 @@
 "use client"
 
 import { SidebarInset, SidebarProvider } from "@/components/shadcn/ui/sidebar"
-import PrimarySidebar from "../shadcn/sidebar/primary-sidebar"
+import PrimarySidebar from "../sidebar/primary-sidebar"
 
 export default function InternalPagesLayout({ children } : { children: React.ReactNode }): React.ReactNode {
 	return (

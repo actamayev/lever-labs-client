@@ -6,8 +6,8 @@ import { observer } from "mobx-react"
 import { Avatar, AvatarFallback } from "@/components/shadcn/ui/avatar"
 import { SidebarMenu, SidebarMenuItem } from "@/components/shadcn/ui/sidebar"
 import CustomSidebarButton from "./custom-sidebar-button"
-import { CustomUserCircle } from "../../../icons/custom-user-circle"
-import personalInfoClass from "../../../classes/personal-info-class"
+import { CustomUserCircle } from "../../icons/custom-user-circle"
+import personalInfoClass from "../../classes/personal-info-class"
 
 function ProfileSidebarButton(): React.ReactNode {
 	const profilePictureUrl = personalInfoClass.profilePictureUrl

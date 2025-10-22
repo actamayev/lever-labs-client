@@ -5,7 +5,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/compone
 import SidebarLogo from "./sidebar-logo"
 import MappedNavData from "./mapped-nav-data"
 import ProfileSidebarButton from "./profile-sidebar-button"
-import { PrivatePageNames, OpenPages } from "../../../utils/constants/page-constants"
+import { PrivatePageNames, OpenPages } from "../../utils/constants/page-constants"
 
 export default function PrimarySidebar(): React.ReactNode {
 	const pathname = usePathname()

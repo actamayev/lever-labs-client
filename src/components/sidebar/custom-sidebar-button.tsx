@@ -4,7 +4,7 @@ import Link from "next/link"
 import isUndefined from "lodash-es/isUndefined"
 import { SidebarMenuButton } from "@/components/shadcn/ui/sidebar"
 import { usePathname } from "next/navigation"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../lib/shadcn/utils"
 
 interface CustomSidebarButtonProps {
 	icon: React.ReactNode
