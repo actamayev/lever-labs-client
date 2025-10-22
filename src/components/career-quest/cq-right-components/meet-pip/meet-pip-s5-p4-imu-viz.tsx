@@ -74,7 +74,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 		<div className="space-y-6">
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
 				{/* Yaw Chart */}
-				<Card className="h-56 rounded-3xl">
+				<Card className="h-56">
 					<CardHeader className="pb-2">
 						<CardTitle className="text-lg">Yaw (Heading)</CardTitle>
 					</CardHeader>
