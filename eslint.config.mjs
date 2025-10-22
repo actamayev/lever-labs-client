@@ -1,17 +1,13 @@
 import { dirname } from "path"
 import { fileURLToPath } from "url"
-import { FlatCompat } from "@eslint/eslintrc"
-import js from "@eslint/js"
 import stylistic from "@stylistic/eslint-plugin"
+import typescript from "@typescript-eslint/eslint-plugin"
+import typescriptParser from "@typescript-eslint/parser"
+import react from "eslint-plugin-react"
+import reactHooks from "eslint-plugin-react-hooks"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-	baseDirectory: __dirname,
-	recommendedConfig: js.configs.recommended,
-	allConfig: js.configs.all,
-})
 
 const eslintConfig = [
 	{
@@ -22,7 +18,7 @@ const eslintConfig = [
 			"build/**",
 			"next-env.d.ts",
 			"src/components/ui/**/*",
-			"src/lib/**/*", 
+			"src/lib/**/*",
 			"src/hooks/shadcn/**/*",
 			"src/components/magicui/**/*",
 			"add-use-client.js",
@@ -36,14 +32,25 @@ const eslintConfig = [
 		],
 	},
 
-	// Use Next.js recommended configurations
-	...compat.extends(
-		"next/core-web-vitals",
-		"next/typescript"
-	),
-
-	// Global rules configuration
+	// TypeScript and React configuration
 	{
+		files: ["**/*.{ts,tsx}"],
+		languageOptions: {
+			parser: typescriptParser,
+			parserOptions: {
+				ecmaVersion: "latest",
+				sourceType: "module",
+				project: "./tsconfig.json",
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
+		},
+		plugins: {
+			"@typescript-eslint": typescript,
+			"react": react,
+			"react-hooks": reactHooks,
+		},
 		rules: {
 			"linebreak-style": ["warn", "unix"],
 			"quotes": ["error", "double"],
@@ -52,7 +59,7 @@ const eslintConfig = [
 			"eol-last": ["error", "always"],
 			"no-unused-vars": "off",
 			"@typescript-eslint/no-unused-vars": [
-				"warn", 
+				"warn",
 				{ "argsIgnorePattern": "^_" }
 			],
 			"eqeqeq": "error",
@@ -91,7 +98,7 @@ const eslintConfig = [
 			"react/prop-types": "off",
 			"max-params": ["warn", 4],
 			"max-lines-per-function": [
-				"warn", 
+				"warn",
 				{"max": 90, "skipBlankLines": true, "skipComments": true}
 			],
 			"@typescript-eslint/naming-convention": [
@@ -174,6 +181,10 @@ const eslintConfig = [
 	// Override for JavaScript files - disable TypeScript-specific rules
 	{
 		files: ["**/*.{js,mjs,cjs}"],
+		languageOptions: {
+			ecmaVersion: "latest",
+			sourceType: "module",
+		},
 		rules: {
 			"@typescript-eslint/explicit-function-return-type": "off",
 			"@typescript-eslint/no-unused-vars": "off",
@@ -191,7 +202,7 @@ const eslintConfig = [
 		},
 	},
 
-	// Override for icon components - disable explicit function return type
+	// Override for additional icon components paths
 	{
 		files: ["src/components/icons/**/*", "src/utils/career-quest/career-quest-right-content/**/*"],
 		rules: {

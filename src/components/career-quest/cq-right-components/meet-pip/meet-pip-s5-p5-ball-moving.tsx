@@ -9,7 +9,7 @@ import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
 type Vec2 = { x: number; y: number }
 
 // eslint-disable-next-line max-lines-per-function
-function MeetPipS5P5BallMoving(): JSX.Element {
+function MeetPipS5P5BallMoving(): React.ReactElement {
 	useCareerQuestTrigger(
 		CareerType.MEET_PIP,
 		MeetPipTriggerType.S5_P5_ENTER,
