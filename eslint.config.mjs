@@ -22,7 +22,7 @@ const eslintConfig = [
 			"build/**",
 			"next-env.d.ts",
 			// Ignore shadcn and other third-party components
-			"src/components/shadcn/ui/**/*",
+			"src/components/ui/**/*",
 			"src/lib/**/*", 
 			"src/hooks/shadcn/**/*",
 			"src/components/magicui/**/*",
