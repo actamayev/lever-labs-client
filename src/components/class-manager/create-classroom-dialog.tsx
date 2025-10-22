@@ -65,7 +65,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 		<Dialog open={isOpen} onOpenChange={handleClose}>
 			<DialogContent className="sm:max-w-[500px]">
 				<DialogHeader>
-					<DialogTitle>Create class</DialogTitle>
+					<DialogTitle className="text-2xl">Create class</DialogTitle>
 					<DialogClose />
 				</DialogHeader>
 
@@ -81,7 +81,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 							setClassroomName(e.target.value)
 							clearErrorAndSuccess()
 						}}
-						className="w-full h-10 text-lg bg-polar text-eel! font-light border-swan shadow-none"
+						className="w-full h-10 text-lg bg-polar text-eel! font-light border-swan shadow-none mt-2"
 						placeholder="The awesome robotics class"
 						disabled={isSubmitting}
 						maxLength={100}
