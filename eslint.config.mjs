@@ -21,20 +21,15 @@ const eslintConfig = [
 			"out/**",
 			"build/**",
 			"next-env.d.ts",
-			// Ignore shadcn and other third-party components
 			"src/components/ui/**/*",
 			"src/lib/**/*", 
 			"src/hooks/shadcn/**/*",
 			"src/components/magicui/**/*",
-			// Ignore the problematic JS files that are causing issues
 			"add-use-client.js",
-			// Ignore ESLint config file itself
 			"eslint.config.mjs",
-			// Add these to fix the parsing errors
 			"next.config.js",
 			"postcss.config.js",
 			"public/keepalive-worker.js",
-			// Ignore test directory
 			"test/**/*",
 			"src/classes/__tests__/**/*",
 			"coverage/**/*",
@@ -42,31 +37,14 @@ const eslintConfig = [
 	},
 
 	// Use Next.js recommended configurations
-	...compat.config({
-		extends: [
-			"next/core-web-vitals",
-			"next/typescript",
-		],
-		env: {
-			browser: true,
-			node: true,
-			es6: true,
-		},
-		plugins: [
-			"react",
-			"@typescript-eslint",
-			"react-hooks",
-		],
-		parser: "@typescript-eslint/parser",
-		parserOptions: {
-			ecmaVersion: "latest",
-			sourceType: "module",
-			ecmaFeatures: {
-				jsx: true,
-			},
-		},
+	...compat.extends(
+		"next/core-web-vitals",
+		"next/typescript"
+	),
+
+	// Global rules configuration
+	{
 		rules: {
-			// Basic formatting rules (not the problematic indent rule)
 			"linebreak-style": ["warn", "unix"],
 			"quotes": ["error", "double"],
 			"semi": ["error", "never"],
@@ -104,8 +82,6 @@ const eslintConfig = [
 			"@typescript-eslint/no-empty-interface": "error",
 			"max-depth": ["warn", 3],
 			"no-nested-ternary": "error",
-			// DISABLE the problematic type-aware rules for now
-			// "@typescript-eslint/no-unnecessary-condition": "warn",
 			"complexity": ["warn", 10],
 			"no-shadow": "off",
 			"@typescript-eslint/no-shadow": "error",
@@ -157,7 +133,7 @@ const eslintConfig = [
 			"react/jsx-no-constructed-context-values": "error",
 			"react/no-unescaped-entities": "off",
 		},
-	}),
+	},
 
 	// Stylistic rules (including indent with tabs)
 	{
@@ -210,7 +186,6 @@ const eslintConfig = [
 			"@typescript-eslint/naming-convention": "off",
 			"@typescript-eslint/ban-types": "off",
 			"@typescript-eslint/no-floating-promises": "off",
-			// Re-enable basic no-unused-vars for JS files
 			"no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
 			"no-shadow": "error",
 		},
