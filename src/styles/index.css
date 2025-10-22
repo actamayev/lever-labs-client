@@ -1,6 +1,13 @@
 @import 'tailwindcss';
 @config '../../tailwind.config.ts';
 
+/* Plugin for tailwindcss-animate */
+@plugin "tailwindcss-animate";
+
+/* Safelist for dynamic Duolingo colors - v4.1+ inline source syntax */
+@source inline('{bg-,text-,border-,ring-,hover:bg-,shadow-}{macaw,cardinal,bee,fox,beetle,humpback,beakInner,chargingGreen,questionCorrectGreen,questionIncorrectRed}{,-1,-2,-3}');
+@source inline('{bg-,text-,border-,ring-,hover:bg-,shadow-}iMessage{Blue,Green}');
+
 /* Import your color definitions */
 @import './colors.css' layer(base);
 
