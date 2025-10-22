@@ -28,7 +28,7 @@ function createRedirect(request: NextRequest, path: PageNames): NextResponse {
 }
 
 // eslint-disable-next-line complexity
-export async function middleware(request: NextRequest): Promise<NextResponse> {
+export async function proxy(request: NextRequest): Promise<NextResponse> {
 	const { pathname } = request.nextUrl
 
 	// Get theme from cookie for SSR
