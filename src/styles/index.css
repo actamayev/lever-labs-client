@@ -5,7 +5,7 @@
 @plugin "tailwindcss-animate";
 
 /* Safelist for dynamic Duolingo colors - v4.1+ inline source syntax */
-@source inline('{bg-,text-,border-,ring-,hover:bg-,shadow-}{macaw,cardinal,bee,fox,beetle,humpback,beakInner,chargingGreen,questionCorrectGreen,questionIncorrectRed}{,-1,-2,-3}');
+@source inline('{bg-,text-,border-,ring-,hover:bg-,shadow-}{macaw,cardinal,bee,fox,beetle,humpback,beak-inner,charging-green,question-correct-green,question-incorrect-red}{,-1,-2,-3}');
 @source inline('{bg-,text-,border-,ring-,hover:bg-,shadow-}iMessage{Blue,Green}');
 
 /* Import your color definitions */

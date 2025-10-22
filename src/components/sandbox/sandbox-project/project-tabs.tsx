@@ -73,7 +73,7 @@ function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): Reac
 				<TabsTrigger value="chat">Chat</TabsTrigger>
 			</TabsList>
 
-			<TabsContent value="code" className="flex-1 overflow-auto bg-polar p-4 rounded">
+			<TabsContent value="code" className="flex-1 overflow-auto bg-polar p-4 rounded-3xl">
 				<pre className="text-sm font-mono whitespace-pre-wrap">
 					{cppCode || "// Your code will appear here"}
 				</pre>
@@ -82,7 +82,7 @@ function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): Reac
 			<TabsContent value="notes" className="flex-1" data-notes-section="true">
 				<Textarea
 					placeholder="Add notes about your project here..."
-					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded"
+					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded-3xl"
 					value={projectNotes || ""}
 					onChange={handleNotesChange}
 				/>

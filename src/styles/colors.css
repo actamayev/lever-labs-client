@@ -12,18 +12,18 @@
 		--landing-outer-border: 244 244 246;
 		--landing-dotted-line: 238 238 242;
 
-		--chargingGreen: 35 200 100;
-		--chargingGreen-1: 45 220 120;
-		--chargingGreen-2: 30 180 100;
-		--chargingGreen-3: 50 240 140;
+		--charging-green: 35 200 100;
+		--charging-green-1: 45 220 120;
+		--charging-green-2: 30 180 100;
+		--charging-green-3: 50 240 140;
 
-		--questionCorrectGreen: 215 255 184;
-		--questionCorrectGreen-1: 165 237 111;
-		--questionCorrectGreen-2: 88 167 0;
-		--questionCorrectGreen-3: 97 184 0;
+		--question-correct-green: 215 255 184;
+		--question-correct-green-1: 165 237 111;
+		--question-correct-green-2: 88 167 0;
+		--question-correct-green-3: 97 184 0;
 
-		--questionIncorrectRed: 255 223 224;
-		--questionIncorrectRed-2: 234 43 43;
+		--question-incorrect-red: 255 223 224;
+		--question-incorrect-red-2: 234 43 43;
 
 		--career-quest-yellow: 253 217 11;
 		
@@ -58,10 +58,10 @@
 		--humpback-2: 25 80 160;
 		--humpback-3: 60 100 180;
 		
-		--beakInner: 182 110 40;
-		--beakInner-1: 210 140 80;
-		--beakInner-2: 140 80 20;
-		--beakInner-3: 190 100 50;
+		--beak-inner: 182 110 40;
+		--beak-inner-1: 210 140 80;
+		--beak-inner-2: 140 80 20;
+		--beak-inner-3: 190 100 50;
 
 		--iMessageBlue: 0 122 255;
 		--iMessageGreen: 139 239 139;
@@ -83,20 +83,20 @@
 		--landing-outer-border: 35 45 50;
 		--landing-dotted-line: 40 50 55;
 
-		--chargingGreen: 35 200 100;
-		--chargingGreen-1: 45 220 120;
-		--chargingGreen-2: 30 180 100;
-		--chargingGreen-3: 50 240 140;
+		--charging-green: 35 200 100;
+		--charging-green-1: 45 220 120;
+		--charging-green-2: 30 180 100;
+		--charging-green-3: 50 240 140;
 
 		--career-quest-yellow: 253 217 11;
 
-		--questionCorrectGreen: 32 47 54;
-		--questionCorrectGreen-1: 95 132 40;
-		--questionCorrectGreen-2: 122 185 50;
-		--questionCorrectGreen-3: 134 204 54;
+		--question-correct-green: 32 47 54;
+		--question-correct-green-1: 95 132 40;
+		--question-correct-green-2: 122 185 50;
+		--question-correct-green-3: 134 204 54;
 
-		--questionIncorrectRed: 32 47 54;
-		--questionIncorrectRed-2: 216 72 72;
+		--question-incorrect-red: 32 47 54;
+		--question-incorrect-red-2: 216 72 72;
 
 		/* Duolingo colors - Dark mode variants */
 		--macaw: 72 191 248;
@@ -129,10 +129,10 @@
 		--humpback-2: 30 70 140;
 		--humpback-3: 70 120 190;
 		
-		--beakInner: 182 110 40;
-		--beakInner-1: 220 150 90;
-		--beakInner-2: 120 70 25;
-		--beakInner-3: 200 120 60;
+		--beak-inner: 182 110 40;
+		--beak-inner-1: 220 150 90;
+		--beak-inner-2: 120 70 25;
+		--beak-inner-3: 200 120 60;
 	
 		--iMessageBlue: 0 122 255;
 		--iMessageGreen: 139 239 139;

@@ -140,7 +140,7 @@ export const careerData: CareerData[] = [
 		careerDescription: "Race Pip on a straight path or defined course using encoders, IMU, and line-following sensors. Students must balance maximum speed with stability and accuracy.",
 		careerUrl: "/career-quest/obstacle-avoidance",
 		careerIcon: Flag,
-		backgroundColor: "beakInner",
+		backgroundColor: "beak-inner",
 		expectedCompletionTime: "2.5 HOURS",
 		componentsUsed: [ "Motors + Encoders", "IMU", "IR Sensors"],
 		codingConcepts: [
