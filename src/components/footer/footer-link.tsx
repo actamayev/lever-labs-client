@@ -17,7 +17,7 @@ export default function FooterLink(props: Props): React.ReactNode {
 			<Link
 				href={linkTo}
 				className={cn(
-					"text-questionText hover:underline duration-0 whitespace-nowrap",
+					"text-question-text hover:underline duration-0 whitespace-nowrap",
 					extraClasses
 				)}
 			>

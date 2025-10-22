@@ -44,7 +44,7 @@ function ProfileImage(): React.ReactNode {
 						priority
 					/>
 				) : (
-					<AvatarFallback className="bg-standardBackground text-questionText">
+					<AvatarFallback className="bg-standard-background text-question-text">
 						<CustomUserCircle
 							className="w-full h-full cursor-pointer"
 							style={imageStyle}

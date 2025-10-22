@@ -44,7 +44,7 @@ export default function DrivingSchoolS3P6(props: Props = {}): React.ReactNode {
 	const getButtonStyles = (answer: AnswerChoice): string => {
 		if (selectedAnswer === answer) {
 			if (answer === "distance") {
-				return "bg-chargingGreen text-white"
+				return "bg-charging-green text-white"
 			} else {
 				return "bg-cardinal text-white"
 			}
@@ -101,7 +101,7 @@ export default function DrivingSchoolS3P6(props: Props = {}): React.ReactNode {
 	return (
 		<div className="flex flex-col h-full p-6 items-center justify-center">
 			{/* Image Section - Top - Fixed height to prevent shifting */}
-			<div className="flex-shrink-0 mb-6 flex justify-center h-60">
+			<div className="shrink-0 mb-6 flex justify-center h-60">
 				<div className="relative w-full max-w-2xl h-full">
 					<Image
 						src="/images/career-quest/driving-school/S3P6.png"
@@ -115,7 +115,7 @@ export default function DrivingSchoolS3P6(props: Props = {}): React.ReactNode {
 			</div>
 
 			{/* Answer Choices - Middle */}
-			<div className="flex-shrink-0 mb-4">
+			<div className="shrink-0 mb-4">
 				<div className="flex gap-4 justify-center">
 					<TactileButton
 						onClick={(): void => handleAnswerClick("time")}

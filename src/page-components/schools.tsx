@@ -80,7 +80,7 @@ export default function SchoolsPage(): React.ReactNode {
 					We're working hard to perfect Pip for educational settings. If you're interested in bringing robot-powered learning to your school, please reach out - we'd love to hear from you.
 					<div
 						className="border-2 border-swan rounded-lg py-1
-							px-0.5 mx-auto bg-standardBackground w-80 my-5"
+							px-0.5 mx-auto bg-standard-background w-80 my-5"
 					>
 						<ContactItemInCard email="hello@leverlabs.com" />
 					</div>

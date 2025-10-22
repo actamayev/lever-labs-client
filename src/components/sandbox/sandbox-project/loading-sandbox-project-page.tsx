@@ -15,7 +15,7 @@ function SandboxProjectPage(): React.ReactNode {
 			<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan" style={{ height: "74px" }}>
 				<div className="flex flex-row items-center justify-center">
 					<Link href="/sandbox">
-						<button className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2">
+						<button className="flex items-center text-question-text hover:bg-polar p-2 rounded-lg mr-2">
 							<ArrowLeft size={30} className="mr-1" />
 						</button>
 					</Link>
@@ -29,10 +29,10 @@ function SandboxProjectPage(): React.ReactNode {
 						<ConnectToPipButton
 							colors={getDuolingoColors("humpback")}
 							tactileButtonClasses="h-12 text-lg"
-							botIconClasses="!size-6"
+							botIconClasses="size-6!"
 						/>
 					</div>
-					<button className="p-2 rounded-md border-2 text-questionText border-swan opacity-50 cursor-not-allowed">
+					<button className="p-2 rounded-md border-2 text-question-text border-swan opacity-50 cursor-not-allowed">
 						<NotebookPen size={30} />
 					</button>
 				</div>

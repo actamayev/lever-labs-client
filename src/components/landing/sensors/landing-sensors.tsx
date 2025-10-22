@@ -46,7 +46,7 @@ export default function LandingSensors(): React.ReactNode {
 
 			{/* Larger screens (sm and up) - grid layout */}
 			<div className="hidden sm:block">
-				<Card className="h-full flex flex-col bg-standardBackground mt-4 sm:mt-6 md:mt-8 pt-2 sm:pt-3 md:pt-4 lg:pt-6 shadow-md">
+				<Card className="h-full flex flex-col bg-standard-background mt-4 sm:mt-6 md:mt-8 pt-2 sm:pt-3 md:pt-4 lg:pt-6 shadow-md">
 					<CardContent className="flex-1 px-2 xs:px-3 sm:px-5 md:px-6">
 						<div className="w-full">
 							<div className="w-full h-full">

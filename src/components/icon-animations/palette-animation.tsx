@@ -31,7 +31,7 @@ function PaletteAnimation({ iconSize } : { iconSize: number }): React.ReactNode 
 			onClick={handleClick}
 		>
 			<CustomPalette
-				className={`transition-colors duration-300 ${isDefaultColor ? "text-questionText" : ""}`}
+				className={`transition-colors duration-300 ${isDefaultColor ? "text-question-text" : ""}`}
 				style={colorStyle}
 				size={iconSize}
 			/>

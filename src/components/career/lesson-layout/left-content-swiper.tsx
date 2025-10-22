@@ -28,7 +28,7 @@ function ChallengeTextCard({ challengeUUID }: { challengeUUID: string }): React.
 		<div className="border-2 border-swan rounded-3xl bg-polar h-full overflow-hidden">
 			<div className="h-full flex items-center justify-center px-[25px]">
 				<div className="max-w-none text-4xl leading-relaxed">
-					<div className="text-questionText text-center cursor-text leading-relaxed">
+					<div className="text-question-text text-center cursor-text leading-relaxed">
 						{getLeftContentComponent(challengeUUID)}
 					</div>
 				</div>

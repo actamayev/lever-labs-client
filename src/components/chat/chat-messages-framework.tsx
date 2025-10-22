@@ -131,7 +131,7 @@ function ChatMessagesFramework(props: Props): React.ReactNode {
 				{!hasAnyMessages && (
 					<div className="text-center">
 						<BotMessageSquare className="w-12 h-12 mx-auto mb-4 text-macaw" />
-						<h3 className="text-lg font-semibold text-questionText mb-2">What can I help with?</h3>
+						<h3 className="text-lg font-semibold text-question-text mb-2">What can I help with?</h3>
 						<p className="text-sm text-wolf">Ask questions about your code or robotics concepts</p>
 					</div>
 				)}
@@ -144,7 +144,7 @@ function ChatMessagesFramework(props: Props): React.ReactNode {
 						{/* Loading indicator when waiting for response to start */}
 						{isWaitingForResponse && (
 							<div className="flex gap-3 justify-start">
-								<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
+								<Avatar className="w-8 h-8 mt-1 shrink-0">
 									<AvatarFallback className="bg-macaw text-white">
 										<BotMessageSquare className="w-4 h-4" />
 									</AvatarFallback>
@@ -169,10 +169,10 @@ function ChatMessagesFramework(props: Props): React.ReactNode {
 			<button
 				onClick={handleScrollToBottomClick}
 				className={cn(
-					"absolute bottom-6 left-1/2 -translate-x-1/2 bg-standardBackground",
-					"text-questionText rounded-full z-50 flex items-center justify-center",
+					"absolute bottom-6 left-1/2 -translate-x-1/2 bg-standard-background",
+					"text-question-text rounded-full z-50 flex items-center justify-center",
 					"transition-all duration-300 ease-in-out size-8 p-0", // Removed padding so icon can overflow
-					"!border-swan border",
+					"border-swan! border",
 					showScrollButton
 						? "opacity-100 pointer-events-auto"
 						: "opacity-0 pointer-events-none"

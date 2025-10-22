@@ -139,7 +139,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 
 			{/* Class Info Card */}
 			<div className="mb-8">
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
 							<Hash className="h-5 w-5 text-humpback" />
@@ -156,7 +156,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 
 			{/* Student Hubs Section */}
 			{isEmpty(classroomData.activeHubs) ? (
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardContent>
 						<div className="text-center py-16">
 							<Play className="h-16 w-16 text-eel mx-auto mb-6 opacity-50" />
@@ -169,7 +169,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 					</CardContent>
 				</Card>
 			) : (
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardHeader>
 						<CardTitle className="flex items-center gap-2">
 							<Play className="h-5 w-5 text-humpback" />

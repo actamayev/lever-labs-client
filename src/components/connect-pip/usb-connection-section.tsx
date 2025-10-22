@@ -77,7 +77,7 @@ function ConnectToPipDialog(): React.ReactNode {
 				</>
 			) : (
 				<div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-4">
-					<div className="text-sm text-beakInner-2 font-medium mb-3">
+					<div className="text-sm text-beak-inner-2 font-medium mb-3">
 						{browserInfo.name} Not Supported
 					</div>
 					<div className="text-sm text-fox-2 mb-3">

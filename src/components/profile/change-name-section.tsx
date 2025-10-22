@@ -45,8 +45,8 @@ function ChangeNameSection(): React.ReactNode {
 						id="name"
 						value={name}
 						onChange={handleNameChange}
-						className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl
-								bg-polar !text-eel font-light border-swan shadow-none"
+						className="w-full pr-14 h-10 md:h-12 text-lg md:text-xl!
+								bg-polar text-eel! font-light border-swan shadow-none"
 						maxLength={50}
 					/>
 					<CharacterCounter
@@ -62,7 +62,7 @@ function ChangeNameSection(): React.ReactNode {
 						variant="ghost"
 						className="self-end sm:self-auto sm:ml-2 hover:bg-polar p-2"
 					>
-						<Save className="h-5 w-5 md:!h-6 md:!w-6" />
+						<Save className="h-5 w-5 md:h-6! md:w-6!" />
 					</Button>
 				)}
 			</div>

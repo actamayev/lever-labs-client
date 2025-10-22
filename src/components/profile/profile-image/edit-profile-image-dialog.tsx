@@ -175,7 +175,7 @@ function EditProfileImageDialog({ isOpen, onClose }: EditProfileImageDialogProps
 									onMouseLeave={handleMouseLeave}
 								/>
 							) : (
-								<AvatarFallback className="bg-standardBackground text-questionText">
+								<AvatarFallback className="bg-standard-background text-question-text">
 									<CustomUserCircle
 										className="w-32 h-32 cursor-pointer"
 										style={imageStyle}

@@ -87,7 +87,7 @@ function FeatureItem({ feature }: FeatureItemProps): React.ReactNode {
 	return (
 		<div className={cn(
 			"group relative flex flex-col justify-between overflow-hidden rounded-xl",
-			"bg-standardBackground shadow-md hover:shadow-lg transition-shadow duration-0",
+			"bg-standard-background shadow-md hover:shadow-lg transition-shadow duration-0",
 			"transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)]",
 			"dark:[box-shadow:0_-20px_80px_-20px_#ffffff1f_inset]"
 		)}>

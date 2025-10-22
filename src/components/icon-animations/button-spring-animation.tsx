@@ -15,7 +15,7 @@ export default function ButtonSpringAnimation({ iconSize } : { iconSize: number 
 				}}
 			>
 				<CustomButton
-					className="text-questionText cursor-pointer"
+					className="text-question-text cursor-pointer"
 					size={iconSize}
 				/>
 			</motion.div>

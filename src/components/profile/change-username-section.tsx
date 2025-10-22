@@ -51,8 +51,8 @@ function ChangeUsernameSection(): React.ReactNode {
 						value={username}
 						onChange={handleUsernameChange}
 						className={cn(
-							"w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light shadow-none border-swan",
-							(username.length > 0 && username.length < 3) && "border-cardinal focus-visible:!border-cardinal"
+							"w-full pr-14 h-10 md:h-12 text-lg md:text-xl! bg-polar text-eel! font-light shadow-none border-swan",
+							(username.length > 0 && username.length < 3) && "border-cardinal focus-visible:border-cardinal!"
 						)}
 						maxLength={50}
 					/>
@@ -69,7 +69,7 @@ function ChangeUsernameSection(): React.ReactNode {
 						variant="ghost"
 						className="self-end sm:self-auto sm:ml-2 hover:bg-polar p-2"
 					>
-						<Save className="h-5 w-5 md:!h-6 md:!w-6" />
+						<Save className="h-5 w-5 md:h-6! md:w-6!" />
 					</Button>
 				)}
 			</div>

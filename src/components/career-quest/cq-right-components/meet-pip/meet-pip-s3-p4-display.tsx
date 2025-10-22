@@ -62,7 +62,7 @@ function MeetPipS3P4Display(): React.ReactNode {
 					value={personalInfoClass.name || ""}
 					onChange={(e): Promise<void> => setTextInput(e.target.value)}
 					className={cn(
-						"border-2 pr-6 border-swan rounded-2xl !text-xl text-center bg-inherit shadow-none",
+						"border-2 pr-6 border-swan rounded-2xl text-xl! text-center bg-inherit shadow-none",
 						"[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
 						"[&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 font-medium"
 					)}

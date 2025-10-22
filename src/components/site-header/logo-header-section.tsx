@@ -25,13 +25,13 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.React
 
 	return (
 		<div
-			className={`inline-flex items-center flex-grow-0 flex-shrink-0 z-10 ${
+			className={`inline-flex items-center grow-0 shrink-0 z-10 ${
 				!isScrolled ? "justify-center" : ""
 			}`}
 		>
 			<Link
 				href={whereToNavigate}
-				className="flex items-center font-semibold text-3xl sm:text-3xl flex-shrink-0 text-humpbackText duration-0"
+				className="flex items-center font-semibold text-3xl sm:text-3xl shrink-0 text-humpbackText duration-0"
 			>
 				<Image
 					src="/favicon.svg"

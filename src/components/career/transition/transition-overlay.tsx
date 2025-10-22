@@ -12,7 +12,7 @@ function TransitionOverlay({ careerData }: { careerData: CareerQuestData }): Rea
 		<AnimatePresence>
 			{isTransitioning && (
 				<motion.div
-					className="fixed inset-0 bg-black z-[9999] pointer-events-none"
+					className="fixed inset-0 bg-black z-9999 pointer-events-none"
 					initial={{ opacity: 0 }}
 					animate={{ opacity: 1 }}
 					exit={{ opacity: 0 }}

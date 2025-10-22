@@ -29,7 +29,7 @@ function ProfilePage(): React.ReactNode {
 					<div className="text-base md:text-lg font-medium text-eel mb-2 block">
 						Email
 					</div>
-					<div className="text-base md:text-lg font-medium text-wolf break-words">
+					<div className="text-base md:text-lg font-medium text-wolf wrap-break-word">
 						{personalInfoClass.email || "No email set"}
 					</div>
 				</div>
@@ -49,9 +49,9 @@ function ProfilePage(): React.ReactNode {
 						className="rounded-full h-9 w-9 md:h-10 md:w-10"
 					>
 						{personalInfoClass.defaultSiteTheme === "light" ? (
-							<Moon className="h-5 w-5 md:!h-6 md:!w-6" />
+							<Moon className="h-5 w-5 md:h-6! md:w-6!" />
 						) : (
-							<Sun className="h-5 w-5 md:!h-6 md:!w-6" />
+							<Sun className="h-5 w-5 md:h-6! md:w-6!" />
 						)}
 					</Button>
 					<span

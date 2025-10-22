@@ -22,10 +22,10 @@ export default function DisplayActionTriangle(props: DisplayActionTriangleProps)
 			return "fill-gray-300 text-gray-400"
 		}
 		if (isActive) {
-			return "text-chargingGreen fill-chargingGreen"
+			return "text-charging-green fill-charging-green"
 		}
 		if (isEmpty) {
-			return "fill-standardBackground text-hare"
+			return "fill-standard-background text-hare"
 		}
 		return "text-macaw fill-macaw"
 	}, [isActive, isEmpty, isDisabled])

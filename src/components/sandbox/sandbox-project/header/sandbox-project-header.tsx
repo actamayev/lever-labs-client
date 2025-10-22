@@ -32,7 +32,7 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 					tooltipTrigger={
 						<Link href="/sandbox">
 							<button
-								className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
+								className="flex items-center text-question-text hover:bg-polar p-2 rounded-lg mr-2"
 								onClick={leaveSandbox}
 							>
 								<ArrowLeft size={30} className="mr-1" />
@@ -72,7 +72,7 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 						<ConnectToPipButton
 							colors={getDuolingoColors("humpback")}
 							tactileButtonClasses="h-12 text-2xl"
-							botIconClasses="!size-10"
+							botIconClasses="size-10!"
 						/>
 					</div>
 				)}
@@ -82,8 +82,8 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 							onClick={setSandboxNotesOpenStatus}
 							className={`p-2 rounded-md transition-none border-2 ${
 								personalInfoClass.sandboxNotesOpen
-									? "bg-standardBackgroundHover text-macaw border-standardBackgroundHover"
-									: "text-questionText hover:bg-polar border-swan"
+									? "bg-standard-background-hover text-macaw border-standard-background-hover"
+									: "text-question-text hover:bg-polar border-swan"
 							}`}
 							title={personalInfoClass.sandboxNotesOpen ? "Hide Code" : "Show Code"}
 						>

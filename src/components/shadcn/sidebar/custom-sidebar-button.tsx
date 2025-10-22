@@ -36,21 +36,21 @@ export default function CustomSidebarButton({
 				isActive={isActive}
 				className={cn(
 					// Base styles - ensure consistent sizing
-					"transition-none !flex items-center justify-start !p-0 !h-[50px] w-full", // Added w-full
+					"transition-none flex! items-center justify-start p-0! h-[50px]! w-full", // Added w-full
 					"border-2 border-transparent rounded-xl",
 					// Active/hover states
 					isActive
-						? "!bg-selectedSidebarButtonBackground"
-						: "hover:!bg-polar",
+						? "bg-selected-sidebar-button-background!"
+						: "hover:bg-polar!",
 					// Size and dimensions - apply consistent sizing regardless of collapsible state
-					"group-data-[collapsible=icon]:!h-[50px] group-data-[collapsible=icon]:!w-[170px]",
+					"group-data-[collapsible=icon]:h-[50px]! group-data-[collapsible=icon]:w-[170px]!",
 					// Custom styles passed from parent
-					isActive && "!border-selectedSidebarButtonBorder",
+					isActive && "border-selected-sidebar-button-border!",
 					customStyles
 				)}
 			>
 				<div className="flex items-center justify-start space-x-4 w-full"> {/* Added w-full */}
-					<div className={cn("ml-2.5 flex-shrink-0 w-[35px] h-[35px]", iconClassName)}>
+					<div className={cn("ml-2.5 shrink-0 w-[35px] h-[35px]", iconClassName)}>
 						{icon}
 					</div>
 					<div className={cn(

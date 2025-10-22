@@ -52,7 +52,7 @@ function ClassManagerPage(): React.ReactNode {
 			<ClassManagerStatsCards setIsCreateDialogOpen={setIsCreateDialogOpen} />
 
 			{/* Classrooms Section */}
-			<Card className="border-2 border-swan bg-standardBackground">
+			<Card className="border-2 border-swan bg-standard-background">
 				<CardHeader>
 					<div className="flex items-center justify-between">
 						<div>

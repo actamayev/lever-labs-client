@@ -27,7 +27,7 @@ function DisplayControls(): React.ReactNode {
 								variant: "outline",
 								className: cn(
 									"flex items-center gap-1 rounded-2xl justify-between",
-									"px-4 !py-6 w-full border-2 shadow-none !text-xl",
+									"px-4 py-6! w-full border-2 shadow-none text-xl!",
 									isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
 								)
 							})
@@ -37,11 +37,11 @@ function DisplayControls(): React.ReactNode {
 						<span className="flex items-center gap-2">
 							{garageClass.selectedDesign}
 						</span>
-						<ChevronDown className="!size-6" />
+						<ChevronDown className="size-6!" />
 					</div>
 				</DropdownMenuTrigger>
 				<DropdownMenuContent
-					className="rounded-xl bg-standardBackground mt-1 w-56 max-h-44 overflow-y-auto border-2 shadow-none border-swan"
+					className="rounded-xl bg-standard-background mt-1 w-56 max-h-44 overflow-y-auto border-2 shadow-none border-swan"
 				>
 					{PRE_DEFINED_DESIGNS.map((design): React.ReactNode => (
 						<DropdownMenuItem
@@ -52,7 +52,7 @@ function DisplayControls(): React.ReactNode {
 								}
 							}}
 							className={cn(
-								"transition-none hover:!bg-polar rounded-lg text-xl",
+								"transition-none hover:bg-polar! rounded-lg text-xl",
 								isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
 							)}
 						>
@@ -98,7 +98,7 @@ function DisplayControls(): React.ReactNode {
 					}
 				}}
 				className={cn(
-					"border-2 pr-6 border-swan rounded-2xl !text-xl text-start bg-inherit shadow-none",
+					"border-2 pr-6 border-swan rounded-2xl text-xl! text-start bg-inherit shadow-none",
 					"[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
 					"[&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 font-medium",
 					isDisabled && "opacity-50 cursor-not-allowed"

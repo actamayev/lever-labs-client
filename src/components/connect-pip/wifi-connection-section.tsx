@@ -108,9 +108,9 @@ function WifiConnectionSection(): React.ReactNode {
 			case "connected to serial to another user":
 				return "bg-beetle"
 			case "connected online to you":
-				return "bg-chargingGreen"
+				return "bg-charging-green"
 			case "connected to serial to you":
-				return "bg-chargingGreen"
+				return "bg-charging-green"
 			default:
 				return "bg-cardinal"
 		}
@@ -232,7 +232,7 @@ function WifiConnectionSection(): React.ReactNode {
 							disabled={isConnecting}
 						>
 							<div className="flex items-center justify-center gap-2">
-								<WifiHighIcon className="!size-8 text-white mb-2" />
+								<WifiHighIcon className="size-8! text-white mb-2" />
 								{isConnecting ? "CONNECTING..." : "CONNECT"}
 							</div>
 						</TactileButton>

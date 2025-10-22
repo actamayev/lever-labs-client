@@ -74,8 +74,8 @@ function ChangePasswordSection(): React.ReactNode {
 							type={showCurrentPassword ? "text" : "password"}
 							value={currentPassword}
 							onChange={handleCurrentPasswordChange}
-							className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl shadow-none
-							bg-polar !text-eel font-light border-swan"
+							className="w-full pr-14 h-10 md:h-12 text-lg md:text-xl! shadow-none
+							bg-polar text-eel! font-light border-swan"
 						/>
 						<Button
 							type="button"
@@ -85,9 +85,9 @@ function ChangePasswordSection(): React.ReactNode {
 							onClick={(): void => setShowCurrentPassword((prevState): boolean => !prevState)}
 						>
 							{showCurrentPassword ? (
-								<EyeOff className="h-5 w-5 md:!h-6 md:!w-6" />
+								<EyeOff className="h-5 w-5 md:h-6! md:w-6!" />
 							) : (
-								<Eye className="h-5 w-5 md:!h-6 md:!w-6" />
+								<Eye className="h-5 w-5 md:h-6! md:w-6!" />
 							)}
 						</Button>
 					</div>
@@ -102,8 +102,8 @@ function ChangePasswordSection(): React.ReactNode {
 							type={showNewPassword ? "text" : "password"}
 							value={newPassword}
 							onChange={handleNewPasswordChange}
-							className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl shadow-none
-							bg-polar !text-eel font-light border-swan"
+							className="w-full pr-14 h-10 md:h-12 text-lg md:text-xl! shadow-none
+							bg-polar text-eel! font-light border-swan"
 						/>
 						<Button
 							type="button"
@@ -113,9 +113,9 @@ function ChangePasswordSection(): React.ReactNode {
 							onClick={(): void => setShowNewPassword((prevState): boolean => !prevState)}
 						>
 							{showNewPassword ? (
-								<EyeOff className="h-5 w-5 md:!h-6 md:!w-6" />
+								<EyeOff className="h-5 w-5 md:h-6! md:w-6!" />
 							) : (
-								<Eye className="h-5 w-5 md:!h-6 md:!w-6" />
+								<Eye className="h-5 w-5 md:h-6! md:w-6!" />
 							)}
 						</Button>
 					</div>

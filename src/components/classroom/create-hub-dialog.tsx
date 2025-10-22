@@ -146,7 +146,7 @@ export default function CreateHubDialog(props: Props): React.ReactNode {
 							value={hubName}
 							onChange={(e): void => setHubName(e.target.value)}
 							placeholder="Enter hub name"
-							className="w-full !text-xl h-10"
+							className="w-full text-xl! h-10"
 							onKeyDown={handleKeyDown}
 							autoFocus
 							maxLength={50}

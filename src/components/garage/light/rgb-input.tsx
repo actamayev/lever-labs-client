@@ -41,7 +41,7 @@ function RGBInput(): React.ReactNode {
 					onChange={(e): void => { if (!isDisabled) onChange(enforceRGBRange(e.target.value)) }}
 					min="0"
 					max="255"
-					className={`border-2 ${borderClass} rounded-xl !text-xl text-center ${bgClass} shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+					className={`border-2 ${borderClass} rounded-xl text-xl! text-center ${bgClass} shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
 					style={{ width: "72px", height: "52px" }}
 					disabled={isDisabled}
 				/>

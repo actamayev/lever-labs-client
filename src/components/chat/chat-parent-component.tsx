@@ -12,7 +12,7 @@ export default function ChatParentComponent({ children, extraClasses }: ChatPare
 		<div
 			className={cn(
 				// eslint-disable-next-line max-len
-				"flex flex-col h-full max-h-full bg-standardBackground rounded-3xl border-2 border-swan overflow-hidden chat-parent-component",
+				"flex flex-col h-full max-h-full bg-standard-background rounded-3xl border-2 border-swan overflow-hidden chat-parent-component",
 				extraClasses
 			)}
 			data-chat-component="true"

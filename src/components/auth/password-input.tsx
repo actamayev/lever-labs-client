@@ -36,7 +36,7 @@ export default function PasswordField<T extends LoginRequest | RegisterFormValue
 								value={field.value?.toString() || ""}
 								placeholder={placeholder}
 								maxLength={100}
-								className="pr-16 truncate h-12 rounded-xl !text-xl font-light border-2 bg-polar shadow-none border-swan"
+								className="pr-16 truncate h-12 rounded-xl text-xl! font-light border-2 bg-polar shadow-none border-swan"
 							/>
 							<Button
 								type="button"
@@ -46,9 +46,9 @@ export default function PasswordField<T extends LoginRequest | RegisterFormValue
 								onClick={(): void => setShowPassword((prevState): boolean => !prevState)}
 							>
 								{showPassword ? (
-									<EyeOff className="!h-6 !w-6" />
+									<EyeOff className="h-6! w-6!" />
 								) : (
-									<Eye className="!h-6 !w-6" />
+									<Eye className="h-6! w-6!" />
 								)}
 							</Button>
 						</div>

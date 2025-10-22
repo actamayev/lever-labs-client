@@ -200,7 +200,7 @@ function FillInBlankQuestion(): React.ReactNode {
 
 	return (
 		<div className="space-y-6">
-			<h2 className="text-3xl font-semibold text-questionText text-center">
+			<h2 className="text-3xl font-semibold text-question-text text-center">
 				{questionText}
 			</h2>
 
@@ -215,7 +215,7 @@ function FillInBlankQuestion(): React.ReactNode {
 					onClick={(): void => { void resetWorkspace() }}
 					className={cn(
 						"absolute top-2 right-2 z-10 p-2 h-8 w-8",
-						"bg-background/80 backdrop-blur-sm border-border/50",
+						"bg-background/80 backdrop-blur-xs border-border/50",
 						"hover:bg-accent hover:text-accent-foreground",
 						"transition-all duration-200"
 					)}

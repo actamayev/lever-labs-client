@@ -68,8 +68,8 @@ export default function ChallengeHeader({ challengeData, onReset }: ChallengeHea
 									<CustomTooltip
 										tooltipTrigger={
 											<TactileButton
-												className="bg-beakInner text-white flex items-center justify-center rounded-lg p-2 h-10"
-												shadowClass="shadow-beakInner-2"
+												className="bg-beak-inner text-white flex items-center justify-center rounded-lg p-2 h-10"
+												shadowClass="shadow-beak-inner-2"
 												onClick={(): void => setIsDescriptionExpanded(false)}
 											>
 												<X className="w-4 h-4" />
@@ -123,8 +123,8 @@ export default function ChallengeHeader({ challengeData, onReset }: ChallengeHea
 									<CustomTooltip
 										tooltipTrigger={
 											<TactileButton
-												className="bg-beakInner text-white flex items-center justify-center rounded-lg p-2 h-8 w-8"
-												shadowClass="shadow-beakInner-2"
+												className="bg-beak-inner text-white flex items-center justify-center rounded-lg p-2 h-8 w-8"
+												shadowClass="shadow-beak-inner-2"
 												onClick={(): void => setIsDescriptionExpanded(true)}
 											>
 												<ChevronDown className="w-4 h-4" />

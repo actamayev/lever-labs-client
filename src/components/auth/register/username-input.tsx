@@ -34,7 +34,7 @@ export default function UsernameInput<T extends FormWithUsername>({
 									const sanitizedValue = handleTypeUsername(event)
 									field.onChange(sanitizedValue)
 								}}
-								className="w-full pr-16 truncate h-12 rounded-xl !text-xl \
+								className="w-full pr-16 truncate h-12 rounded-xl text-xl! \
 								font-light border-2 bg-polar shadow-none border-swan"
 								maxLength={100}
 							/>

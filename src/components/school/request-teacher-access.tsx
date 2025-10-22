@@ -97,15 +97,15 @@ function RequestTeacherAccess(): React.ReactNode {
 
 		if (teacherData.isApproved === true) {
 			return (
-				<div className="flex items-center mb-4 text-chargingGreen text-sm font-medium">
-					<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+				<div className="flex items-center mb-4 text-charging-green text-sm font-medium">
+					<CheckCircle className="w-4 h-4 mr-2 shrink-0" />
 					<span>Your teacher account has been approved! You can update your information below.</span>
 				</div>
 			)
 		} else if (teacherData.isApproved === null) {
 			return (
 				<div className="flex items-center mb-4 text-blue-600 text-sm font-medium">
-					<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+					<AlertCircle className="w-4 h-4 mr-2 shrink-0" />
 					<span>Your teacher application is being reviewed. You can update your information below.</span>
 				</div>
 			)
@@ -113,7 +113,7 @@ function RequestTeacherAccess(): React.ReactNode {
 		} else if (teacherData.isApproved === false) {
 			return (
 				<div className="flex items-center mb-4 text-cardinal text-sm font-medium">
-					<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+					<AlertCircle className="w-4 h-4 mr-2 shrink-0" />
 					<span>
 						Your teacher application was not accepted.
 						Please contact our support team at hello@leverlabs.com for assistance.
@@ -171,8 +171,8 @@ function RequestTeacherAccess(): React.ReactNode {
 							value={firstName}
 							onChange={handleFirstNameChange}
 							disabled={isFormDisabled}
-							className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
-						bg-polar !text-eel font-light border-swan"
+							className="w-full h-10 md:h-12 text-lg md:text-xl! shadow-none
+						bg-polar text-eel! font-light border-swan"
 						/>
 					</div>
 
@@ -189,8 +189,8 @@ function RequestTeacherAccess(): React.ReactNode {
 							value={lastName}
 							onChange={handleLastNameChange}
 							disabled={isFormDisabled}
-							className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
-						bg-polar !text-eel font-light border-swan"
+							className="w-full h-10 md:h-12 text-lg md:text-xl! shadow-none
+						bg-polar text-eel! font-light border-swan"
 						/>
 					</div>
 
@@ -211,7 +211,7 @@ function RequestTeacherAccess(): React.ReactNode {
 											size="sm"
 											className="h-auto p-1.5 hover:bg-polar"
 										>
-											<Info className="!h-4 !w-4 text-gray-500" />
+											<Info className="h-4! w-4! text-gray-500" />
 										</Button>
 									}
 									tooltipContent="School name cannot be edited after submission"
@@ -224,21 +224,21 @@ function RequestTeacherAccess(): React.ReactNode {
 							value={schoolName}
 							onChange={handleSchoolNameChange}
 							disabled={hasExistingData || isFormDisabled}
-							className="w-full h-10 md:h-12 text-lg md:!text-xl shadow-none
-							bg-polar !text-eel font-light border-swan"
+							className="w-full h-10 md:h-12 text-lg md:text-xl! shadow-none
+							bg-polar text-eel! font-light border-swan"
 						/>
 					</div>
 
 					{error && (
 						<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
-							<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+							<AlertCircle className="w-4 h-4 mr-2 shrink-0" />
 							<span>{error}</span>
 						</div>
 					)}
 
 					{success && (
-						<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
-							<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<div className="flex items-center mt-2 text-charging-green text-sm font-medium">
+							<CheckCircle className="w-4 h-4 mr-2 shrink-0" />
 							<span>{success}</span>
 						</div>
 					)}

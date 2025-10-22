@@ -81,7 +81,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 							setClassroomName(e.target.value)
 							clearErrorAndSuccess()
 						}}
-						className="w-full h-10 text-lg bg-polar !text-eel font-light border-swan shadow-none"
+						className="w-full h-10 text-lg bg-polar text-eel! font-light border-swan shadow-none"
 						placeholder="The awesome robotics class"
 						disabled={isSubmitting}
 						maxLength={100}
@@ -90,14 +90,14 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 
 				{error && (
 					<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
-						<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<AlertCircle className="w-4 h-4 mr-2 shrink-0" />
 						<span>{error}</span>
 					</div>
 				)}
 
 				{success && (
-					<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
-						<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+					<div className="flex items-center mt-2 text-charging-green text-sm font-medium">
+						<CheckCircle className="w-4 h-4 mr-2 shrink-0" />
 						<span>{success}</span>
 					</div>
 				)}

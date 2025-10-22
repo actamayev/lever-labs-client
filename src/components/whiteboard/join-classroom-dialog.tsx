@@ -65,7 +65,7 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 
 	const borderColor = useMemo((): string => {
 		if (error) return "border-cardinal"
-		if (success) return "border-chargingGreen"
+		if (success) return "border-charging-green"
 		return "border-swan"
 	}, [error, success])
 
@@ -87,7 +87,7 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 						value={classCode}
 						onChange={handleInputChange}
 						className={cn(
-							"w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light shadow-none",
+							"w-full pr-14 h-10 md:h-12 text-lg md:text-xl! bg-polar text-eel! font-light shadow-none",
 							borderColor
 						)}
 						maxLength={5}
@@ -97,14 +97,14 @@ export default function JoinClassroomDialog({ isOpen, onOpenChange }: CreateClas
 
 				{error && (
 					<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
-						<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<AlertCircle className="w-4 h-4 mr-2 shrink-0" />
 						<span>{error}</span>
 					</div>
 				)}
 
 				{success && (
-					<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
-						<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+					<div className="flex items-center mt-2 text-charging-green text-sm font-medium">
+						<CheckCircle className="w-4 h-4 mr-2 shrink-0" />
 						<span>{success}</span>
 					</div>
 				)}

@@ -213,7 +213,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 					/>
 				</div>
 
-				<div className="flex-shrink-0 flex gap-3 p-3">
+				<div className="shrink-0 flex gap-3 p-3">
 					<AnimatedStateButton
 						buttonText="SEND CODE"
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}

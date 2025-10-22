@@ -22,7 +22,7 @@ const getButtonClasses = (isDisabled: boolean): string => {
 	const stateClasses = isDisabled
 		? "bg-gray-300/20 text-gray-400 cursor-not-allowed dark:bg-gray-600/20 dark:text-gray-500"
 		: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-	const focusClasses = "outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+	const focusClasses = "outline-hidden focus:outline-hidden focus:ring-0 focus-visible:outline-hidden focus-visible:ring-0"
 
 	return cn(baseClasses, stateClasses, focusClasses)
 }
@@ -33,7 +33,7 @@ const getBorderClasses = (isDisabled: boolean): string => {
 	const stateClasses = isDisabled
 		? "border-gray-300/40 dark:border-gray-500/40"
 		: "border-blue-400 dark:border-blue-600 " +
-			"group-active:border-selectedSidebarButtonBorder group-active:text-answerText dark:group-active:text-answerText"
+			"group-active:border-selected-sidebar-button-border group-active:text-answer-text dark:group-active:text-answer-text"
 
 	return cn(baseClasses, stateClasses)
 }
@@ -68,9 +68,9 @@ function DrivingActionButton({
 	const getActionIcon = (): ReactNode => {
 		switch (action) {
 			case "headlights":
-				return <CustomHeadlights className="!size-10" />
+				return <CustomHeadlights className="size-10!" />
 			case "horn":
-				return <CustomHorn className="!size-10" />
+				return <CustomHorn className="size-10!" />
 		}
 	}
 

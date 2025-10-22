@@ -68,7 +68,7 @@ function Landing(): React.ReactNode {
 					<ByBuildersForBuilders />
 				</LandingSectionContainer>
 
-				<LandingSectionContainer extraClasses="flex relative items-center justify-center pb-16 text-questionText">
+				<LandingSectionContainer extraClasses="flex relative items-center justify-center pb-16 text-question-text">
 					<SignUpForUpdates />
 				</LandingSectionContainer>
 			</div>

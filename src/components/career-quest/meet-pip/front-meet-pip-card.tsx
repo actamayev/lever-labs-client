@@ -93,7 +93,7 @@ function FrontMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNod
 					</TactileButton>
 					<BackFlipButton
 						onFlip={flipCard}
-						extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
+						extraClasses="size-8 rounded-full flex items-center justify-center focus:outline-hidden duration-0"
 						style={{ marginRight: "30px" }}
 					/>
 				</div>

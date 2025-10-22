@@ -64,7 +64,7 @@ function LightAnimationsList(): React.ReactNode {
 					variant: "outline",
 					className: cn(
 						"flex items-center gap-1 rounded-xl justify-between",
-						"px-4 !py-6 font-medium w-full border-2 shadow-none !text-xl",
+						"px-4 py-6! font-medium w-full border-2 shadow-none text-xl!",
 						isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
 					)
 				})
@@ -77,7 +77,7 @@ function LightAnimationsList(): React.ReactNode {
 				</div>
 				{garageClass.selectedAnimation}
 			</span>
-			<ChevronDown className="!size-6" />
+			<ChevronDown className="size-6!" />
 		</div>
 	)
 
@@ -86,20 +86,20 @@ function LightAnimationsList(): React.ReactNode {
 			<DropdownMenuTrigger asChild>
 				{trigger}
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="rounded-xl bg-standardBackground mt-1 w-72 max-h-44 overflow-y-auto border-2 shadow-none">
+			<DropdownMenuContent className="rounded-xl bg-standard-background mt-1 w-72 max-h-44 overflow-y-auto border-2 shadow-none">
 				{ANIMATIONS.map((animation): React.ReactNode => (
 					<DropdownMenuItem
 						key={animation.name}
 						onClick={(): Promise<void> => (!isDisabled ? optimizedLightsAnimation(animation.name) : Promise.resolve())}
 						className={cn(
-							"transition-none hover:!bg-polar rounded-lg",
+							"transition-none hover:bg-polar! rounded-lg",
 							isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
 						)}
 					>
-						<div className="flex-shrink-0">
+						<div className="shrink-0">
 							{animation.icon(rgbColor)}
 						</div>
-						<div className="flex-grow">
+						<div className="grow">
 							<div className="font-medium text-base">{animation.name}</div>
 							<div className="text-xs text-hare">{animation.description}</div>
 						</div>

@@ -56,7 +56,7 @@ export default function SignUpForUpdates(): React.ReactNode {
 												placeholder="Email"
 												required
 												className="flex-1 h-10 w-full md:w-56 border-eel border-2
-												duration-0 !text-lg md:!text-xl font-light"
+												duration-0 text-lg! md:text-xl! font-light"
 												{...field}
 											/>
 										</FormControl>
@@ -67,7 +67,7 @@ export default function SignUpForUpdates(): React.ReactNode {
 								buttonText="SUBSCRIBE"
 								isDisabled={!isEmailValidMemo}
 								type="submit"
-								className="w-40 !duration-150"
+								className="w-40 duration-150!"
 							/>
 						</form>
 					</Form>

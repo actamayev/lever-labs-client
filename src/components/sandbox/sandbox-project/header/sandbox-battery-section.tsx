@@ -11,7 +11,7 @@ function SandboxBatterySection(): React.ReactNode {
 	const batteryColorClasses = useGetBatteryColorClasses()
 	return (
 		<div className="flex flex-col items-center justify-center font-medium">
-			<BatteryWorkbenchIcon extraClasses="!size-10" />
+			<BatteryWorkbenchIcon extraClasses="size-10!" />
 			<span className={cn("text-base font-medium -mt-2 text-center", batteryColorClasses)}>
 				{isNull(workbenchClass.batteryDataLastUpdated) ?
 					"\u00A0" :

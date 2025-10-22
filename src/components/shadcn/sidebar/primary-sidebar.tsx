@@ -39,7 +39,7 @@ export default function PrimarySidebar(): React.ReactNode {
 	return (
 		<Sidebar
 			collapsible="icon"
-			className="hidden md:flex !border-r-2 border-swan"
+			className="hidden md:flex border-r-2! border-swan"
 		>
 			<SidebarHeader>
 				<SidebarLogo />

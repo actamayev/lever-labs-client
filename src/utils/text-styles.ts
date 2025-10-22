@@ -39,7 +39,7 @@ export function landingTableText (additionalClasses?: string): string {
 
 export function landingSensorCardHeaderText (additionalClasses?: string): string {
 	return cn(
-		"text-lg md:text-xl font-semibold text-questionText",
+		"text-lg md:text-xl font-semibold text-question-text",
 		additionalClasses
 	)
 }

@@ -14,7 +14,7 @@ export default function LockIconAndTooltip(): React.ReactNode {
 					size="sm"
 					className="h-auto p-1.5 hover:bg-swan"
 				>
-					<Lock className="!h-7 !w-7" />
+					<Lock className="h-7! w-7!" />
 				</Button>
 			}
 			tooltipContent="ENCRYPTED"

@@ -57,7 +57,7 @@ function BlockToFunctionQuestion(): React.ReactNode {
 	return (
 		<div>
 			{/* Question text */}
-			<h2 className="text-3xl font-semibold text-questionText mb-8">
+			<h2 className="text-3xl font-semibold text-question-text mb-8">
 				{questionText}
 			</h2>
 
@@ -88,10 +88,10 @@ function BlockToFunctionQuestion(): React.ReactNode {
 							// eslint-disable-next-line max-len
 							className={`h-12 w-full flex items-center justify-start px-4 text-lg font-semibold rounded-lg duration-0 relative ${
 								isSelected
-									? "bg-standardBackgroundHover border-2 border-macaw"
+									? "bg-standard-background-hover border-2 border-macaw"
 									: isInConfirmationStage
-										? "bg-standardBackground border-2 border-swan cursor-default"
-										: "bg-standardBackground border-2 border-swan hover:bg-polar"
+										? "bg-standard-background border-2 border-swan cursor-default"
+										: "bg-standard-background border-2 border-swan hover:bg-polar"
 							}`}
 							shadowClass={isSelected ? "shadow-macaw" : "shadow-swan"}
 							shadowHeight={2}

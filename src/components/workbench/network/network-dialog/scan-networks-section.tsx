@@ -125,9 +125,9 @@ function ScanNetworksSection(): React.ReactNode {
 											onClick={(): void => setShowPassword((prevState): boolean => !prevState)}
 										>
 											{showPassword ? (
-												<EyeOff className="h-4 w-4 md:!h-4 md:!w-4" />
+												<EyeOff className="h-4 w-4 md:h-4! md:w-4!" />
 											) : (
-												<Eye className="h-4 w-4 md:!h-4 md:!w-4" />
+												<Eye className="h-4 w-4 md:h-4! md:w-4!" />
 											)}
 										</Button>
 									</div>

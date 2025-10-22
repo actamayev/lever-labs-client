@@ -23,7 +23,7 @@ function SingleClassCard(props: Props): React.ReactNode {
 	return (
 		<Card
 			key={classroom.classCode}
-			className="group cursor-pointer duration-0 border-swan bg-standardBackground hover:bg-polar relative overflow-hidden"
+			className="group cursor-pointer duration-0 border-swan bg-standard-background hover:bg-polar relative overflow-hidden"
 			onClick={handleClassroomClick}
 		>
 			<CardHeader className="relative">
@@ -42,12 +42,12 @@ function SingleClassCard(props: Props): React.ReactNode {
 								/>
 							</div>
 						</DropdownMenuTrigger>
-						<DropdownMenuContent className="w-40 bg-standardBackground shadow-none">
+						<DropdownMenuContent className="w-40 bg-standard-background shadow-none">
 							<DropdownMenuItem
 								onClick={(e): void => handleRenameClick(e, classroom)}
-								className="cursor-pointer text-lg hover:!bg-polar"
+								className="cursor-pointer text-lg hover:bg-polar!"
 							>
-								<Edit className="mr-2 !size-5" strokeWidth={2.5}/>
+								<Edit className="mr-2 size-5!" strokeWidth={2.5}/>
 								Rename
 							</DropdownMenuItem>
 						</DropdownMenuContent>

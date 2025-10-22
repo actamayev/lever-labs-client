@@ -104,20 +104,20 @@ function SingleProjectCard({ project } : { project: SandboxProject }): React.Rea
 									/>
 								</div>
 							</DropdownMenuTrigger>
-							<DropdownMenuContent className="w-40 bg-standardBackground shadow-none">
-								<DropdownMenuItem onClick={handleRenameClick} className="cursor-pointer text-lg hover:!bg-polar">
-									<Edit className="mr-2 !size-5" strokeWidth={2.5}/>
+							<DropdownMenuContent className="w-40 bg-standard-background shadow-none">
+								<DropdownMenuItem onClick={handleRenameClick} className="cursor-pointer text-lg hover:bg-polar!">
+									<Edit className="mr-2 size-5!" strokeWidth={2.5}/>
 									Rename
 								</DropdownMenuItem>
-								<DropdownMenuItem onClick={handleStarClick} className="cursor-pointer text-lg hover:!bg-polar">
+								<DropdownMenuItem onClick={handleStarClick} className="cursor-pointer text-lg hover:bg-polar!">
 									<Star
-										className={cn("mr-2 !size-5", project.isStarred ? "text-bee fill-bee" : "")}
+										className={cn("mr-2 size-5!", project.isStarred ? "text-bee fill-bee" : "")}
 										strokeWidth={2.5}
 									/>
 									{project.isStarred ? "Unstar" : "Star"}
 								</DropdownMenuItem>
-								<DropdownMenuItem onClick={handleDeleteClick} className="cursor-pointer text-lg hover:!bg-polar">
-									<Trash2 className="mr-2 text-cardinal !size-5" strokeWidth={2.5}/>
+								<DropdownMenuItem onClick={handleDeleteClick} className="cursor-pointer text-lg hover:bg-polar!">
+									<Trash2 className="mr-2 text-cardinal size-5!" strokeWidth={2.5}/>
 									Delete
 								</DropdownMenuItem>
 							</DropdownMenuContent>

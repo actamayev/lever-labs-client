@@ -75,7 +75,7 @@ function RenameProjectDialog(): React.ReactNode {
 					value={sandboxClass.newProjectName}
 					onChange={handleInputChange}
 					placeholder="Project name"
-					className="w-full !text-xl h-10"
+					className="w-full text-xl! h-10"
 					onKeyDown={handleKeyDown}
 					maxLength={50}
 				/>

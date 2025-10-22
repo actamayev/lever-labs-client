@@ -340,7 +340,7 @@ function MeetPipS5P5BallMoving(): JSX.Element {
 					<div className="text-xs text-eel">Controls X movement</div>
 				</div>
 				<div className="text-center p-3 bg-green-50 dark:bg-green-900 rounded-lg">
-					<div className="text-lg font-semibold text-chargingGreen">
+					<div className="text-lg font-semibold text-charging-green">
 						Pitch: {(sensorDataClass.pitch[sensorDataClass.pitch.length - 1] || 0).toFixed(1)}°
 					</div>
 					<div className="text-xs text-eel">Controls Y movement</div>

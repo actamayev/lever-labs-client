@@ -70,7 +70,7 @@ export default function GridPattern(): React.ReactNode {
         strokeWidth="1"
         strokeDasharray="0"
         vectorEffect="non-scaling-stroke"
-        className="stroke-landingOuterBorder"
+        className="stroke-landing-outer-border"
       />
 
       {/* Right border line - solid */}
@@ -82,7 +82,7 @@ export default function GridPattern(): React.ReactNode {
         strokeWidth="1"
         strokeDasharray="0"
         vectorEffect="non-scaling-stroke"
-        className="stroke-landingOuterBorder"
+        className="stroke-landing-outer-border"
       />
 
       {/* Middle dashed line */}
@@ -94,7 +94,7 @@ export default function GridPattern(): React.ReactNode {
         strokeWidth="1"
         strokeDasharray={dashPattern}
         vectorEffect="non-scaling-stroke"
-        className="stroke-landingDottedLine"
+        className="stroke-landing-dotted-line"
       />
     </svg>
   );

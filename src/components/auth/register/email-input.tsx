@@ -30,7 +30,7 @@ export default function EmailInput({ control }: { control: Control<RegisterFormV
 							placeholder={getPlaceholder()}
 							{...field}
 							maxLength={100}
-							className="h-12 rounded-xl !text-xl font-light border-2 bg-polar shadow-none border-swan"
+							className="h-12 rounded-xl text-xl! font-light border-2 bg-polar shadow-none border-swan"
 						/>
 					</FormControl>
 					<FormMessage />

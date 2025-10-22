@@ -43,7 +43,7 @@ export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonEleme
 			<TactileButton
 				ref={ref}
 				className={cn(
-					"flex items-center transition-none rounded-2xl !bg-standardBackground",
+					"flex items-center transition-none rounded-2xl bg-standard-background!",
 					"text-eel dark:text-wolf",
 					className
 				)}

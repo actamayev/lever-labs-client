@@ -117,7 +117,7 @@ function LightBrightnessControl(): ReactNode {
 				className="border-2 border-swan shadow-none rounded-xl"
 				style={{ height: "52px", width: "52px" }}
 			>
-				<Minus className="!size-6 text-questionText" />
+				<Minus className="size-6! text-question-text" />
 			</Button>
 
 			<div className="flex items-center flex-col relative">
@@ -131,7 +131,7 @@ function LightBrightnessControl(): ReactNode {
 						min="0"
 						max="100"
 						// eslint-disable-next-line max-len
-						className="border-2 pr-6 border-swan rounded-xl !text-xl text-center bg-inherit shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
+						className="border-2 pr-6 border-swan rounded-xl text-xl! text-center bg-inherit shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0"
 						style={{ width: "120px", height: "52px" }}
 						disabled={isDisabled}
 					/>
@@ -159,7 +159,7 @@ function LightBrightnessControl(): ReactNode {
 				className="border-2 border-swan shadow-none rounded-xl"
 				style={{ height: "52px", width: "52px" }}
 			>
-				<PlusIcon className="!size-6 text-questionText" />
+				<PlusIcon className="size-6! text-question-text" />
 			</Button>
 		</>
 	)

@@ -15,7 +15,7 @@ function SingleWhiteboardCard({ classroom } : { classroom: StudentClassroomData 
 	return (
 		<Card
 			key={classroom.classCode}
-			className="group cursor-pointer duration-0 border-swan bg-standardBackground hover:bg-polar relative overflow-hidden"
+			className="group cursor-pointer duration-0 border-swan bg-standard-background hover:bg-polar relative overflow-hidden"
 			onClick={handleClassroomClick}
 		>
 			<CardHeader className="relative">

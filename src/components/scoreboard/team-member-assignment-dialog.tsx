@@ -97,7 +97,7 @@ function TeamMemberAssignmentDialog(props: Props): React.ReactNode {
 
 				<div className="space-y-4">
 					{/* Current Team Members */}
-					<Card className="border-2 border-swan bg-standardBackground">
+					<Card className="border-2 border-swan bg-standard-background">
 						<CardHeader className="pb-3">
 							<CardTitle className="flex items-center gap-2 text-lg">
 								<Users className="h-5 w-5 text-humpback" />
@@ -132,7 +132,7 @@ function TeamMemberAssignmentDialog(props: Props): React.ReactNode {
 					</Card>
 
 					{/* Available Students */}
-					<Card className="border-2 border-swan bg-standardBackground">
+					<Card className="border-2 border-swan bg-standard-background">
 						<CardHeader className="pb-3">
 							<CardTitle className="flex items-center gap-2 text-lg">
 								<Plus className="h-5 w-5 text-humpback" />

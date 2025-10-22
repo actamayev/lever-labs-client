@@ -33,7 +33,7 @@ export default function AgeInput<T extends { age: number | null }>({
 								const numericValue = sanitizedValue === "" ? null : parseInt(sanitizedValue, 10)
 								field.onChange(numericValue)
 							}}
-							className="w-full h-12 rounded-xl !text-xl font-light border-2 bg-polar shadow-none border-swan"
+							className="w-full h-12 rounded-xl text-xl! font-light border-2 bg-polar shadow-none border-swan"
 							maxLength={3}
 						/>
 					</FormControl>

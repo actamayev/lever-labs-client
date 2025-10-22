@@ -21,12 +21,12 @@ function Missing(): React.ReactNode {
 					{authClass.isFinishedWithSignup ? (
 						<>
 							RETURN TO GARAGE
-							<CustomGarage className="ml-2 !h-7 !w-7" />
+							<CustomGarage className="ml-2 h-7! w-7!" />
 						</>
 					) : (
 						<>
 							RETURN HOME
-							<CustomHouse className="ml-2 !h-7 !w-7" />
+							<CustomHouse className="ml-2 h-7! w-7!" />
 						</>
 					)}
 				</BlackWhiteTactileButton>

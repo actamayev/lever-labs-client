@@ -122,12 +122,12 @@ export const NavigationMorphingText: React.FC<NavigationMorphingTextProps> = ({
 	}, [doMorph, doCooldown])
 
 	return (
-		<div className={cn("leading-relaxed text-questionText text-center cursor-text", className)}>
+		<div className={cn("leading-relaxed text-question-text text-center cursor-text", className)}>
 			<div className="mb-4">
 				{staticText}
 			</div>
 			<div
-				className="relative [filter:url(#nav-threshold)]"
+				className="relative filter-[url(#nav-threshold)]"
 				style={{ minHeight: "1.5em" }}
 			>
 				<span

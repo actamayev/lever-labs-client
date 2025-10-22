@@ -56,7 +56,7 @@ function ClassroomHubsSection({ classCode }: ClassroomHubsSectionProps): React.R
 	}
 
 	return (
-		<Card className="border-2 border-swan bg-standardBackground mb-8">
+		<Card className="border-2 border-swan bg-standard-background mb-8">
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<Play className="h-5 w-5 text-humpback" />
@@ -105,12 +105,12 @@ function ClassroomHubsSection({ classCode }: ClassroomHubsSectionProps): React.R
 													/>
 												</div>
 											</DropdownMenuTrigger>
-											<DropdownMenuContent className="w-32 bg-standardBackground shadow-none">
+											<DropdownMenuContent className="w-32 bg-standard-background shadow-none">
 												<DropdownMenuItem
 													onClick={(): void => handleDeleteHub(hub)}
-													className="cursor-pointer text-sm hover:!bg-polar text-cardinal hover:!text-cardinal"
+													className="cursor-pointer text-sm hover:bg-polar! text-cardinal hover:text-cardinal!"
 												>
-													<Trash2 className="mr-2 !size-4" strokeWidth={2.5}/>
+													<Trash2 className="mr-2 size-4!" strokeWidth={2.5}/>
 													Delete
 												</DropdownMenuItem>
 											</DropdownMenuContent>

@@ -1,15 +1,51 @@
-@import './colors.css';
+@import './colors.css' layer(base);
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import 'tailwindcss';
 
-svg[display='none'] {
-  display: none !important;
+@config '../../tailwind.config.ts';
+
+@theme inline {
+  @keyframes meteor {
+    0% {
+      transform: rotate(var(--angle)) translateX(0);
+      opacity: 1;
+    }
+    70% {
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(var(--angle)) translateX(-500px);
+      opacity: 0;
+    }
+  }
 }
 
-body {
-  font-family: 'Lexend', sans-serif;
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer utilities {
+  svg[display='none'] {
+    display: none !important;
+  }
+
+  body {
+    font-family: 'Lexend', sans-serif;
+  }
 }
 
 @layer base {
@@ -126,95 +162,81 @@ body {
   }
 }
 
-.blocklyMainBackground {
-  stroke: none !important;
-}
+@layer utilities {
+  .blocklyMainBackground {
+    stroke: none !important;
+  }
 
-.blocklyToolboxCategoryLabel {
-  font-family: 'Lexend', sans-serif !important;
-  font-weight: normal !important;
-}
+  .blocklyToolboxCategoryLabel {
+    font-family: 'Lexend', sans-serif !important;
+    font-weight: normal !important;
+  }
 
-.blocklyToolboxCategory {
-  font-family: 'Lexend', sans-serif !important;
-}
+  .blocklyToolboxCategory {
+    font-family: 'Lexend', sans-serif !important;
+  }
 
-.blocklyToolboxDiv {
-  font-family: 'Lexend', sans-serif !important;
-}
+  .blocklyToolboxDiv {
+    font-family: 'Lexend', sans-serif !important;
+  }
 
-.preserve-3d {
-  transform-style: preserve-3d;
-  perspective: 1000px;
-  border-radius: 1rem; /* Equivalent to rounded-2xl */
-}
+  .preserve-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+    border-radius: 1rem; /* Equivalent to rounded-2xl */
+  }
 
-.backface-hidden {
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
-  border-radius: 1rem; /* Equivalent to rounded-2xl */
-}
+  .backface-hidden {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 1rem; /* Equivalent to rounded-2xl */
+  }
 
-/* Keep Blockly scrollbars in the DOM (so APIs like scrollCenter() work),
+  /* Keep Blockly scrollbars in the DOM (so APIs like scrollCenter() work),
    but make them invisible and not interactable. */
-.blocklyScrollbar,
-.blocklyScrollbarBackground,
-.blocklyScrollbarHandle {
-  opacity: 0 !important;
-  pointer-events: none !important;
-  transition: none !important;
-}
+  .blocklyScrollbar,
+  .blocklyScrollbarBackground,
+  .blocklyScrollbarHandle {
+    opacity: 0 !important;
+    pointer-events: none !important;
+    transition: none !important;
+  }
 
-/* Also hide any native overflow scrollbars on the workspace SVG/containers.
+  /* Also hide any native overflow scrollbars on the workspace SVG/containers.
   This ensures there's no visual scrollbar even in browsers that render things differently. */
-.blocklyWorkspaceSvg,
-.blocklySvg {
-  overflow: hidden !important;
-}
-.blocklyScrollbar {
-  width: 0 !important;
-  height: 0 !important;
-}
+  .blocklyWorkspaceSvg,
+  .blocklySvg {
+    overflow: hidden !important;
+  }
+  .blocklyScrollbar {
+    width: 0 !important;
+    height: 0 !important;
+  }
 
-   
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 
-/* Alternative approach - make scrollbar transparent */
-.scrollbar-hide::-webkit-scrollbar {
-  width: 0px;
-  background: transparent;
-}
+  /* Alternative approach - make scrollbar transparent */
+  .scrollbar-hide::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+  }
 
-/* Ensure the content is still scrollable */
-.scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;     /* Firefox */
-}
+  /* Ensure the content is still scrollable */
+  .scrollbar-hide {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 
-html, body {
-  overscroll-behavior: none !important;
-  /* overflow-x: hidden; */
-}
+  html,
+  body {
+    overscroll-behavior: none !important;
+    /* overflow-x: hidden; */
+  }
 
-* {
-  -webkit-overflow-scrolling: auto !important;
-}
-
-@theme inline {
-  @keyframes meteor {
-  0% {
-    transform: rotate(var(--angle)) translateX(0);
-    opacity: 1;
-    }
-  70% {
-    opacity: 1;
-    }
-  100% {
-    transform: rotate(var(--angle)) translateX(-500px);
-    opacity: 0;
-    }
+  * {
+    -webkit-overflow-scrolling: auto !important;
   }
 }
 

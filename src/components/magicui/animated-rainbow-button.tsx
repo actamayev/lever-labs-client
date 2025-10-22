@@ -24,9 +24,9 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 	type = "button",
 }) => {
 	const rainbowButtonClasses = cn(
-		"group relative inline-flex w-full h-full items-center justify-center rounded-xl border-0 px-8 py-2 font-medium text-primary-foreground transition-all focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+		"group relative inline-flex w-full h-full items-center justify-center rounded-xl border-0 px-8 py-2 font-medium text-primary-foreground transition-all focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
 		// Animation and background classes
-		"bg-[length:200%] brightness-110",
+		"bg-size-[200%] brightness-110",
 		// hover effect
 		// "hover:opacity-90 hover:scale-[1.02] hover:shadow-lg",
 		// Primary button has both the content background and the rainbow border
@@ -48,8 +48,8 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 	// Create a separate class for the rainbow border element
 	const rainbowBorderClasses = cn(
 		"absolute inset-0 rounded-xl -z-10",
-		"bg-[length:200%] bg-[linear-gradient(90deg,hsl(var(--color-1)),hsl(var(--color-5)),hsl(var(--color-3)),hsl(var(--color-4)),hsl(var(--color-2)))]",
-		"[filter:blur(calc(0.4*1rem))]" // Reduced blur for a tighter effect
+		"bg-size-[200%] bg-[linear-gradient(90deg,hsl(var(--color-1)),hsl(var(--color-5)),hsl(var(--color-3)),hsl(var(--color-4)),hsl(var(--color-2)))]",
+		"filter-[blur(calc(0.4*1rem))]" // Reduced blur for a tighter effect
 	)
 
 	// Inner content that sits on top of the rainbow border

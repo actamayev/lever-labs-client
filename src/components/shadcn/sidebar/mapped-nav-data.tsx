@@ -30,13 +30,13 @@ const baseNavData: SidebarNavData[] = [
 		title: "Career Quest",
 		url: "/career-quest",
 		icon: CustomBriefcase,
-		textColor: "text-careerQuestYellow"
+		textColor: "text-career-quest-yellow"
 	},
 	{
 		title: "Sandbox",
 		url: "/sandbox",
 		icon: CustomSandbox,
-		textColor: "text-sandboxOrange"
+		textColor: "text-sandbox-orange"
 	},
 	{
 		title: "Garage",
@@ -113,7 +113,7 @@ function MappedNavData(): React.ReactNode {
 									isActive={active}
 									goTo={item.url}
 									customStyles={cn(
-										active && "!border-selectedSidebarButtonBorder"
+										active && "border-selected-sidebar-button-border!"
 									)}
 								/>
 							</SidebarMenuItem>

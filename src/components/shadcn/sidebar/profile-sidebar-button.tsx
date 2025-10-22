@@ -19,7 +19,7 @@ function ProfileSidebarButton(): React.ReactNode {
 					icon={(
 						<Avatar className="w-full h-full">
 							{isNull(profilePictureUrl) ? (
-								<AvatarFallback className="bg-standardBackground text-questionText">
+								<AvatarFallback className="bg-standard-background text-question-text">
 									<CustomUserCircle className="w-full h-full" />
 								</AvatarFallback>
 							) : (

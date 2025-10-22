@@ -109,7 +109,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 	}
 
 	// Common styles for both viewing and editing states
-	const commonStyles = "!text-xl font-medium leading-10 h-10 px-2 border-2 rounded"
+	const commonStyles = "text-xl! font-medium leading-10 h-10 px-2 border-2 rounded"
 
 	return (
 		<div
@@ -120,7 +120,7 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 			{/* Hidden span to measure text width */}
 			<span
 				ref={measureRef}
-				className="absolute left-0 top-0 invisible whitespace-pre !text-xl font-medium"
+				className="absolute left-0 top-0 invisible whitespace-pre text-xl! font-medium"
 			>
 				{isEditing ? editingName : projectName}
 			</span>

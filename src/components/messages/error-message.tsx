@@ -13,7 +13,7 @@ export default function ErrorMessage(props: Props): React.ReactNode {
 	return (
 		<Alert variant="destructive" className="dark:text-red-400 border-0">
 			<div className="flex items-center justify-center gap-2">
-				<AlertCircle className="h-6 w-6 flex-shrink-0" />
+				<AlertCircle className="h-6 w-6 shrink-0" />
 				<AlertDescription className="flex-1 text-center justify-center text-lg">
 					{error}
 				</AlertDescription>

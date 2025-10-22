@@ -63,7 +63,7 @@ function TheSandboxPage(): React.ReactNode {
 
 	return (
 		<WorkbenchLayout preventElasticScroll={true}>
-			<div className="sticky top-0 z-10 bg-standardBackground pt-3 pl-5">
+			<div className="sticky top-0 z-10 bg-standard-background pt-3 pl-5">
 				<div className="w-full border-b-2 border-swan pb-3">
 					<div className="relative">
 						<div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -71,7 +71,7 @@ function TheSandboxPage(): React.ReactNode {
 						</div>
 						<Input
 							type="text"
-							className="block w-1/2 pl-10 pr-10 py-2 !text-2xl border-swan border-2
+							className="block w-1/2 pl-10 pr-10 py-2 text-2xl! border-swan border-2
 							h-12 rounded-2xl focus:ring-0 shadow-none"
 							placeholder="Search in Sandbox"
 							value={searchQuery}
@@ -94,7 +94,7 @@ function TheSandboxPage(): React.ReactNode {
 						size="lg"
 					>
 						<div className="flex flex-row items-center justify-center">
-							<PlusCircle className="!size-8 mr-2"/>
+							<PlusCircle className="size-8! mr-2"/>
 							NEW PROJECT
 						</div>
 					</TactileButton>

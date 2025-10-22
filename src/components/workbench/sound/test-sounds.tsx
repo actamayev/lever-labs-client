@@ -102,7 +102,7 @@ function TestSounds(props: Props): React.ReactNode {
 									</div>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent
-									className="rounded-xl bg-standardBackground border-swan shadow-none"
+									className="rounded-xl bg-standard-background border-swan shadow-none"
 									align="end"
 								>
 									{testSounds.map((sound): React.ReactNode => (
@@ -112,7 +112,7 @@ function TestSounds(props: Props): React.ReactNode {
 												workbenchClass.setSelectedSound(sound)
 												setIsDropdownOpen(false)
 											}}
-											className="cursor-pointer transition-none hover:!bg-polar rounded-lg"
+											className="cursor-pointer transition-none hover:bg-polar! rounded-lg"
 										>
 											<span className="text-sm font-medium">
 												{toUpper(sound)}

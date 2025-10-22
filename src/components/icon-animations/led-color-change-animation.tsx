@@ -21,7 +21,7 @@ export default function LEDColorChangeAnimation({ iconSize }: { iconSize: number
 	return (
 		<div className="pointer-events-auto w-fit" onClick={handleIconClick}>
 			<CustomLightbulb
-				className="origin-left duration-300 cursor-pointer text-questionText"
+				className="origin-left duration-300 cursor-pointer text-question-text"
 				style={{
 					color: ledColor || "",
 					filter: ledColor ? `drop-shadow(0 0 8px ${ledColor})` : "none"

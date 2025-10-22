@@ -110,7 +110,7 @@ const Slider = React.forwardRef<
       {/* Modified thumb with the three lines */}
       <SliderPrimitive.Thumb 
         className={cn(
-          "block border bg-background shadow duration-0 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 z-20",
+          "block border bg-background shadow-sm duration-0 focus-visible:outline-hidden disabled:pointer-events-none disabled:opacity-50 z-20",
           thumbBorderColor,
           roundLevel,
           "flex flex-col items-center justify-center"

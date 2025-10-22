@@ -51,7 +51,7 @@ export default function RenameClassroomDialog(props: Props): React.ReactNode {
 						value={newClassroomName}
 						onChange={(e): void => setNewClassroomName(e.target.value)}
 						placeholder="Class name"
-						className="w-full !text-xl h-10"
+						className="w-full text-xl! h-10"
 						onKeyDown={(e): void => {
 							if (e.key === "Escape") {
 								handleCancelRename()

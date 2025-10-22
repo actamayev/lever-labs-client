@@ -46,7 +46,7 @@ function ChatTextArea(props: Props): React.ReactNode {
 	}
 
 	return (
-		<div className="px-4 pb-4 flex-shrink-0">
+		<div className="px-4 pb-4 shrink-0">
 			<div className="relative">
 				<Textarea
 					ref={inputRef}
@@ -64,7 +64,7 @@ function ChatTextArea(props: Props): React.ReactNode {
 							shadowClass={cn((isStreaming && !isWaitingForCodeCheck) ? "shadow-cardinal-2" : undefined)}
 							shadowHeight={4}
 							className={cn("absolute right-2 bottom-4 h-8 w-8 shrink-0 text-white font-semibold",
-								(isStreaming && !isWaitingForCodeCheck) ? "bg-cardinal" : "bg-iMessageBlue"
+								(isStreaming && !isWaitingForCodeCheck) ? "bg-cardinal" : "bg-i-message-blue"
 							)}
 						>
 							{(isStreaming && !isWaitingForCodeCheck) ? (

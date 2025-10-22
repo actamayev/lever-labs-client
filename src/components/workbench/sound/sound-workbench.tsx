@@ -25,7 +25,7 @@ function SoundWorkbench(): React.ReactNode {
 	const isSoundsDisabled = !garageClass.garageSoundsStatus
 
 	const SpeakerIconToShow = (): React.ReactNode => {
-		const baseClasses = "!h-16 !w-16"
+		const baseClasses = "h-16! w-16!"
 		const strokeWidth = 2.5
 		if (workbenchClass.isMuted || isSoundsDisabled) {
 			return <VolumeOff className={cn(baseClasses, "opacity-50")} strokeWidth={strokeWidth}/>
@@ -82,7 +82,7 @@ function SoundWorkbench(): React.ReactNode {
 			<HoverCardContent
 				className={cn(
 					"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
-					"bg-standardBackground",
+					"bg-standard-background",
 					"animate-none duration-0",
 				)}
 				side="bottom"

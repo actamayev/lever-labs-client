@@ -73,7 +73,7 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 					<div>
 						<WorkbenchIconTemplate>
 							<NetworkIconToShow
-								iconClasses={isSandboxPage ? "!size-8" : ""}
+								iconClasses={isSandboxPage ? "size-8!" : ""}
 								extraTextClasses={isSandboxPage ? "text-base font-medium mt-0" : ""}
 							/>
 						</WorkbenchIconTemplate>
@@ -83,7 +83,7 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 				<HoverCardContent
 					className={cn(
 						"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
-						"bg-standardBackground",
+						"bg-standard-background",
 						"duration-0 z-30",
 					)}
 					side="bottom"

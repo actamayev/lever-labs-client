@@ -42,7 +42,7 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 					<ConnectToPipButton
 						colors={getDuolingoColors("humpback")}
 						tactileButtonClasses="text-4xl"
-						botIconClasses="!size-12"
+						botIconClasses="size-12!"
 					/>
 				</div>
 			)}

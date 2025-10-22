@@ -90,7 +90,7 @@ export default function CreateScoreboardDialog(props: Props): React.ReactNode {
 							value={scoreboardName}
 							onChange={(e): void => setScoreboardName(e.target.value)}
 							placeholder="Enter scoreboard name"
-							className="w-full !text-xl h-10"
+							className="w-full text-xl! h-10"
 							onKeyDown={handleKeyDown}
 							autoFocus
 							maxLength={50}
