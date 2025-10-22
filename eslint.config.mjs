@@ -61,7 +61,6 @@ const eslintConfig = [
 		parserOptions: {
 			ecmaVersion: "latest",
 			sourceType: "module",
-			project: "./tsconfig.json",
 			ecmaFeatures: {
 				jsx: true,
 			},
