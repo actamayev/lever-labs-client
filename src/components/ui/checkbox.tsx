@@ -3,7 +3,7 @@
 import * as React from "react"
 import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
 import { Check } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../lib/shadcn/utils"
 
 interface CheckboxProps extends React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root> {
   showPlaceholder?: boolean;

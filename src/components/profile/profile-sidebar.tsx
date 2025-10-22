@@ -6,7 +6,7 @@ import { LogOut } from "lucide-react"
 import logout from "../../utils/auth/logout"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { BlackWhiteTactileButton } from "../buttons/tactile-buttons"
-import { Card, CardDescription, CardTitle } from "../shadcn/ui/card"
+import { Card, CardDescription, CardTitle } from "../ui/card"
 
 interface SidebarSectionProps {
 	title: string

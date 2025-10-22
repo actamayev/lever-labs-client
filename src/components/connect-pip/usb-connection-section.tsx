@@ -3,7 +3,7 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import { CustomUsb } from "../../icons/custom-usb"

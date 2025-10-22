@@ -9,7 +9,7 @@ import { createChallengeToolbox } from "@lever-labs/common-ts/types/utils/blockl
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { RotateCcw } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
-import { Button } from "../shadcn/ui/button"
+import { Button } from "../ui/button"
 import learnClass from "../../classes/learn-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"

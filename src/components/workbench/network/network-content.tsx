@@ -3,7 +3,7 @@
 import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
 import { Settings } from "lucide-react"
-import { Button } from "../../shadcn/ui/button"
+import { Button } from "../../ui/button"
 import pipClass from "../../../classes/pip-class"
 import workbenchClass from "../../../classes/workbench-class"
 import disconnectFromPip from "../../../utils/pip/disconnect-from-pip"

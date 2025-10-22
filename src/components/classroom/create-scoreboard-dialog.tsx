@@ -9,10 +9,10 @@ import {
 	DialogTitle,
 	DialogFooter,
 	DialogClose
-} from "../shadcn/ui/dialog"
-import { Input } from "../shadcn/ui/input"
+} from "../ui/dialog"
+import { Input } from "../ui/input"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import createScoreboard from "../../utils/teacher/scoreboard/create-scoreboard"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"

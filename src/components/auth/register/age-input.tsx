@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { Control, FieldPath } from "react-hook-form"
-import { Input } from "../../shadcn/ui/input"
-import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
+import { Input } from "../../ui/input"
+import { FormControl, FormField, FormItem, FormMessage } from "../../ui/form"
 import { handleTypeAge } from "../../../utils/handle-type-validation/handle-type-fields"
 
 interface Props<T extends { age: number | null }> {

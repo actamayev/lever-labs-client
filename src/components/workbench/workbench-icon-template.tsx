@@ -1,6 +1,6 @@
 "use client"
 import { cn } from "../../lib/shadcn/utils"
-import { buttonVariants } from "../shadcn/ui/button"
+import { buttonVariants } from "../ui/button"
 
 interface Props {
 	children: React.ReactNode

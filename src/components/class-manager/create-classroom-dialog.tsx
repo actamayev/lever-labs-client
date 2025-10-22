@@ -3,14 +3,14 @@
 import { useState, useCallback } from "react"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { AlertCircle, CheckCircle } from "lucide-react"
-import { Input } from "../shadcn/ui/input"
-import { Label } from "../shadcn/ui/label"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import createClassroom from "../../utils/teacher/create-classroom"
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog"
 
 interface CreateClassroomDialogProps {
 	isOpen: boolean

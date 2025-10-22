@@ -9,7 +9,7 @@ import pipClass from "../../../classes/pip-class"
 import NetworkIconToShow from "./network-icon-to-show"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../ui/hover-card"
 
 // eslint-disable-next-line max-lines-per-function
 function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React.ReactNode {

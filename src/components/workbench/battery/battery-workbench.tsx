@@ -5,7 +5,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import BatteryWorkbenchIcon from "./battery-workbench-icon"
 import workbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../ui/hover-card"
 import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
 
 function BatteryWorkbench(): React.ReactNode {

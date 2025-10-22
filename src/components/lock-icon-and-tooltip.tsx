@@ -1,7 +1,7 @@
 "use client"
 
 import { Lock } from "lucide-react"
-import { Button } from "./shadcn/ui/button"
+import { Button } from "./ui/button"
 import CustomTooltip from "./custom-tooltip"
 
 export default function LockIconAndTooltip(): React.ReactNode {

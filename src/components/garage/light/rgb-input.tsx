@@ -3,8 +3,8 @@
 
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { Input } from "../../shadcn/ui/input"
-import { Label } from "../../shadcn/ui/label"
+import { Input } from "../../ui/input"
+import { Label } from "../../ui/label"
 import garageClass from "../../../classes/garage-class"
 import CustomTooltip from "../../custom-tooltip"
 

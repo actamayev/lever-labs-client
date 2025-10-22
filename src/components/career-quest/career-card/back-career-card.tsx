@@ -8,7 +8,7 @@ import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import SingleComponentUsed from "../single-component-used"
 import SingleCodingConceptUsed from "../single-coding-concept-used"
-import { Separator } from "../../shadcn/ui/separator"
+import { Separator } from "../../ui/separator"
 
 interface Props {
 	careerData: CareerData

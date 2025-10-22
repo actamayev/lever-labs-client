@@ -1,7 +1,7 @@
 "use client"
 
 import { Moon, Sun } from "lucide-react"
-import { Button } from "@/components/shadcn/ui/button"
+import { Button } from "@/components/ui/button"
 import useSetDefaultSiteTheme from "../../utils/personal-info/set-default-site-theme"
 import { observer } from "mobx-react"
 

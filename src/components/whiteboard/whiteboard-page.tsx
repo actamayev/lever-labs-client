@@ -7,7 +7,7 @@ import { BookOpen } from "lucide-react"
 import studentClass from "../../classes/student-class"
 import JoinClassroomDialog from "./join-classroom-dialog"
 import SingleWhiteboardCard from "./single-whiteboard-card"
-import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import WhiteboardStatsCards from "./whiteboard-stats-cards"
 
 function WhiteboardPage(): React.ReactNode {

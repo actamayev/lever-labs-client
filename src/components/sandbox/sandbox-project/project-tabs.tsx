@@ -4,10 +4,10 @@ import { observer } from "mobx-react"
 import debounce from "lodash-es/debounce"
 import { useRef, useEffect, useState, useMemo } from "react"
 import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
-import { Textarea } from "../../shadcn/ui/textarea"
+import { Textarea } from "../../ui/textarea"
 import SandboxChatInterface from "./sandbox-chat-interface"
 import sandboxClass from "../../../classes/sandbox-class"
-import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../shadcn/ui/tabs"
+import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../ui/tabs"
 import editSandboxProjectNotes from "../../../utils/sandbox/edit-sandbox-project-notes"
 
 function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): React.ReactNode {

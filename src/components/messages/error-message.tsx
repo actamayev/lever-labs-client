@@ -1,7 +1,7 @@
 "use client"
 
 import { AlertCircle } from "lucide-react"
-import { Alert, AlertDescription } from "../shadcn/ui/alert"
+import { Alert, AlertDescription } from "../ui/alert"
 
 interface Props {
 	error: string

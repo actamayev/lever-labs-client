@@ -4,7 +4,7 @@
 import { observer } from "mobx-react"
 import { useEffect } from "react"
 import learnClass from "../../classes/learn-class"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../ui/tactile-button"
 import LearnMiniSandbox from "./learn-mini-sandbox"
 import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
 import { cn } from "../../lib/shadcn/utils"

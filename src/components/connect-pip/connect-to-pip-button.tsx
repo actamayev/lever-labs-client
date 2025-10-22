@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { BotIcon } from "lucide-react"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../ui/tactile-button"
 import ConnectToPipDialog from "./connect-pip-dialog"
 import { DuolingoColorVariants } from "../../utils/get-duolingo-colors"
 import pipClass from "../../classes/pip-class"

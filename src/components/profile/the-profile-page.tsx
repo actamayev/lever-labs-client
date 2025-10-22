@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { Moon, Sun } from "lucide-react"
-import { Button } from "../shadcn/ui/button"
+import { Button } from "../ui/button"
 import ProfileLayout from "./profile-layout"
 import ChangeNameSection from "./change-name-section"
 import ProfileImage from "./profile-image/profile-image"

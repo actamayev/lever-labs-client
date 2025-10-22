@@ -2,14 +2,14 @@
 
 import { observer } from "mobx-react"
 import { ChevronDown } from "lucide-react"
-import { Input } from "../../shadcn/ui/input"
+import { Input } from "../../ui/input"
 import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"
-import { buttonVariants } from "../../shadcn/ui/button"
+import { buttonVariants } from "../../ui/button"
 import garageClass from "../../../classes/garage-class"
 import DisplayActionTriangle from "./display-action-triangle"
 import { PRE_DEFINED_DESIGNS } from "../../../utils/constants/display-constants"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../shadcn/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu"
 
 // eslint-disable-next-line max-lines-per-function
 function DisplayControls(): React.ReactNode {

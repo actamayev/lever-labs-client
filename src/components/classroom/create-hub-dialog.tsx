@@ -9,17 +9,17 @@ import {
 	DialogTitle,
 	DialogFooter,
 	DialogClose
-} from "../shadcn/ui/dialog"
-import { Input } from "../shadcn/ui/input"
+} from "../ui/dialog"
+import { Input } from "../ui/input"
 import {
 	Select,
 	SelectContent,
 	SelectItem,
 	SelectTrigger,
 	SelectValue,
-} from "../shadcn/ui/select"
+} from "../ui/select"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import { CAREER_DEFINITIONS } from "../../utils/career-quest/career-quest-right-content/all-career-quest-right-content"

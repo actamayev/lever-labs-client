@@ -11,9 +11,9 @@ import {
 	DropdownMenuTrigger,
 	DropdownMenuItem,
 	DropdownMenuContent
-} from "../../shadcn/ui/dropdown-menu"
+} from "../../ui/dropdown-menu"
 import { cn } from "../../../lib/shadcn/utils"
-import { Button } from "../../shadcn/ui/button"
+import { Button } from "../../ui/button"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import relativeDateFormatter from "../../../utils/sandbox/date-formatting"
 import starSandboxProject from "../../../utils/sandbox/star-sandbox-project"

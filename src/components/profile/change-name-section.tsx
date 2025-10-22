@@ -3,9 +3,9 @@
 import { observer } from "mobx-react"
 import { useState, useCallback, useEffect } from "react" // Add useEffect
 import { Save } from "lucide-react"
-import { Input } from "../shadcn/ui/input"
-import { Label } from "../shadcn/ui/label"
-import { Button } from "../shadcn/ui/button"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
+import { Button } from "../ui/button"
 import CharacterCounter from "../character-counter"
 import editName from "../../utils/personal-info/edit-name"
 import personalInfoClass from "../../classes/personal-info-class"

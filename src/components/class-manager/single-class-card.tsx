@@ -3,9 +3,9 @@
 import { observer } from "mobx-react"
 import { Edit, EllipsisVertical } from "lucide-react"
 import { BasicTeacherClassroomData } from "@lever-labs/common-ts/types/api"
-import { Card, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Card, CardHeader, CardTitle } from "../ui/card"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../shadcn/ui/dropdown-menu"
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"
 
 interface Props {
 	classroom: BasicTeacherClassroomData

@@ -2,7 +2,7 @@
 import React from "react"
 import Link from "next/link"
 import isUndefined from "lodash-es/isUndefined"
-import { SidebarMenuButton } from "@/components/shadcn/ui/sidebar"
+import { SidebarMenuButton } from "@/components/ui/sidebar"
 import { usePathname } from "next/navigation"
 import { cn } from "../../lib/shadcn/utils"
 

@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Form } from "../../shadcn/ui/form"
+import { Form } from "../../ui/form"
 import AgeInput from "../register/age-input"
 import AuthButton from "../../buttons/generic-buttons"
 import UsernameInput from "../register/username-input"

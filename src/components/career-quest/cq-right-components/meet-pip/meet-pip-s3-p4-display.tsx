@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { Input } from "../../../shadcn/ui/input"
+import { Input } from "../../../ui/input"
 import { cn } from "../../../../lib/shadcn/utils"
 import editName from "../../../../utils/personal-info/edit-name"
 import RenderDisplay from "../../../garage/display/render-display"

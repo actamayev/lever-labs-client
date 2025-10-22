@@ -8,12 +8,12 @@ import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@/components/shadcn/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu"
 import { LightAnimation } from "@lever-labs/common-ts/types/garage"
 import { Rainbow, Siren, ChevronDown, Circle } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import { CustomYoga } from "../../../icons/custom-yoga"
-import { buttonVariants } from "../../shadcn/ui/button"
+import { buttonVariants } from "../../ui/button"
 import garageClass from "../../../classes/garage-class"
 import lightsAnimation from "../../../utils/garage/lights-animation"
 import CustomTooltip from "../../custom-tooltip"

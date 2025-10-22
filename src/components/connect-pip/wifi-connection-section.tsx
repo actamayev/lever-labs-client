@@ -4,7 +4,7 @@ import { useCallback, useState, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import { BotIcon, WifiHighIcon } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
 import { PipUUID } from "@lever-labs/common-ts/types/utils"
@@ -12,7 +12,7 @@ import pipClass from "../../classes/pip-class"
 import { RetrieveIsPipUUIDValidResponse } from "@lever-labs/common-ts/types/api"
 import searchPipByUUIDUtil from "../../utils/pip/search-pip-by-uuid-util"
 import { ACCEPTABLE_PIP_ID_CHARACTERS } from "@lever-labs/common-ts/types/utils/constants"
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "../shadcn/ui/input-otp"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
 
 // eslint-disable-next-line max-lines-per-function
 function WifiConnectionSection(): React.ReactNode {

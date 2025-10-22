@@ -5,14 +5,14 @@ import { useCallback } from "react"
 import { Play, UserCheck, EllipsisVertical, Trash2 } from "lucide-react"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { TeacherViewHubData } from "@lever-labs/common-ts/types/hub"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import { TactileButton } from "../ui/tactile-button"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "../shadcn/ui/dropdown-menu"
+} from "../ui/dropdown-menu"
 import teacherClass from "../../classes/teacher-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import getDuolingoColors from "../../utils/get-duolingo-colors"

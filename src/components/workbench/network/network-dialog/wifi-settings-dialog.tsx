@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { useCallback, useEffect } from "react"
 import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
-import { Button } from "../../../shadcn/ui/button"
+import { Button } from "../../../ui/button"
 import ScanNetworksSection from "./scan-networks-section"
 import KnownNetworksSection from "./known-networks-section"
 import workbenchClass from "../../../../classes/workbench-class"
@@ -13,7 +13,7 @@ import useScanForNetworks from "../../../../hooks/use-scan-for-networks"
 import PreviouslyConnectedSection from "./previously-connected-section"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../../../../classes/serial-connection-manager-class"
-import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../../shadcn/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from "../../../ui/dialog"
 
 function WiFiSettingsDialog(): React.ReactNode {
 	// Use the custom hook

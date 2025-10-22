@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { Button, ButtonProps } from "@/components/shadcn/ui/button"
+import { Button, ButtonProps } from "@/components/ui/button"
 import { cn } from "@/lib/shadcn/utils"
 
 type TactileButtonProps = Omit<ButtonProps, 'variant'> & {

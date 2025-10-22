@@ -6,12 +6,12 @@ import { useCallback, useState } from "react"
 import { ChevronRight, Eye, EyeOff, Lock } from "lucide-react"
 import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
 import { ScannedWiFiNetworkItem } from "@lever-labs/common-ts/types/pip"
-import { Input } from "../../../shadcn/ui/input"
-import { Button } from "../../../shadcn/ui/button"
+import { Input } from "../../../ui/input"
+import { Button } from "../../../ui/button"
 import NetworkStrengthIcon from "../../../network-strength-icon"
 import serialConnectionManagerClass from "../../../../classes/serial-connection-manager-class"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../shadcn/ui/collapsible"
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "../../../ui/collapsible"
 
 // eslint-disable-next-line max-lines-per-function
 function ScanNetworksSection(): React.ReactNode {

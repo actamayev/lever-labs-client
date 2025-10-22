@@ -3,8 +3,8 @@
 import * as React from "react"
 import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
-import { ButtonProps } from "../shadcn/ui/button"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { ButtonProps } from "../ui/button"
+import { TactileButton } from "../ui/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
 

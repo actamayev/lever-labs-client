@@ -13,14 +13,14 @@ import {
 	DialogTitle,
 	DialogFooter,
 	DialogClose
-} from "../../shadcn/ui/dialog"
+} from "../../ui/dialog"
 import LoadingOval from "../../loading-oval"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { TactileButton } from "../../ui/tactile-button"
 import { CustomUserCircle } from "../../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
 import uploadProfilePicture from "../../../utils/personal-info/upload-profile-picture"
 import removeCurrentProfilePicture from "../../../utils/personal-info/remove-current-profile-picture"
-import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
+import { Avatar, AvatarFallback } from "../../ui/avatar"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { cn } from "../../../lib/shadcn/utils"
 

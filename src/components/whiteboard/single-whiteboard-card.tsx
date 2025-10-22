@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { StudentClassroomData } from "@lever-labs/common-ts/types/api"
-import { Card, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Card, CardHeader, CardTitle } from "../ui/card"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 
 function SingleWhiteboardCard({ classroom } : { classroom: StudentClassroomData }): React.ReactNode {

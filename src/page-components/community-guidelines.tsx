@@ -2,7 +2,7 @@
 "use client"
 
 import Link from "next/link"
-import { Separator } from "../components/shadcn/ui/separator"
+import { Separator } from "../components/ui/separator"
 import ProfileLayout from "../components/profile/profile-layout"
 import SupportSectionContainer from "../components/support/support-section-container"
 import { ComplianceParagraph, ComplianceSectionHeader } from "../components/compliance"

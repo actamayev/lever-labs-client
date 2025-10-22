@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { useMemo, useState } from "react"
-import { TactileButton } from "../../../shadcn/ui/tactile-button"
+import { TactileButton } from "../../../ui/tactile-button"
 import getDuolingoColors from "../../../../utils/get-duolingo-colors"
 import { cn } from "../../../../lib/shadcn/utils"
 import careerQuestClass from "../../../../classes/career-quest-class"

@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { ArrowDown, BotMessageSquare } from "lucide-react"
 import { useEffect, useRef, useState, useCallback } from "react"
 import { cn } from "../../lib/shadcn/utils"
-import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
+import { Avatar, AvatarFallback } from "../ui/avatar"
 
 interface Props {
 	hasAnyMessages: boolean

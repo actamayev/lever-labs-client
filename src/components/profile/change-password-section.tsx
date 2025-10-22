@@ -3,13 +3,13 @@
 import { observer } from "mobx-react"
 import { EyeOff, Eye } from "lucide-react"
 import { useState, useCallback } from "react"
-import { Input } from "../shadcn/ui/input"
-import { Label } from "../shadcn/ui/label"
-import { Button } from "../shadcn/ui/button"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
+import { Button } from "../ui/button"
 import changePassword from "../../utils/personal-info/change-password"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
 

@@ -11,12 +11,12 @@ import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@/components/shadcn/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu"
 import { cn } from "../../../lib/shadcn/utils"
 import playTune from "../../../utils/workbench/play-tune"
 import workbenchClass from "../../../classes/workbench-class"
 import garageClass from "../../../classes/garage-class"
-import { Button, buttonVariants } from "../../shadcn/ui/button"
+import { Button, buttonVariants } from "../../ui/button"
 import CustomTooltip from "../../custom-tooltip"
 
 // Helper function to get button tooltip content

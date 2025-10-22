@@ -11,7 +11,7 @@ import {
 	Tooltip,
 	ResponsiveContainer,
 } from "recharts"
-import { Card, CardContent, CardHeader, CardTitle } from "../../../shadcn/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card"
 import sensorDataClass from "../../../../classes/sensor-data-class"
 import { MeetPipTriggerType, CareerType } from "@lever-labs/common-ts/protocol"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"

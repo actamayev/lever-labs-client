@@ -1,7 +1,7 @@
 "use client"
 
 import { usePathname } from "next/navigation"
-import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/components/shadcn/ui/sidebar"
+import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader } from "@/components/ui/sidebar"
 import SidebarLogo from "./sidebar-logo"
 import MappedNavData from "./mapped-nav-data"
 import ProfileSidebarButton from "./profile-sidebar-button"

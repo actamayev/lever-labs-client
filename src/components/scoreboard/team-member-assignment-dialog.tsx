@@ -10,9 +10,9 @@ import {
 	DialogTitle,
 	DialogFooter,
 	DialogClose
-} from "../shadcn/ui/dialog"
-import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+} from "../ui/dialog"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { TactileButton } from "../ui/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import teacherClass from "../../classes/teacher-class"

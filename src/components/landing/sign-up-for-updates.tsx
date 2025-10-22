@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useCallback, useMemo, useState } from "react"
 import { EmailUpdatesRequest } from "@lever-labs/common-ts/types/api"
-import { Input } from "../shadcn/ui/input"
+import { Input } from "../ui/input"
 import isEmailValid from "../../utils/auth/is-email-valid"
 import { emailUpdatesSchema } from "../../utils/auth/auth-schemas"
 import subscribeForUpdates from "../../utils/subscribe-for-updates"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
-import { Form, FormControl, FormField, FormItem } from "../shadcn/ui/form"
+import { Form, FormControl, FormField, FormItem } from "../ui/form"
 
 export default function SignUpForUpdates(): React.ReactNode {
 	const [isLoading, setIsLoading] = useState(false)

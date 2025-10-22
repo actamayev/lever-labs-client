@@ -1,7 +1,7 @@
 "use client"
 import { SandboxProject } from "@lever-labs/common-ts/types/sandbox"
 import { useState, useRef, useEffect, KeyboardEvent } from "react"
-import { Input } from "../../../shadcn/ui/input"
+import { Input } from "../../../ui/input"
 import editSandboxProjectName from "../../../../utils/sandbox/edit-sandbox-project-name"
 
 // eslint-disable-next-line max-lines-per-function

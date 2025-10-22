@@ -12,7 +12,7 @@ import {
 import { useMemo } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
-import { Card, CardContent, CardHeader, CardTitle } from "../../../shadcn/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "../../../ui/card"
 import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 

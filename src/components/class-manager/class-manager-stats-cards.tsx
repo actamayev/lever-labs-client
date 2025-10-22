@@ -3,9 +3,9 @@
 import { Plus, BookOpen, Calendar } from "lucide-react"
 import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
-import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import teacherClass from "../../classes/teacher-class"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../ui/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { Dispatch, SetStateAction } from "react"
 

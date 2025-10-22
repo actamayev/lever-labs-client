@@ -2,7 +2,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../ui/tactile-button"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import { Check, X } from "lucide-react"

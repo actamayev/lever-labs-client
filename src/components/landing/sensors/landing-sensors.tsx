@@ -1,6 +1,6 @@
 "use client"
 
-import { Card, CardContent } from "../../shadcn/ui/card"
+import { Card, CardContent } from "../../ui/card"
 import React from "react"
 import LEDCard from "./led-card"
 import IMUCard from "./imu-card"

@@ -5,7 +5,7 @@ import Image from "next/image"
 import {
 	SidebarMenu,
 	SidebarMenuItem,
-} from "@/components/shadcn/ui/sidebar"
+} from "@/components/ui/sidebar"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 
 export default function SidebarLogo(): React.ReactNode {

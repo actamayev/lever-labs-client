@@ -7,7 +7,7 @@ import { useState, useCallback } from "react"
 import EditProfileImageDialog from "./edit-profile-image-dialog"
 import { CustomUserCircle } from "../../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
-import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
+import { Avatar, AvatarFallback } from "../../ui/avatar"
 
 function ProfileImage(): React.ReactNode {
 	const [isDialogOpen, setIsDialogOpen] = useState(false)

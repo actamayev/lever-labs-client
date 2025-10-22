@@ -7,8 +7,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogClose
-} from "../shadcn/ui/dialog"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+} from "../ui/dialog"
+import { TactileButton } from "../ui/tactile-button"
 import learnClass from "../../classes/learn-class"
 import { observer } from "mobx-react"
 

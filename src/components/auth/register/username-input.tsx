@@ -1,9 +1,9 @@
 "use client"
 
 import { Control, FieldPath } from "react-hook-form"
-import { Input } from "../../shadcn/ui/input"
+import { Input } from "../../ui/input"
 import CharacterCounter from "../../character-counter"
-import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
+import { FormControl, FormField, FormItem, FormMessage } from "../../ui/form"
 import { handleTypeUsername } from "../../../utils/handle-type-validation/handle-type-fields"
 
 // Base interface for any form that has a username field

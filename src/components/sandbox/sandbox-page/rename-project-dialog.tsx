@@ -9,10 +9,10 @@ import {
 	DialogTitle,
 	DialogFooter,
 	DialogClose
-} from "../../shadcn/ui/dialog"
-import { Input } from "../../shadcn/ui/input"
+} from "../../ui/dialog"
+import { Input } from "../../ui/input"
 import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { TactileButton } from "../../ui/tactile-button"
 import { cn } from "../../../lib/shadcn/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import sandboxClass from "../../../classes/sandbox-class"
