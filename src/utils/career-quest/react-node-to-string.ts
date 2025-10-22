@@ -25,7 +25,7 @@ export function reactNodeToString(node: ReactNode | (() => ReactNode)): string {
 	}
 	if (typeof node === "object" && "props" in node) {
 		// Handle React elements
-		const { children } = node.props || {}
+		const { children } = node.props as { children: ReactNode }
 		if (children) {
 			return reactNodeToString(children)
 		}
