@@ -9,7 +9,7 @@ import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 function DisplaySection(): React.ReactNode {
 	return (
 		<div
-			className="h-1/3 overflow-hidden border-t border-r border-b"
+			className="h-1/3 overflow-hidden border-t border-r border-b border-swan"
 			style={{
 				borderTopRightRadius: WORKBENCH_ROUNDING_RADIUS,
 				borderBottomRightRadius: WORKBENCH_ROUNDING_RADIUS

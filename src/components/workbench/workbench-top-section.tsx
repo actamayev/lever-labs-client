@@ -19,7 +19,7 @@ function WorkbenchTopSection({ topSectionHeight }: { topSectionHeight: number })
 
 	return (
 		<div
-			className={cn("fixed border-b border-l-2", isGaragePage ? "border-l" : "border-l-2")}
+			className={cn("fixed border-b border-l-2 border-swan", isGaragePage ? "border-l" : "border-l-2")}
 			style={{
 				width: workbenchClass.fixedWidth + "px",
 				top: "0",

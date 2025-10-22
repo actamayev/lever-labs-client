@@ -64,7 +64,7 @@ function LightAnimationsList(): React.ReactNode {
 					variant: "outline",
 					className: cn(
 						"flex items-center gap-1 rounded-xl justify-between",
-						"px-4 py-6! font-medium w-full border-2 shadow-none text-xl!",
+						"px-4 py-6! font-medium w-full border-2 border-swan shadow-none text-xl!",
 						isDisabled ? "cursor-not-allowed opacity-50" : "cursor-pointer"
 					)
 				})

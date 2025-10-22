@@ -1,9 +1,10 @@
-@import './colors.css' layer(base);
-
 @import 'tailwindcss';
-
 @config '../../tailwind.config.ts';
 
+/* Import your color definitions */
+@import './colors.css' layer(base);
+
+/* Inline theme for custom animations */
 @theme inline {
   @keyframes meteor {
     0% {
@@ -24,9 +25,6 @@
   The default border color has changed to `currentcolor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
   looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
 */
 @layer base {
   *,
@@ -35,6 +33,16 @@
   ::backdrop,
   ::file-selector-button {
     border-color: var(--color-gray-200, currentcolor);
+  }
+
+  /* Fix for cursor-pointer - ensure it works properly */
+  .cursor-pointer {
+    cursor: pointer !important;
+  }
+
+  /* If you want buttons to use pointer cursor by default */
+  button {
+    cursor: pointer;
   }
 }
 
@@ -89,6 +97,7 @@
     --color-4: 195 100% 63%;
     --color-5: 90 100% 63%;
   }
+  
   .dark {
     --background: 196 27% 11%;
     --foreground: 204 3.98% 98.43%;
@@ -98,16 +107,16 @@
     --popover-foreground: 204 3.98% 98.43%;
     --primary: 204 3.98% 98.43%;
     --primary-foreground: 240 5.9% 10%;
-    --secondary: 217 19.1% 26.7%;;
+    --secondary: 217 19.1% 26.7%;
     --secondary-foreground: 204 3.98% 98.43%;
-    --muted: 217 19.1% 26.7%;;
+    --muted: 217 19.1% 26.7%;
     --muted-foreground: 240 5% 64.9%;
-    --accent: 217 19.1% 26.7%;;
+    --accent: 217 19.1% 26.7%;
     --accent-foreground: 204 3.98% 98.43%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 204 3.98% 98.43%;
-    --border: 217 19.1% 26.7%;;
-    --input: 217 19.1% 26.7%;;
+    --border: 217 19.1% 26.7%;
+    --input: 217 19.1% 26.7%;
     --ring: 240 4.9% 83.9%;
     --chart-1: 220 70% 50%;
     --chart-2: 160 60% 45%;
@@ -128,6 +137,7 @@
     --color-4: 195 100% 63%;
     --color-5: 90 100% 63%;
   }
+  
   .theme {
     --animate-meteor: meteor 5s linear infinite;
   }
@@ -183,17 +193,15 @@
   .preserve-3d {
     transform-style: preserve-3d;
     perspective: 1000px;
-    border-radius: 1rem; /* Equivalent to rounded-2xl */
+    border-radius: 1rem;
   }
 
   .backface-hidden {
     backface-visibility: hidden;
     -webkit-backface-visibility: hidden;
-    border-radius: 1rem; /* Equivalent to rounded-2xl */
+    border-radius: 1rem;
   }
 
-  /* Keep Blockly scrollbars in the DOM (so APIs like scrollCenter() work),
-   but make them invisible and not interactable. */
   .blocklyScrollbar,
   .blocklyScrollbarBackground,
   .blocklyScrollbarHandle {
@@ -202,12 +210,11 @@
     transition: none !important;
   }
 
-  /* Also hide any native overflow scrollbars on the workspace SVG/containers.
-  This ensures there's no visual scrollbar even in browsers that render things differently. */
   .blocklyWorkspaceSvg,
   .blocklySvg {
     overflow: hidden !important;
   }
+  
   .blocklyScrollbar {
     width: 0 !important;
     height: 0 !important;
@@ -215,24 +222,18 @@
 
   .scrollbar-hide::-webkit-scrollbar {
     display: none;
-  }
-
-  /* Alternative approach - make scrollbar transparent */
-  .scrollbar-hide::-webkit-scrollbar {
     width: 0px;
     background: transparent;
   }
 
-  /* Ensure the content is still scrollable */
   .scrollbar-hide {
-    -ms-overflow-style: none; /* IE and Edge */
-    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 
   html,
   body {
     overscroll-behavior: none !important;
-    /* overflow-x: hidden; */
   }
 
   * {
@@ -255,7 +256,6 @@
   overflow: hidden !important;
 }
 
-/* Ensure the container is positioned relatively */
 [data-input-otp-container] {
   position: relative !important;
 }
