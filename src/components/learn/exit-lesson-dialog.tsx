@@ -8,7 +8,7 @@ import {
 	DialogTitle,
 	DialogClose
 } from "../ui/dialog"
-import { TactileButton } from "../ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import learnClass from "../../classes/learn-class"
 import { observer } from "mobx-react"
 

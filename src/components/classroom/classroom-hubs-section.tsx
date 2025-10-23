@@ -6,7 +6,7 @@ import { Play, UserCheck, EllipsisVertical, Trash2 } from "lucide-react"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { TeacherViewHubData } from "@lever-labs/common-ts/types/hub"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { TactileButton } from "../ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import {
 	DropdownMenu,
 	DropdownMenuContent,

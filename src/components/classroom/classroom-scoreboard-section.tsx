@@ -6,7 +6,7 @@ import { Trophy, Clock, Users, EllipsisVertical, Trash2 } from "lucide-react"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { Scoreboard } from "@lever-labs/common-ts/types/scoreboard"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
-import { TactileButton } from "../ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import {
 	DropdownMenu,
 	DropdownMenuContent,

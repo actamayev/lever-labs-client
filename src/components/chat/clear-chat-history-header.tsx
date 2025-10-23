@@ -2,7 +2,7 @@
 
 import { Trash2, X } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
 interface ClearChatHistoryHeaderProps {

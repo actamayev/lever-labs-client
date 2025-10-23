@@ -12,7 +12,7 @@ import {
 } from "../ui/dialog"
 import { Input } from "../ui/input"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import editClassroomName from "../../utils/teacher/edit-classroom-name"
 

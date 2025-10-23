@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import { Lightbulb, Send, Square } from "lucide-react"
 import { Dispatch, RefObject, SetStateAction, useCallback } from "react"
 import { Textarea } from "../ui/textarea"
-import { TactileButton } from "../ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
 import CustomTooltip from "../custom-tooltip"
 

@@ -13,7 +13,7 @@ import WorkbenchLayout from "../../layouts/workbench-layout"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import createSandboxProject from "../../../utils/sandbox/create-sandbox-project"
 import retrieveAllSandboxProjects from "../../../utils/sandbox/retrieve-all-sandbox-projects"
-import { TactileButton } from "../../ui/tactile-button"
+import { TactileButton } from "../../buttons/tactile-button"
 import { cn } from "../../../lib/shadcn/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 

@@ -19,7 +19,7 @@ import {
 	SelectValue,
 } from "../ui/select"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import { CAREER_DEFINITIONS } from "../../utils/career-quest/career-quest-right-content/all-career-quest-right-content"

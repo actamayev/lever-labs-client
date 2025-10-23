@@ -11,7 +11,7 @@ import CreateHubDialog from "./create-hub-dialog"
 import DeleteHubDialog from "./delete-hub-dialog"
 import CreateScoreboardDialog from "./create-scoreboard-dialog"
 import teacherClass from "../../classes/teacher-class"
-import { TactileButton } from "../ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function
