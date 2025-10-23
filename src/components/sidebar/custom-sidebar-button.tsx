@@ -11,7 +11,6 @@ interface CustomSidebarButtonProps {
 	text: string
 	isActive?: boolean
 	goTo: PageNames
-	iconClassName?: string
 	customStyles?: string
 }
 
@@ -20,7 +19,6 @@ export default function CustomSidebarButton({
 	text,
 	isActive,
 	goTo,
-	iconClassName,
 	customStyles,
 }: CustomSidebarButtonProps): React.ReactNode {
 	const pathname = usePathname()
@@ -50,7 +48,7 @@ export default function CustomSidebarButton({
 				)}
 			>
 				<div className="flex items-center justify-start space-x-4 w-full"> {/* Added w-full */}
-					<div className={cn("ml-2.5 shrink-0 w-[35px] h-[35px]", iconClassName)}>
+					<div className="ml-2.5 shrink-0 w-[35px] h-[35px] text-beetle">
 						{icon}
 					</div>
 					<div className={cn(
