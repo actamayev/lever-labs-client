@@ -1,3 +1,0 @@
-Besides for the files below, do not update the components in the ui directory. These are shadcn components. If you need to update the component, do it by extending the component (add extra classes where the component is called).
-button.tsx
-input.tsx
