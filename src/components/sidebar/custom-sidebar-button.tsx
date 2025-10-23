@@ -47,8 +47,8 @@ export default function CustomSidebarButton({
 					customStyles
 				)}
 			>
-				<div className="flex items-center justify-start space-x-4 w-full"> {/* Added w-full */}
-					<div className="ml-2.5 shrink-0 w-[35px] h-[35px] text-beetle">
+				<div className="flex items-center justify-start space-x-4 w-full pl-2.5"> {/* Added w-full */}
+					<div className="w-[35px] h-[35px] text-beetle">
 						{icon}
 					</div>
 					<div className={cn(
