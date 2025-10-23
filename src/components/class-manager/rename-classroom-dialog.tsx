@@ -9,10 +9,10 @@ import {
 	DialogTitle,
 	DialogFooter,
 	DialogClose
-} from "../shadcn/ui/dialog"
-import { Input } from "../shadcn/ui/input"
+} from "../ui/dialog"
+import { Input } from "../ui/input"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import editClassroomName from "../../utils/teacher/edit-classroom-name"
 
@@ -51,7 +51,7 @@ export default function RenameClassroomDialog(props: Props): React.ReactNode {
 						value={newClassroomName}
 						onChange={(e): void => setNewClassroomName(e.target.value)}
 						placeholder="Class name"
-						className="w-full !text-xl h-10"
+						className="w-full text-xl! h-10"
 						onKeyDown={(e): void => {
 							if (e.key === "Escape") {
 								handleCancelRename()

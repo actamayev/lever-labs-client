@@ -3,9 +3,9 @@
 import { useState } from "react"
 import { Eye, EyeOff } from "lucide-react"
 import { Control, FieldPath } from "react-hook-form"
-import { Input } from "@/components/shadcn/ui/input"
-import { Button } from "@/components/shadcn/ui/button"
-import { FormControl, FormField, FormItem, FormMessage } from "@/components/shadcn/ui/form"
+import { Input } from "@/components/ui/input"
+import { Button } from "@/components/ui/button"
+import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { LoginRequest } from "@lever-labs/common-ts/types/api"
 
 interface PasswordFieldProps<T extends LoginRequest | RegisterFormValues> {
@@ -36,7 +36,7 @@ export default function PasswordField<T extends LoginRequest | RegisterFormValue
 								value={field.value?.toString() || ""}
 								placeholder={placeholder}
 								maxLength={100}
-								className="pr-16 truncate h-12 rounded-xl !text-xl font-light border-2 bg-polar shadow-none border-swan"
+								className="pr-16 truncate h-12 rounded-xl text-xl! font-light border-2 bg-polar shadow-none border-swan"
 							/>
 							<Button
 								type="button"
@@ -46,9 +46,9 @@ export default function PasswordField<T extends LoginRequest | RegisterFormValue
 								onClick={(): void => setShowPassword((prevState): boolean => !prevState)}
 							>
 								{showPassword ? (
-									<EyeOff className="!h-6 !w-6" />
+									<EyeOff className="h-6! w-6!" />
 								) : (
-									<Eye className="!h-6 !w-6" />
+									<Eye className="h-6! w-6!" />
 								)}
 							</Button>
 						</div>

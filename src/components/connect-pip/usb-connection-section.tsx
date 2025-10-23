@@ -3,7 +3,7 @@
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import { CustomUsb } from "../../icons/custom-usb"
@@ -77,7 +77,7 @@ function ConnectToPipDialog(): React.ReactNode {
 				</>
 			) : (
 				<div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-4">
-					<div className="text-sm text-beakInner-2 font-medium mb-3">
+					<div className="text-sm text-beak-inner-2 font-medium mb-3">
 						{browserInfo.name} Not Supported
 					</div>
 					<div className="text-sm text-fox-2 mb-3">

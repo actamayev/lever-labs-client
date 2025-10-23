@@ -1,8 +1,15 @@
 {
   "compilerOptions": {
     "target": "ES2022",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "types": ["vitest/globals", "w3c-web-serial"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "types": [
+      "vitest/globals",
+      "w3c-web-serial"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -12,7 +19,7 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "plugins": [
       {
@@ -21,9 +28,13 @@
     ],
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
+      "@/*": [
+        "./src/*"
+      ],
       // Add explicit path mapping for your package (fallback)
-      "@lever-labs/common-ts/*": ["./node_modules/@lever-labs/common-ts/dist/src/*"]
+      "@lever-labs/common-ts/*": [
+        "./node_modules/@lever-labs/common-ts/dist/src/*"
+      ]
     },
     "allowSyntheticDefaultImports": true,
     "forceConsistentCasingInFileNames": true,
@@ -46,11 +57,12 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts",
-    "./tailwind.config.ts"
+    "./tailwind.config.ts",
+    ".next/dev/types/**/*.ts"
   ],
   "exclude": [
     "node_modules",
-    "eslint.config.mjs", 
+    "eslint.config.mjs",
     "postcss.config.js",
     "next.config.js",
     "keepalive-worker.js"

@@ -10,9 +10,9 @@ import {
 	DialogTitle,
 	DialogFooter,
 	DialogClose
-} from "../shadcn/ui/dialog"
-import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+} from "../ui/dialog"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
+import { TactileButton } from "../buttons/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import teacherClass from "../../classes/teacher-class"
@@ -97,7 +97,7 @@ function TeamMemberAssignmentDialog(props: Props): React.ReactNode {
 
 				<div className="space-y-4">
 					{/* Current Team Members */}
-					<Card className="border-2 border-swan bg-standardBackground">
+					<Card className="border-2 border-swan bg-standard-background">
 						<CardHeader className="pb-3">
 							<CardTitle className="flex items-center gap-2 text-lg">
 								<Users className="h-5 w-5 text-humpback" />
@@ -132,7 +132,7 @@ function TeamMemberAssignmentDialog(props: Props): React.ReactNode {
 					</Card>
 
 					{/* Available Students */}
-					<Card className="border-2 border-swan bg-standardBackground">
+					<Card className="border-2 border-swan bg-standard-background">
 						<CardHeader className="pb-3">
 							<CardTitle className="flex items-center gap-2 text-lg">
 								<Plus className="h-5 w-5 text-humpback" />

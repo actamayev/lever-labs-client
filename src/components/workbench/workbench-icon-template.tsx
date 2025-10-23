@@ -1,6 +1,6 @@
 "use client"
 import { cn } from "../../lib/shadcn/utils"
-import { buttonVariants } from "../shadcn/ui/button"
+import { buttonVariants } from "../ui/button"
 
 interface Props {
 	children: React.ReactNode
@@ -17,7 +17,7 @@ export default function WorkbenchIconTemplate(props: Props): React.ReactNode {
 					size: "lg",
 					className: cn(
 						"relative flex flex-col items-center cursor-default justify-center",
-						"h-auto hover:text-current rounded-2xl p-0 outline-none",
+						"h-auto hover:text-current rounded-2xl p-0 outline-hidden",
 						"transition-none", // Add smooth transitions
 						"bg-inherit hover:bg-inherit"
 					)

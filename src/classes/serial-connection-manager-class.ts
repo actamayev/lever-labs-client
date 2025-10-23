@@ -206,7 +206,10 @@ class SerialConnectionManagerClass {
 			return
 		}
 
-		if (this.connected) return
+		if (this.connected) {
+			console.info("Already connected to port")
+			return
+		}
 
 		try {
 			await port.open({ baudRate: 115200 })

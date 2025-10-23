@@ -5,7 +5,7 @@ import {
 	CardContent,
 	CardHeader,
 	CardTitle,
-} from "@/components/shadcn/ui/card"
+} from "@/components/ui/card"
 
 interface Props {
 	title: string

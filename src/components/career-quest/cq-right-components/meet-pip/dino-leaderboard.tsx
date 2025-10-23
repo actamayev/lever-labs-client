@@ -41,15 +41,15 @@ function DinoLeaderboard(): React.ReactNode {
 		<div className="max-w-4xl mx-auto p-6" data-component="dino-leaderboard">
 			{/* Header Section */}
 			<div className="text-center mb-8">
-				<h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4">
+				<h1 className="text-4xl font-bold bg-linear-to-r from-green-600 to-blue-600 bg-clip-text text-transparent mb-4">
 					🦖 Dino Game Leaderboard
 				</h1>
 				<p className="text-eel text-lg">Track your progress and beat your best scores!</p>
 			</div>
 
 			{/* Leaderboard Table */}
-			<div className="bg-standardBackground rounded-xl shadow-lg overflow-hidden">
-				<div className="bg-gradient-to-r from-gray-800 to-gray-900 px-6 py-4">
+			<div className="bg-standard-background rounded-xl shadow-lg overflow-hidden">
+				<div className="bg-linear-to-r from-gray-800 to-gray-900 px-6 py-4">
 					<h2 className="text-xl font-bold text-white">🏆 Score Rankings</h2>
 				</div>
 
@@ -81,7 +81,7 @@ function DinoLeaderboard(): React.ReactNode {
 									</th>
 								</tr>
 							</thead>
-							<tbody className="bg-standardBackground divide-y divide-swan">
+							<tbody className="bg-standard-background divide-y divide-swan">
 								{sortedScores.map((scoreData, index): React.ReactNode => (
 									<tr
 										key={`${scoreData.score}-${scoreData.timestamp.getTime()}`}
@@ -109,7 +109,7 @@ function DinoLeaderboard(): React.ReactNode {
 											</span>
 											{scoreData.score === highScore && (
 												<span className="ml-2 inline-flex items-center px-2.5 py-0.5 rounded-full
-												text-xs font-medium bg-bee text-beakInner-2">
+												text-xs font-medium bg-bee text-beak-inner-2">
 													🏆 High Score!
 												</span>
 											)}
@@ -121,7 +121,7 @@ function DinoLeaderboard(): React.ReactNode {
 											<div className="flex items-center justify-center">
 												<div className="w-16 bg-swan rounded-full h-2 mr-3">
 													<div
-														className="bg-gradient-to-r from-green-400 to-blue-500
+														className="bg-linear-to-r from-green-400 to-blue-500
 														h-2 rounded-full transition-all duration-300"
 														style={{
 															width: `${Math.min((scoreData.score / highScore) * 100, 100)}%`

@@ -3,13 +3,13 @@
 import { observer } from "mobx-react"
 import { EyeOff, Eye } from "lucide-react"
 import { useState, useCallback } from "react"
-import { Input } from "../shadcn/ui/input"
-import { Label } from "../shadcn/ui/label"
-import { Button } from "../shadcn/ui/button"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
+import { Button } from "../ui/button"
 import changePassword from "../../utils/personal-info/change-password"
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
 
@@ -74,8 +74,8 @@ function ChangePasswordSection(): React.ReactNode {
 							type={showCurrentPassword ? "text" : "password"}
 							value={currentPassword}
 							onChange={handleCurrentPasswordChange}
-							className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl shadow-none
-							bg-polar !text-eel font-light border-swan"
+							className="w-full pr-14 h-10 md:h-12 text-lg md:text-xl! shadow-none
+							bg-polar text-eel! font-light border-swan"
 						/>
 						<Button
 							type="button"
@@ -85,9 +85,9 @@ function ChangePasswordSection(): React.ReactNode {
 							onClick={(): void => setShowCurrentPassword((prevState): boolean => !prevState)}
 						>
 							{showCurrentPassword ? (
-								<EyeOff className="h-5 w-5 md:!h-6 md:!w-6" />
+								<EyeOff className="h-5 w-5 md:h-6! md:w-6!" />
 							) : (
-								<Eye className="h-5 w-5 md:!h-6 md:!w-6" />
+								<Eye className="h-5 w-5 md:h-6! md:w-6!" />
 							)}
 						</Button>
 					</div>
@@ -102,8 +102,8 @@ function ChangePasswordSection(): React.ReactNode {
 							type={showNewPassword ? "text" : "password"}
 							value={newPassword}
 							onChange={handleNewPasswordChange}
-							className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl shadow-none
-							bg-polar !text-eel font-light border-swan"
+							className="w-full pr-14 h-10 md:h-12 text-lg md:text-xl! shadow-none
+							bg-polar text-eel! font-light border-swan"
 						/>
 						<Button
 							type="button"
@@ -113,9 +113,9 @@ function ChangePasswordSection(): React.ReactNode {
 							onClick={(): void => setShowNewPassword((prevState): boolean => !prevState)}
 						>
 							{showNewPassword ? (
-								<EyeOff className="h-5 w-5 md:!h-6 md:!w-6" />
+								<EyeOff className="h-5 w-5 md:h-6! md:w-6!" />
 							) : (
-								<Eye className="h-5 w-5 md:!h-6 md:!w-6" />
+								<Eye className="h-5 w-5 md:h-6! md:w-6!" />
 							)}
 						</Button>
 					</div>

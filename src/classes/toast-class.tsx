@@ -24,7 +24,7 @@ class ToastClass {
 					{title && <div className="font-semibold text-[1.05em]">{title}</div>}
 					{description && <div className="text-sm">{description}</div>}
 				</div>
-				{action && <div className="mx-4 flex-shrink-0">{action}</div>}
+				{action && <div className="mx-4 shrink-0">{action}</div>}
 			</div>
 		</div>
 	)
@@ -57,7 +57,7 @@ class ToastClass {
 		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,
-			className: "!bg-green-500 !text-white !border-green-600 font-bold",
+			className: "bg-green-500! text-white! border-green-600! font-bold",
 			closeButton: true,
 			pauseOnHover: true,
 			draggable: true,
@@ -71,7 +71,7 @@ class ToastClass {
 		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,
-			className: "!bg-macaw !text-white !border-blue-600 font-bold",
+			className: "bg-macaw! text-white! border-blue-600! font-bold",
 			closeButton: true,
 			pauseOnHover: true,
 			draggable: true,

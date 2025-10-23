@@ -53,7 +53,7 @@ function ChallengeProgressCircle({ careerData } : { careerData: CareerQuestData 
 			</svg>
 			{/* Text overlay */}
 			<div className="absolute inset-0 flex items-center justify-center">
-				<span className="text-sm font-semibold text-questionText">
+				<span className="text-sm font-semibold text-question-text">
 					{completedChallenges}/{totalChallenges}
 				</span>
 			</div>

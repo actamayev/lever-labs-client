@@ -2,8 +2,8 @@
 
 import Link from "next/link"
 import { Control, FieldPath } from "react-hook-form"
-import { Input } from "../../shadcn/ui/input"
-import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
+import { Input } from "../../ui/input"
+import { FormControl, FormField, FormItem, FormMessage } from "../../ui/form"
 import { handleTypeAge } from "../../../utils/handle-type-validation/handle-type-fields"
 
 interface Props<T extends { age: number | null }> {
@@ -33,7 +33,7 @@ export default function AgeInput<T extends { age: number | null }>({
 								const numericValue = sanitizedValue === "" ? null : parseInt(sanitizedValue, 10)
 								field.onChange(numericValue)
 							}}
-							className="w-full h-12 rounded-xl !text-xl font-light border-2 bg-polar shadow-none border-swan"
+							className="w-full h-12 rounded-xl text-xl! font-light border-2 bg-polar shadow-none border-swan"
 							maxLength={3}
 						/>
 					</FormControl>

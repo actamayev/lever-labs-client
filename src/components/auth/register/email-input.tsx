@@ -1,8 +1,8 @@
 "use client"
 
 import { Control, useWatch } from "react-hook-form"
-import { Input } from "../../shadcn/ui/input"
-import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
+import { Input } from "../../ui/input"
+import { FormControl, FormField, FormItem, FormMessage } from "../../ui/form"
 
 export default function EmailInput({ control }: { control: Control<RegisterFormValues> }): React.ReactNode {
 	// Watch the age field to determine placeholder text
@@ -30,7 +30,7 @@ export default function EmailInput({ control }: { control: Control<RegisterFormV
 							placeholder={getPlaceholder()}
 							{...field}
 							maxLength={100}
-							className="h-12 rounded-xl !text-xl font-light border-2 bg-polar shadow-none border-swan"
+							className="h-12 rounded-xl text-xl! font-light border-2 bg-polar shadow-none border-swan"
 						/>
 					</FormControl>
 					<FormMessage />

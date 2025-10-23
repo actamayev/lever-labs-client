@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { StudentClassroomData } from "@lever-labs/common-ts/types/api"
-import { Card, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Card, CardHeader, CardTitle } from "../ui/card"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 
 function SingleWhiteboardCard({ classroom } : { classroom: StudentClassroomData }): React.ReactNode {
@@ -15,7 +15,7 @@ function SingleWhiteboardCard({ classroom } : { classroom: StudentClassroomData 
 	return (
 		<Card
 			key={classroom.classCode}
-			className="group cursor-pointer duration-0 border-swan bg-standardBackground hover:bg-polar relative overflow-hidden"
+			className="group cursor-pointer duration-0 border-swan bg-standard-background hover:bg-polar relative overflow-hidden"
 			onClick={handleClassroomClick}
 		>
 			<CardHeader className="relative">

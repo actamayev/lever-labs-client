@@ -37,7 +37,7 @@ export default function ByBuildersForBuilders(): React.ReactNode {
 
 					<div className="flex items-center justify-center my-6 sm:my-8">
 						<LandingCTAButton
-							className={cn("px-4 sm:px-8 !py-4 sm:!py-5 text-lg sm:text-2xl",
+							className={cn("px-4 sm:px-8 py-4! sm:py-5! text-lg sm:text-2xl",
 								"rounded-xl sm:rounded-2xl border-2 w-full h-10 sm:h-12",
 								"bg-green-500 border-none text-white",
 								"dark:bg-green-900 dark:border-green-600 dark:text-green-200")}

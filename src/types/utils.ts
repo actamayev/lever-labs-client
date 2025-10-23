@@ -48,10 +48,10 @@ declare global {
 	| "fox"
 	| "beetle"
 	| "humpback"
-	| "beakInner"
-	| "chargingGreen"
-	| "questionCorrectGreen"
-	| "questionIncorrectRed"
+	| "beak-inner"
+	| "charging-green"
+	| "question-correct-green"
+	| "question-incorrect-red"
 }
 
 export {}

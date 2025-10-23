@@ -11,12 +11,12 @@ import {
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "@/components/shadcn/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu"
 import { cn } from "../../../lib/shadcn/utils"
 import playTune from "../../../utils/workbench/play-tune"
 import workbenchClass from "../../../classes/workbench-class"
 import garageClass from "../../../classes/garage-class"
-import { Button, buttonVariants } from "../../shadcn/ui/button"
+import { Button, buttonVariants } from "../../ui/button"
 import CustomTooltip from "../../custom-tooltip"
 
 // Helper function to get button tooltip content
@@ -81,11 +81,8 @@ function TestSounds(props: Props): React.ReactNode {
 				<CustomTooltip
 					tooltipTrigger={
 						<div className="w-24 relative">
-							<DropdownMenu
-								open={isDropdownOpen}
-								onOpenChange={setIsDropdownOpen}
-							>
-								<DropdownMenuTrigger asChild>
+							<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+								<DropdownMenuTrigger asChild className="cursor-pointer">
 									<div
 										className={cn(
 											buttonVariants({
@@ -102,7 +99,7 @@ function TestSounds(props: Props): React.ReactNode {
 									</div>
 								</DropdownMenuTrigger>
 								<DropdownMenuContent
-									className="rounded-xl bg-standardBackground border-swan shadow-none"
+									className="rounded-xl bg-standard-background border-swan shadow-none"
 									align="end"
 								>
 									{testSounds.map((sound): React.ReactNode => (
@@ -112,7 +109,7 @@ function TestSounds(props: Props): React.ReactNode {
 												workbenchClass.setSelectedSound(sound)
 												setIsDropdownOpen(false)
 											}}
-											className="cursor-pointer transition-none hover:!bg-polar rounded-lg"
+											className="cursor-pointer transition-none hover:bg-polar! rounded-lg"
 										>
 											<span className="text-sm font-medium">
 												{toUpper(sound)}

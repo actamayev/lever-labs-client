@@ -9,7 +9,7 @@ import { CqChallengeData } from "@lever-labs/common-ts/types/career-quest"
 import { cn } from "../../../lib/shadcn/utils"
 import ChallengeHeader from "./challenge-header"
 import pipClass from "../../../classes/pip-class"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { TactileButton } from "../../buttons/tactile-button"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import careerQuestClass from "../../../classes/career-quest-class"
@@ -213,7 +213,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 					/>
 				</div>
 
-				<div className="flex-shrink-0 flex gap-3 p-3">
+				<div className="shrink-0 flex gap-3 p-3">
 					<AnimatedStateButton
 						buttonText="SEND CODE"
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}

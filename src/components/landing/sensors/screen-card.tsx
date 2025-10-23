@@ -11,7 +11,7 @@ export default function ScreenCard(): React.ReactNode {
 	const ScreenIcon = (): React.ReactNode => {
 		return (
 			<div
-				className="relative text-questionText"
+				className="relative text-question-text"
 				onMouseEnter={(): void => setIsHovered(true)}
 				onMouseLeave={(): void => setIsHovered(false)}
 			>

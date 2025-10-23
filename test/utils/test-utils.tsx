@@ -2,7 +2,7 @@ import React, { ReactElement } from "react"
 import { render, RenderOptions } from "@testing-library/react"
 
 // Custom render function that includes any providers you need
-const AllTheProviders = ({ children }: { children: React.ReactNode }): JSX.Element => {
+const AllTheProviders = ({ children }: { children: React.ReactNode }): React.ReactElement => {
 	// Add any global providers here (themes, contexts, etc.)
 	return <>{children}</>
 }

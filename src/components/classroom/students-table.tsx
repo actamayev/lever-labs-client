@@ -5,9 +5,9 @@ import { observer } from "mobx-react"
 import { useCallback } from "react"
 import { Users, Car, Lightbulb, Volume2, Monitor } from "lucide-react"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../shadcn/ui/table"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
+import { TactileButton } from "../buttons/tactile-button"
 import { getGarageStatusClasses } from "../../utils/garage-status-classes"
 import StudentGarageControls from "./student-garage-controls"
 import CustomTooltip from "../custom-tooltip"
@@ -72,7 +72,7 @@ function StudentsTable({ classCode }: { classCode: ClassCode }): React.ReactNode
 	}, [classCode, getGarageStatus])
 
 	return (
-		<Card className="border-2 border-swan bg-standardBackground">
+		<Card className="border-2 border-swan bg-standard-background">
 			<CardHeader>
 				<div className="flex items-center justify-between">
 					<div>

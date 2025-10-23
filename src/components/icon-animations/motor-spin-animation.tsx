@@ -29,7 +29,7 @@ export default function MotorSpinAnimation({ iconSize } : { iconSize: number }):
 			>
 				<CustomWheel
 					className={cn(
-						"origin-center text-questionText",
+						"origin-center text-question-text",
 						isSpinning && "spin-wheel"
 					)}
 					size={iconSize}

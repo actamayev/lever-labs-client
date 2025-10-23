@@ -5,13 +5,13 @@ import { observer } from "mobx-react"
 import { useState, SetStateAction } from "react"
 import { Hash, Rocket, Plus, Trophy } from "lucide-react"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
-import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { cn } from "../../lib/shadcn/utils"
 import CreateHubDialog from "./create-hub-dialog"
 import DeleteHubDialog from "./delete-hub-dialog"
 import CreateScoreboardDialog from "./create-scoreboard-dialog"
 import teacherClass from "../../classes/teacher-class"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
 // eslint-disable-next-line max-lines-per-function
@@ -25,7 +25,7 @@ function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.Rea
 		<div>
 
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
 							<Hash className="h-5 w-5 text-humpback" />
@@ -39,7 +39,7 @@ function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.Rea
 					</CardContent>
 				</Card>
 
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
 							<Trophy className="h-5 w-5 text-humpback" />
@@ -60,7 +60,7 @@ function ClassroomStatsCards({ classCode }: { classCode: ClassCode }): React.Rea
 					</CardContent>
 				</Card>
 
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
 							<Rocket className="h-5 w-5 text-humpback" />

@@ -8,8 +8,8 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogClose
-} from "../shadcn/ui/dialog"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../shadcn/ui/tabs"
+} from "../ui/dialog"
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs"
 import pipClass from "../../classes/pip-class"
 import UsbConnectionSection from "./usb-connection-section"
 import WifiConnectionSection from "./wifi-connection-section"

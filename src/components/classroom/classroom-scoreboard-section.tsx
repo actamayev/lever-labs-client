@@ -5,14 +5,14 @@ import { useCallback } from "react"
 import { Trophy, Clock, Users, EllipsisVertical, Trash2 } from "lucide-react"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { Scoreboard } from "@lever-labs/common-ts/types/scoreboard"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import { TactileButton } from "../buttons/tactile-button"
 import {
 	DropdownMenu,
 	DropdownMenuContent,
 	DropdownMenuItem,
 	DropdownMenuTrigger,
-} from "../shadcn/ui/dropdown-menu"
+} from "../ui/dropdown-menu"
 import teacherClass from "../../classes/teacher-class"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { cn } from "../../lib/shadcn/utils"
@@ -51,7 +51,7 @@ function ClassroomScoreboardSection({ classCode }: ClassroomScoreboardSectionPro
 	const colors = getDuolingoColors("humpback")
 
 	return (
-		<Card className="border-2 border-swan bg-standardBackground mb-8">
+		<Card className="border-2 border-swan bg-standard-background mb-8">
 			<CardHeader>
 				<CardTitle className="flex items-center gap-2">
 					<Trophy className="h-5 w-5 text-humpback" />
@@ -89,7 +89,7 @@ function ClassroomScoreboardSection({ classCode }: ClassroomScoreboardSectionPro
 										</div>
 									</div>
 									<DropdownMenu>
-										<DropdownMenuTrigger asChild>
+										<DropdownMenuTrigger asChild className="cursor-pointer">
 											<div className="p-1 transition-none rounded hover:bg-polar cursor-pointer">
 												<EllipsisVertical
 													className="text-wolf"
@@ -97,12 +97,12 @@ function ClassroomScoreboardSection({ classCode }: ClassroomScoreboardSectionPro
 												/>
 											</div>
 										</DropdownMenuTrigger>
-										<DropdownMenuContent className="w-32 bg-standardBackground shadow-none">
+										<DropdownMenuContent className="w-32 bg-standard-background shadow-none">
 											<DropdownMenuItem
 												onClick={(): void => handleDeleteScoreboard(scoreboard)}
-												className="cursor-pointer text-sm hover:!bg-polar text-cardinal hover:!text-cardinal"
+												className="cursor-pointer text-sm hover:bg-polar! text-cardinal hover:text-cardinal!"
 											>
-												<Trash2 className="mr-2 !size-4" strokeWidth={2.5}/>
+												<Trash2 className="mr-2 size-4!" strokeWidth={2.5}/>
 												Delete
 											</DropdownMenuItem>
 										</DropdownMenuContent>

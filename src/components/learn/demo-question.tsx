@@ -6,7 +6,7 @@ import MeetPipS8P3ColorViz from "../career-quest/cq-right-components/meet-pip/me
 function DemoQuestion(): React.ReactNode {
 	return (
 		<div className="space-y-6">
-			<h2 className="text-3xl font-semibold text-questionText text-center">
+			<h2 className="text-3xl font-semibold text-question-text text-center">
 				Demo: Color Sensor Visualization
 			</h2>
 			<div className="flex justify-center">

@@ -3,8 +3,8 @@
 
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { Input } from "../../shadcn/ui/input"
-import { Label } from "../../shadcn/ui/label"
+import { Input } from "../../ui/input"
+import { Label } from "../../ui/label"
 import garageClass from "../../../classes/garage-class"
 import CustomTooltip from "../../custom-tooltip"
 
@@ -41,7 +41,7 @@ function RGBInput(): React.ReactNode {
 					onChange={(e): void => { if (!isDisabled) onChange(enforceRGBRange(e.target.value)) }}
 					min="0"
 					max="255"
-					className={`border-2 ${borderClass} rounded-xl !text-xl text-center ${bgClass} shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
+					className={`border-2 ${borderClass} rounded-xl text-xl! text-center ${bgClass} shadow-none [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 ${isDisabled ? "opacity-50 cursor-not-allowed" : ""}`}
 					style={{ width: "72px", height: "52px" }}
 					disabled={isDisabled}
 				/>

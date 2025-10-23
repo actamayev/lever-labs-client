@@ -2,7 +2,7 @@
 
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { Button } from "../shadcn/ui/button"
+import { Button } from "../ui/button"
 import CustomTooltip from "../custom-tooltip"
 import toastClass from "../../classes/toast-class"
 

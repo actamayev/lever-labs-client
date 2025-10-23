@@ -3,7 +3,7 @@
 
 import { Car, Lightbulb, Volume2, Monitor } from "lucide-react"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
 import teacherClass from "../../classes/teacher-class"
 import updateIndividualStudentDrivingStatus from "../../utils/teacher/update-individual-student-driving-status"
@@ -55,13 +55,13 @@ function StudentGarageControls({
 						className={cn(
 							"h-6 w-6 rounded flex items-center justify-center duration-150",
 							garageDrivingAllowed
-								? "bg-chargingGreen text-standardBackground border border-chargingGreen"
-								: "bg-cardinal text-standardBackground border border-cardinal"
+								? "bg-charging-green text-standard-background border border-charging-green"
+								: "bg-cardinal text-standard-background border border-cardinal"
 						)}
 						shadowHeight={4}
 						shadowClass={
 							garageDrivingAllowed
-								? "shadow-chargingGreen-2"
+								? "shadow-charging-green-2"
 								: "shadow-cardinal-2"
 						}
 					>
@@ -81,13 +81,13 @@ function StudentGarageControls({
 						className={cn(
 							"h-6 w-6 rounded flex items-center justify-center duration-150",
 							garageLightsAllowed
-								? "bg-chargingGreen text-standardBackground border border-chargingGreen"
-								: "bg-cardinal text-standardBackground border border-cardinal"
+								? "bg-charging-green text-standard-background border border-charging-green"
+								: "bg-cardinal text-standard-background border border-cardinal"
 						)}
 						shadowHeight={4}
 						shadowClass={
 							garageLightsAllowed
-								? "shadow-chargingGreen-2"
+								? "shadow-charging-green-2"
 								: "shadow-cardinal-2"
 						}
 					>
@@ -107,13 +107,13 @@ function StudentGarageControls({
 						className={cn(
 							"h-6 w-6 rounded flex items-center justify-center duration-150",
 							garageSoundsAllowed
-								? "bg-chargingGreen text-standardBackground border border-chargingGreen"
-								: "bg-cardinal text-standardBackground border border-cardinal"
+								? "bg-charging-green text-standard-background border border-charging-green"
+								: "bg-cardinal text-standard-background border border-cardinal"
 						)}
 						shadowHeight={4}
 						shadowClass={
 							garageSoundsAllowed
-								? "shadow-chargingGreen-2"
+								? "shadow-charging-green-2"
 								: "shadow-cardinal-2"
 						}
 					>
@@ -133,13 +133,13 @@ function StudentGarageControls({
 						className={cn(
 							"h-6 w-6 rounded flex items-center justify-center duration-150",
 							garageDisplayAllowed
-								? "bg-chargingGreen text-standardBackground border border-chargingGreen"
-								: "bg-cardinal text-standardBackground border border-cardinal"
+								? "bg-charging-green text-standard-background border border-charging-green"
+								: "bg-cardinal text-standard-background border border-cardinal"
 						)}
 						shadowHeight={4}
 						shadowClass={
 							garageDisplayAllowed
-								? "shadow-chargingGreen-2"
+								? "shadow-charging-green-2"
 								: "shadow-cardinal-2"
 						}
 					>

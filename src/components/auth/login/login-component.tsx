@@ -3,7 +3,7 @@
 import { useForm } from "react-hook-form"
 import { usePathname } from "next/navigation"
 import { useCallback, useState } from "react"
-import { Form } from "@/components/shadcn/ui/form"
+import { Form } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoginRequest } from "@lever-labs/common-ts/types/api"
 import OrComponent from "../or-component"

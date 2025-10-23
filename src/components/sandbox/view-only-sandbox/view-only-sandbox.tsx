@@ -14,7 +14,7 @@ import { isEmpty } from "lodash-es"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import pipClass from "../../../classes/pip-class"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { TactileButton } from "../../buttons/tactile-button"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import getCppGenerator from "../../../utils/cpp/cpp-generator"
 import careerQuestClass from "../../../classes/career-quest-class"
@@ -184,7 +184,7 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 						/>
 					</div>
 				</div>
-				<div className="flex-shrink-0 flex gap-3 p-3">
+				<div className="shrink-0 flex gap-3 p-3">
 					<AnimatedStateButton
 						buttonText="SEND CODE"
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}

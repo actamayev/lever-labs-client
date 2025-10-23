@@ -2,8 +2,8 @@
 
 import { forwardRef } from "react"
 import { Search, X } from "lucide-react"
-import { Input } from "../shadcn/ui/input"
-import { Button } from "../shadcn/ui/button"
+import { Input } from "../ui/input"
+import { Button } from "../ui/button"
 
 interface BlocklySearchBarProps {
 	searchTerm: string

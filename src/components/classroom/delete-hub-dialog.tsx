@@ -11,8 +11,8 @@ import {
 	DialogTitle,
 	DialogFooter,
 	DialogClose
-} from "../shadcn/ui/dialog"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+} from "../ui/dialog"
+import { TactileButton } from "../buttons/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import deleteHub from "../../utils/teacher/hub/delete-hub"

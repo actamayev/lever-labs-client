@@ -8,7 +8,7 @@ import { CareerUUID } from "@lever-labs/common-ts/types/utils"
 import { useState, useRef, useEffect, useCallback } from "react"
 import { cn } from "../../../lib/shadcn/utils"
 import ChatTextArea from "../../chat/chat-text-area"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { TactileButton } from "../../buttons/tactile-button"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import careerQuestClass from "../../../classes/career-quest-class"
 import ChatParentComponent from "../../chat/chat-parent-component"
@@ -45,7 +45,7 @@ const NextSectionButton = observer(({ careerUUID }: { careerUUID: CareerUUID }):
 						ease: "easeInOut"
 					}}
 				>
-					<ArrowDown className="!size-6" strokeWidth={2.5} />
+					<ArrowDown className="size-6!" strokeWidth={2.5} />
 				</motion.div>
 			</TactileButton>
 		</div>
@@ -126,7 +126,7 @@ function ChallengeChatInterface({ challengeData }: { challengeData: CqChallengeD
 	// Show loading state while retrieving messages
 	if (isRetrievingData) {
 		return (
-			<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg border-2 border-swan overflow-hidden">
+			<div className="flex flex-col h-full max-h-full bg-standard-background rounded-lg border-2 border-swan overflow-hidden">
 				<div className="flex-1 flex items-center justify-center">
 					<div className="text-center">
 						<div className="flex space-x-1 justify-center mb-4">

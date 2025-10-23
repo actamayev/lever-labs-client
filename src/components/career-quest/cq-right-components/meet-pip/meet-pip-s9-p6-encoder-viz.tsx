@@ -16,8 +16,8 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 	)
 	const leftWheelRef = useRef<HTMLCanvasElement>(null)
 	const rightWheelRef = useRef<HTMLCanvasElement>(null)
-	const leftAnimationRef = useRef<number>()
-	const rightAnimationRef = useRef<number>()
+	const leftAnimationRef = useRef<number | undefined>(undefined)
+	const rightAnimationRef = useRef<number | undefined>(undefined)
 	const [leftRotation, setLeftRotation] = useState(0)
 	const [rightRotation, setRightRotation] = useState(0)
 
@@ -235,7 +235,7 @@ function MeetPipS9P6EncoderViz(): React.ReactNode {
 
 						{/* Enhanced Speed indicator with defined width */}
 						<div className="mt-8 flex justify-center">
-							<div className="w-3/4 bg-chargingGreen px-4 py-2 rounded-full">
+							<div className="w-3/4 bg-charging-green px-4 py-2 rounded-full">
 								<span className="text-sm font-bold text-white">
 									{latestRightRPM.toFixed(1)} RPM
 								</span>

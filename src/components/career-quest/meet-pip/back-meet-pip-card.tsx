@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 import { Hourglass } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import BackFlipButton from "../back-flip-button"
-import { Separator } from "../../shadcn/ui/separator"
+import { Separator } from "../../ui/separator"
 import SingleComponentUsed from "../single-component-used"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import { CAREER_QUEST_CARD_ROUNDING_RADIUS } from "../../../utils/constants/constants"
@@ -66,7 +66,10 @@ export default function BackMeetPipCard({ flipCard } : {flipCard: () => void}): 
 
 			<BackFlipButton
 				onFlip={flipCard}
-				extraClasses="absolute bottom-6 right-6 size-8 rounded-full flex items-center justify-center focus:outline-none duration-0"
+				extraClasses={cn(
+					"absolute bottom-6 right-6 size-8 rounded-full",
+					"flex items-center justify-center focus:outline-hidden duration-0"
+				)}
 			/>
 		</motion.div>
 	)

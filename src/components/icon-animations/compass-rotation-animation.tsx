@@ -29,7 +29,7 @@ export default function CompassRotationAnimation({ iconSize } : { iconSize: numb
 			>
 				<CustomCompass
 					className={cn(
-						"origin-center text-questionText transform",
+						"origin-center text-question-text transform",
 						isAnimating ? "animate-compass-wobble" : ""
 					)}
 					size={iconSize}

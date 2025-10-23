@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { Slider } from "../../shadcn/ui/slider"
+import { Slider } from "../../ui/slider"
 import garageClass from "../../../classes/garage-class"
 import { cn } from "../../../lib/shadcn/utils"
 import CustomTooltip from "../../custom-tooltip"

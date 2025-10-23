@@ -11,9 +11,9 @@ import {
 	DropdownMenuTrigger,
 	DropdownMenuItem,
 	DropdownMenuContent
-} from "../../shadcn/ui/dropdown-menu"
+} from "../../ui/dropdown-menu"
 import { cn } from "../../../lib/shadcn/utils"
-import { Button } from "../../shadcn/ui/button"
+import { Button } from "../../ui/button"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import relativeDateFormatter from "../../../utils/sandbox/date-formatting"
 import starSandboxProject from "../../../utils/sandbox/star-sandbox-project"
@@ -96,7 +96,7 @@ function SingleProjectCard({ project } : { project: SandboxProject }): React.Rea
 							{project.projectName || "Untitled Project"}
 						</div>
 						<DropdownMenu>
-							<DropdownMenuTrigger asChild onClick={(e): void => e.stopPropagation()}>
+							<DropdownMenuTrigger asChild onClick={(e): void => e.stopPropagation()} className="cursor-pointer">
 								<div className="p-1 transition-none rounded hover:bg-swan">
 									<EllipsisVertical
 										className="text-wolf cursor-pointer"
@@ -104,20 +104,20 @@ function SingleProjectCard({ project } : { project: SandboxProject }): React.Rea
 									/>
 								</div>
 							</DropdownMenuTrigger>
-							<DropdownMenuContent className="w-40 bg-standardBackground shadow-none">
-								<DropdownMenuItem onClick={handleRenameClick} className="cursor-pointer text-lg hover:!bg-polar">
-									<Edit className="mr-2 !size-5" strokeWidth={2.5}/>
+							<DropdownMenuContent className="w-40 bg-standard-background shadow-none">
+								<DropdownMenuItem onClick={handleRenameClick} className="cursor-pointer text-lg hover:bg-polar!">
+									<Edit className="mr-2 size-5!" strokeWidth={2.5}/>
 									Rename
 								</DropdownMenuItem>
-								<DropdownMenuItem onClick={handleStarClick} className="cursor-pointer text-lg hover:!bg-polar">
+								<DropdownMenuItem onClick={handleStarClick} className="cursor-pointer text-lg hover:bg-polar!">
 									<Star
-										className={cn("mr-2 !size-5", project.isStarred ? "text-bee fill-bee" : "")}
+										className={cn("mr-2 size-5!", project.isStarred ? "text-bee fill-bee" : "")}
 										strokeWidth={2.5}
 									/>
 									{project.isStarred ? "Unstar" : "Star"}
 								</DropdownMenuItem>
-								<DropdownMenuItem onClick={handleDeleteClick} className="cursor-pointer text-lg hover:!bg-polar">
-									<Trash2 className="mr-2 text-cardinal !size-5" strokeWidth={2.5}/>
+								<DropdownMenuItem onClick={handleDeleteClick} className="cursor-pointer text-lg hover:bg-polar!">
+									<Trash2 className="mr-2 text-cardinal size-5!" strokeWidth={2.5}/>
 									Delete
 								</DropdownMenuItem>
 							</DropdownMenuContent>

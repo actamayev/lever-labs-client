@@ -7,7 +7,7 @@ import { BookOpen } from "lucide-react"
 import studentClass from "../../classes/student-class"
 import JoinClassroomDialog from "./join-classroom-dialog"
 import SingleWhiteboardCard from "./single-whiteboard-card"
-import { Card, CardContent, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import WhiteboardStatsCards from "./whiteboard-stats-cards"
 
 function WhiteboardPage(): React.ReactNode {
@@ -34,7 +34,7 @@ function WhiteboardPage(): React.ReactNode {
 			<WhiteboardStatsCards setIsJoinDialogOpen={setIsJoinDialogOpen} />
 
 			{/* Classrooms Section */}
-			<Card className="border-2 border-swan bg-standardBackground">
+			<Card className="border-2 border-swan bg-standard-background">
 				<CardHeader>
 					<div className="flex items-center justify-between">
 						<CardTitle className="flex items-center gap-2">

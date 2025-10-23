@@ -3,8 +3,8 @@
 import { useState } from "react"
 import { Wifi } from "lucide-react"
 import { observer } from "mobx-react"
-import { Button } from "../../../shadcn/ui/button"
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../../../shadcn/ui/dialog"
+import { Button } from "../../../ui/button"
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "../../../ui/dialog"
 
 interface ForgetNetworkDialogProps {
 	open: boolean

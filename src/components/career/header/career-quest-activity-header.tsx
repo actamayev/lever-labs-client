@@ -87,13 +87,13 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 	const currentHub = getCurrentHub()
 
 	return (
-		<header className="h-20 flex items-center px-4 shadow-sm fixed top-0 left-0 right-0 bg-standardBackground z-10">
+		<header className="h-20 flex items-center px-4 shadow-xs fixed top-0 left-0 right-0 bg-standard-background z-10">
 			{/* Left section with back button */}
 			<div className="w-1/4 flex items-center">
 				{!studentClass.isInFocusMode && (
 					<button
 						onClick={handleBack}
-						className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2"
+						className="flex items-center text-question-text hover:bg-polar p-2 rounded-lg mr-2"
 					>
 						<ArrowLeft size={30} className="mr-1" />
 					</button>
@@ -102,7 +102,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 
 			{/* Center section with career title */}
 			<div className="w-1/2 flex justify-center">
-				<h1 className="text-5xl font-medium text-questionText text-center">
+				<h1 className="text-5xl font-medium text-question-text text-center">
 					{careerData.careerTitle}
 				</h1>
 			</div>
@@ -112,7 +112,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 				{shouldShowStudentsButton && currentHub && (
 					<button
 						onClick={handleShowStudents}
-						className="flex items-center p-2 rounded-lg text-questionText hover:bg-polar duration-0"
+						className="flex items-center p-2 rounded-lg text-question-text hover:bg-polar duration-0"
 						title="View students in hub"
 					>
 						<Users size={24} />
@@ -130,7 +130,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 					<ConnectToPipButton
 						colors={getDuolingoColors(careerData.careerColor)}
 						tactileButtonClasses="text-3xl"
-						botIconClasses="!size-9"
+						botIconClasses="size-9!"
 					/>
 				)}
 				{careerData.needsChat && (
@@ -141,7 +141,7 @@ function CareerQuestActivityHeader({ careerData }: { careerData: CareerQuestData
 								className={`flex items-center p-2 rounded-lg duration-0 ${
 									isChatToggled
 										? "bg-macaw text-white"
-										: "text-questionText hover:bg-polar"
+										: "text-question-text hover:bg-polar"
 								}`}
 							>
 								<MessageCircle size={30} />

@@ -8,7 +8,7 @@ import { observer } from "mobx-react"
 import { BotMessageSquare } from "lucide-react"
 import { SandboxChatMessage } from "@lever-labs/common-ts/types/chat"
 import { cn } from "../../lib/shadcn/utils"
-import { Avatar, AvatarFallback } from "../shadcn/ui/avatar"
+import { Avatar, AvatarFallback } from "../ui/avatar"
 import { CustomUserCircle } from "../../icons/custom-user-circle"
 import personalInfoClass from "../../classes/personal-info-class"
 import AssistantMessageMarkdown from "./assistant-message-markdown"
@@ -26,7 +26,7 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 	if (!isUser && isStreamingWithNoContent) {
 		return (
 			<div className="flex gap-3 min-w-0 w-full justify-start">
-				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
+				<Avatar className="w-8 h-8 mt-1 shrink-0">
 					<AvatarFallback className="bg-macaw text-white">
 						<BotMessageSquare className="w-4 h-4" />
 					</AvatarFallback>
@@ -49,7 +49,7 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 			className={cn("flex gap-3 min-w-0 w-full", isUser ? "justify-end" : "justify-start")}
 		>
 			{!isUser && (
-				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
+				<Avatar className="w-8 h-8 mt-1 shrink-0">
 					<AvatarFallback className="bg-macaw text-white">
 						<BotMessageSquare className="w-4 h-4" />
 					</AvatarFallback>
@@ -59,7 +59,7 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 			<div
 				className={cn(
 					"max-w-[80%] min-w-0 rounded-lg px-3 py-2",
-					isUser ? "bg-iMessageBlue text-white ml-auto" : "bg-polar text-gray-900 dark:text-white"
+					isUser ? "bg-i-message-blue text-white ml-auto" : "bg-polar text-gray-900 dark:text-white"
 				)}
 				style={{ overflowWrap: "break-word", wordWrap: "break-word" }}
 			>
@@ -77,7 +77,7 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 			</div>
 
 			{isUser && (
-				<Avatar className="w-8 h-8 mt-1 flex-shrink-0">
+				<Avatar className="w-8 h-8 mt-1 shrink-0">
 					{!isNull(profilePictureUrl) ? (
 						<Image
 							src={profilePictureUrl}
@@ -87,7 +87,7 @@ function SingleSandboxMessage({ message, isStreaming = false }: SingleSandboxMes
 							className="rounded-full object-cover w-full h-full"
 						/>
 					) : (
-						<AvatarFallback className="bg-standardBackground text-questionText">
+						<AvatarFallback className="bg-standard-background text-question-text">
 							<CustomUserCircle className="w-full h-full" />
 						</AvatarFallback>
 					)}

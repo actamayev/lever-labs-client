@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { Input } from "../../../shadcn/ui/input"
+import { Input } from "../../../ui/input"
 import { cn } from "../../../../lib/shadcn/utils"
 import editName from "../../../../utils/personal-info/edit-name"
 import RenderDisplay from "../../../garage/display/render-display"
@@ -62,7 +62,7 @@ function MeetPipS3P4Display(): React.ReactNode {
 					value={personalInfoClass.name || ""}
 					onChange={(e): Promise<void> => setTextInput(e.target.value)}
 					className={cn(
-						"border-2 pr-6 border-swan rounded-2xl !text-xl text-center bg-inherit shadow-none",
+						"border-2 pr-6 border-swan rounded-2xl text-xl! text-center bg-inherit shadow-none",
 						"[&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none",
 						"[&::-webkit-inner-spin-button]:m-0 [&::-webkit-outer-spin-button]:m-0 font-medium"
 					)}

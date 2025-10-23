@@ -3,8 +3,8 @@
 import * as React from "react"
 import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
-import { ButtonProps } from "../shadcn/ui/button"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { ButtonProps } from "../ui/button"
+import { TactileButton } from "./tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
 
@@ -43,7 +43,7 @@ export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonEleme
 			<TactileButton
 				ref={ref}
 				className={cn(
-					"flex items-center transition-none rounded-2xl !bg-standardBackground",
+					"flex items-center transition-none rounded-2xl bg-standard-background!",
 					"text-eel dark:text-wolf",
 					className
 				)}

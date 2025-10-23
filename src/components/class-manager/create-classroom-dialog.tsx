@@ -3,14 +3,14 @@
 import { useState, useCallback } from "react"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { AlertCircle, CheckCircle } from "lucide-react"
-import { Input } from "../shadcn/ui/input"
-import { Label } from "../shadcn/ui/label"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import createClassroom from "../../utils/teacher/create-classroom"
-import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../shadcn/ui/dialog"
+import { Dialog, DialogClose, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "../ui/dialog"
 
 interface CreateClassroomDialogProps {
 	isOpen: boolean
@@ -65,7 +65,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 		<Dialog open={isOpen} onOpenChange={handleClose}>
 			<DialogContent className="sm:max-w-[500px]">
 				<DialogHeader>
-					<DialogTitle>Create class</DialogTitle>
+					<DialogTitle className="text-2xl">Create class</DialogTitle>
 					<DialogClose />
 				</DialogHeader>
 
@@ -81,7 +81,7 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 							setClassroomName(e.target.value)
 							clearErrorAndSuccess()
 						}}
-						className="w-full h-10 text-lg bg-polar !text-eel font-light border-swan shadow-none"
+						className="w-full h-10 text-lg bg-polar text-eel! font-light border-swan shadow-none mt-2"
 						placeholder="The awesome robotics class"
 						disabled={isSubmitting}
 						maxLength={100}
@@ -90,14 +90,14 @@ export default function CreateClassroomDialog({ isOpen, onOpenChange }: CreateCl
 
 				{error && (
 					<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
-						<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<AlertCircle className="w-4 h-4 mr-2 shrink-0" />
 						<span>{error}</span>
 					</div>
 				)}
 
 				{success && (
-					<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
-						<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+					<div className="flex items-center mt-2 text-charging-green text-sm font-medium">
+						<CheckCircle className="w-4 h-4 mr-2 shrink-0" />
 						<span>{success}</span>
 					</div>
 				)}

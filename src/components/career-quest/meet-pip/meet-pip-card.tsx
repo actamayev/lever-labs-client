@@ -14,7 +14,7 @@ export default function MeetPipCard(): React.ReactNode {
 	}, [])
 
 	return (
-		<div className={cn("relative overflow-hidden text-white w-full aspect-[750/321]")}>
+		<div className={cn("relative overflow-hidden text-white w-full aspect-750/321")}>
 			<motion.div
 				className="w-full h-full relative preserve-3d"
 				animate={{ rotateY: flipped ? 180 : 0 }}
