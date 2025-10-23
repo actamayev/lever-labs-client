@@ -35,7 +35,7 @@ function AuthenticatedLayoutClient({
 
 	// User is authenticated, show the protected content
 	return (
-		<div className="text-questionText">
+		<div className="text-question-text">
 			{children}
 		</div>
 	)

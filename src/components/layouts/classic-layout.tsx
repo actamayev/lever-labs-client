@@ -17,7 +17,7 @@ function ClassicLayout(props: ClassicLayoutProps): React.ReactNode {
 	const { extraClasses = "px-14", children, isIncompleteSignup = false } = props
 
 	return (
-		<div className="min-h-screen bg-standardBackground flex flex-col duration-0">
+		<div className="min-h-screen bg-standard-background flex flex-col duration-0">
 			<HeaderNav isIncompleteSignup={isIncompleteSignup} />
 			<main className={cn(
 				"flex-1 w-full overflow-y-auto pt-14",

@@ -45,18 +45,18 @@ function FunctionToBlockQuestion(): React.ReactNode {
 	// const buttonExtraClass = useCallback((isSelected: boolean): string => {
 	// 	if (isSelected) {
 	// 		if (lastAnswerWasCorrect) {
-	// 			return "bg-questionCorrectGreen border-2 border-questionCorrectGreen-1 cursor-default"
+	// 			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default"
 	// 		}
-	// 		return "bg-standardBackgroundHover border-2 border-macaw"
+	// 		return "bg-standard-background-hover border-2 border-macaw"
 	// 	}
-	// 	if (isInConfirmationStage) return "bg-standardBackground border-2 border-swan cursor-default"
-	// 	return "bg-standardBackground border-2 border-swan hover:bg-polar"
+	// 	if (isInConfirmationStage) return "bg-standard-background border-2 border-swan cursor-default"
+	// 	return "bg-standard-background border-2 border-swan hover:bg-polar"
 	// }, [isInConfirmationStage, lastAnswerWasCorrect])
 
 	// const numberBadgeClass = useCallback((isSelected: boolean): string => {
 	// 	if (isSelected) {
 	// 		if (lastAnswerWasCorrect) {
-	// 			return "border-questionCorrectGreen-1 text-questionCorrectGreen-2"
+	// 			return "border-question-correct-green-1 text-question-correct-green-2"
 	// 		}
 	// 		return "border-macaw text-macaw"
 	// 	}
@@ -66,7 +66,7 @@ function FunctionToBlockQuestion(): React.ReactNode {
 	// const shadowClass = useCallback((isSelected: boolean): string => {
 	// 	if (isSelected) {
 	// 		if (lastAnswerWasCorrect) {
-	// 			return "shadow-questionCorrectGreen-1"
+	// 			return "shadow-question-correct-green-1"
 	// 		}
 	// 		return "shadow-macaw"
 	// 	}
@@ -85,7 +85,7 @@ function FunctionToBlockQuestion(): React.ReactNode {
 
 	return (
 		<div>
-			<h2 className="text-3xl font-semibold text-questionText">
+			<h2 className="text-3xl font-semibold text-question-text">
 				{questionText}
 			</h2>
 
@@ -100,7 +100,7 @@ function FunctionToBlockQuestion(): React.ReactNode {
 					return (
 						<div
 							className={cn(
-								"relative w-full max-w-sm lg:w-96 cursor-pointer rounded-3xl duration-0 flex-shrink-0",
+								"relative w-full max-w-sm lg:w-96 cursor-pointer rounded-3xl duration-0 shrink-0",
 								isSelected ? "outline-2 outline-macaw" : "outline-2 outline-transparent hover:outline-macaw/50",
 								isInConfirmationStage ? "cursor-default" : "cursor-pointer"
 							)}

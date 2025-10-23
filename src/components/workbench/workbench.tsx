@@ -48,7 +48,7 @@ function Workbench(): React.ReactNode {
 			{/* Middle section - much lower z-index so hover cards appear above */}
 			<div
 				className={cn(
-					"fixed border-t border-b z-0",
+					"fixed border-t border-b z-0 border-swan",
 					isGaragePage ? "border-l" : "border-l-2"
 				)}
 				style={{
@@ -79,7 +79,7 @@ function Workbench(): React.ReactNode {
 			{/* Bottom section with driving controls - lower z-index */}
 			{isGaragePage && (
 				<div
-					className="fixed border-l border-t z-0"
+					className="fixed border-l border-t z-0 border-swan"
 					style={{
 						width: workbenchClass.fixedWidth + "px",
 						top: `${bottomSectionTop}px`,

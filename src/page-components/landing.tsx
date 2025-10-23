@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import GridPattern from "../components/shadcn/ui/grid-pattern"
+import GridPattern from "../components/landing/grid-pattern"
 import LandingHeader from "../components/landing/landing-header"
 import TheLittleThings from "../components/landing/the-little-things"
 import ByBuildersForBuilders from "../components/landing/by-builders-for-builders"
@@ -68,7 +68,7 @@ function Landing(): React.ReactNode {
 					<ByBuildersForBuilders />
 				</LandingSectionContainer>
 
-				<LandingSectionContainer extraClasses="flex relative items-center justify-center pb-16 text-questionText">
+				<LandingSectionContainer extraClasses="flex relative items-center justify-center pb-16 text-question-text">
 					<SignUpForUpdates />
 				</LandingSectionContainer>
 			</div>

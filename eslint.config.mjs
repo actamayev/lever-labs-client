@@ -1,17 +1,8 @@
-import { dirname } from "path"
-import { fileURLToPath } from "url"
-import { FlatCompat } from "@eslint/eslintrc"
-import js from "@eslint/js"
 import stylistic from "@stylistic/eslint-plugin"
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = dirname(__filename)
-
-const compat = new FlatCompat({
-	baseDirectory: __dirname,
-	recommendedConfig: js.configs.recommended,
-	allConfig: js.configs.all,
-})
+import typescript from "@typescript-eslint/eslint-plugin"
+import typescriptParser from "@typescript-eslint/parser"
+import react from "eslint-plugin-react"
+import reactHooks from "eslint-plugin-react-hooks"
 
 const eslintConfig = [
 	{
@@ -21,53 +12,46 @@ const eslintConfig = [
 			"out/**",
 			"build/**",
 			"next-env.d.ts",
-			// Ignore shadcn and other third-party components
-			"src/components/shadcn/ui/**/*",
-			"src/lib/**/*", 
+			"src/components/ui/**/*",
+			"src/lib/**/*",
 			"src/hooks/shadcn/**/*",
 			"src/components/magicui/**/*",
-			// Ignore the problematic JS files that are causing issues
 			"add-use-client.js",
-			// Ignore ESLint config file itself
 			"eslint.config.mjs",
-			// Add these to fix the parsing errors
 			"next.config.js",
 			"postcss.config.js",
 			"public/keepalive-worker.js",
-			// Ignore test directory
 			"test/**/*",
 			"src/classes/__tests__/**/*",
 			"coverage/**/*",
 		],
 	},
 
-	// Use Next.js recommended configurations
-	...compat.config({
-		extends: [
-			"next/core-web-vitals",
-			"next/typescript",
-		],
-		env: {
-			browser: true,
-			node: true,
-			es6: true,
+	// TypeScript and React configuration
+	{
+		files: ["**/*.{ts,tsx}"],
+		languageOptions: {
+			parser: typescriptParser,
+			parserOptions: {
+				ecmaVersion: "latest",
+				sourceType: "module",
+				project: "./tsconfig.json",
+				ecmaFeatures: {
+					jsx: true,
+				},
+			},
 		},
-		plugins: [
-			"react",
-			"@typescript-eslint",
-			"react-hooks",
-		],
-		parser: "@typescript-eslint/parser",
-		parserOptions: {
-			ecmaVersion: "latest",
-			sourceType: "module",
-			project: "./tsconfig.json",
-			ecmaFeatures: {
-				jsx: true,
+		plugins: {
+			"@typescript-eslint": typescript,
+			"react": react,
+			"react-hooks": reactHooks,
+		},
+		settings: {
+			react: {
+				version: "detect",
 			},
 		},
 		rules: {
-			// Basic formatting rules (not the problematic indent rule)
 			"linebreak-style": ["warn", "unix"],
 			"quotes": ["error", "double"],
 			"semi": ["error", "never"],
@@ -75,7 +59,7 @@ const eslintConfig = [
 			"eol-last": ["error", "always"],
 			"no-unused-vars": "off",
 			"@typescript-eslint/no-unused-vars": [
-				"warn", 
+				"warn",
 				{ "argsIgnorePattern": "^_" }
 			],
 			"eqeqeq": "error",
@@ -105,8 +89,6 @@ const eslintConfig = [
 			"@typescript-eslint/no-empty-interface": "error",
 			"max-depth": ["warn", 3],
 			"no-nested-ternary": "error",
-			// DISABLE the problematic type-aware rules for now
-			// "@typescript-eslint/no-unnecessary-condition": "warn",
 			"complexity": ["warn", 10],
 			"no-shadow": "off",
 			"@typescript-eslint/no-shadow": "error",
@@ -116,7 +98,7 @@ const eslintConfig = [
 			"react/prop-types": "off",
 			"max-params": ["warn", 4],
 			"max-lines-per-function": [
-				"warn", 
+				"warn",
 				{"max": 90, "skipBlankLines": true, "skipComments": true}
 			],
 			"@typescript-eslint/naming-convention": [
@@ -158,7 +140,7 @@ const eslintConfig = [
 			"react/jsx-no-constructed-context-values": "error",
 			"react/no-unescaped-entities": "off",
 		},
-	}),
+	},
 
 	// Stylistic rules (including indent with tabs)
 	{
@@ -199,6 +181,10 @@ const eslintConfig = [
 	// Override for JavaScript files - disable TypeScript-specific rules
 	{
 		files: ["**/*.{js,mjs,cjs}"],
+		languageOptions: {
+			ecmaVersion: "latest",
+			sourceType: "module",
+		},
 		rules: {
 			"@typescript-eslint/explicit-function-return-type": "off",
 			"@typescript-eslint/no-unused-vars": "off",
@@ -211,13 +197,12 @@ const eslintConfig = [
 			"@typescript-eslint/naming-convention": "off",
 			"@typescript-eslint/ban-types": "off",
 			"@typescript-eslint/no-floating-promises": "off",
-			// Re-enable basic no-unused-vars for JS files
 			"no-unused-vars": ["warn", { "argsIgnorePattern": "^_" }],
 			"no-shadow": "error",
 		},
 	},
 
-	// Override for icon components - disable explicit function return type
+	// Override for additional icon components paths
 	{
 		files: ["src/components/icons/**/*", "src/utils/career-quest/career-quest-right-content/**/*"],
 		rules: {

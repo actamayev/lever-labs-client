@@ -6,8 +6,8 @@ import { observer } from "mobx-react"
 import { ArrowLeft, Hash, Play, UserCheck, ExternalLink } from "lucide-react"
 import { CareerUUID, ClassCode, HubUUID } from "@lever-labs/common-ts/types/utils"
 import { cn } from "../../lib/shadcn/utils"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
+import { TactileButton } from "../buttons/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import useJoinHub from "../../hooks/student/join-hub"
@@ -139,7 +139,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 
 			{/* Class Info Card */}
 			<div className="mb-8">
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardHeader className="pb-3">
 						<CardTitle className="flex items-center gap-2 text-lg">
 							<Hash className="h-5 w-5 text-humpback" />
@@ -156,7 +156,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 
 			{/* Student Hubs Section */}
 			{isEmpty(classroomData.activeHubs) ? (
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardContent>
 						<div className="text-center py-16">
 							<Play className="h-16 w-16 text-eel mx-auto mb-6 opacity-50" />
@@ -169,7 +169,7 @@ function SingleWhiteboardPage({ classCode }: ClassroomPageProps): React.ReactNod
 					</CardContent>
 				</Card>
 			) : (
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardHeader>
 						<CardTitle className="flex items-center gap-2">
 							<Play className="h-5 w-5 text-humpback" />

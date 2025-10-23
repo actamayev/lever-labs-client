@@ -4,11 +4,12 @@ import { observer } from "mobx-react"
 import debounce from "lodash-es/debounce"
 import { useRef, useEffect, useState, useMemo } from "react"
 import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
-import { Textarea } from "../../shadcn/ui/textarea"
+import { Textarea } from "../../ui/textarea"
 import SandboxChatInterface from "./sandbox-chat-interface"
 import sandboxClass from "../../../classes/sandbox-class"
-import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../shadcn/ui/tabs"
+import { Tabs, TabsList, TabsContent, TabsTrigger } from "../../ui/tabs"
 import editSandboxProjectNotes from "../../../utils/sandbox/edit-sandbox-project-notes"
+import { Code , FileText , MessageCircle } from "lucide-react"
 
 function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): React.ReactNode {
 	const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
@@ -67,13 +68,22 @@ function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): Reac
 
 	return (
 		<Tabs defaultValue="code" className="w-full h-full flex flex-col">
-			<TabsList className="mb-2 bg-polar">
-				<TabsTrigger value="code">Code</TabsTrigger>
-				<TabsTrigger value="notes">Notes</TabsTrigger>
-				<TabsTrigger value="chat">Chat</TabsTrigger>
+			<TabsList className="mb-2 bg-polar w-full">
+				<TabsTrigger value="code">
+					<Code className="w-4 h-4" />
+					Code
+				</TabsTrigger>
+				<TabsTrigger value="notes">
+					<FileText className="w-4 h-4" />
+					Notes
+				</TabsTrigger>
+				<TabsTrigger value="chat">
+					<MessageCircle className="w-4 h-4" />
+					Chat
+				</TabsTrigger>
 			</TabsList>
 
-			<TabsContent value="code" className="flex-1 overflow-auto bg-polar p-4 rounded">
+			<TabsContent value="code" className="flex-1 overflow-auto bg-polar p-4 rounded-3xl">
 				<pre className="text-sm font-mono whitespace-pre-wrap">
 					{cppCode || "// Your code will appear here"}
 				</pre>
@@ -82,7 +92,7 @@ function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): Reac
 			<TabsContent value="notes" className="flex-1" data-notes-section="true">
 				<Textarea
 					placeholder="Add notes about your project here..."
-					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded"
+					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded-3xl ring-0!"
 					value={projectNotes || ""}
 					onChange={handleNotesChange}
 				/>

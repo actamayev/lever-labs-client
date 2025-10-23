@@ -21,7 +21,7 @@ function SupportSectionContainer(props: Props): React.ReactNode {
 
 	return (
 		<div className={parentClasses}>
-			<div className="font-medium text-3xl text-questionText">
+			<div className="font-medium text-3xl text-question-text">
 				{title}
 			</div>
 			<div className={childClasses}>

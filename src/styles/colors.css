@@ -1,6 +1,5 @@
-/* TODO 8/19/25: Change to using these instead of -1/-2/-3 */
-/* //https://design.duolingo.com/illustration/shape-language#color */
-@tailwind base;
+/* Custom color definitions for your application */
+/* These are used by the Tailwind config to generate utility classes */
 
 @layer base {
 	:root {
@@ -13,56 +12,56 @@
 		--landing-outer-border: 244 244 246;
 		--landing-dotted-line: 238 238 242;
 
-		--chargingGreen: 35 200 100;
-		--chargingGreen-1: 45 220 120;
-		--chargingGreen-2: 30 180 100;
-		--chargingGreen-3: 50 240 140;
+		--charging-green: 35 200 100;
+		--charging-green-1: 45 220 120;
+		--charging-green-2: 30 180 100;
+		--charging-green-3: 50 240 140;
 
-		--questionCorrectGreen: 215 255 184; /* Question background green */
-		--questionCorrectGreen-1: 165 237 111; /* Question border green */
-		--questionCorrectGreen-2: 88 167 0; /* Question correct text color */
-		--questionCorrectGreen-3: 97 184 0; /* Check Question shadow color */
+		--question-correct-green: 215 255 184;
+		--question-correct-green-1: 165 237 111;
+		--question-correct-green-2: 88 167 0;
+		--question-correct-green-3: 97 184 0;
 
-		--questionIncorrectRed: 255 223 224; /* Question background red */
-		--questionIncorrectRed-2: 234 43 43; /* Question incorrect text color */
+		--question-incorrect-red: 255 223 224;
+		--question-incorrect-red-2: 234 43 43;
 
 		--career-quest-yellow: 253 217 11;
-		/* https://design.duolingo.com/identity/color */
+		
 		/* Duolingo colors */
 		--macaw: 28 176 246;
-		--macaw-1: 100 200 255;     /* Lighter, softer blue */
-		--macaw-2: 15 140 200;      /* Deeper blue */
-		--macaw-3: 45 190 220;      /* Cyan-tinted blue */
+		--macaw-1: 100 200 255;
+		--macaw-2: 15 140 200;
+		--macaw-3: 45 190 220;
 		
 		--cardinal: 255 75 75;
-		--cardinal-1: 255 120 120;  /* Lighter coral red */
-		--cardinal-2: 200 45 45;    /* Deeper red */
-		--cardinal-3: 255 95 60;    /* Orange-tinted red */
+		--cardinal-1: 255 120 120;
+		--cardinal-2: 200 45 45;
+		--cardinal-3: 255 95 60;
 		
 		--bee: 255 200 0;
-		--bee-1: 255 220 80;        /* Lighter golden yellow */
-		--bee-2: 220 160 0;         /* Deeper amber */
-		--bee-3: 255 185 20;        /* Slightly orange yellow */
+		--bee-1: 255 220 80;
+		--bee-2: 220 160 0;
+		--bee-3: 255 185 20;
 		
 		--fox: 255 150 0;
-		--fox-1: 255 180 60;        /* Lighter peach orange */
-		--fox-2: 200 110 0;         /* Deeper burnt orange */
-		--fox-3: 255 130 20;        /* More red-orange */
+		--fox-1: 255 180 60;
+		--fox-2: 200 110 0;
+		--fox-3: 255 130 20;
 		
 		--beetle: 206 130 255;
-		--beetle-1: 230 170 255;    /* Lighter lavender */
-		--beetle-2: 160 90 220;     /* Deeper purple */
-		--beetle-3: 180 120 255;    /* Blue-tinted purple */
+		--beetle-1: 230 170 255;
+		--beetle-2: 160 90 220;
+		--beetle-3: 180 120 255;
 		
 		--humpback: 43 112 201;
-		--humpback-1: 80 140 230;   /* Lighter navy blue */
-		--humpback-2: 25 80 160;    /* Deeper navy */
-		--humpback-3: 60 100 180;   /* Indigo-tinted blue */
+		--humpback-1: 80 140 230;
+		--humpback-2: 25 80 160;
+		--humpback-3: 60 100 180;
 		
-		--beakInner: 182 110 40;
-		--beakInner-1: 210 140 80;  /* Lighter tan */
-		--beakInner-2: 140 80 20;   /* Deeper brown */
-		--beakInner-3: 190 100 50;  /* Reddish brown */
+		--beak-inner: 182 110 40;
+		--beak-inner-1: 210 140 80;
+		--beak-inner-2: 140 80 20;
+		--beak-inner-3: 190 100 50;
 
 		--iMessageBlue: 0 122 255;
 		--iMessageGreen: 139 239 139;
@@ -84,57 +83,56 @@
 		--landing-outer-border: 35 45 50;
 		--landing-dotted-line: 40 50 55;
 
-		--chargingGreen: 35 200 100;
-		--chargingGreen-1: 45 220 120;
-		--chargingGreen-2: 30 180 100;
-		--chargingGreen-3: 50 240 140;
+		--charging-green: 35 200 100;
+		--charging-green-1: 45 220 120;
+		--charging-green-2: 30 180 100;
+		--charging-green-3: 50 240 140;
 
 		--career-quest-yellow: 253 217 11;
 
-		--questionCorrectGreen: 32 47 54; /* Question background green */
-		--questionCorrectGreen-1: 95 132 40; /* Question border green */
-		--questionCorrectGreen-2: 122 185 50; /* Question correct text color */
-		--questionCorrectGreen-3: 134 204 54; /* Check Question shadow color */
+		--question-correct-green: 32 47 54;
+		--question-correct-green-1: 95 132 40;
+		--question-correct-green-2: 122 185 50;
+		--question-correct-green-3: 134 204 54;
 
-		--questionIncorrectRed: 32 47 54; /* Question background red */
-		--questionIncorrectRed-2: 216 72 72; /* Question incorrect text color */
+		--question-incorrect-red: 32 47 54;
+		--question-incorrect-red-2: 216 72 72;
 
-		/* https://design.duolingo.com/identity/color */
 		/* Duolingo colors - Dark mode variants */
 		--macaw: 72 191 248;
-		--macaw-1: 120 210 255;     /* Brighter light blue */
-		--macaw-2: 45 160 210;      /* Muted blue */
-		--macaw-3: 90 200 230;      /* Cyan-tinted blue */
+		--macaw-1: 120 210 255;
+		--macaw-2: 45 160 210;
+		--macaw-3: 90 200 230;
 		
 		--cardinal: 255 75 75;
-		--cardinal-1: 255 140 140;  /* Softer red */
-		--cardinal-2: 180 50 50;    /* Muted red */
-		--cardinal-3: 255 110 80;   /* Orange-tinted red */
+		--cardinal-1: 255 140 140;
+		--cardinal-2: 180 50 50;
+		--cardinal-3: 255 110 80;
 		
 		--bee: 255 200 0;
-		--bee-1: 255 230 100;       /* Brighter yellow */
-		--bee-2: 200 150 0;         /* Muted amber */
-		--bee-3: 255 200 40;        /* Slightly orange yellow */
+		--bee-1: 255 230 100;
+		--bee-2: 200 150 0;
+		--bee-3: 255 200 40;
 		
 		--fox: 255 150 0;
-		--fox-1: 255 190 80;        /* Brighter orange */
-		--fox-2: 180 110 0;         /* Muted orange */
-		--fox-3: 255 150 40;        /* More red-orange */
+		--fox-1: 255 190 80;
+		--fox-2: 180 110 0;
+		--fox-3: 255 150 40;
 		
 		--beetle: 206 130 255;
-		--beetle-1: 240 180 255;    /* Brighter lavender */
-		--beetle-2: 140 80 200;     /* Muted purple */
-		--beetle-3: 200 140 255;    /* Blue-tinted purple */
+		--beetle-1: 240 180 255;
+		--beetle-2: 140 80 200;
+		--beetle-3: 200 140 255;
 		
 		--humpback: 43 112 201;
-		--humpback-1: 100 150 240;  /* Brighter navy */
-		--humpback-2: 30 70 140;    /* Muted navy */
-		--humpback-3: 70 120 190;   /* Indigo-tinted blue */
+		--humpback-1: 100 150 240;
+		--humpback-2: 30 70 140;
+		--humpback-3: 70 120 190;
 		
-		--beakInner: 182 110 40;
-		--beakInner-1: 220 150 90;  /* Brighter tan */
-		--beakInner-2: 120 70 25;   /* Muted brown */
-		--beakInner-3: 200 120 60;  /* Reddish brown */
+		--beak-inner: 182 110 40;
+		--beak-inner-1: 220 150 90;
+		--beak-inner-2: 120 70 25;
+		--beak-inner-3: 200 120 60;
 	
 		--iMessageBlue: 0 122 255;
 		--iMessageGreen: 139 239 139;

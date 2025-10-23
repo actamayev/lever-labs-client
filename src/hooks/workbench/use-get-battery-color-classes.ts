@@ -7,7 +7,7 @@ export default function useGetBatteryColorClasses(): string {
 	return useMemo((): string => {
 		const batteryData = workbenchClass.batteryData
 		if (!batteryData) return "opacity-50 text-cardinal"
-		if (batteryData.isCharging) return "text-chargingGreen"
+		if (batteryData.isCharging) return "text-charging-green"
 		if (batteryData.stateOfCharge <= 20) return "text-cardinal"
 		else if (batteryData.stateOfCharge <= 40) return "text-bee"
 		else if (batteryData.stateOfCharge <= 70) return "text-fox"

@@ -1,8 +1,8 @@
 "use client"
 
 import { Control } from "react-hook-form"
-import { Input } from "../../shadcn/ui/input"
-import { FormControl, FormField, FormItem, FormMessage } from "../../shadcn/ui/form"
+import { Input } from "../../ui/input"
+import { FormControl, FormField, FormItem, FormMessage } from "../../ui/form"
 import { LoginRequest } from "@lever-labs/common-ts/types/api"
 
 export default function ContactInput ({ control } : { control: Control<LoginRequest>}): React.ReactNode {
@@ -18,7 +18,7 @@ export default function ContactInput ({ control } : { control: Control<LoginRequ
 							{...field}
 							maxLength={100}
 							min={3}
-							className="h-12 !text-xl font-light bg-polar shadow-none border-swan"
+							className="h-12 text-xl! font-light bg-polar shadow-none border-swan"
 						/>
 					</FormControl>
 					<FormMessage />

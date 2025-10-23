@@ -98,7 +98,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				<div className="flex-1 mx-10">
 					<div className="w-full bg-swan rounded-full h-4">
 						<div
-							className="bg-chargingGreen h-4 rounded-full transition-all duration-300"
+							className="bg-charging-green h-4 rounded-full transition-all duration-300"
 							style={{ width: `${progress}%` }}
 						/>
 					</div>
@@ -113,7 +113,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 						<ConnectToPipButton
 							colors={getDuolingoColors("humpback")}
 							tactileButtonClasses="h-8 text-xl"
-							botIconClasses="!size-6"
+							botIconClasses="size-6!"
 						/>
 					</div>
 				)}
@@ -124,7 +124,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 					shadowClass="shadow-macaw-2"
 					className="w-10 h-10 bg-macaw"
 				>
-					<BotIcon className="size-10 text-standardBackground"/>
+					<BotIcon className="size-10 text-standard-background"/>
 				</TactileButton> */}
 			</header>
 			<ExitLessonDialog onEndSession={handleEndSession} />

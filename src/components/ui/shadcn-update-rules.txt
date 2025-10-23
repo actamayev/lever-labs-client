@@ -1,0 +1,14 @@
+This directory houses the Shadcn/UI components.
+Besides for the files below, do not manually modify the components in this directory.
+If you need to modify the component, do it by extending the component (add extra classes where the component is called).
+- button.tsx
+- input.tsx
+- sidebar.tsx
+- slider.tsx
+- tooltip.tsx
+
+The excluded components should not be updated via shadcn.
+They are excluded because we have implemented custom modifications to the components.
+
+To update a component to it's latest version, run:
+	`pnpm dlx shadcn@canary add -o {component}`

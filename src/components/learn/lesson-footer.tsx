@@ -2,7 +2,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import { Check, X } from "lucide-react"
@@ -82,23 +82,23 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 
 	const shadowClass = useCallback((): string => {
 		if (!isInConfirmationStage || lastAnswerWasCorrect) {
-			return "shadow-chargingGreen-2"
+			return "shadow-charging-green-2"
 		}
 		return "shadow-cardinal"
 	}, [lastAnswerWasCorrect, isInConfirmationStage])
 
 	const tactileButtonClass = useCallback((): string => {
-		const baseClass = "h-11 px-12 py-4 text-xl font-semibold rounded-2xl text-standardBackground duration-0"
+		const baseClass = "h-11 px-12 py-4 text-xl font-semibold rounded-2xl text-standard-background duration-0"
 		if (!isInConfirmationStage || lastAnswerWasCorrect) {
-			return `${baseClass} bg-chargingGreen`
+			return `${baseClass} bg-charging-green`
 		}
 		return `${baseClass} bg-cardinal-1`
 	}, [lastAnswerWasCorrect, isInConfirmationStage])
 
 	const footerBackgroundColor = useMemo((): string => {
 		if (!isInConfirmationStage) return ""
-		if (lastAnswerWasCorrect) return "bg-questionCorrectGreen !border-questionCorrectGreen"
-		return "bg-questionIncorrectRed !border-questionIncorrectRed"
+		if (lastAnswerWasCorrect) return "bg-question-correct-green border-question-correct-green!"
+		return "bg-question-incorrect-red border-question-incorrect-red!"
 	}, [isInConfirmationStage, lastAnswerWasCorrect])
 
 	// eslint-disable-next-line complexity
@@ -117,7 +117,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				<div className="flex items-center gap-3">
 
 					<X className="size-10 text-cardinal" />
-					<span className="text-3xl font-semibold text-questionIncorrectRed-2">Correct solution:</span>
+					<span className="text-3xl font-semibold text-question-incorrect-red-2">Correct solution:</span>
 					{correctAnswer && typeof correctAnswer === "object" && (
 						<div className="relative h-32 w-96">
 							<LearnMiniSandbox
@@ -133,7 +133,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				<div className="flex items-center gap-3">
 					<X className="size-10 text-cardinal" />
 					<div className="flex flex-col items-center justify-center gap-2">
-						<span className="text-3xl font-semibold text-questionIncorrectRed-2">Correct solution:</span>
+						<span className="text-3xl font-semibold text-question-incorrect-red-2">Correct solution:</span>
 						{correctAnswer && typeof correctAnswer === "string" && (
 							<div className="relative h-32 w-96">
 								{correctAnswer}
@@ -175,8 +175,8 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				<div className="flex items-center gap-3">
 					{lastAnswerWasCorrect ? (
 						<>
-							<Check className="size-10 text-questionCorrectGreen-2" />
-							<span className="text-3xl font-semibold text-questionCorrectGreen-2">Correct!</span>
+							<Check className="size-10 text-question-correct-green-2" />
+							<span className="text-3xl font-semibold text-question-correct-green-2">Correct!</span>
 						</>
 					) : (
 						<ShowIncorrectAnswerContent />

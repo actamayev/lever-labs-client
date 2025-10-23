@@ -21,10 +21,10 @@ export default function HeaderNav({ isIncompleteSignup = false }: { isIncomplete
 	return (
 		<nav
 			id="header"
-			className={`fixed top-0 left-0 w-full z-20 duration-0 border-b backdrop-blur-sm ${
+			className={`fixed top-0 left-0 w-full z-20 duration-0 border-b backdrop-blur-xs ${
 				isScrolled
-					? "bg-standardBackground/70 border-landingOuterBorder"
-					: "bg-standardBackground/50 border-transparent"
+					? "bg-standard-background/70 border-landing-outer-border"
+					: "bg-standard-background/50 border-transparent"
 			}`}
 		>
 			<div

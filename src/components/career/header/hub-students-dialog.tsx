@@ -8,9 +8,9 @@ import {
 	DialogHeader,
 	DialogTitle,
 	DialogClose
-} from "../../shadcn/ui/dialog"
-import { Card, CardContent } from "../../shadcn/ui/card"
-import { Avatar, AvatarFallback } from "../../shadcn/ui/avatar"
+} from "../../ui/dialog"
+import { Card, CardContent } from "../../ui/card"
+import { Avatar, AvatarFallback } from "../../ui/avatar"
 import { observer } from "mobx-react"
 import { isEmpty } from "lodash-es"
 

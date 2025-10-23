@@ -3,9 +3,9 @@
 import { observer } from "mobx-react"
 import { useState, useCallback, useEffect } from "react" // Add useEffect
 import { Save } from "lucide-react"
-import { Input } from "../shadcn/ui/input"
-import { Label } from "../shadcn/ui/label"
-import { Button } from "../shadcn/ui/button"
+import { Input } from "../ui/input"
+import { Label } from "../ui/label"
+import { Button } from "../ui/button"
 import CharacterCounter from "../character-counter"
 import editName from "../../utils/personal-info/edit-name"
 import personalInfoClass from "../../classes/personal-info-class"
@@ -45,8 +45,8 @@ function ChangeNameSection(): React.ReactNode {
 						id="name"
 						value={name}
 						onChange={handleNameChange}
-						className="w-full pr-14 h-10 md:h-12 text-lg md:!text-xl
-								bg-polar !text-eel font-light border-swan shadow-none"
+						className="w-full pr-14 h-10 md:h-12 text-lg md:text-xl!
+								bg-polar text-eel! font-light border-swan shadow-none"
 						maxLength={50}
 					/>
 					<CharacterCounter
@@ -62,7 +62,7 @@ function ChangeNameSection(): React.ReactNode {
 						variant="ghost"
 						className="self-end sm:self-auto sm:ml-2 hover:bg-polar p-2"
 					>
-						<Save className="h-5 w-5 md:!h-6 md:!w-6" />
+						<Save className="h-5 w-5 md:h-6! md:w-6!" />
 					</Button>
 				)}
 			</div>

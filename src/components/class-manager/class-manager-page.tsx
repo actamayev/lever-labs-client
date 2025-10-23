@@ -5,7 +5,7 @@ import { BookOpen } from "lucide-react"
 import { observer } from "mobx-react"
 import { useState, useEffect, useCallback } from "react"
 import { BasicTeacherClassroomData } from "@lever-labs/common-ts/types/api"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../shadcn/ui/card"
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import teacherClass from "../../classes/teacher-class"
 import CreateClassroomDialog from "./create-classroom-dialog"
 import RenameClassroomDialog from "./rename-classroom-dialog"
@@ -52,7 +52,7 @@ function ClassManagerPage(): React.ReactNode {
 			<ClassManagerStatsCards setIsCreateDialogOpen={setIsCreateDialogOpen} />
 
 			{/* Classrooms Section */}
-			<Card className="border-2 border-swan bg-standardBackground">
+			<Card className="border-2 border-swan bg-standard-background">
 				<CardHeader>
 					<div className="flex items-center justify-between">
 						<div>

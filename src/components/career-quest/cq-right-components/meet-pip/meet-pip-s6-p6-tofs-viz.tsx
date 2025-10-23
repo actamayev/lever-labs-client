@@ -12,7 +12,6 @@ import {
 import { useMemo } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
-import { Card, CardContent, CardHeader, CardTitle } from "../../../shadcn/ui/card"
 import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
@@ -59,11 +58,11 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 		<div className="space-y-6">
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
 				{/* Left TOF Chart */}
-				<Card className="h-80">
-					<CardHeader className="pb-2">
-						<CardTitle className="text-lg text-center">Left TOF Sensor</CardTitle>
-					</CardHeader>
-					<CardContent className="h-60">
+				<div className="h-80 bg-card text-card-foreground rounded-xl border shadow-sm p-6">
+					<div className="pb-2">
+						<h3 className="text-lg font-semibold leading-none text-center">Left TOF Sensor</h3>
+					</div>
+					<div className="h-60">
 						<ResponsiveContainer width="100%" height="100%">
 							<BarChart data={leftTofData}>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
@@ -90,15 +89,15 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 								/>
 							</BarChart>
 						</ResponsiveContainer>
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 
 				{/* Right TOF Chart */}
-				<Card className="h-80">
-					<CardHeader className="pb-2">
-						<CardTitle className="text-lg text-center">Right TOF Sensor</CardTitle>
-					</CardHeader>
-					<CardContent className="h-60">
+				<div className="h-80 bg-card text-card-foreground rounded-xl border shadow-sm p-6">
+					<div className="pb-2">
+						<h3 className="text-lg font-semibold leading-none text-center">Right TOF Sensor</h3>
+					</div>
+					<div className="h-60">
 						<ResponsiveContainer width="100%" height="100%">
 							<BarChart data={rightTofData}>
 								<CartesianGrid strokeDasharray="3 3" className="stroke-swan" />
@@ -125,8 +124,8 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 								/>
 							</BarChart>
 						</ResponsiveContainer>
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 			</div>
 		</div>
 	)

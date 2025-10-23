@@ -4,7 +4,7 @@ import { useCallback, useState, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import { BotIcon, WifiHighIcon } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
 import { PipUUID } from "@lever-labs/common-ts/types/utils"
@@ -12,7 +12,7 @@ import pipClass from "../../classes/pip-class"
 import { RetrieveIsPipUUIDValidResponse } from "@lever-labs/common-ts/types/api"
 import searchPipByUUIDUtil from "../../utils/pip/search-pip-by-uuid-util"
 import { ACCEPTABLE_PIP_ID_CHARACTERS } from "@lever-labs/common-ts/types/utils/constants"
-import { InputOTP, InputOTPGroup, InputOTPSlot } from "../shadcn/ui/input-otp"
+import { InputOTP, InputOTPGroup, InputOTPSlot } from "../ui/input-otp"
 
 // eslint-disable-next-line max-lines-per-function
 function WifiConnectionSection(): React.ReactNode {
@@ -108,9 +108,9 @@ function WifiConnectionSection(): React.ReactNode {
 			case "connected to serial to another user":
 				return "bg-beetle"
 			case "connected online to you":
-				return "bg-chargingGreen"
+				return "bg-charging-green"
 			case "connected to serial to you":
-				return "bg-chargingGreen"
+				return "bg-charging-green"
 			default:
 				return "bg-cardinal"
 		}
@@ -155,35 +155,37 @@ function WifiConnectionSection(): React.ReactNode {
 								index={0}
 								className={cn(
 									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
-									"transition-all"
+									"transition-all ring-0! data-[active=true]:border-humpback!",
+									"first:rounded-l-lg first:border-l-2"
 								)}
 							/>
 							<InputOTPSlot
 								index={1}
 								className={cn(
 									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
-									"transition-all"
+									"transition-all ring-0! data-[active=true]:border-humpback!"
 								)}
 							/>
 							<InputOTPSlot
 								index={2}
 								className={cn(
 									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
-									"transition-all"
+									"transition-all ring-0! data-[active=true]:border-humpback!"
 								)}
 							/>
 							<InputOTPSlot
 								index={3}
 								className={cn(
 									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
-									"transition-all"
+									"transition-all ring-0! data-[active=true]:border-humpback!"
 								)}
 							/>
 							<InputOTPSlot
 								index={4}
 								className={cn(
 									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
-									"transition-all"
+									"transition-all ring-0! data-[active=true]:border-humpback!",
+									"last:rounded-r-lg last:border-r-2"
 								)}
 							/>
 						</InputOTPGroup>
@@ -232,7 +234,7 @@ function WifiConnectionSection(): React.ReactNode {
 							disabled={isConnecting}
 						>
 							<div className="flex items-center justify-center gap-2">
-								<WifiHighIcon className="!size-8 text-white mb-2" />
+								<WifiHighIcon className="size-8! text-white mb-2" />
 								{isConnecting ? "CONNECTING..." : "CONNECT"}
 							</div>
 						</TactileButton>

@@ -89,7 +89,7 @@ function CareerChatInterface({ careerUUID }: { careerUUID: CareerUUID }): React.
 	// Show loading state while retrieving messages
 	if (isRetrievingData) {
 		return (
-			<div className="flex flex-col h-full max-h-full bg-standardBackground rounded-lg overflow-hidden">
+			<div className="flex flex-col h-full max-h-full bg-standard-background rounded-lg overflow-hidden">
 				<div className="flex-1 flex items-center justify-center">
 					<div className="text-center">
 						<div className="flex space-x-1 justify-center mb-4">

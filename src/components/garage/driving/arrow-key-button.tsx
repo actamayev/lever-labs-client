@@ -5,7 +5,7 @@ import { useRef, useEffect } from "react"
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
 import garageClass from "../../../classes/garage-class"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { TactileButton } from "../../buttons/tactile-button"
 import personalInfoClass from "../../../classes/personal-info-class"
 import applyMotorControl from "../../../utils/garage/apply-motor-control"
 import computeMotorControl from "../../../utils/garage/compute-motor-control"
@@ -17,7 +17,7 @@ const getButtonClasses = (isDisabled: boolean): string => {
 	const stateClasses = isDisabled
 		? "bg-gray-300/20 text-gray-400 cursor-not-allowed dark:bg-gray-600/20 dark:text-gray-500"
 		: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"
-	const focusClasses = "outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+	const focusClasses = "outline-hidden focus:outline-hidden focus:ring-0 focus-visible:outline-hidden focus-visible:ring-0"
 
 	return cn(baseClasses, stateClasses, focusClasses)
 }
@@ -49,13 +49,13 @@ function ArrowKeyButton({ direction }: { direction: MotorDirection }): React.Rea
 	const getMotorDirectionIcon = (): React.ReactNode => {
 		switch (direction) {
 			case "up":
-				return <ArrowUp className="!size-12" strokeWidth={2.5}/>
+				return <ArrowUp className="size-12!" strokeWidth={2.5}/>
 			case "down":
-				return <ArrowDown className="!size-12" strokeWidth={2.5}/>
+				return <ArrowDown className="size-12!" strokeWidth={2.5}/>
 			case "left":
-				return <ArrowLeft className="!size-12" strokeWidth={2.5}/>
+				return <ArrowLeft className="size-12!" strokeWidth={2.5}/>
 			case "right":
-				return <ArrowRight className="!size-12" strokeWidth={2.5}/>
+				return <ArrowRight className="size-12!" strokeWidth={2.5}/>
 		}
 	}
 

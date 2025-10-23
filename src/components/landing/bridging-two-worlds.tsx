@@ -9,7 +9,7 @@ import LandingSectionHeaderText from "./landing-section-header-text"
 // eslint-disable-next-line @typescript-eslint/naming-convention
 function ShowCheckIcon({ icon: Icon} : { icon: LucideIcon }): React.ReactNode {
 	return (
-		<div className="flex-shrink-0">
+		<div className="shrink-0">
 			<div className="bg-green-500 dark:bg-green-700 w-5 h-5 sm:w-6 sm:h-6 rounded-full flex items-center justify-center text-white">
 				<Icon size={12} className="w-3 h-3 sm:w-4 sm:h-4" />
 			</div>

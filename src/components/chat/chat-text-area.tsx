@@ -4,13 +4,13 @@
 import { observer } from "mobx-react"
 import { Lightbulb, Send, Square } from "lucide-react"
 import { Dispatch, RefObject, SetStateAction, useCallback } from "react"
-import { Textarea } from "../shadcn/ui/textarea"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { Textarea } from "../ui/textarea"
+import { TactileButton } from "../buttons/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
 import CustomTooltip from "../custom-tooltip"
 
 interface Props {
-	inputRef: RefObject<HTMLTextAreaElement>
+	inputRef: RefObject<HTMLTextAreaElement | null>
 	handleSendMessage: () => Promise<void>
 	onStopStreaming: () => Promise<void>
 	inputValue: string
@@ -46,7 +46,7 @@ function ChatTextArea(props: Props): React.ReactNode {
 	}
 
 	return (
-		<div className="px-4 pb-4 flex-shrink-0">
+		<div className="px-4 pb-4 shrink-0">
 			<div className="relative">
 				<Textarea
 					ref={inputRef}
@@ -54,7 +54,10 @@ function ChatTextArea(props: Props): React.ReactNode {
 					onChange={(e): void => setInputValue(e.target.value)}
 					onKeyDown={handleKeyDown}
 					placeholder="Ask about the code or concepts"
-					className="pr-12 resize-none min-h-14 max-h-32 border-2 border-swan rounded-xl"
+					className={cn(
+						"pr-12 resize-none min-h-14 max-h-32 border-2 border-swan",
+						"rounded-xl focus:border-humpback! focus:ring-0! shadow-none!"
+					)}
 				/>
 				<CustomTooltip
 					tooltipTrigger={
@@ -64,7 +67,7 @@ function ChatTextArea(props: Props): React.ReactNode {
 							shadowClass={cn((isStreaming && !isWaitingForCodeCheck) ? "shadow-cardinal-2" : undefined)}
 							shadowHeight={4}
 							className={cn("absolute right-2 bottom-4 h-8 w-8 shrink-0 text-white font-semibold",
-								(isStreaming && !isWaitingForCodeCheck) ? "bg-cardinal" : "bg-iMessageBlue"
+								(isStreaming && !isWaitingForCodeCheck) ? "bg-cardinal" : "bg-i-message-blue"
 							)}
 						>
 							{(isStreaming && !isWaitingForCodeCheck) ? (

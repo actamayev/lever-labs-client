@@ -5,7 +5,7 @@ import { cn } from "../../../lib/shadcn/utils"
 import BatteryWorkbenchIcon from "./battery-workbench-icon"
 import workbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../ui/hover-card"
 import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"
 
 function BatteryWorkbench(): React.ReactNode {
@@ -66,7 +66,7 @@ function BatteryWorkbench(): React.ReactNode {
 			<HoverCardContent
 				className={cn(
 					"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
-					"bg-standardBackground", "duration-0 animate-none",
+					"bg-standard-background duration-0 shadow-none",
 				)}
 				side="bottom"
 				align="start"
@@ -85,7 +85,7 @@ function BatteryWorkbench(): React.ReactNode {
 
 					<div className="space-y-2">
 						{batteryData?.isCharging && (
-							<div className="flex items-center gap-2 text-chargingGreen">
+							<div className="flex items-center gap-2 text-charging-green">
 								<span className="text-lg">⚡</span>
 								<span className="text-sm font-medium">Charging</span>
 							</div>

@@ -20,7 +20,7 @@ export default function LearnByDoing(): React.ReactNode {
 			rightContent={
 				<div className="bg-white dark:bg-gray-800 overflow-hidden shadow-md w-full rounded-2xl border-2 border-swan">
 					{/* Header row */}
-					<div className="grid grid-cols-2 text-questionText">
+					<div className="grid grid-cols-2 text-question-text">
 						<div className={landingTableHeader()}>
 							In the Career Quest
 						</div>

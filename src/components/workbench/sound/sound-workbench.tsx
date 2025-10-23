@@ -6,13 +6,13 @@ import { observer } from "mobx-react"
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
 import TestSounds from "./test-sounds"
 import { cn } from "../../../lib/shadcn/utils"
-import { Slider } from "../../shadcn/ui/slider"
-import { Checkbox } from "../../shadcn/ui/checkbox"
-import { Separator } from "../../shadcn/ui/separator"
+import { Slider } from "../../ui/slider"
+import { Checkbox } from "../../ui/checkbox"
+import { Separator } from "../../ui/separator"
 import workbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import changeAudibleStatus from "../../../utils/workbench/change-audible-status"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../ui/hover-card"
 import handleVolumeChange from "../../../utils/workbench/handle-volume-change"
 import CustomTooltip from "../../custom-tooltip"
 import garageClass from "../../../classes/garage-class"
@@ -25,7 +25,7 @@ function SoundWorkbench(): React.ReactNode {
 	const isSoundsDisabled = !garageClass.garageSoundsStatus
 
 	const SpeakerIconToShow = (): React.ReactNode => {
-		const baseClasses = "!h-16 !w-16"
+		const baseClasses = "h-16! w-16!"
 		const strokeWidth = 2.5
 		if (workbenchClass.isMuted || isSoundsDisabled) {
 			return <VolumeOff className={cn(baseClasses, "opacity-50")} strokeWidth={strokeWidth}/>
@@ -82,8 +82,8 @@ function SoundWorkbench(): React.ReactNode {
 			<HoverCardContent
 				className={cn(
 					"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
-					"bg-standardBackground",
-					"animate-none duration-0",
+					"bg-standard-background",
+					"duration-0 shadow-none",
 				)}
 				side="bottom"
 				align="end"

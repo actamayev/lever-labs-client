@@ -9,7 +9,7 @@ import pipClass from "../../../classes/pip-class"
 import NetworkIconToShow from "./network-icon-to-show"
 import WorkbenchIconTemplate from "../workbench-icon-template"
 import WifiSettingsDialog from "./network-dialog/wifi-settings-dialog"
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../shadcn/ui/hover-card"
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "../../ui/hover-card"
 
 // eslint-disable-next-line max-lines-per-function
 function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React.ReactNode {
@@ -69,11 +69,11 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 				openDelay={0}
 				closeDelay={100}
 			>
-				<HoverCardTrigger asChild >
+				<HoverCardTrigger asChild>
 					<div>
 						<WorkbenchIconTemplate>
 							<NetworkIconToShow
-								iconClasses={isSandboxPage ? "!size-8" : ""}
+								iconClasses={isSandboxPage ? "size-8!" : ""}
 								extraTextClasses={isSandboxPage ? "text-base font-medium mt-0" : ""}
 							/>
 						</WorkbenchIconTemplate>
@@ -83,8 +83,7 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 				<HoverCardContent
 					className={cn(
 						"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
-						"bg-standardBackground",
-						"duration-0 z-30",
+						"bg-standard-background duration-0 shadow-none",
 					)}
 					side="bottom"
 					align="center"

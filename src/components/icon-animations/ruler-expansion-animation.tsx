@@ -26,7 +26,7 @@ export default function RulerExpansionAnimation({ iconSize }: { iconSize: number
 			<CustomRuler
 				onClick={handleClick}
 				className={cn(
-					"origin-left text-questionText cursor-pointer",
+					"origin-left text-question-text cursor-pointer",
 					isAnimating ? "animate-[measure_1s_ease-in-out]" : ""
 				)}
 				size={iconSize}

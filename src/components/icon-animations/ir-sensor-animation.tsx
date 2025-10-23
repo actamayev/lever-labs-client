@@ -8,7 +8,7 @@ export default function IRSensorAnimation(): React.ReactNode {
 		<div className="cursor-pointer">
 			<CustomRemote
 				size={bentoIconSize}
-				className="transition-colors duration-300 text-questionText"
+				className="transition-colors duration-300 text-question-text"
 			/>
 		</div>
 	)

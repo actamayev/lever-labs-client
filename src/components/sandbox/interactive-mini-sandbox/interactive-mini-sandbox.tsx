@@ -7,7 +7,7 @@ import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Menu, X } from "lucide-react"
 import { cn } from "../../../lib/shadcn/utils"
-import { Button } from "../../shadcn/ui/button"
+import { Button } from "../../ui/button"
 import personalInfoClass from "../../../classes/personal-info-class"
 import initializeBlocks from "../../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../../utils/blockly/workspace-config"
@@ -111,7 +111,7 @@ function InteractiveMiniSandbox(props: Props): React.ReactNode {
 				onClick={toggleToolbox}
 				className={cn(
 					"absolute top-2 right-2 z-10 p-2 h-8 w-8",
-					"bg-background/80 backdrop-blur-sm border-border/50",
+					"bg-background/80 backdrop-blur-xs border-border/50",
 					"hover:bg-accent hover:text-accent-foreground",
 					"transition-all duration-200"
 				)}

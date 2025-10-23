@@ -3,7 +3,7 @@
 import { useState } from "react"
 import isEmpty from "lodash-es/isEmpty"
 import { observer } from "mobx-react"
-import { Button } from "../../../shadcn/ui/button"
+import { Button } from "../../../ui/button"
 import ForgetNetworkDialog from "./forget-network-dialog"
 import forgetNetwork from "../../../../utils/workbench/forget-network"
 import serialMessageManagerClass from "../../../../classes/serial-message-manager-class"

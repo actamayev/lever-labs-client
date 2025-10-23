@@ -23,62 +23,62 @@ function MeetPipS4P4(): React.ReactNode {
 		MeetPipTriggerType.S4_P4_EXIT,
 		{ enterDelayMs: 100, enabled: true }
 	)
-	const iconSize = "!size-16"
+	const iconSize = "size-16!"
 	const sounds: FunSoundWithClasses[] = [
 		{
 			sound: "Fart",
-			buttonClasses: "bg-beakInner/20 text-beakInner dark:bg-beakInner/80 dark:text-standardBackground w-32 h-32",
+			buttonClasses: "bg-beak-inner/20 text-beak-inner dark:bg-beak-inner/80 dark:text-standard-background w-32 h-32",
 			shadowColor: "rgb(120 70 25)",
-			iconClasses: "border-beakInner/40 dark:border-beakInner/80 group-active:text-standardBackground w-8 h-8 text-sm",
+			iconClasses: "border-beak-inner/40 dark:border-beak-inner/80 group-active:text-standard-background w-8 h-8 text-sm",
 			iconSize
 		},
 		{
 			sound: "Monkey",
-			buttonClasses: "bg-sandboxOrange/20 text-sandboxOrange dark:bg-sandboxOrange/80 dark:text-standardBackground w-32 h-32",
+			buttonClasses: "bg-sandbox-orange/20 text-sandbox-orange dark:bg-sandbox-orange/80 dark:text-standard-background w-32 h-32",
 			shadowColor: "rgb(255 189 153)",
-			iconClasses: "border-sandboxOrange/40 dark:border-sandboxOrange/80 group-active:text-answerText w-8 h-8 text-sm",
+			iconClasses: "border-sandbox-orange/40 dark:border-sandbox-orange/80 group-active:text-answer-text w-8 h-8 text-sm",
 			iconSize
 		},
 		{
 			sound: "Elephant",
-			buttonClasses: "bg-beetle/20 text-beetle dark:bg-beetle/80 dark:text-standardBackground w-32 h-32",
+			buttonClasses: "bg-beetle/20 text-beetle dark:bg-beetle/80 dark:text-standard-background w-32 h-32",
 			shadowColor: "rgb(200 0 255)",
-			iconClasses: "border-beetle/40 dark:border-beetle/80 group-active:text-answerText w-8 h-8 text-sm",
+			iconClasses: "border-beetle/40 dark:border-beetle/80 group-active:text-answer-text w-8 h-8 text-sm",
 			iconSize
 		},
 		{
 			sound: "Party",
-			buttonClasses: "bg-bee/20 text-bee dark:bg-bee/80 dark:text-standardBackground w-32 h-32",
+			buttonClasses: "bg-bee/20 text-bee dark:bg-bee/80 dark:text-standard-background w-32 h-32",
 			shadowColor: "rgb(200 200 0)",
-			iconClasses: "border-bee/40 dark:border-bee/80 group-active:text-answerText w-8 h-8 text-sm",
+			iconClasses: "border-bee/40 dark:border-bee/80 group-active:text-answer-text w-8 h-8 text-sm",
 			iconSize
 		},
 		{
 			sound: "UFO",
-			buttonClasses: "bg-fox/20 text-fox dark:bg-fox/80 dark:text-standardBackground w-32 h-32",
+			buttonClasses: "bg-fox/20 text-fox dark:bg-fox/80 dark:text-standard-background w-32 h-32",
 			shadowColor: "rgb(200 150 0)",
-			iconClasses: "border-fox/40 dark:border-fox/80 group-active:text-answerText w-8 h-8 text-sm",
+			iconClasses: "border-fox/40 dark:border-fox/80 group-active:text-answer-text w-8 h-8 text-sm",
 			iconSize
 		},
 		{
 			sound: "Countdown",
-			buttonClasses: "bg-macaw/20 text-macaw dark:bg-macaw/80 dark:text-standardBackground w-32 h-32",
+			buttonClasses: "bg-macaw/20 text-macaw dark:bg-macaw/80 dark:text-standard-background w-32 h-32",
 			shadowColor: "rgb(0 200 255)",
-			iconClasses: "border-macaw/40 dark:border-macaw/80 group-active:text-answerText w-8 h-8 text-sm",
+			iconClasses: "border-macaw/40 dark:border-macaw/80 group-active:text-answer-text w-8 h-8 text-sm",
 			iconSize
 		},
 		{
 			sound: "Engine",
-			buttonClasses: "bg-humpback/20 text-humpback dark:bg-humpback/80 dark:text-standardBackground w-32 h-32",
+			buttonClasses: "bg-humpback/20 text-humpback dark:bg-humpback/80 dark:text-standard-background w-32 h-32",
 			shadowColor: "rgb(20 80 160)",
-			iconClasses: "border-humpback/40 dark:border-humpback/80 group-active:text-answerText w-8 h-8 text-sm",
+			iconClasses: "border-humpback/40 dark:border-humpback/80 group-active:text-answer-text w-8 h-8 text-sm",
 			iconSize
 		},
 		{
 			sound: "Robot",
-			buttonClasses: "bg-cardinal/20 text-cardinal dark:bg-cardinal/80 dark:text-standardBackground w-32 h-32",
+			buttonClasses: "bg-cardinal/20 text-cardinal dark:bg-cardinal/80 dark:text-standard-background w-32 h-32",
 			shadowColor: "rgb(200 50 50)",
-			iconClasses: "border-cardinal/40 dark:border-cardinal/80 group-active:text-answerText w-8 h-8 text-sm",
+			iconClasses: "border-cardinal/40 dark:border-cardinal/80 group-active:text-answer-text w-8 h-8 text-sm",
 			iconSize
 		}
 	]

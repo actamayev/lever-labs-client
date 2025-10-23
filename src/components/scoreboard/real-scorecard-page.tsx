@@ -5,8 +5,8 @@ import { observer } from "mobx-react"
 import { useState, useEffect, useCallback } from "react"
 import { ArrowLeft, Play, Pause, Car, Lightbulb, Plus, Minus, Users, RotateCcw } from "lucide-react"
 import teacherClass from "../../classes/teacher-class"
-import { TactileButton } from "../shadcn/ui/tactile-button"
-import { Card, CardContent } from "../shadcn/ui/card"
+import { TactileButton } from "../buttons/tactile-button"
+import { Card, CardContent } from "../ui/card"
 import { cn } from "../../lib/shadcn/utils"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
@@ -116,14 +116,14 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 	const getTeamDrivingButtonClass = useCallback((teamNumber: 1 | 2): string => {
 		const status = getTeamDrivingStatus(teamNumber)
-		if (status === true) return "bg-chargingGreen border border-chargingGreen"
+		if (status === true) return "bg-charging-green border border-charging-green"
 		if (status === false) return "bg-cardinal border border-cardinal"
 		return "bg-eel dark:bg-swan"
 	}, [getTeamDrivingStatus])
 
 	const getTeamDrivingShadowClass = useCallback((teamNumber: 1 | 2): string => {
 		const status = getTeamDrivingStatus(teamNumber)
-		if (status === true) return "shadow-chargingGreen-2"
+		if (status === true) return "shadow-charging-green-2"
 		if (status === false) return "shadow-cardinal-2"
 		return "shadow-hare"
 	}, [getTeamDrivingStatus])
@@ -134,14 +134,14 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 	const getTeamLightsButtonClass = useCallback((teamNumber: 1 | 2): string => {
 		const status = getTeamLightsStatus(teamNumber)
-		if (status === true) return "bg-chargingGreen border border-chargingGreen"
+		if (status === true) return "bg-charging-green border border-charging-green"
 		if (status === false) return "bg-cardinal border border-cardinal"
 		return "bg-eel dark:bg-swan"
 	}, [getTeamLightsStatus])
 
 	const getTeamLightsShadowClass = useCallback((teamNumber: 1 | 2): string => {
 		const status = getTeamLightsStatus(teamNumber)
-		if (status === true) return "shadow-chargingGreen-2"
+		if (status === true) return "shadow-charging-green-2"
 		if (status === false) return "shadow-cardinal-2"
 		return "shadow-hare"
 	}, [getTeamLightsStatus])
@@ -155,7 +155,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 	// Show loading state while retrieving classroom data
 	if (teacherClass.isRetrievingDetailedData) {
 		return (
-			<div className="min-h-screen bg-standardBackground p-6">
+			<div className="min-h-screen bg-standard-background p-6">
 				<div className="mb-8">
 					<TactileButton
 						onClick={handleBackClick}
@@ -176,7 +176,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 	if (!scoreboardData) {
 		return (
-			<div className="min-h-screen bg-standardBackground p-6">
+			<div className="min-h-screen bg-standard-background p-6">
 				<div className="mb-8">
 					<TactileButton
 						onClick={handleBackClick}
@@ -195,7 +195,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 	}
 
 	return (
-		<div className="min-h-screen bg-standardBackground p-6">
+		<div className="min-h-screen bg-standard-background p-6">
 			{/* Back Button */}
 			<div className="mb-8">
 				<TactileButton
@@ -257,7 +257,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 			{/* Teams Section */}
 			<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardContent className="p-6">
 						<div className="relative">
 							{/* Team Assignment Button */}
@@ -291,9 +291,9 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 								<TactileButton
 									onClick={(): void => handleTeamScoreChange(1, 1)}
-									className="px-4 py-2 rounded-xl text-lg text-white bg-chargingGreen"
+									className="px-4 py-2 rounded-xl text-lg text-white bg-charging-green"
 									shadowHeight={4}
-									shadowClass="shadow-chargingGreen"
+									shadowClass="shadow-charging-green"
 								>
 									<Plus className="h-4 w-4" />
 								</TactileButton>
@@ -323,7 +323,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 				</Card>
 
 				{/* Team 2 */}
-				<Card className="border-2 border-swan bg-standardBackground">
+				<Card className="border-2 border-swan bg-standard-background">
 					<CardContent className="p-6">
 						<div className="relative">
 							{/* Team Assignment Button */}
@@ -357,9 +357,9 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 								<TactileButton
 									onClick={(): void => handleTeamScoreChange(2, 1)}
-									className="px-4 py-2 rounded-xl text-lg text-white bg-chargingGreen"
+									className="px-4 py-2 rounded-xl text-lg text-white bg-charging-green"
 									shadowHeight={4}
-									shadowClass="shadow-chargingGreen"
+									shadowClass="shadow-charging-green"
 								>
 									<Plus className="h-4 w-4" />
 								</TactileButton>

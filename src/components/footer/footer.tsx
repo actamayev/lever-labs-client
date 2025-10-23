@@ -22,15 +22,15 @@ export default function Footer(): React.ReactNode {
 	) return null
 
 	return (
-		<footer id="footer" className="bg-standardBackground py-6 md:py-8 z-20 border-t border-landingOuterBorder">
-			<div className="container max-w-screen-2xl mx-auto px-4 sm:px-60">
+		<footer id="footer" className="bg-standard-background py-6 md:py-8 z-20 border-t border-landing-outer-border">
+			<div className="container max-w-(--breakpoint-2xl) mx-auto px-4 sm:px-60">
 				{/* Main footer content */}
 				<div className="grid grid-cols-2 gap-8 lg:grid-cols-6">
 					{/* Logo and company section */}
 					<div className="col-span-3 lg:mb-0 space-y-4">
 						<Link
 							href="/"
-							className="inline-flex items-center font-semibold text-3xl sm:text-3xl flex-shrink-0 duration-0"
+							className="inline-flex items-center font-semibold text-3xl sm:text-3xl shrink-0 duration-0"
 						>
 							<Image
 								src="/favicon.svg"

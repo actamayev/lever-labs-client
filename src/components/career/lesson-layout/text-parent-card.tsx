@@ -61,7 +61,7 @@ function TextParentCard(props: TextParentCardProps): React.ReactNode {
 										}
 									/>
 								) : (
-									<div className="text-questionText text-center cursor-text leading-relaxed">
+									<div className="text-question-text text-center cursor-text leading-relaxed">
 										{typeof child.content === "function" ? child.content((): void => {
 											careerQuestClass.handleButtonClickAdvance(careerUUID)
 										}) : typeof child.content === "string" ? getLeftContentComponent(child.content, (): void => {

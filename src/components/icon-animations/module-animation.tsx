@@ -16,7 +16,7 @@ export default function ModuleAnimation({ iconSize } : { iconSize: number }): Re
 		>
 			{/* Static infinity icon */}
 			<CustomInfinity
-				className="duration-0 text-questionText"
+				className="duration-0 text-question-text"
 				size={iconSize}
 			/>
 
@@ -28,7 +28,7 @@ export default function ModuleAnimation({ iconSize } : { iconSize: number }): Re
 					animate={{ opacity: 1 }}
 				>
 					<motion.div
-						className="absolute h-2 w-2 rounded-full bg-questionText"
+						className="absolute h-2 w-2 rounded-full bg-question-text"
 						animate={{
 							x: [1, 16, 31, 16, 1],
 							y: [16, 1, 16, 31, 16],
@@ -41,7 +41,7 @@ export default function ModuleAnimation({ iconSize } : { iconSize: number }): Re
 						}}
 					/>
 					<InfinityIcon
-						className="duration-0 text-questionText"
+						className="duration-0 text-question-text"
 						size={iconSize}
 					/>
 				</motion.div>

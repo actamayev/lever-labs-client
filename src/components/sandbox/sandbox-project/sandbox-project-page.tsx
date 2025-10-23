@@ -14,7 +14,7 @@ import pipClass from "../../../classes/pip-class"
 import BlocklySearchBar from "../blockly-search-bar"
 import sandboxClass from "../../../classes/sandbox-class"
 import SandboxProjectHeader from "./header/sandbox-project-header"
-import { TactileButton } from "../../shadcn/ui/tactile-button"
+import { TactileButton } from "../../buttons/tactile-button"
 import getCppGenerator from "../../../utils/cpp/cpp-generator"
 import BlocklyLoadingComponent from "../blockly-loading-component"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
@@ -176,7 +176,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 				<div className="flex items-center justify-between px-4 border-b-2 py-3 border-swan" style={{ height: "74px" }}>
 					<div className="flex flex-row items-center justify-center">
 						<Link href="/sandbox">
-							<button className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2">
+							<button className="flex items-center text-question-text hover:bg-polar p-2 rounded-lg mr-2">
 								<ArrowLeft size={30} className="mr-1" />
 							</button>
 						</Link>
@@ -235,7 +235,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 									className="duration-150 rounded-xl text-4xl"
 								/>
 								<TactileButton
-									className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl !px-10"
+									className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl px-10!"
 									shadowColor="rgb(150, 50, 75)"
 									onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
 								>

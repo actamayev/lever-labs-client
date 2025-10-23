@@ -11,7 +11,7 @@ import { CustomFart } from "../../../../icons/custom-fart"
 import garageClass from "../../../../classes/garage-class"
 import { CustomEngine } from "../../../../icons/custom-engine"
 import { CustomElephant } from "../../../../icons/custom-elephant"
-import { TactileButton } from "../../../shadcn/ui/tactile-button"
+import { TactileButton } from "../../../buttons/tactile-button"
 import { CustomCountdown } from "../../../../icons/custom-countdown"
 import playFunSound from "../../../../utils/garage/play-fun-sound"
 import { CustomPartyPopper } from "../../../../icons/custom-party-popper"
@@ -59,8 +59,8 @@ const getButtonClasses = (isDisabled: boolean, extraClasses?: string): string =>
 	const baseClasses = "duration-150 w-20 h-20 flex items-center justify-center rounded-xl"
 	const stateClasses = isDisabled
 		? "bg-gray-300/20 text-gray-400 cursor-not-allowed dark:bg-gray-600/20 dark:text-gray-500"
-		: "bg-sandboxOrange/20 text-sandboxOrange dark:bg-sandboxOrange/80 dark:text-orange-200"
-	const focusClasses = "outline-none focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+		: "bg-sandbox-orange/20 text-sandbox-orange dark:bg-sandbox-orange/80 dark:text-orange-200"
+	const focusClasses = "outline-hidden focus:outline-hidden focus:ring-0 focus-visible:outline-hidden focus-visible:ring-0"
 
 	return cn(baseClasses, stateClasses, focusClasses, extraClasses)
 }
@@ -70,15 +70,15 @@ const getBorderClasses = (isDisabled: boolean, extraClasses?: string): string =>
 	const baseClasses = "absolute top-1 left-1 w-5 h-5 flex items-center justify-center border-2 rounded-md text-xs font-medium"
 	const stateClasses = isDisabled
 		? "border-gray-300/40 dark:border-gray-500/40"
-		: "border-sandboxOrange/40 dark:border-[rgb(255,189,153)] " +
-			"group-active:border-selectedSidebarButtonBorder group-active:text-answerText"
+		: "border-sandbox-orange/40 dark:border-[rgb(255,189,153)] " +
+			"group-active:border-selected-sidebar-button-border group-active:text-answer-text"
 
 	return cn(baseClasses, stateClasses, extraClasses)
 }
 
 // Helper function to render the tooltip trigger
 const renderTooltipTrigger = (params: {
-	buttonRef: React.RefObject<HTMLButtonElement>
+	buttonRef: React.RefObject<HTMLButtonElement | null>
 	isDisabled: boolean
 	extraClasses: SoundActionButtonProps["extraClasses"]
 	handleButtonDown: () => void
@@ -120,7 +120,7 @@ const renderTooltipTrigger = (params: {
 function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 	const { sound, index, extraClasses } = props
 	const buttonRef = useRef<HTMLButtonElement>(null)
-	const iconSize = extraClasses?.iconSize || "!size-10"
+	const iconSize = extraClasses?.iconSize || "size-10!"
 
 	// Update button styling directly when isPressed changes
 	useEffect((): void => {

@@ -60,7 +60,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 	),
 	// meet-pip-1-5 is morphing text
 	"meet-pip-1-6": (onAdvance?: () => void): ReactNode => (
-		<div className="flex-shrink-0 flex flex-col gap-4">
+		<div className="shrink-0 flex flex-col gap-4">
 			Exploration is better with a friend.
 			<br />
 			Will you join me?

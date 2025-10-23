@@ -20,11 +20,11 @@ export default function CareerActivityLoadingComponent({ careerTitle }: Props): 
 	return (
 		<div className="flex flex-col h-screen min-h-0">
 			{/* Loading Header - mimics CareerQuestActivityHeader */}
-			<header className="h-20 flex items-center px-4 shadow-sm fixed top-0 left-0 right-0 bg-standardBackground z-10">
+			<header className="h-20 flex items-center px-4 shadow-xs fixed top-0 left-0 right-0 bg-standard-background z-10">
 				{/* Left section with back button */}
 				<div className="w-1/4 flex items-center">
 					<button
-						className="flex items-center text-questionText hover:bg-polar p-2 rounded-lg mr-2 opacity-50 cursor-not-allowed"
+						className="flex items-center text-question-text hover:bg-polar p-2 rounded-lg mr-2 opacity-50 cursor-not-allowed"
 					>
 						<ArrowLeft size={30} className="mr-1" />
 					</button>
@@ -33,7 +33,7 @@ export default function CareerActivityLoadingComponent({ careerTitle }: Props): 
 				{/* Center section with career title */}
 				<div className="w-1/2 flex justify-center">
 					{careerTitle ? (
-						<h1 className="text-5xl font-medium text-questionText text-center opacity-50">
+						<h1 className="text-5xl font-medium text-question-text text-center opacity-50">
 							{careerTitle}
 						</h1>
 					) : (
@@ -43,7 +43,7 @@ export default function CareerActivityLoadingComponent({ careerTitle }: Props): 
 
 				{/* Right section with disabled buttons */}
 				<div className="w-1/4 flex justify-end items-center pr-4 gap-2">
-					<button className="flex items-center p-2 rounded-lg text-questionText opacity-50 cursor-not-allowed">
+					<button className="flex items-center p-2 rounded-lg text-question-text opacity-50 cursor-not-allowed">
 						<MessageCircle size={24} />
 					</button>
 					{/* Progress circle skeleton */}

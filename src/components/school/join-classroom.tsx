@@ -1,9 +1,9 @@
 "use client"
 import { useCallback, useState } from "react"
 import { AlertCircle, CheckCircle } from "lucide-react"
-import { Input } from "../shadcn/ui/input"
+import { Input } from "../ui/input"
 import { cn } from "../../lib/shadcn/utils"
-import { TactileButton } from "../shadcn/ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import joinClassroom from "../../utils/student/join-classroom"
 import { isValidClassCode } from "../../utils/validate-class-code"
@@ -60,12 +60,12 @@ export default function JoinClassroom(): React.ReactNode {
 					value={classCode}
 					onChange={handleInputChange}
 					className={cn(
-						"w-full pr-14 h-10 md:h-12 text-lg md:!text-xl bg-polar !text-eel font-light shadow-none",
+						"w-full pr-14 h-10 md:h-12 text-lg md:text-xl! bg-polar text-eel! font-light shadow-none",
 						// eslint-disable-next-line no-nested-ternary
 						error
 							? "border-cardinal"
 							: success
-								? "border-chargingGreen"
+								? "border-charging-green"
 								: "border-swan"
 					)}
 					maxLength={5}
@@ -74,14 +74,14 @@ export default function JoinClassroom(): React.ReactNode {
 				{/* Error/Success Area */}
 				{error && (
 					<div className="flex items-center mt-2 text-cardinal text-sm font-medium">
-						<AlertCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+						<AlertCircle className="w-4 h-4 mr-2 shrink-0" />
 						<span>{error}</span>
 					</div>
 				)}
 
 				{success && (
-					<div className="flex items-center mt-2 text-chargingGreen text-sm font-medium">
-						<CheckCircle className="w-4 h-4 mr-2 flex-shrink-0" />
+					<div className="flex items-center mt-2 text-charging-green text-sm font-medium">
+						<CheckCircle className="w-4 h-4 mr-2 shrink-0" />
 						<span>{success}</span>
 					</div>
 				)}

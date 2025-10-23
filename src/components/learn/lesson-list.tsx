@@ -40,7 +40,7 @@ function LessonList(): React.ReactNode {
 				<div
 					key={lesson.lessonId}
 					onClick={(): void => goToLearnPage(lesson.lessonId)}
-					className="bg-standardBackground rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer p-6 border border-swan"
+					className="bg-standard-background rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer p-6 border border-swan"
 				>
 					<div className="flex items-center justify-between mb-4">
 						<h3 className="text-lg font-semibold text-gray-900 dark:text-white">

@@ -6,7 +6,7 @@ import { LogOut } from "lucide-react"
 import logout from "../../utils/auth/logout"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { BlackWhiteTactileButton } from "../buttons/tactile-buttons"
-import { Card, CardDescription, CardTitle } from "../shadcn/ui/card"
+import { Card, CardDescription, CardTitle } from "../ui/card"
 
 interface SidebarSectionProps {
 	title: string
@@ -15,8 +15,8 @@ interface SidebarSectionProps {
 
 const SidebarSection = ({ title, children }: SidebarSectionProps): React.ReactNode => {
 	return (
-		<Card className="mb-8 pb-6">
-			<CardTitle className="text-wolf text-xl mb-5 pt-6 pl-10">
+		<Card className="mb-8 pb-6 shadow-none border-2">
+			<CardTitle className="text-wolf text-xl pl-10">
 				{title}
 			</CardTitle>
 			<CardDescription className="space-y-4 text-eel">

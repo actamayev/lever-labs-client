@@ -82,7 +82,7 @@ function MeetPipS8P3ColorViz(): React.ReactNode {
 						className="w-16 h-16 rounded-lg mx-auto mb-2 border border-swan"
 						style={{ backgroundColor: `rgb(0, ${latestGreen}, 0)` }}
 					/>
-					<div className="text-sm font-medium text-chargingGreen flex justify-center items-center gap-1">
+					<div className="text-sm font-medium text-charging-green flex justify-center items-center gap-1">
 						<span>Green:</span>
 						<span className="inline-block w-8 text-left">{latestGreen}</span>
 					</div>

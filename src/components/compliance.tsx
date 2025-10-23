@@ -7,7 +7,7 @@ interface Props {
 // Reusable Section Header Component
 export function ComplianceSectionHeader ({ children }: Props): React.ReactNode {
 	return (
-		<h2 className="text-xl md:text-2xl font-medium text-questionText mt-8 mb-4">
+		<h2 className="text-xl md:text-2xl font-medium text-question-text mt-8 mb-4">
 			{children}
 		</h2>
 	)

@@ -13,7 +13,7 @@ export default function SupportSection(props: Props): React.ReactNode {
 
 	return (
 		<div className={cn("mb-10", extraClasses)}>
-			<div className="text-questionText font-medium text-xl">
+			<div className="text-question-text font-medium text-xl">
 				{sectionTitle}
 			</div>
 			<div className="text-wolf mt-6" style={{ fontWeight: 350 }}>

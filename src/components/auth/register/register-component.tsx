@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
-import { Form } from "@/components/shadcn/ui/form"
+import { Form } from "@/components/ui/form"
 import AgeInput from "./age-input"
 import EmailInput from "./email-input"
 import OrComponent from "../or-component"

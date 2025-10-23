@@ -11,7 +11,6 @@ import {
 	Tooltip,
 	ResponsiveContainer,
 } from "recharts"
-import { Card, CardContent, CardHeader, CardTitle } from "../../../shadcn/ui/card"
 import sensorDataClass from "../../../../classes/sensor-data-class"
 import { MeetPipTriggerType, CareerType } from "@lever-labs/common-ts/protocol"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
@@ -74,11 +73,11 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 		<div className="space-y-6">
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
 				{/* Yaw Chart */}
-				<Card className="h-56 rounded-3xl">
-					<CardHeader className="pb-2">
-						<CardTitle className="text-lg">Yaw (Heading)</CardTitle>
-					</CardHeader>
-					<CardContent className="h-4/5">
+				<div className="h-56 bg-standard-background text-card-foreground rounded-3xl border-2 border-swan">
+					<div className="p-6 pb-2">
+						<h3 className="text-lg font-semibold leading-none">Yaw (Heading)</h3>
+					</div>
+					<div className="h-4/5 p-6 pt-0">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart
 								data={yawData}
@@ -117,15 +116,15 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								/>
 							</LineChart>
 						</ResponsiveContainer>
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 
 				{/* Pitch Chart */}
-				<Card className="h-56">
-					<CardHeader className="pb-2">
-						<CardTitle className="text-lg">Pitch (Forward/Backward)</CardTitle>
-					</CardHeader>
-					<CardContent className="h-4/5">
+				<div className="h-56 bg-standard-background text-card-foreground rounded-3xl border-2 border-swan">
+					<div className="p-6 pb-2">
+						<h3 className="text-lg font-semibold leading-none">Pitch (Forward/Backward)</h3>
+					</div>
+					<div className="h-4/5 p-6 pt-0">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart
 								data={pitchData}
@@ -166,15 +165,15 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								/>
 							</LineChart>
 						</ResponsiveContainer>
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 
 				{/* Roll Chart */}
-				<Card className="h-56">
-					<CardHeader className="pb-2">
-						<CardTitle className="text-lg">Roll (Left/Right)</CardTitle>
-					</CardHeader>
-					<CardContent className="h-4/5">
+				<div className="h-56 bg-standard-background text-card-foreground rounded-3xl border-2 border-swan">
+					<div className="p-6 pb-2">
+						<h3 className="text-lg font-semibold leading-none">Roll (Left/Right)</h3>
+					</div>
+					<div className="h-4/5 p-6 pt-0">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart
 								data={rollData}
@@ -215,15 +214,15 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								/>
 							</LineChart>
 						</ResponsiveContainer>
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 
 				{/* Linear Acceleration Chart */}
-				<Card className="h-56">
-					<CardHeader className="pb-2">
-						<CardTitle className="text-lg">Shake</CardTitle>
-					</CardHeader>
-					<CardContent className="h-4/5">
+				<div className="h-56 bg-standard-background text-card-foreground rounded-3xl border-2 border-swan p-6">
+					<div className="p-6 pb-2">
+						<h3 className="text-lg font-semibold leading-none">Shake</h3>
+					</div>
+					<div className="h-4/5 p-6 pt-0">
 						<ResponsiveContainer width="100%" height="100%">
 							<LineChart
 								data={linearAccelerationData}
@@ -263,8 +262,8 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								/>
 							</LineChart>
 						</ResponsiveContainer>
-					</CardContent>
-				</Card>
+					</div>
+				</div>
 			</div>
 		</div>
 	)
