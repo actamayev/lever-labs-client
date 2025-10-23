@@ -92,7 +92,7 @@ function ProjectTabs({ projectUUID }: { projectUUID: SandboxProjectUUID }): Reac
 			<TabsContent value="notes" className="flex-1" data-notes-section="true">
 				<Textarea
 					placeholder="Add notes about your project here..."
-					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded-3xl"
+					className="w-full h-full min-h-[300px] bg-polar p-4 resize-none border-none rounded-3xl ring-0!"
 					value={projectNotes || ""}
 					onChange={handleNotesChange}
 				/>
