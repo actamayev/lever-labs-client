@@ -105,12 +105,18 @@ function ScanNetworksSection(): React.ReactNode {
 								{network.encrypted && (  // Add this condition
 									<div className="relative w-full">
 										<Input
-											type={showPassword ? "text" : "password"}
+											type="text"
 											placeholder="Enter password"
 											value={password}
 											onChange={(e): void => setPassword(e.target.value)}
 											className="flex-1 h-8 text-sm"
 											disabled={isConnecting}
+											autoComplete="new-password"
+											data-form-type="other"
+											data-lpignore="true"
+											style={{
+												WebkitTextSecurity: showPassword ? "none" : "disc"
+											}}
 											onKeyDown={(e): void => {
 												if (e.key === "Enter" && password.trim()) {
 													handleConnectToNetwork(network)
