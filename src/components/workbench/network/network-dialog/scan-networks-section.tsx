@@ -116,7 +116,7 @@ function ScanNetworksSection(): React.ReactNode {
 											data-lpignore="true"
 											style={{
 												WebkitTextSecurity: showPassword ? "none" : "disc"
-											}}
+											} as React.CSSProperties}
 											onKeyDown={(e): void => {
 												if (e.key === "Enter" && password.trim()) {
 													handleConnectToNetwork(network)
