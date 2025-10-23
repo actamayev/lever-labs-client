@@ -96,7 +96,7 @@ function SingleProjectCard({ project } : { project: SandboxProject }): React.Rea
 							{project.projectName || "Untitled Project"}
 						</div>
 						<DropdownMenu>
-							<DropdownMenuTrigger asChild onClick={(e): void => e.stopPropagation()}>
+							<DropdownMenuTrigger asChild onClick={(e): void => e.stopPropagation()} className="cursor-pointer">
 								<div className="p-1 transition-none rounded hover:bg-swan">
 									<EllipsisVertical
 										className="text-wolf cursor-pointer"

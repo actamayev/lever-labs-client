@@ -89,7 +89,7 @@ function ClassroomScoreboardSection({ classCode }: ClassroomScoreboardSectionPro
 										</div>
 									</div>
 									<DropdownMenu>
-										<DropdownMenuTrigger asChild>
+										<DropdownMenuTrigger asChild className="cursor-pointer">
 											<div className="p-1 transition-none rounded hover:bg-polar cursor-pointer">
 												<EllipsisVertical
 													className="text-wolf"

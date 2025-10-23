@@ -20,7 +20,7 @@ function DisplayControls(): React.ReactNode {
 	const renderDropdown = (): React.ReactNode => {
 		const dropdownContent = (
 			<DropdownMenu>
-				<DropdownMenuTrigger asChild>
+				<DropdownMenuTrigger asChild className="cursor-pointer">
 					<div
 						className={cn(
 							buttonVariants({

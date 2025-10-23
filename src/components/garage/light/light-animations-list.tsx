@@ -83,7 +83,7 @@ function LightAnimationsList(): React.ReactNode {
 
 	const menu = (
 		<DropdownMenu>
-			<DropdownMenuTrigger asChild>
+			<DropdownMenuTrigger asChild className="cursor-pointer">
 				{trigger}
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="rounded-xl bg-standard-background mt-1 w-72 max-h-44 overflow-y-auto border-2 shadow-none">

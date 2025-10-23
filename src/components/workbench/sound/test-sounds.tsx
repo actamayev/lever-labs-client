@@ -81,11 +81,8 @@ function TestSounds(props: Props): React.ReactNode {
 				<CustomTooltip
 					tooltipTrigger={
 						<div className="w-24 relative">
-							<DropdownMenu
-								open={isDropdownOpen}
-								onOpenChange={setIsDropdownOpen}
-							>
-								<DropdownMenuTrigger asChild>
+							<DropdownMenu open={isDropdownOpen} onOpenChange={setIsDropdownOpen}>
+								<DropdownMenuTrigger asChild className="cursor-pointer">
 									<div
 										className={cn(
 											buttonVariants({

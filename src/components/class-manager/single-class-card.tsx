@@ -34,7 +34,7 @@ function SingleClassCard(props: Props): React.ReactNode {
 						</CardTitle>
 					</div>
 					<DropdownMenu>
-						<DropdownMenuTrigger asChild onClick={(e): void => e.stopPropagation()}>
+						<DropdownMenuTrigger asChild onClick={(e): void => e.stopPropagation()} className="cursor-pointer">
 							<div className="p-1 transition-none rounded hover:bg-swan">
 								<EllipsisVertical
 									className="text-wolf cursor-pointer"
