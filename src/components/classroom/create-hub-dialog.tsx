@@ -131,7 +131,7 @@ export default function CreateHubDialog(props: Props): React.ReactNode {
 
 	return (
 		<Dialog open={isCreateHubDialogOpen} onOpenChange={setIsCreateHubDialogOpen}>
-			<DialogContent className="w-96 border-none" onClick={(e): void => e.stopPropagation()}>
+			<DialogContent className="w-full max-w-md min-w-80 border-none" onClick={(e): void => e.stopPropagation()}>
 				<DialogHeader>
 					<DialogTitle className="text-2xl">Create Hub</DialogTitle>
 					<DialogClose />
@@ -163,17 +163,19 @@ export default function CreateHubDialog(props: Props): React.ReactNode {
 							onValueChange={handleCareerSelect}
 							disabled={isCreating}
 						>
-							<SelectTrigger className="w-full h-10 text-lg border-2 border-swan rounded-xl shadow-none">
-								<SelectValue placeholder="Select a career" />
+							<SelectTrigger
+								className="w-full h-auto min-h-10 text-lg border-2 border-swan rounded-xl shadow-none whitespace-normal"
+							>
+								<SelectValue placeholder="Select a career" className="whitespace-normal wrap-break-word" />
 							</SelectTrigger>
 							<SelectContent>
 								{allCareers.map((career): React.ReactNode => {
 									const Icon = career.careerIcon
 									return (
 										<SelectItem key={career.careerUUID} value={career.careerUUID} className="cursor-pointer">
-											<div className="flex items-center gap-2">
-												<Icon className="h-4 w-4" />
-												<span>{career.careerName}</span>
+											<div className="flex items-center gap-2 min-w-0">
+												<Icon className="h-4 w-4 shrink-0" />
+												<span className="truncate">{career.careerName}</span>
 											</div>
 										</SelectItem>
 									)
