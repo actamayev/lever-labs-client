@@ -155,35 +155,37 @@ function WifiConnectionSection(): React.ReactNode {
 								index={0}
 								className={cn(
 									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
-									"transition-all"
+									"transition-all ring-0! data-[active=true]:border-humpback!",
+									"first:rounded-l-lg first:border-l-2"
 								)}
 							/>
 							<InputOTPSlot
 								index={1}
 								className={cn(
 									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
-									"transition-all"
+									"transition-all ring-0! data-[active=true]:border-humpback!"
 								)}
 							/>
 							<InputOTPSlot
 								index={2}
 								className={cn(
 									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
-									"transition-all"
+									"transition-all ring-0! data-[active=true]:border-humpback!"
 								)}
 							/>
 							<InputOTPSlot
 								index={3}
 								className={cn(
 									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
-									"transition-all"
+									"transition-all ring-0! data-[active=true]:border-humpback!"
 								)}
 							/>
 							<InputOTPSlot
 								index={4}
 								className={cn(
 									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
-									"transition-all"
+									"transition-all ring-0! data-[active=true]:border-humpback!",
+									"last:rounded-r-lg last:border-r-2"
 								)}
 							/>
 						</InputOTPGroup>
