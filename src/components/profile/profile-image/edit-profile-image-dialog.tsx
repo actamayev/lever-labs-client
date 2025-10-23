@@ -15,7 +15,7 @@ import {
 	DialogClose
 } from "../../ui/dialog"
 import LoadingOval from "../../loading-oval"
-import { TactileButton } from "../../ui/tactile-button"
+import { TactileButton } from "../../buttons/tactile-button"
 import { CustomUserCircle } from "../../../icons/custom-user-circle"
 import personalInfoClass from "../../../classes/personal-info-class"
 import uploadProfilePicture from "../../../utils/personal-info/upload-profile-picture"

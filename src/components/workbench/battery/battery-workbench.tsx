@@ -66,7 +66,7 @@ function BatteryWorkbench(): React.ReactNode {
 			<HoverCardContent
 				className={cn(
 					"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
-					"bg-standard-background", "duration-0 animate-none",
+					"bg-standard-background", "duration-0 shadow-none",
 				)}
 				side="bottom"
 				align="start"

@@ -12,7 +12,7 @@ import {
 	DialogClose
 } from "../ui/dialog"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
-import { TactileButton } from "../ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import { cn } from "../../lib/shadcn/utils"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import teacherClass from "../../classes/teacher-class"

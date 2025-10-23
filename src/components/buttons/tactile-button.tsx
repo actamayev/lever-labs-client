@@ -13,7 +13,9 @@ type TactileButtonProps = Omit<ButtonProps, "variant"> & {
 }
 
 const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
-	({ className, shadowColor, shadowClass, shadowHeight = 4, style, shouldHoverPushButton = true, disableOpacityOnDisabled = true, ...props }, ref) => {
+	({ className, shadowColor, shadowClass, shadowHeight = 4, style,
+		// eslint-disable-next-line complexity
+		shouldHoverPushButton = true, disableOpacityOnDisabled = true, ...props }, ref): React.ReactNode => {
 
 		// Determine which shadow approach to use
 		const useNewSystem = shadowClass && !shadowColor
@@ -28,7 +30,10 @@ const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
 				? "shadow-[0_4px_0_0_var(--shadow-color)]"
 				: "shadow-[0_2px_0_0_var(--shadow-color)]"
 
-			const hoverClass = shadowHeight === 4 && shouldHoverPushButton && "hover:shadow-[0_2px_0_0_var(--shadow-color)] hover:translate-y-0.5"
+			const hoverClass =
+				shadowHeight === 4 &&
+				shouldHoverPushButton &&
+				"hover:shadow-[0_2px_0_0_var(--shadow-color)] hover:translate-y-0.5"
 
 			const activeShadowClass = shadowHeight === 4
 				? "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-1"
@@ -55,7 +60,7 @@ const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
 			)
 		} else {
 			// LEGACY SYSTEM: Use RGB shadow colors (backward compatibility)
-			const shadowClass = shadowHeight === 4
+			const legacyShadowClass = shadowHeight === 4
 				? "shadow-[0_4px_0_0_var(--shadow-color)]"
 				: "shadow-[0_2px_0_0_var(--shadow-color)]"
 
@@ -71,7 +76,7 @@ const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
 					variant="tactile"
 					className={cn(
 						"duration-150",
-						shadowClass,
+						legacyShadowClass,
 						hoverClass,
 						activeShadowClass,
 						!disableOpacityOnDisabled && "disabled:opacity-100",

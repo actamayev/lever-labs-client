@@ -69,7 +69,7 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 				openDelay={0}
 				closeDelay={100}
 			>
-				<HoverCardTrigger asChild >
+				<HoverCardTrigger asChild>
 					<div>
 						<WorkbenchIconTemplate>
 							<NetworkIconToShow
@@ -84,7 +84,7 @@ function NetworkWorkbench({ isSandboxPage }: { isSandboxPage?: boolean }): React
 					className={cn(
 						"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
 						"bg-standard-background",
-						"duration-0 z-30",
+						"duration-0 shadow-none",
 					)}
 					side="bottom"
 					align="center"

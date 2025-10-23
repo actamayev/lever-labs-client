@@ -83,7 +83,7 @@ function SoundWorkbench(): React.ReactNode {
 				className={cn(
 					"w-80 p-4 border-2 border-swan rounded-2xl text-eel text-base",
 					"bg-standard-background",
-					"animate-none duration-0",
+					"duration-0 shadow-none",
 				)}
 				side="bottom"
 				align="end"

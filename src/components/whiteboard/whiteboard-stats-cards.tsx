@@ -6,7 +6,7 @@ import { Dispatch, SetStateAction } from "react"
 import { Plus, Users, BookOpen, Calendar } from "lucide-react"
 import { cn } from "../../lib/shadcn/utils"
 import studentClass from "../../classes/student-class"
-import { TactileButton } from "../ui/tactile-button"
+import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 
