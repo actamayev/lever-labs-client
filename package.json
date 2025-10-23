@@ -78,13 +78,13 @@
     "eslint-config-next": "^16.0.0",
     "eslint-plugin-react": "^7.37.5",
     "eslint-plugin-react-hooks": "^7.0.0",
-    "jsdom": "^27.0.1",
+    "jsdom": "^26.1.0",
     "tailwindcss": "^4.1.15",
     "typescript": "^5.9.3",
     "vitest": "^4.0.1"
   },
   "scripts": {
-    "dev": "next dev --turbo",
+    "dev": "sudo next dev --turbo",
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
