@@ -54,7 +54,10 @@ function ChatTextArea(props: Props): React.ReactNode {
 					onChange={(e): void => setInputValue(e.target.value)}
 					onKeyDown={handleKeyDown}
 					placeholder="Ask about the code or concepts"
-					className="pr-12 resize-none min-h-14 max-h-32 border-2 border-swan rounded-xl focus:border-humpback! focus:ring-0!"
+					className={cn(
+						"pr-12 resize-none min-h-14 max-h-32 border-2 border-swan",
+						"rounded-xl focus:border-humpback! focus:ring-0! shadow-none!"
+					)}
 				/>
 				<CustomTooltip
 					tooltipTrigger={
