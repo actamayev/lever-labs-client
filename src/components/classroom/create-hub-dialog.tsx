@@ -163,7 +163,7 @@ export default function CreateHubDialog(props: Props): React.ReactNode {
 							onValueChange={handleCareerSelect}
 							disabled={isCreating}
 						>
-							<SelectTrigger className="w-full h-10 text-lg">
+							<SelectTrigger className="w-full h-10 text-lg border-2 border-swan rounded-xl shadow-none">
 								<SelectValue placeholder="Select a career" />
 							</SelectTrigger>
 							<SelectContent>
