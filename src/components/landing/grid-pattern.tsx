@@ -8,8 +8,8 @@ export default function GridPattern(): React.ReactNode {
 	const [showGrid, setShowGrid] = useState(true)
 
 	// Handle screen size changes
-	useEffect(() => {
-		const handleResize = () => {
+	useEffect((): (() => void) | void => {
+		const handleResize = (): void => {
 			const width = window.innerWidth
 
 			// Responsive grid visibility and margins
@@ -38,7 +38,7 @@ export default function GridPattern(): React.ReactNode {
 		window.addEventListener("resize", handleResize)
 
 		// Cleanup
-		return () => window.removeEventListener("resize", handleResize)
+		return (): void => window.removeEventListener("resize", handleResize)
 	}, [])
 
 	// If grid should be hidden (mobile), return empty SVG
