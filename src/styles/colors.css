@@ -3,145 +3,151 @@
 
 @layer base {
 	:root {
-		--standard-background: 255 255 255;
-		--standard-background-hover: 220 244 255;
-		--selected-sidebar-button-background: 220 244 255;
-		--lilypad-blue-background: 61 176 246;
-		--selected-sidebar-button-border: 132 216 255;
-		--question-text: 60 60 60;
-		--landing-outer-border: 244 244 246;
-		--landing-dotted-line: 238 238 242;
-
-		--charging-green: 35 200 100;
-		--charging-green-1: 45 220 120;
-		--charging-green-2: 30 180 100;
-		--charging-green-3: 50 240 140;
-
-		--question-correct-green: 215 255 184;
-		--question-correct-green-1: 165 237 111;
-		--question-correct-green-2: 88 167 0;
-		--question-correct-green-3: 97 184 0;
-
-		--question-incorrect-red: 255 223 224;
-		--question-incorrect-red-2: 234 43 43;
-
-		--career-quest-yellow: 253 217 11;
-		
-		/* Duolingo colors */
-		--macaw: 28 176 246;
-		--macaw-1: 100 200 255;
-		--macaw-2: 15 140 200;
-		--macaw-3: 45 190 220;
-		
-		--cardinal: 255 75 75;
-		--cardinal-1: 255 120 120;
-		--cardinal-2: 200 45 45;
-		--cardinal-3: 255 95 60;
-		
-		--bee: 255 200 0;
-		--bee-1: 255 220 80;
-		--bee-2: 220 160 0;
-		--bee-3: 255 185 20;
-		
-		--fox: 255 150 0;
-		--fox-1: 255 180 60;
-		--fox-2: 200 110 0;
-		--fox-3: 255 130 20;
-		
-		--beetle: 206 130 255;
-		--beetle-1: 230 170 255;
-		--beetle-2: 160 90 220;
-		--beetle-3: 180 120 255;
-		
-		--humpback: 43 112 201;
-		--humpback-1: 80 140 230;
-		--humpback-2: 25 80 160;
-		--humpback-3: 60 100 180;
-		
-		--beak-inner: 182 110 40;
-		--beak-inner-1: 210 140 80;
-		--beak-inner-2: 140 80 20;
-		--beak-inner-3: 190 100 50;
-
-		--iMessageBlue: 0 122 255;
-		--iMessageGreen: 139 239 139;
-
-		/* Neutrals */
-		--eel: 75 75 75;
-		--wolf: 119 119 119;
-		--hare: 175 175 175;
-		--swan: 229 229 229;
-		--polar: 247 247 247;
+	  /* Application colors */
+	  --standard-background: 255 255 255;
+	  --standard-background-hover: 220 244 255;
+	  --selected-sidebar-button-background: 220 244 255;
+	  --lilypad-blue-background: 61 176 246;
+	  --selected-sidebar-button-border: 132 216 255;
+	  --question-text: 60 60 60;
+	  --landing-outer-border: 244 244 246;
+	  --landing-dotted-line: 238 238 242;
+  
+	  /* Status colors */
+	  --charging-green: 35 200 100;
+	  --charging-green-1: 45 220 120;
+	  --charging-green-2: 30 180 100;
+	  --charging-green-3: 50 240 140;
+  
+	  --question-correct-green: 215 255 184;
+	  --question-correct-green-1: 165 237 111;
+	  --question-correct-green-2: 88 167 0;
+	  --question-correct-green-3: 97 184 0;
+  
+	  --question-incorrect-red: 255 223 224;
+	  --question-incorrect-red-2: 234 43 43;
+  
+	  --career-quest-yellow: 253 217 11;
+	  
+	  /* Duolingo color palette */
+	  --macaw: 28 176 246;
+	  --macaw-1: 100 200 255;
+	  --macaw-2: 15 140 200;
+	  --macaw-3: 45 190 220;
+	  
+	  --cardinal: 255 75 75;
+	  --cardinal-1: 255 120 120;
+	  --cardinal-2: 200 45 45;
+	  --cardinal-3: 255 95 60;
+	  
+	  --bee: 255 200 0;
+	  --bee-1: 255 220 80;
+	  --bee-2: 220 160 0;
+	  --bee-3: 255 185 20;
+	  
+	  --fox: 255 150 0;
+	  --fox-1: 255 180 60;
+	  --fox-2: 200 110 0;
+	  --fox-3: 255 130 20;
+	  
+	  --beetle: 206 130 255;
+	  --beetle-1: 230 170 255;
+	  --beetle-2: 160 90 220;
+	  --beetle-3: 180 120 255;
+	  
+	  --humpback: 43 112 201;
+	  --humpback-1: 80 140 230;
+	  --humpback-2: 25 80 160;
+	  --humpback-3: 60 100 180;
+	  
+	  --beak-inner: 182 110 40;
+	  --beak-inner-1: 210 140 80;
+	  --beak-inner-2: 140 80 20;
+	  --beak-inner-3: 190 100 50;
+  
+	  /* iMessage colors */
+	  --iMessageBlue: 0 122 255;
+	  --iMessageGreen: 139 239 139;
+  
+	  /* Neutral colors */
+	  --eel: 75 75 75;
+	  --wolf: 119 119 119;
+	  --hare: 175 175 175;
+	  --swan: 229 229 229;
+	  --polar: 247 247 247;
 	}
-
+  
 	.dark {
-		--standard-background: 20 31 35;
-		--standard-background-hover: 32 47 54;
-		--selected-sidebar-button-background: 32 47 54;
-		--selected-sidebar-button-border: 63 132 167;
-		--question-text: 241 247 251;
-		--landing-outer-border: 35 45 50;
-		--landing-dotted-line: 40 50 55;
-
-		--charging-green: 35 200 100;
-		--charging-green-1: 45 220 120;
-		--charging-green-2: 30 180 100;
-		--charging-green-3: 50 240 140;
-
-		--career-quest-yellow: 253 217 11;
-
-		--question-correct-green: 32 47 54;
-		--question-correct-green-1: 95 132 40;
-		--question-correct-green-2: 122 185 50;
-		--question-correct-green-3: 134 204 54;
-
-		--question-incorrect-red: 32 47 54;
-		--question-incorrect-red-2: 216 72 72;
-
-		/* Duolingo colors - Dark mode variants */
-		--macaw: 72 191 248;
-		--macaw-1: 120 210 255;
-		--macaw-2: 45 160 210;
-		--macaw-3: 90 200 230;
-		
-		--cardinal: 255 75 75;
-		--cardinal-1: 255 140 140;
-		--cardinal-2: 180 50 50;
-		--cardinal-3: 255 110 80;
-		
-		--bee: 255 200 0;
-		--bee-1: 255 230 100;
-		--bee-2: 200 150 0;
-		--bee-3: 255 200 40;
-		
-		--fox: 255 150 0;
-		--fox-1: 255 190 80;
-		--fox-2: 180 110 0;
-		--fox-3: 255 150 40;
-		
-		--beetle: 206 130 255;
-		--beetle-1: 240 180 255;
-		--beetle-2: 140 80 200;
-		--beetle-3: 200 140 255;
-		
-		--humpback: 43 112 201;
-		--humpback-1: 100 150 240;
-		--humpback-2: 30 70 140;
-		--humpback-3: 70 120 190;
-		
-		--beak-inner: 182 110 40;
-		--beak-inner-1: 220 150 90;
-		--beak-inner-2: 120 70 25;
-		--beak-inner-3: 200 120 60;
+	  /* Application colors - dark mode */
+	  --standard-background: 20 31 35;
+	  --standard-background-hover: 32 47 54;
+	  --selected-sidebar-button-background: 32 47 54;
+	  --selected-sidebar-button-border: 63 132 167;
+	  --question-text: 241 247 251;
+	  --landing-outer-border: 35 45 50;
+	  --landing-dotted-line: 40 50 55;
+  
+	  /* Status colors - dark mode */
+	  --charging-green: 35 200 100;
+	  --charging-green-1: 45 220 120;
+	  --charging-green-2: 30 180 100;
+	  --charging-green-3: 50 240 140;
+  
+	  --career-quest-yellow: 253 217 11;
+  
+	  --question-correct-green: 32 47 54;
+	  --question-correct-green-1: 95 132 40;
+	  --question-correct-green-2: 122 185 50;
+	  --question-correct-green-3: 134 204 54;
+  
+	  --question-incorrect-red: 32 47 54;
+	  --question-incorrect-red-2: 216 72 72;
+  
+	  /* Duolingo colors - dark mode variants */
+	  --macaw: 72 191 248;
+	  --macaw-1: 120 210 255;
+	  --macaw-2: 45 160 210;
+	  --macaw-3: 90 200 230;
+	  
+	  --cardinal: 255 75 75;
+	  --cardinal-1: 255 140 140;
+	  --cardinal-2: 180 50 50;
+	  --cardinal-3: 255 110 80;
+	  
+	  --bee: 255 200 0;
+	  --bee-1: 255 230 100;
+	  --bee-2: 200 150 0;
+	  --bee-3: 255 200 40;
+	  
+	  --fox: 255 150 0;
+	  --fox-1: 255 190 80;
+	  --fox-2: 180 110 0;
+	  --fox-3: 255 150 40;
+	  
+	  --beetle: 206 130 255;
+	  --beetle-1: 240 180 255;
+	  --beetle-2: 140 80 200;
+	  --beetle-3: 200 140 255;
+	  
+	  --humpback: 43 112 201;
+	  --humpback-1: 100 150 240;
+	  --humpback-2: 30 70 140;
+	  --humpback-3: 70 120 190;
+	  
+	  --beak-inner: 182 110 40;
+	  --beak-inner-1: 220 150 90;
+	  --beak-inner-2: 120 70 25;
+	  --beak-inner-3: 200 120 60;
 	
-		--iMessageBlue: 0 122 255;
-		--iMessageGreen: 139 239 139;
-
-		/* Neutrals */
-		--eel: 241 247 251;
-		--wolf: 220 230 235;
-		--hare: 82 100 109;
-		--swan: 55 70 79;
-		--polar: 32 47 54;
+	  /* iMessage colors - dark mode */
+	  --iMessageBlue: 0 122 255;
+	  --iMessageGreen: 139 239 139;
+  
+	  /* Neutral colors - dark mode */
+	  --eel: 241 247 251;
+	  --wolf: 220 230 235;
+	  --hare: 82 100 109;
+	  --swan: 55 70 79;
+	  --polar: 32 47 54;
 	}
 }

@@ -1,7 +1,7 @@
 import { Viewport } from "next"
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
-import "../src/styles/index.css"
+import "../src/styles/globals.css"
 import Providers from "./providers"
 import { lexend } from "../src/utils/fonts"
 import { getAuthState } from "@/lib/auth-server"
@@ -22,8 +22,12 @@ export default async function RootLayout({
 	const isDark = authState.theme === "dark"
 
 	return (
-		<html lang="en" className={`${lexend.variable} ${isDark ? "dark" : ""}`}>
-			<body>
+		<html
+			lang="en"
+			className={`${lexend.variable} ${isDark ? "dark" : ""}`}
+			suppressHydrationWarning
+		>
+			<body className="overscroll-none antialiased">
 				<Providers>
 					{children}
 				</Providers>
