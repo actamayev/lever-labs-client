@@ -49,10 +49,10 @@ export default function PlatformSection(): React.ReactNode {
 								<div className="space-y-6">
 									{/* Title and subtitle */}
 									<div>
-										<h3 className="text-2xl sm:text-4xl font-semibold mb-2">
+										<h3 className="text-2xl sm:text-6xl font-semibold mb-4">
 											{tab.title}
 										</h3>
-										<p className="text-lg text-muted-foreground">
+										<p className="text-lg text-wolf">
 											{tab.subtitle}
 										</p>
 									</div>
@@ -61,8 +61,8 @@ export default function PlatformSection(): React.ReactNode {
 									<ul className="space-y-3">
 										{tab.bullets.map((bullet, idx): React.ReactNode => (
 											<li key={idx} className="flex items-start gap-3">
-												<span className="text-primary mt-1">•</span>
-												<span className="text-foreground">{bullet}</span>
+												<span className="text-primary">•</span>
+												<span className="text-foreground text-lg">{bullet}</span>
 											</li>
 										))}
 									</ul>
@@ -75,10 +75,10 @@ export default function PlatformSection(): React.ReactNode {
 												<div
 													key={idx}
 													// eslint-disable-next-line max-len
-													className="bg-standard-background rounded-lg flex flex-col items-center justify-center text-center aspect-square"
+													className="bg-standard-background rounded-lg flex flex-col items-center justify-center text-center aspect-square p-4"
 												>
-													<CardIcon className="w-8 h-8 mb-3 text-primary" />
-													<p className="text-sm font-medium leading-tight">
+													<CardIcon className="size-16 mb-3 text-primary" />
+													<p className="text-lg font-normal leading-tight">
 														{card.title}
 													</p>
 												</div>
