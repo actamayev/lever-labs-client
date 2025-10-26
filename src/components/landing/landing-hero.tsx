@@ -44,10 +44,6 @@ export default function LandingHero(): React.ReactNode {
 
 							{/* Desktop navigation */}
 							<div className="hidden md:flex items-center gap-2">
-								<a className="inline-block py-2 px-3 transition-all duration-200 text-sm font-medium tracking-tight rounded-full hover:bg-gray-100 hover:text-black text-black" href="/about">About</a>
-								<a className="inline-block py-2 px-3 transition-all duration-200 text-sm font-medium tracking-tight rounded-full hover:bg-gray-100 hover:text-black text-black" href="/blog">Blog</a>
-								<a className="inline-block py-2 px-3 transition-all duration-200 text-sm font-medium tracking-tight rounded-full hover:bg-gray-100 hover:text-black text-black" href="/developers">Developers</a>
-								<a className="inline-block py-2 px-3 transition-all duration-200 text-sm font-medium tracking-tight rounded-full hover:bg-gray-100 hover:text-black text-black" href="/integrations">Integrations</a>
 								<a className="inline-block py-2 px-3 transition-all duration-200 text-sm font-medium tracking-tight rounded-full hover:bg-gray-100 hover:text-black text-black" href="/login">Login</a>
 								<a className="inline-block py-2 px-3 transition-all duration-200 text-sm font-medium tracking-tight rounded-full hover:bg-gray-100 hover:text-black text-black" href="/signup">Sign up</a>
 							</div>

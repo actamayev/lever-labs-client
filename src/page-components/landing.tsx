@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import LandingHeader from "../components/landing/landing-header"
+// import LandingHeader from "../components/landing/landing-header"
 import TheLittleThings from "../components/landing/the-little-things"
 import ByBuildersForBuilders from "../components/landing/by-builders-for-builders"
 import SignUpForUpdates from "../components/landing/sign-up-for-updates"
