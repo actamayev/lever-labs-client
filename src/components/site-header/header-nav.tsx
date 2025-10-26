@@ -42,10 +42,14 @@ export default function HeaderNav({ isIncompleteSignup = false }: { isIncomplete
 						isScrolled ? "flex" : "hidden sm:flex"
 					)}
 				>
-					{isIncompleteSignup ? <LinkAuthHeaderButton
-						title="FINISH REGISTRATION"
-						linkTo="/register-google"
-					/> : <LoginLogoutHeaderItem />}
+					{!isIncompleteSignup ? (
+						<LoginLogoutHeaderItem />
+					) : (
+						<LinkAuthHeaderButton
+							title="Finish Registration"
+							linkTo="/register-google"
+						/>
+					)}
 				</div>
 			</div>
 		</nav>

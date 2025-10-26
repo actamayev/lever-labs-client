@@ -3,21 +3,26 @@
 import Link from "next/link"
 import { observer } from "mobx-react"
 import authClass from "../../classes/auth-class"
-import { BlueTactileButton } from "../buttons/tactile-buttons"
+import { Button } from "../ui/button"
+import { cn } from "../../lib/shadcn/utils"
 
 interface LinkAuthHeaderProps {
 	title: string
 	linkTo: PageNames
+	className?: string
 }
 
 export function LinkAuthHeaderButton(props: LinkAuthHeaderProps): React.ReactNode {
-	const { title, linkTo } = props
+	const { title, linkTo, className } = props
 
 	return (
 		<Link href={linkTo}>
-			<BlueTactileButton className="text-xs sm:text-sm font-normal px-3 sm:px-4">
+			<Button
+				variant="ghost"
+				className={cn("text-xs sm:text-sm font-normal px-3 sm:px-4 hover:bg-polar rounded-full", className)}
+			>
 				{title}
-			</BlueTactileButton>
+			</Button>
 		</Link>
 	)
 }
@@ -31,12 +36,13 @@ function SetLoginOrRegisterAuthHeaderButton(props: SetLoginOrRegisterAuthHeaderP
 	const { title, setShowLoginOrRegister } = props
 
 	return (
-		<BlueTactileButton
-			className="text-sm font-normal"
+		<Button
+			variant="ghost"
+			className="text-sm font-normal hover:bg-polar"
 			onClick={(): void => authClass.setShowLoginOrRegister(setShowLoginOrRegister)}
 		>
 			{title}
-		</BlueTactileButton>
+		</Button>
 	)
 }
 
