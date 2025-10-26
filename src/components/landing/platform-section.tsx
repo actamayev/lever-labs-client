@@ -48,7 +48,7 @@ export default function PlatformSection(): React.ReactNode {
 						{platformTabs.map((tab): React.ReactNode => (
 							<div
 								key={tab.id}
-								className={`transition-opacity duration-500 ${
+								className={`transition-opacity duration-300 ${
 									activeTab === tab.id ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"
 								}`}
 							>
