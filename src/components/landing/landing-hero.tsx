@@ -1,9 +1,7 @@
 "use client"
 
 import HeroBackground from "./hero-background"
-import LandingNavigation from "./landing-navigation"
 import HeroContent from "./hero-content"
-import LandingContainer from "./landing-container"
 
 export default function LandingHero(): React.ReactNode {
 	return (
@@ -13,11 +11,6 @@ export default function LandingHero(): React.ReactNode {
 
 			{/* Content wrapper */}
 			<div className="h-full pb-24 z-10 relative">
-				{/* Navigation */}
-				<LandingContainer className="xs:pt-4">
-					<LandingNavigation />
-				</LandingContainer>
-
 				{/* Hero text */}
 				<HeroContent />
 			</div>
