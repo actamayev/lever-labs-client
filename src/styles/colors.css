@@ -29,6 +29,11 @@
   
 	  --career-quest-yellow: 253 217 11;
 	  
+	  /* Lever brand colors */
+	  --lever-yellow: 255 235 50;
+	  --lever-blue: 1 115 206;
+	  --lever-red: 241 81 55;
+	  
 	  /* Duolingo color palette */
 	  --macaw: 28 176 246;
 	  --macaw-1: 100 200 255;
@@ -94,7 +99,12 @@
 	  --charging-green-3: 50 240 140;
   
 	  --career-quest-yellow: 253 217 11;
-  
+
+	  /* Lever brand colors - dark mode */
+	  --lever-yellow: 255 235 50;
+	  --lever-blue: 1 115 206;
+	  --lever-red: 241 81 55;
+
 	  --question-correct-green: 32 47 54;
 	  --question-correct-green-1: 95 132 40;
 	  --question-correct-green-2: 122 185 50;
