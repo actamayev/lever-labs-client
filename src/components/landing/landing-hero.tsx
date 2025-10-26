@@ -56,16 +56,12 @@ export default function LandingHero(): React.ReactNode {
 					<div className="flex flex-col z-10 sm:mb-0 mb-3 xs:mb-6 relative">
 						<div className="hidden blur-lg bg-[#dadada] xs:hidden absolute w-full h-full -z-10 opacity-60"></div>
 						<h1 className="font-heading tracking-tight text-black font-medium text-5xl xs:text-5xl sm:text-5xl sm:text-left text-center mb-4 xs:mb-3">
-							Clarity, at a glance
+							Like Duolingo, for robotics
 						</h1>
 						<p className="text-sm xs:text-base sm:text-sm sm:px-0 px-6 sm:text-left text-center tracking-tight text-black font-light">
-							TRMNL is an e-ink companion that helps you stay focused.
+							With Pip, learning feels like play
 						</p>
 					</div>
-					<a target="_blank" className="mt-12 sm:mt-0 cursor-pointer rounded-full relative bg-black sm:min-w-40 sm:w-auto w-full px-8 py-3 hover:bg-gray-50 focus:ring-4 focus:ring-gray-200 flex items-center justify-center mb-2 group transition duration-200" href="https://shop.usetrmnl.com/collections/devices">
-						<span className="font-heading text-white text-xl group-hover:text-black transition duration-200">Buy Now</span>
-						<span className="top-14 absolute transform left-1/2 -translate-x-1/2 text-sm text-gray-200 font-heading italic hidden group-hover:opacity-100 group-hover:block w-full text-center transition ease-in-out delay-100">OG Model In Stock</span>
-					</a>
 				</div>
 			</div>
 		</div>
