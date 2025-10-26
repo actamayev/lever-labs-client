@@ -14,16 +14,18 @@ import AllAgesWelcome from "../components/landing/all-ages-welcome"
 import SimpleSetup from "../components/landing/simple-setup"
 import BridgingTwoWorlds from "../components/landing/bridging-two-worlds"
 import LandingSectionContainer from "../components/landing/landing-section-container"
+import LandingHero from "../components/landing/landing-hero"
 
 function Landing(): React.ReactNode {
 	return (
 		<>
-			<div className="min-h-screen w-full relative">
+			<LandingHero />
+			{/* <div className="min-h-screen w-full relative">
 				<LandingSectionContainer>
 					<LandingHeader />
-				</LandingSectionContainer>
+				</LandingSectionContainer> */}
 
-				<LandingSectionContainer>
+			{/* <LandingSectionContainer>
 					<SmallRobotBigPossibilities />
 				</LandingSectionContainer>
 
@@ -41,13 +43,13 @@ function Landing(): React.ReactNode {
 
 				<LandingSectionContainer>
 					<AllAgesWelcome />
-				</LandingSectionContainer>
+				</LandingSectionContainer> */}
 
-				{/* <LandingSectionContainer>
+			{/* <LandingSectionContainer>
 					<CodeThatComesAlive />
 				</LandingSectionContainer> */}
 
-				<LandingSectionContainer>
+			{/* <LandingSectionContainer>
 					<SimpleSetup />
 				</LandingSectionContainer>
 
@@ -65,8 +67,8 @@ function Landing(): React.ReactNode {
 
 				<LandingSectionContainer extraClasses="flex relative items-center justify-center pb-16 text-question-text">
 					<SignUpForUpdates />
-				</LandingSectionContainer>
-			</div>
+				</LandingSectionContainer> */}
+			{/* </div> */}
 		</>
 	)
 }
