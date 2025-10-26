@@ -10,10 +10,15 @@ const config: Config = {
 	theme: {
 		extend: {
 			screens: {
+				"xs": "475px",
 				"wide": "1900px",
+			},
+			maxWidth: {
+				"9xl": "1536px",
 			},
 			fontFamily: {
 				sans: ["var(--font-lexend)", "sans-serif"],
+				heading: ["var(--font-lexend)", "sans-serif"], // Add your heading font here if different
 			},
 			colors: {
 				// shadcn-compatible base colors
