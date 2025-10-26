@@ -36,7 +36,7 @@ export const platformTabs: TabContent[] = [
 			},
 			{
 				icon: Repeat,
-				title: "Builds a habit of loving to learn"
+				title: "Learning by repetition"
 			},
 			{
 				icon: Package,
@@ -61,7 +61,7 @@ export const platformTabs: TabContent[] = [
 		cards: [
 			{
 				icon: Sparkles,
-				title: "Strengthen left brain (creativity) thinking"
+				title: "Strengthen left brain thinking"
 			},
 			{
 				icon: Search,
@@ -69,7 +69,7 @@ export const platformTabs: TabContent[] = [
 			},
 			{
 				icon: Beaker,
-				title: "Learn by making trial-and-error"
+				title: "Learn by trial-and-error"
 			}
 		],
 		ctaLink: "/sandbox",
@@ -98,7 +98,7 @@ export const platformTabs: TabContent[] = [
 			},
 			{
 				icon: Trophy,
-				title: "Race friends (social component)"
+				title: "Compete with friends"
 			}
 		],
 		ctaLink: "/garage",

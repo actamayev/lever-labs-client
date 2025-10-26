@@ -68,7 +68,7 @@ export default function PlatformSection(): React.ReactNode {
 									</ul>
 
 									{/* Cards */}
-									<div className="grid grid-cols-3 gap-4 pt-4">
+									<div className="grid grid-cols-3 gap-4 pt-4 w-4/5">
 										{tab.cards.map((card, idx): React.ReactNode => {
 											const CardIcon = card.icon
 											return (
