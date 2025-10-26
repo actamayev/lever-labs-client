@@ -26,12 +26,12 @@ const baseNavData: SidebarNavData[] = [
 		icon: Book,
 		textColor: "text-fox"
 	},
-	{
-		title: "Career Quest",
-		url: "/career-quest",
-		icon: CustomBriefcase,
-		textColor: "text-career-quest-yellow"
-	},
+	// {
+	// 	title: "Career Quest",
+	// 	url: "/career-quest",
+	// 	icon: CustomBriefcase,
+	// 	textColor: "text-career-quest-yellow"
+	// },
 	{
 		title: "Sandbox",
 		url: "/sandbox",
