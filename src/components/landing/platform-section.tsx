@@ -26,15 +26,15 @@ export default function PlatformSection(): React.ReactNode {
 				{/* Tabs */}
 				<Tabs defaultValue="learn" className="w-full">
 					<TabsList className="grid w-full grid-cols-3 mb-8">
-						{platformTabs.map((tab) => {
+						{platformTabs.map((tab): React.ReactNode => {
 							// eslint-disable-next-line no-nested-ternary
 							const IconComponent = tab.useCustomIcon
 								? (tab.id === "sandbox" ? CustomSandbox : CustomGarage)
 								: tab.icon
 
 							return (
-								<TabsTrigger key={tab.id} value={tab.id} className="gap-2">
-									<IconComponent className="w-4 h-4" />
+								<TabsTrigger key={tab.id} value={tab.id} className="gap-2 text-2xl sm:text-3xl font-semibold">
+									<IconComponent className="size-6 sm:size-8" />
 									{tab.label}
 								</TabsTrigger>
 							)
@@ -42,7 +42,7 @@ export default function PlatformSection(): React.ReactNode {
 					</TabsList>
 
 					{/* Tab content */}
-					{platformTabs.map((tab) => (
+					{platformTabs.map((tab): React.ReactNode => (
 						<TabsContent key={tab.id} value={tab.id}>
 							<div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
 								{/* Left column - Content */}
@@ -59,7 +59,7 @@ export default function PlatformSection(): React.ReactNode {
 
 									{/* Bullets */}
 									<ul className="space-y-3">
-										{tab.bullets.map((bullet, idx) => (
+										{tab.bullets.map((bullet, idx): React.ReactNode => (
 											<li key={idx} className="flex items-start gap-3">
 												<span className="text-primary mt-1">•</span>
 												<span className="text-foreground">{bullet}</span>
@@ -69,12 +69,13 @@ export default function PlatformSection(): React.ReactNode {
 
 									{/* Cards */}
 									<div className="grid grid-cols-3 gap-4 pt-4">
-										{tab.cards.map((card, idx) => {
+										{tab.cards.map((card, idx): React.ReactNode => {
 											const CardIcon = card.icon
 											return (
 												<div
 													key={idx}
-													className="bg-standardBackground rounded-lg p-4 flex flex-col items-center justify-center text-center aspect-square"
+													// eslint-disable-next-line max-len
+													className="bg-standard-background rounded-lg flex flex-col items-center justify-center text-center aspect-square"
 												>
 													<CardIcon className="w-8 h-8 mb-3 text-primary" />
 													<p className="text-sm font-medium leading-tight">
@@ -87,7 +88,7 @@ export default function PlatformSection(): React.ReactNode {
 
 									{/* CTA Button */}
 									<div className="pt-4">
-										<Button asChild size="lg">
+										<Button asChild size="lg" className="rounded-full">
 											<Link href={tab.ctaLink}>
 												Get started
 											</Link>

@@ -27,7 +27,7 @@ export default function LandingNavigation(): React.ReactNode {
 					variant="ghost"
 					size="icon"
 					className="md:hidden text-black hover:bg-gray-100"
-					onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+					onClick={(): void => setMobileMenuOpen(!mobileMenuOpen)}
 					aria-label="Toggle menu"
 				>
 					<Menu className="h-6 w-6" />
