@@ -18,10 +18,10 @@ export default function PlatformSection(): React.ReactNode {
 			<LandingContainer>
 				{/* Section header */}
 				<div className="text-center mb-12">
-					<h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold mb-4">
+					<h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-normal mb-4">
 						The Lever Labs Platform
 					</h2>
-					<p className="text-lg sm:text-xl text-muted-foreground font-light">
+					<p className="text-lg sm:text-xl text-wolf font-semibold">
 						Free. Fun. Effective.
 					</p>
 				</div>
