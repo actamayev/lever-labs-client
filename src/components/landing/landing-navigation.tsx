@@ -8,19 +8,27 @@ import LogoHeaderSection from "../site-header/logo-header-section"
 export default function LandingNavigation(): React.ReactNode {
 	const [isScrolled, setIsScrolled] = useState(false)
 
-	useEffect((): () => void => {
-		const handleScroll = (): void => {
-			setIsScrolled(window.scrollY > 0)
+	useEffect(() => {
+		let ticking = false
+
+		const handleScroll = () => {
+			if (!ticking) {
+				window.requestAnimationFrame(() => {
+					setIsScrolled(window.scrollY > 0)
+					ticking = false
+				})
+				ticking = true
+			}
 		}
 
-		window.addEventListener("scroll", handleScroll)
-		return (): void => window.removeEventListener("scroll", handleScroll)
+		window.addEventListener("scroll", handleScroll, { passive: true })
+		return () => window.removeEventListener("scroll", handleScroll)
 	}, [])
 
 	return (
 		<nav
-			className={`fixed top-0 left-0 right-0 z-50 duration-0 transition-all ${
-				isScrolled && "bg-standardBackground/70 backdrop-blur-sm"
+			className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+				isScrolled ? "bg-standardBackground/70 backdrop-blur-sm" : "bg-transparent"
 			}`}
 		>
 			<div className="px-8 md:px-20 xl:px-32 max-w-9xl mx-auto">
