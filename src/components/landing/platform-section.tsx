@@ -61,7 +61,7 @@ export default function PlatformSection(): React.ReactNode {
 									<ul className="space-y-3">
 										{tab.bullets.map((bullet, idx): React.ReactNode => (
 											<li key={idx} className="flex items-start gap-3">
-												<span className="text-primary">•</span>
+												<span className="text-lever-blue">•</span>
 												<span className="text-foreground text-lg">{bullet}</span>
 											</li>
 										))}
@@ -77,7 +77,7 @@ export default function PlatformSection(): React.ReactNode {
 													// eslint-disable-next-line max-len
 													className="bg-standard-background rounded-lg flex flex-col items-center justify-center text-center aspect-square p-4"
 												>
-													<CardIcon className="size-16 mb-3 text-primary" />
+													<CardIcon className="size-16 mb-3 text-primary" strokeWidth={1}/>
 													<p className="text-lg font-normal leading-tight">
 														{card.title}
 													</p>
