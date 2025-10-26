@@ -26,7 +26,7 @@ export default function LandingNavigation(): React.ReactNode {
 			<div className="px-8 md:px-20 xl:px-32 max-w-9xl mx-auto">
 				<div className="flex items-center justify-between h-16 sm:h-20">
 					{/* Logo */}
-					<LogoHeaderSection isScrolled={isScrolled} />
+					<LogoHeaderSection />
 
 					{/* Navigation buttons */}
 					<div className="flex items-center gap-3">
@@ -37,7 +37,7 @@ export default function LandingNavigation(): React.ReactNode {
 						</Link>
 						<Link href="/preorder">
 							<Button variant="default" className="rounded-full">
-								Buy now
+								Pre-order now
 							</Button>
 						</Link>
 					</div>

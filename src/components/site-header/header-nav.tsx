@@ -33,7 +33,7 @@ export default function HeaderNav({ isIncompleteSignup = false }: { isIncomplete
 				}`}
 			>
 				{/* Logo section */}
-				<LogoHeaderSection isScrolled={isScrolled} />
+				<LogoHeaderSection />
 
 				{/* Right section with buttons */}
 				<div

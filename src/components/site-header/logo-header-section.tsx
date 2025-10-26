@@ -10,7 +10,7 @@ import authClass from "../../classes/auth-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import personalInfoClass from "../../classes/personal-info-class"
 
-function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.ReactNode {
+function LogoHeaderSection(): React.ReactNode {
 	const pathname = usePathname()
 
 	const whereToNavigate = useMemo((): PageNames => {
@@ -25,9 +25,7 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.React
 
 	return (
 		<div
-			className={`inline-flex items-center grow-0 shrink-0 z-10 ${
-				!isScrolled ? "justify-center" : ""
-			}`}
+			className={"inline-flex items-center grow-0 shrink-0 z-10"}
 		>
 			<Link
 				href={whereToNavigate}
