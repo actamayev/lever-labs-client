@@ -58,11 +58,10 @@ export default function PlatformSection(): React.ReactNode {
 									</div>
 
 									{/* Bullets */}
-									<ul className="space-y-3">
+									<ul className="space-y-3 list-disc list-inside [&>li]:marker:text-lever-blue">
 										{tab.bullets.map((bullet, idx): React.ReactNode => (
-											<li key={idx} className="flex items-start gap-3">
-												<span className="text-lever-blue">•</span>
-												<span className="text-foreground text-lg">{bullet}</span>
+											<li key={idx} className="text-foreground text-lg">
+												{bullet}
 											</li>
 										))}
 									</ul>
