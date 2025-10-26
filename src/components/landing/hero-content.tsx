@@ -1,6 +1,8 @@
+import LandingContainer from "./landing-container"
+
 export default function HeroContent(): React.ReactNode {
 	return (
-		<div className="container w-full flex flex-wrap items-end justify-between absolute bottom-16 sm:bottom-20 2xl:bottom-32 left-1/2 transform -translate-x-1/2 px-8 md:px-20 xl:px-32 max-w-9xl">
+		<LandingContainer className="absolute bottom-16 sm:bottom-20 2xl:bottom-32 left-0 right-0">
 			<div className="flex flex-col z-10 sm:mb-0 mb-3 xs:mb-6 relative">
 				{/* Optional blur background - currently hidden */}
 				<div className="hidden blur-lg bg-[#dadada] xs:hidden absolute w-full h-full -z-10 opacity-60" />
@@ -13,6 +15,6 @@ export default function HeroContent(): React.ReactNode {
 					With Pip, learning feels like play
 				</p>
 			</div>
-		</div>
+		</LandingContainer>
 	)
 }

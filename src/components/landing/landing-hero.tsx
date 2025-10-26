@@ -3,6 +3,7 @@
 import HeroBackground from "./hero-background"
 import LandingNavigation from "./landing-navigation"
 import HeroContent from "./hero-content"
+import LandingContainer from "./landing-container"
 
 export default function LandingHero(): React.ReactNode {
 	return (
@@ -11,11 +12,11 @@ export default function LandingHero(): React.ReactNode {
 			<HeroBackground />
 
 			{/* Content wrapper */}
-			<div className="h-full mx-auto pb-24 z-10 relative">
+			<div className="h-full pb-24 z-10 relative">
 				{/* Navigation */}
-				<div className="px-8 md:px-20 xl:px-32 max-w-9xl xs:pt-4 mx-auto">
+				<LandingContainer className="xs:pt-4">
 					<LandingNavigation />
-				</div>
+				</LandingContainer>
 
 				{/* Hero text */}
 				<HeroContent />
