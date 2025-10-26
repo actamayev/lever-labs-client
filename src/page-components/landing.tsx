@@ -1,14 +1,14 @@
 "use client"
 
-import { observer } from "mobx-react"
 import LandingHero from "../components/landing/landing-hero"
+import PlatformSection from "../components/landing/platform-section"
 
-function Landing(): React.ReactNode {
+export default function Landing(): React.ReactNode {
 	return (
 		<>
 			<LandingHero />
+			<PlatformSection />
 		</>
 	)
 }
 
-export default observer(Landing)
