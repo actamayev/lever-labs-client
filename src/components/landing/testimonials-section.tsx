@@ -5,16 +5,16 @@ import LandingSectionHeaderText from "./landing-section-header-text"
 
 const stats = [
 	{
-		stat: "9 out of 10 parents",
-		description: "recommend Pip to other families"
+		stat: "89% of parents",
+		description: "see increased confidence in STEM in their kids"
 	},
 	{
 		stat: "96% of kids",
 		description: "say Pip makes learning fun"
 	},
 	{
-		stat: "89% of parents",
-		description: "see increased confidence in STEM"
+		stat: "9 out of 10 parents",
+		description: "recommend Pip to other families"
 	}
 ]
 
