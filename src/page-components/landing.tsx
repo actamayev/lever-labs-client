@@ -1,6 +1,5 @@
 "use client"
 
-import { observer } from "mobx-react"
 import FAQ from "../components/landing/faq"
 import Footer from "../components/footer/footer"
 import LandingHero from "../components/landing/landing-hero"
@@ -11,7 +10,7 @@ import TestimonialsSection from "../components/landing/testimonials-section"
 import EarlyAccessForm from "../components/custom-shadcn-blocks/early-access"
 import SimpleFeaturesSection from "../components/landing/simple-features-section"
 
-function Landing(): React.ReactNode {
+export default function Landing(): React.ReactNode {
 	return (
 		<>
 			<LandingNavigation />
@@ -26,5 +25,3 @@ function Landing(): React.ReactNode {
 		</>
 	)
 }
-
-export default observer(Landing)
