@@ -14,6 +14,7 @@ export type TabContent = {
 	}>
 	ctaLink: string
 	imagePlaceholder: string
+	themeColor: string
 }
 
 export const platformTabs: TabContent[] = [
@@ -44,7 +45,8 @@ export const platformTabs: TabContent[] = [
 			}
 		],
 		ctaLink: "/learn",
-		imagePlaceholder: "/placeholder-learn.jpg"
+		imagePlaceholder: "/placeholder-learn.jpg",
+		themeColor: "bee"
 	},
 	{
 		id: "sandbox",
@@ -73,7 +75,8 @@ export const platformTabs: TabContent[] = [
 			}
 		],
 		ctaLink: "/sandbox",
-		imagePlaceholder: "/placeholder-sandbox.jpg"
+		imagePlaceholder: "/placeholder-sandbox.jpg",
+		themeColor: "cardinal"
 	},
 	{
 		id: "garage",
@@ -102,6 +105,7 @@ export const platformTabs: TabContent[] = [
 			}
 		],
 		ctaLink: "/garage",
-		imagePlaceholder: "/placeholder-garage.jpg"
+		imagePlaceholder: "/placeholder-garage.jpg",
+		themeColor: "humpback"
 	}
 ]

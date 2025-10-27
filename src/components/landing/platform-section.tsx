@@ -9,6 +9,34 @@ import LandingContainer from "./landing-container"
 import { CustomGarage } from "../../icons/custom-garage"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 
+// Helper function to get background color class
+const getBackgroundColorClass = (themeColor: string): string => {
+	switch (themeColor) {
+		case "cardinal":
+			return "bg-cardinal/5"
+		case "bee":
+			return "bg-bee/5"
+		case "humpback":
+			return "bg-humpback/5"
+		default:
+			return "bg-gray-500/10"
+	}
+}
+
+// Helper function to get icon color class
+const getIconColorClass = (themeColor: string): string => {
+	switch (themeColor) {
+		case "cardinal":
+			return "text-cardinal"
+		case "bee":
+			return "text-bee"
+		case "humpback":
+			return "text-humpback"
+		default:
+			return "text-gray-500"
+	}
+}
+
 // eslint-disable-next-line max-lines-per-function
 export default function PlatformSection(): React.ReactNode {
 	const [activeTab, setActiveTab] = useState<string>("learn")
@@ -37,7 +65,7 @@ export default function PlatformSection(): React.ReactNode {
 
 							return (
 								<TabsTrigger key={tab.id} value={tab.id} className="gap-2 text-2xl sm:text-3xl font-semibold">
-									<IconComponent className="size-6 sm:size-8" />
+									<IconComponent className={`size-6 sm:size-8 ${activeTab === tab.id ? getIconColorClass(tab.themeColor) : ""}`} />
 									{tab.label}
 								</TabsTrigger>
 							)
@@ -52,7 +80,14 @@ export default function PlatformSection(): React.ReactNode {
 									activeTab === tab.id ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"
 								}`}
 							>
-								<div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start">
+								<div className="absolute inset-0 pointer-events-none">
+									<div
+										className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full blur-[200px] rounded-full ${
+											getBackgroundColorClass(tab.themeColor)
+										}`}
+									/>
+								</div>
+								<div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start relative">
 									{/* Left column - Content */}
 									<div className="space-y-6">
 										{/* Title and subtitle */}
