@@ -7,6 +7,7 @@ import LandingContainer from "./landing-container"
 import { CustomGarage } from "../../icons/custom-garage"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 import LandingSectionHeaderText from "./landing-section-header-text"
+import { cn } from "@/lib/shadcn/utils"
 
 // Helper function to get background color class
 const getBackgroundColorClass = (themeColor: string): string => {
@@ -63,7 +64,7 @@ export default function PlatformSection(): React.ReactNode {
 							return (
 								<TabsTrigger key={tab.id} value={tab.id} className="gap-2 text-2xl sm:text-3xl font-semibold">
 									<IconComponent
-										className={`size-6 sm:size-8 ${activeTab === tab.id ? getIconColorClass(tab.themeColor) : ""}`}
+										className={cn("size-6 sm:size-8", getIconColorClass(tab.themeColor))}
 									/>
 									{tab.label}
 								</TabsTrigger>
@@ -79,9 +80,9 @@ export default function PlatformSection(): React.ReactNode {
 							return (
 								<div
 									key={tab.id}
-									className={`transition-opacity duration-300 ${
+									className={cn("transition-opacity duration-300",
 										activeTab === tab.id ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"
-									}`}
+									)}
 								>
 									<div className="absolute inset-0 pointer-events-none">
 										<div className={backgroundClasses} />
