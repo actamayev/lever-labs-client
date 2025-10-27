@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { HeadsetIcon, WifiIcon, PackageIcon, DollarSignIcon, UserIcon, BotIcon, RefreshCwIcon, PlusIcon } from "lucide-react"
+import { HeadsetIcon, WifiIcon, PackageIcon, DollarSignIcon, UserIcon, BotIcon, RefreshCwIcon, PlusIcon, Undo2 } from "lucide-react"
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
 
@@ -30,7 +30,7 @@ const items = [
 	{
 		icon: WifiIcon,
 		title: "Does Pip work wirelessly or with a cable?",
-		content: "Pip works completely wirelessly! After a quick initial setup where you connect Pip to your Wi-Fi over USB, you can control and program Pip from anywhere without any cables."
+		content: "Pip works completely wirelessly! After a quick initial setup where you connect Pip to your Wi-Fi, you can control and program Pip from anywhere without any cables."
 	},
 	{
 		icon: PackageIcon,
@@ -38,7 +38,7 @@ const items = [
 		content: "Your Pip comes ready to use right out of the box with a USB-C charging cable, quick start guide, and lifetime access to our complete learning platform."
 	},
 	{
-		icon: RefreshCwIcon,
+		icon: Undo2,
 		title: "What is your return policy?",
 		content: "We offer a 30-day return policy. If Pip isn't the right fit, simply contact our support team to initiate a return. Products must be in their original condition."
 	},
