@@ -390,7 +390,7 @@ function MotionHighlightItem({
   const localRef = React.useRef<HTMLDivElement>(null);
   React.useImperativeHandle(ref, () => localRef.current as HTMLDivElement);
 
-  React.useEffect(() => {
+  React.useEffect(()=> {
     if (mode !== 'parent') return;
     let rafId: number;
     let previousBounds: Bounds | null = null;
@@ -426,7 +426,7 @@ function MotionHighlightItem({
       setActiveClassName(activeClassName ?? '');
     } else if (!activeValue) clearBounds();
 
-    if (shouldUpdateBounds) return () => cancelAnimationFrame(rafId);
+    return shouldUpdateBounds ? () => cancelAnimationFrame(rafId) : undefined;
   }, [
     mode,
     isActive,
