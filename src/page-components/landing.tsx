@@ -9,6 +9,7 @@ import LandingNavigation from "../components/landing/landing-navigation"
 import TestimonialsSection from "../components/landing/testimonials-section"
 import EarlyAccessForm from "../components/custom-shadcn-blocks/early-access"
 import SimpleFeaturesSection from "../components/landing/simple-features-section"
+// import ReviewsSection from "../components/landing/reviews-section"
 
 export default function Landing(): React.ReactNode {
 	return (
@@ -20,6 +21,7 @@ export default function Landing(): React.ReactNode {
 			<FeaturesSection />
 			<TestimonialsSection />
 			<FAQ />
+			{/* <ReviewsSection /> */}
 			<EarlyAccessForm />
 			<Footer />
 		</>

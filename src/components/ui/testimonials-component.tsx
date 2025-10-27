@@ -23,7 +23,7 @@ type TestimonialsComponentProps = {
 
 const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => {
   return (
-    <section className='py-8 sm:py-16 lg:py-24'>
+    <section className='pb-8 sm:pb-16 lg:pb-24'>
       <Carousel
         className='mx-auto flex max-w-7xl gap-12 max-sm:flex-col sm:items-center sm:gap-16 '
         opts={{
