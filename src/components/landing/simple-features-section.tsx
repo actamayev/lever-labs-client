@@ -3,6 +3,7 @@
 import LandingContainer from "./landing-container"
 
 interface Feature {
+	step: string
 	title: string
 	description: string
 	imagePlaceholder: string
@@ -10,14 +11,22 @@ interface Feature {
 
 const features: Feature[] = [
 	{
-		title: "Simple setup",
-		description: "Pip works right out the box - no assembly required!",
-		imagePlaceholder: "/placeholder-setup.jpg"
+		step: "1",
+		title: "Take Pip out of the box",
+		description: "No assembly required.",
+		imagePlaceholder: "/placeholder-unbox.jpg"
 	},
 	{
-		title: "Quick connection",
-		description: "Connect Pip to your Wi-Fi in a process that takes less than a minute. Drive around, and send code instructions.",
-		imagePlaceholder: "/placeholder-connection.jpg"
+		step: "2",
+		title: "Give Pip Wi-Fi access",
+		description: "Plug Pip into your computer, and give Pip access to your Wi-Fi (takes less than a minute).",
+		imagePlaceholder: "/placeholder-wifi.jpg"
+	},
+	{
+		step: "3",
+		title: "That's it!",
+		description: "Now you can control and communicate with your Pip completely wirelessly.",
+		imagePlaceholder: "/placeholder-learning.jpg"
 	}
 ]
 
@@ -25,8 +34,15 @@ export default function SimpleFeaturesSection(): React.ReactNode {
 	return (
 		<section className="bg-lever-blue py-16 md:py-24">
 			<LandingContainer>
-				<div className="grid md:grid-cols-2 gap-8 md:gap-12">
-					{features.map((feature, idx): React.ReactNode => (
+				{/* Section title */}
+				<div className="text-center mb-12">
+					<h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold text-white">
+						Setup as easy as 1-2-3
+					</h2>
+				</div>
+
+				<div className="grid md:grid-cols-3 gap-8 md:gap-12">
+					{features.map((feature, idx) => (
 						<div key={idx} className="flex flex-col">
 							{/* Image */}
 							<div className="relative aspect-video rounded-2xl overflow-hidden bg-muted mb-6">
@@ -39,7 +55,7 @@ export default function SimpleFeaturesSection(): React.ReactNode {
 
 							{/* Title */}
 							<h3 className="text-2xl sm:text-3xl font-semibold mb-3 text-white">
-								{feature.title}
+								{feature.step}. {feature.title}
 							</h3>
 
 							{/* Description */}
