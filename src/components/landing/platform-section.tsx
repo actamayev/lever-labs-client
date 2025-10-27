@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useState } from "react"
 import { cn } from "@/lib/shadcn/utils"
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/shadcn-io/tabs"
 import { platformTabs } from "./tab-content"
 import LandingContainer from "./landing-container"
 import { CustomGarage } from "../../icons/custom-garage"
