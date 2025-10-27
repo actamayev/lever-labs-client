@@ -12,7 +12,6 @@ export type TabContent = {
 		icon: LucideIcon
 		title: string
 	}>
-	ctaLink: string
 	imagePlaceholder: string
 	themeColor: string
 }
@@ -44,7 +43,6 @@ export const platformTabs: TabContent[] = [
 				title: "Problem solving skills"
 			}
 		],
-		ctaLink: "/learn",
 		imagePlaceholder: "/placeholder-learn.jpg",
 		themeColor: "lever-yellow"
 	},
@@ -74,7 +72,6 @@ export const platformTabs: TabContent[] = [
 				title: "Learn by trial-and-error"
 			}
 		],
-		ctaLink: "/sandbox",
 		imagePlaceholder: "/placeholder-sandbox.jpg",
 		themeColor: "lever-red"
 	},
@@ -104,7 +101,6 @@ export const platformTabs: TabContent[] = [
 				title: "Compete with friends"
 			}
 		],
-		ctaLink: "/garage",
 		imagePlaceholder: "/placeholder-garage.jpg",
 		themeColor: "lever-blue"
 	}

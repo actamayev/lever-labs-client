@@ -129,15 +129,6 @@ export default function PlatformSection(): React.ReactNode {
 													)
 												})}
 											</div>
-
-											{/* CTA Button */}
-											<div className="pt-4">
-												<Button asChild size="lg" className="rounded-full">
-													<Link href={tab.ctaLink}>
-														Get started
-													</Link>
-												</Button>
-											</div>
 										</div>
 
 										{/* Right column - Image */}
