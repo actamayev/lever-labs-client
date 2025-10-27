@@ -133,7 +133,7 @@ export default function PlatformSection(): React.ReactNode {
 										</div>
 
 										{/* Right column - Image */}
-										<div className="order-first md:order-last">
+										<div className="order-last">
 											<div className="relative aspect-video md:aspect-square rounded-lg overflow-hidden bg-muted">
 												<img
 													src={tab.imagePlaceholder}
