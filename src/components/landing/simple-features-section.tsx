@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import LandingContainer from "./landing-container"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
@@ -45,10 +46,11 @@ export default function SimpleFeaturesSection(): React.ReactNode {
 						<div key={idx} className="flex flex-col">
 							{/* Image */}
 							<div className="relative aspect-video rounded-2xl overflow-hidden bg-muted mb-6">
-								<img
+								<Image
 									src={feature.imagePlaceholder}
 									alt={feature.title}
 									className="w-full h-full object-cover"
+									fill
 								/>
 							</div>
 
