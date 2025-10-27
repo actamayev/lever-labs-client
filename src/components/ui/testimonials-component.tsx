@@ -35,7 +35,7 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
         {/* Left Content */}
         <div className='space-y-4 sm:w-1/2 lg:w-1/3'>
 
-          <h2 className='text-2xl font-semibold sm:text-3xl lg:text-4xl'>Customers Feedback</h2>
+          <h2 className='text-2xl font-semibold sm:text-3xl lg:text-4xl'>Customer Feedback</h2>
 
           <p className='text-muted-foreground text-xl'>
             What parents are saying about Pip

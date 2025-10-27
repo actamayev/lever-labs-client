@@ -21,7 +21,7 @@ const stats = [
 const testimonials: TestimonialItem[] = [
 	{
 		name: "Craig",
-		role: "Proud Parent",
+		role: "Proud parent of a future engineer",
 		childName: "Jamie",
 		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-5.png?width=40&height=40&format=auto",
 		rating: 5,
@@ -29,7 +29,7 @@ const testimonials: TestimonialItem[] = [
 	},
 	{
 		name: "Martin",
-		role: "Incredibly happy parent",
+		role: "Parent who finally found screen time he approves of",
 		childName: "Chris",
 		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-3.png?width=40&height=40&format=auto",
 		rating: 5,
@@ -37,7 +37,7 @@ const testimonials: TestimonialItem[] = [
 	},
 	{
 		name: "Sarah",
-		role: "Middle School Teacher",
+		role: "Mom of the neighborhood's coolest kid",
 		childName: "Alex",
 		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-2.png?width=40&height=40&format=auto",
 		rating: 5,
@@ -45,7 +45,7 @@ const testimonials: TestimonialItem[] = [
 	},
 	{
 		name: "Zach",
-		role: "Software Engineer & Parent",
+		role: "Dad desperately trying to keep up with his kid",
 		childName: "Max",
 		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-7.png?width=40&height=40&format=auto",
 		rating: 5,
