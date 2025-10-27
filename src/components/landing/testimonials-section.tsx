@@ -51,7 +51,7 @@ const testimonials: TestimonialItem[] = [
 
 export default function TestimonialsSection(): React.ReactNode {
 	return (
-		<section className="bg-polar pt-16 md:pt-24">
+		<section className="bg-polar">
 			<LandingContainer>
 				{/* Section title */}
 				<div className="text-center mb-12">

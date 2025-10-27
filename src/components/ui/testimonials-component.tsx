@@ -25,7 +25,7 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
   return (
     <section className='py-8 sm:py-16 lg:py-24'>
       <Carousel
-        className='mx-auto flex max-w-7xl gap-12 px-4 max-sm:flex-col sm:items-center sm:gap-16 sm:px-6 lg:gap-24 lg:px-8'
+        className='mx-auto flex max-w-7xl gap-12 max-sm:flex-col sm:items-center sm:gap-16 '
         opts={{
           align: 'start',
           slidesToScroll: 1

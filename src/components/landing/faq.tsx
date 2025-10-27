@@ -18,11 +18,6 @@ const items = [
 		content: "Like all robots, Pip has a job. Pip's job is to help you improve your understanding of robotics and coding through hands-on, interactive learning experiences."
 	},
 	{
-		icon: DollarSignIcon,
-		title: "How much does Pip cost?",
-		content: "Customers pay a one-time $200 fee to buy a Pip, then get lifetime access to software updates. No hidden fees, no surprises."
-	},
-	{
 		icon: RefreshCwIcon,
 		title: "Are there recurring subscription fees?",
 		content: "Nope. Buy Pip once, then use it, along with our web portal, for free, forever."
@@ -31,6 +26,11 @@ const items = [
 		icon: WifiIcon,
 		title: "Does Pip work wirelessly or with a cable?",
 		content: "Pip works completely wirelessly! After a quick initial setup where you connect Pip to your Wi-Fi, you can control and program Pip from anywhere without any cables."
+	},
+	{
+		icon: DollarSignIcon,
+		title: "How much does Pip cost?",
+		content: "Customers pay a one-time $200 fee to buy a Pip, then get lifetime access to software updates. No hidden fees, no surprises."
 	},
 	{
 		icon: PackageIcon,
@@ -51,11 +51,11 @@ const items = [
 
 export default function FAQ(): React.ReactNode {
 	return (
-		<section className="bg-polar py-16">
+		<section className="bg-polar pb-16 md:pb-24">
 			<LandingContainer>
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-16">
 					{/* Left column - FAQ title */}
-					<div className="flex flex-col justify-center">
+					<div className="flex flex-col">
 						<h2 className="text-3xl md:text-4xl lg:text-5xl font-bold">
 							Frequently Asked Questions
 						</h2>

@@ -18,10 +18,10 @@ function Landing(): React.ReactNode {
 			<LandingHero />
 			<PlatformSection />
 			<SimpleFeaturesSection />
-			<TestimonialsSection />
 			<FeaturesSection />
-			<EarlyAccessForm />
+			<TestimonialsSection />
 			<FAQ />
+			<EarlyAccessForm />
 			<Footer />
 		</>
 	)

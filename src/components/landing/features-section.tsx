@@ -35,7 +35,7 @@ const featuresList = [
 
 export default function FeaturesSection(): React.ReactNode {
 	return (
-		<section className="bg-polar">
+		<section className="bg-polar pt-8 md:pt-16">
 			<LandingContainer>
 				<Features featuresList={featuresList} />
 			</LandingContainer>

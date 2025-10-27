@@ -76,6 +76,7 @@ export default function PlatformSection(): React.ReactNode {
 
 					<div className="relative">
 						{platformTabs.map((tab): React.ReactNode => {
+							// eslint-disable-next-line max-len
 							const baseClasses = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full blur-[200px] rounded-full"
 							const backgroundClasses = `${baseClasses} ${getBackgroundColorClass(tab.themeColor)}`
 							return (

@@ -22,7 +22,7 @@ const Features = ({ featuresList }: { featuresList: Features }) => {
     <section className='pb-8 sm:pb-16 lg:pb-24'>
       <div>
         {/* Header */}
-        <div className='mb-6 space-y-4 sm:mb-8 lg:mb-12'>
+        <div className='mb-6 space-y-4 sm:mb-8 lg:mb-12 text-center'>
           <h2 className='text-2xl font-semibold md:text-3xl lg:text-4xl'>Small details. Big smiles.</h2>
         </div>
 
