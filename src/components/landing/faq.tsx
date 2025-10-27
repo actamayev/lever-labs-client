@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import { HeadsetIcon, WifiIcon, PackageIcon, DollarSignIcon, UserIcon, BotIcon, RefreshCwIcon, PlusIcon } from "lucide-react"
 
 import * as AccordionPrimitive from "@radix-ui/react-accordion"
@@ -29,7 +30,7 @@ const items = [
 	{
 		icon: WifiIcon,
 		title: "Does Pip work wirelessly or with a cable?",
-		content: "Pip works completely wirelessly! After a quick initial setup where you connect Pip to your Wi-Fi, you can control and program Pip from anywhere without any cables."
+		content: "Pip works completely wirelessly! After a quick initial setup where you connect Pip to your Wi-Fi over USB, you can control and program Pip from anywhere without any cables."
 	},
 	{
 		icon: PackageIcon,
@@ -44,7 +45,7 @@ const items = [
 	{
 		icon: HeadsetIcon,
 		title: "How can I contact customer support?",
-		content: "Our support team is here to help! You can reach us via email at support@leverlabs.com. We typically respond within 24 hours."
+		content: "Our support team is here to help! You can reach us via email at hello@leverlabs.com. We typically respond within a couple hours."
 	}
 ]
 
@@ -71,13 +72,13 @@ export default function FAQ(): React.ReactNode {
 											className='focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-45'
 										>
 											<span className='flex items-center gap-4'>
-												<item.icon className='size-4 shrink-0' />
-												<span>{item.title}</span>
+												<item.icon className='size-6 shrink-0' />
+												<span className='text-lg font-medium'>{item.title}</span>
 											</span>
 											<PlusIcon className='text-muted-foreground pointer-events-none size-4 shrink-0 transition-transform duration-200' />
 										</AccordionPrimitive.Trigger>
 									</AccordionPrimitive.Header>
-									<AccordionContent className='text-muted-foreground'>{item.content}</AccordionContent>
+									<AccordionContent className='text-muted-foreground text-base'>{item.content}</AccordionContent>
 								</AccordionItem>
 							))}
 						</Accordion>
