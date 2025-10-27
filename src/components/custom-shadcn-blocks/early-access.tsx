@@ -31,7 +31,6 @@ export default function EarlyAccessForm({
 									<FieldGroup>
 										<div className="flex flex-col items-start gap-2">
 											<div className="flex items-center gap-2">
-												<MailIcon className="size-6" />
 												<h1 className="text-2xl font-bold">Get early access</h1>
 											</div>
 											<Badge variant="outline">
@@ -51,6 +50,7 @@ export default function EarlyAccessForm({
 												type="email"
 												placeholder="Email"
 												required
+												className="h-12 rounded-xl text-xl! font-light border-2 bg-polar shadow-none border-swan"
 											/>
 										</Field>
 									</FieldGroup>
