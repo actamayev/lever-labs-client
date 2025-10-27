@@ -16,7 +16,6 @@ import retrieveAllSandboxProjects from "../../../utils/sandbox/retrieve-all-sand
 import { TactileButton } from "../../buttons/tactile-button"
 import { cn } from "../../../lib/shadcn/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
-import { Button } from "@/components/ui/button"
 import {
 	Empty,
 	EmptyContent,
@@ -167,7 +166,10 @@ function TheSandboxPage(): React.ReactNode {
 												<div className="flex gap-2">
 													<TactileButton
 														onClick={handleCreateProject}
-														className={cn("flex-1 px-4 py-2 mb-10 h-10 rounded-xl text-lg text-white", colors.bg)}
+														className={cn(
+															"flex-1 px-4 py-2 mb-10 h-10 rounded-xl text-lg text-white",
+															colors.bg
+														)}
 														shadowHeight={4}
 														shadowClass={colors.shadow2}
 														disabled={isCreating}
