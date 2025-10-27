@@ -46,7 +46,7 @@ export default function PlatformSection(): React.ReactNode {
 		<section className="bg-polar py-8 md:py-16">
 			<LandingContainer>
 				{/* Section header */}
-				<div className="text-center mb-12 space-y-3">
+				<div className="text-center space-y-3 mb-6 md:mb-8">
 					<LandingSectionHeaderText text="The Lever Labs Platform" />
 					<p className="text-lg sm:text-xl text-wolf font-semibold">
 						Free. Fun. Effective.
@@ -56,7 +56,7 @@ export default function PlatformSection(): React.ReactNode {
 				{/* Tabs */}
 				<Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
 					{/* Mobile: Scrollable tabs */}
-					<div className="md:hidden mb-8">
+					<div className="md:hidden mb-6 md:mb-8">
 						<div className="overflow-x-auto scrollbar-hide px-1">
 							<TabsList className="inline-flex w-max min-w-full h-auto p-2 gap-3">
 								{platformTabs.map((tab): React.ReactNode => {
