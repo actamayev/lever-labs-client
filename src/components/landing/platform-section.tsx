@@ -65,7 +65,9 @@ export default function PlatformSection(): React.ReactNode {
 
 							return (
 								<TabsTrigger key={tab.id} value={tab.id} className="gap-2 text-2xl sm:text-3xl font-semibold">
-									<IconComponent className={`size-6 sm:size-8 ${activeTab === tab.id ? getIconColorClass(tab.themeColor) : ""}`} />
+									<IconComponent
+										className={`size-6 sm:size-8 ${activeTab === tab.id ? getIconColorClass(tab.themeColor) : ""}`}
+									/>
 									{tab.label}
 								</TabsTrigger>
 							)
@@ -73,84 +75,83 @@ export default function PlatformSection(): React.ReactNode {
 					</TabsList>
 
 					<div className="relative">
-						{platformTabs.map((tab): React.ReactNode => (
-							<div
-								key={tab.id}
-								className={`transition-opacity duration-300 ${
-									activeTab === tab.id ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"
-								}`}
-							>
-								<div className="absolute inset-0 pointer-events-none">
-									<div
-										className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full blur-[200px] rounded-full ${
-											getBackgroundColorClass(tab.themeColor)
-										}`}
-									/>
-								</div>
-								<div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start relative">
-									{/* Left column - Content */}
-									<div className="space-y-6">
-										{/* Title and subtitle */}
-										<div>
-											<h3 className="text-2xl sm:text-6xl font-semibold mb-4">
-												{tab.title}
-											</h3>
-											<p className="text-lg text-wolf">
-												{tab.subtitle}
-											</p>
+						{platformTabs.map((tab): React.ReactNode => {
+							const backgroundClasses = `absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full blur-[200px] rounded-full ${getBackgroundColorClass(tab.themeColor)}`
+							return (
+								<div
+									key={tab.id}
+									className={`transition-opacity duration-300 ${
+										activeTab === tab.id ? "opacity-100" : "opacity-0 absolute inset-0 pointer-events-none"
+									}`}
+								>
+									<div className="absolute inset-0 pointer-events-none">
+										<div className={backgroundClasses} />
+									</div>
+									<div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start relative">
+										{/* Left column - Content */}
+										<div className="space-y-6">
+											{/* Title and subtitle */}
+											<div>
+												<h3 className="text-2xl sm:text-6xl font-semibold mb-4">
+													{tab.title}
+												</h3>
+												<p className="text-lg text-wolf">
+													{tab.subtitle}
+												</p>
+											</div>
+
+											{/* Bullets */}
+											<ul className="space-y-3 list-disc list-inside [&>li]:marker:text-lever-blue">
+												{tab.bullets.map((bullet, idx): React.ReactNode => (
+													<li key={idx} className="text-foreground text-lg">
+														{bullet}
+													</li>
+												))}
+											</ul>
+
+											{/* Cards */}
+											<div className="grid grid-cols-3 gap-4 pt-4 w-4/5">
+												{tab.cards.map((card, idx): React.ReactNode => {
+													const CardIcon = card.icon
+													return (
+														<div
+															key={idx}
+															// eslint-disable-next-line max-len
+															className="bg-standard-background rounded-lg flex flex-col items-center justify-center text-center aspect-square p-4"
+														>
+															<CardIcon className="size-16 mb-3 text-primary" strokeWidth={1}/>
+															<p className="text-lg font-normal leading-tight">
+																{card.title}
+															</p>
+														</div>
+													)
+												})}
+											</div>
+
+											{/* CTA Button */}
+											<div className="pt-4">
+												<Button asChild size="lg" className="rounded-full">
+													<Link href={tab.ctaLink}>
+														Get started
+													</Link>
+												</Button>
+											</div>
 										</div>
 
-										{/* Bullets */}
-										<ul className="space-y-3 list-disc list-inside [&>li]:marker:text-lever-blue">
-											{tab.bullets.map((bullet, idx): React.ReactNode => (
-												<li key={idx} className="text-foreground text-lg">
-													{bullet}
-												</li>
-											))}
-										</ul>
-
-										{/* Cards */}
-										<div className="grid grid-cols-3 gap-4 pt-4 w-4/5">
-											{tab.cards.map((card, idx): React.ReactNode => {
-												const CardIcon = card.icon
-												return (
-													<div
-														key={idx}
-														// eslint-disable-next-line max-len
-														className="bg-standard-background rounded-lg flex flex-col items-center justify-center text-center aspect-square p-4"
-													>
-														<CardIcon className="size-16 mb-3 text-primary" strokeWidth={1}/>
-														<p className="text-lg font-normal leading-tight">
-															{card.title}
-														</p>
-													</div>
-												)
-											})}
-										</div>
-
-										{/* CTA Button */}
-										<div className="pt-4">
-											<Button asChild size="lg" className="rounded-full">
-												<Link href={tab.ctaLink}>
-													Get started
-												</Link>
-											</Button>
+										{/* Right column - Image */}
+										<div className="order-first md:order-last">
+											<div className="relative aspect-video md:aspect-square rounded-lg overflow-hidden bg-muted">
+												<img
+													src={tab.imagePlaceholder}
+													alt={`${tab.title} preview`}
+													className="w-full h-full object-cover"
+												/>
+											</div>
 										</div>
 									</div>
-
-									{/* Right column - Image */}
-									<div className="order-first md:order-last">
-										<div className="relative aspect-video md:aspect-square rounded-lg overflow-hidden bg-muted">
-											<img
-												src={tab.imagePlaceholder}
-												alt={`${tab.title} preview`}
-												className="w-full h-full object-cover"
-											/>
-										</div>
-									</div>
 								</div>
-							</div>
-						))}
+							)
+						})}
 					</div>
 				</Tabs>
 			</LandingContainer>
