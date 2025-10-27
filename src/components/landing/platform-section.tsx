@@ -63,9 +63,7 @@ export default function PlatformSection(): React.ReactNode {
 
 							return (
 								<TabsTrigger key={tab.id} value={tab.id} className="gap-2 text-2xl sm:text-3xl font-semibold">
-									<IconComponent
-										className={cn("size-6 sm:size-8", getIconColorClass(tab.themeColor))}
-									/>
+									<IconComponent className={cn("size-6 sm:size-8", getIconColorClass(tab.themeColor))} />
 									{tab.label}
 								</TabsTrigger>
 							)

@@ -16,7 +16,6 @@ import { CustomGarage } from "../../icons/custom-garage"
 import CustomSidebarButton from "./custom-sidebar-button"
 import studentClass from "../../classes/student-class"
 import { CustomSandbox } from "../../icons/custom-sandbox"
-import { CustomBriefcase } from "../../icons/custom-briefcase"
 import teacherClass from "../../classes/teacher-class"
 
 const baseNavData: SidebarNavData[] = [

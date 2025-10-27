@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 import LandingContainer from "./landing-container"
 
 export default function HeroContent(): React.ReactNode {
