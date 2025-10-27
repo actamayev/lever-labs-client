@@ -54,7 +54,34 @@ export default function PlatformSection(): React.ReactNode {
 
 				{/* Tabs */}
 				<Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-					<TabsList className="grid w-full grid-cols-3 mb-8 h-auto p-2">
+					{/* Mobile: Scrollable tabs */}
+					<div className="md:hidden mb-8">
+						<div className="overflow-x-auto scrollbar-hide px-1">
+							<TabsList className="inline-flex w-max min-w-full h-auto p-2 gap-3">
+								{platformTabs.map((tab): React.ReactNode => {
+									// eslint-disable-next-line no-nested-ternary
+									const IconComponent = tab.useCustomIcon
+										? (tab.id === "sandbox" ? CustomSandbox : CustomGarage)
+										: tab.icon
+
+									return (
+										<TabsTrigger
+											key={tab.id}
+											value={tab.id}
+											aria-label={tab.label}
+											className="gap-2 text-base font-semibold h-auto whitespace-nowrap shrink-0 px-4 py-3 min-w-fit"
+										>
+											<IconComponent className={cn("size-5", getIconColorClass(tab.themeColor))} />
+											{tab.label}
+										</TabsTrigger>
+									)
+								})}
+							</TabsList>
+						</div>
+					</div>
+
+					{/* Desktop: Grid tabs */}
+					<TabsList className="hidden md:grid w-full grid-cols-3 mb-8 h-auto p-2">
 						{platformTabs.map((tab): React.ReactNode => {
 							// eslint-disable-next-line no-nested-ternary
 							const IconComponent = tab.useCustomIcon
