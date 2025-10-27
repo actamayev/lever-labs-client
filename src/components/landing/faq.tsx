@@ -64,7 +64,7 @@ export default function FAQ(): React.ReactNode {
 					{/* Right column - Questions */}
 					<div className="flex flex-col justify-center">
 						<Accordion type='single' collapsible className='w-full' defaultValue='item-1'>
-							{items.map((item, index) => (
+							{items.map((item, index): React.ReactNode => (
 								<AccordionItem key={index} value={`item-${index + 1}`}>
 									<AccordionPrimitive.Header className='flex'>
 										<AccordionPrimitive.Trigger
