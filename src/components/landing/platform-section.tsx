@@ -13,11 +13,11 @@ import { CustomSandbox } from "../../icons/custom-sandbox"
 const getBackgroundColorClass = (themeColor: string): string => {
 	switch (themeColor) {
 		case "lever-red":
-			return "bg-lever-red/10"
+			return "bg-lever-red/8"
 		case "lever-yellow":
-			return "bg-lever-yellow/10"
+			return "bg-lever-yellow/8"
 		case "lever-blue":
-			return "bg-lever-blue/10"
+			return "bg-lever-blue/8"
 		default:
 			return "bg-gray-500/10"
 	}
