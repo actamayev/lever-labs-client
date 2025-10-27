@@ -54,7 +54,7 @@ export default function PlatformSection(): React.ReactNode {
 
 				{/* Tabs */}
 				<Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-					<TabsList className="grid w-full grid-cols-3 mb-8">
+					<TabsList className="grid w-full grid-cols-3 mb-8 h-auto p-2">
 						{platformTabs.map((tab): React.ReactNode => {
 							// eslint-disable-next-line no-nested-ternary
 							const IconComponent = tab.useCustomIcon
@@ -62,7 +62,12 @@ export default function PlatformSection(): React.ReactNode {
 								: tab.icon
 
 							return (
-								<TabsTrigger key={tab.id} value={tab.id} className="gap-2 text-2xl sm:text-3xl font-semibold">
+								<TabsTrigger
+									key={tab.id}
+									value={tab.id}
+									aria-label={tab.label}
+									className="gap-2 text-2xl sm:text-3xl font-semibold h-auto"
+								>
 									<IconComponent className={cn("size-6 sm:size-8", getIconColorClass(tab.themeColor))} />
 									{tab.label}
 								</TabsTrigger>
