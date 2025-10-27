@@ -25,6 +25,7 @@ import {
 	AvatarFallback,
 	AvatarImage,
 } from "@/components/ui/avatar"
+import Image from "next/image"
 
 // eslint-disable-next-line max-lines-per-function
 export default function EarlyAccessForm({
@@ -133,10 +134,12 @@ export default function EarlyAccessForm({
 								</Form>
 							</div>
 							<div className="bg-muted relative hidden md:block">
-								<img
-									src="/placeholder.svg"
+								<Image
+									src="/images/career-quest/meet-pip/s1_p1.png"
 									alt="Image"
 									className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
+									width={500}
+									height={400}
 								/>
 							</div>
 						</CardContent>
