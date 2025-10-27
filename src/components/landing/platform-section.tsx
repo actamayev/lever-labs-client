@@ -42,10 +42,10 @@ export default function PlatformSection(): React.ReactNode {
 	const [activeTab, setActiveTab] = useState<string>("learn")
 
 	return (
-		<section className="bg-polar py-16 md:py-24">
+		<section className="bg-polar py-8 md:py-16">
 			<LandingContainer>
 				{/* Section header */}
-				<div className="text-center mb-12">
+				<div className="text-center mb-12 space-y-3">
 					<LandingSectionHeaderText text="The Lever Labs Platform" />
 					<p className="text-lg sm:text-xl text-wolf font-semibold">
 						Free. Fun. Effective.
