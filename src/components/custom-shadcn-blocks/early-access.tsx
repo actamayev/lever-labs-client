@@ -1,17 +1,14 @@
 import { cn } from "@/lib/shadcn/utils"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import {
 	Field,
-	FieldDescription,
 	FieldGroup,
 	FieldLabel,
-	FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
 import LandingContainer from "../landing/landing-container"
-import { MailIcon } from "lucide-react"
-
+import { CalendarIcon, CircleIcon, MailIcon } from "lucide-react"
+import { Badge } from "../ui/badge"
 
 export default function EarlyAccessForm({
 	className,
@@ -30,9 +27,13 @@ export default function EarlyAccessForm({
 											<MailIcon className="size-6" />
 											<h1 className="text-2xl font-bold">Get early access</h1>
 										</div>
-										<div className="flex items-center gap-2 border border-swan rounded-full px-2 py-1 text-sm">
+										<Badge variant="outline">
+											<span className="relative flex h-3 w-3 mr-2">
+												<span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-lime-500 opacity-75"></span>
+												<span className="relative inline-flex rounded-full h-3 w-3 bg-lime-500"></span>
+											</span>
 											AVAILABLE IN EARLY 2026
-										</div>
+										</Badge>
 										<p className="text-muted-foreground text-balance">
 											Be amongst the first to experience Pip. Sign up to be notified when Pip becomes available!
 										</p>
