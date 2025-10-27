@@ -58,7 +58,7 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
           <CarouselContent className='sm:-ml-6'>
             {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className='sm:pl-6 lg:basis-1/2'>
-                <Card className='hover:border-primary h-full transition-colors duration-300'>
+                <Card className='hover:border-primary h-full transition-colors duration-300 shadow-none'>
                   <CardContent className='space-y-5'>
                     <div className='flex items-center gap-3'>
                       <Avatar className='size-10 rounded-full'>
