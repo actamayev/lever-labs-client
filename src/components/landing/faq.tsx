@@ -45,7 +45,7 @@ const items = [
 	{
 		icon: HeadsetIcon,
 		title: "How can I contact customer support?",
-		content: "Our support team is here to help! You can reach us via email at hello@leverlabs.com. We typically respond within a couple hours."
+		content: "Our support team is here to help! You can reach us via email at hello@leverlabs.com. We try our best to respond within a couple hours."
 	}
 ]
 
