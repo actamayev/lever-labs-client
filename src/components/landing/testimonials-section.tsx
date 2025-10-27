@@ -28,7 +28,7 @@ export default function TestimonialsSection(): React.ReactNode {
 				</div>
 
 				{/* Stats section */}
-				<div className="bg-swan rounded-3xl p-8 md:p-12">
+				<div className="bg-humpback/20 rounded-3xl p-8 md:p-12">
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-hare">
 						{stats.map((item, idx): React.ReactNode => (
 							<div key={idx} className="flex flex-col items-center justify-center text-center px-4 py-6 md:py-0 md:px-8">
