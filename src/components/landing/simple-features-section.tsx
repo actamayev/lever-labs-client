@@ -13,20 +13,20 @@ interface Feature {
 const features: Feature[] = [
 	{
 		step: "1",
-		title: "Take Pip out of the box",
-		description: "No assembly required.",
+		title: "Unbox and go",
+		description: "No assembly, no complicated instructions. Just open the box and you're ready to start.",
 		imagePlaceholder: "/images/career-quest/meet-pip/s1_p1.png"
 	},
 	{
 		step: "2",
-		title: "Give Pip Wi-Fi access",
-		description: "Plug Pip into your computer, and give Pip access to your Wi-Fi (takes less than a minute).",
+		title: "Connect to Wi-Fi",
+		description: "Plug Pip into your computer and connect to Wi-Fi. The whole process takes less than a minute.",
 		imagePlaceholder: "/images/career-quest/meet-pip/s1_p5_1.png"
 	},
 	{
 		step: "3",
-		title: "That's it!",
-		description: "Now you can control and communicate with your Pip completely wirelessly.",
+		title: "Start learning",
+		description: "That's it! Now you can control and code Pip completely wirelessly from anywhere.",
 		imagePlaceholder: "/images/career-quest/meet-pip/s1_p3.jpeg"
 	}
 ]
