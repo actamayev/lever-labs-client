@@ -127,7 +127,7 @@ export default function EarlyAccessForm({
 												</Avatar>
 											</div>
 											<span className="text-sm text-balance text-muted-foreground">
-												Join 1,100+ others on the waitlist
+												Join 1,100+ others on the wait-list
 											</span>
 										</div>
 									</form>
@@ -135,7 +135,7 @@ export default function EarlyAccessForm({
 							</div>
 							<div className="bg-muted relative hidden md:block">
 								<Image
-									src="/images/career-quest/meet-pip/s1_p1.png"
+									src="/pip3.jpg"
 									alt="Image"
 									className="absolute inset-0 h-full w-full object-cover"
 									width={500}
