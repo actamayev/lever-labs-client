@@ -46,7 +46,7 @@ export const platformTabs: TabContent[] = [
 		],
 		ctaLink: "/learn",
 		imagePlaceholder: "/placeholder-learn.jpg",
-		themeColor: "bee"
+		themeColor: "lever-yellow"
 	},
 	{
 		id: "sandbox",
@@ -76,7 +76,7 @@ export const platformTabs: TabContent[] = [
 		],
 		ctaLink: "/sandbox",
 		imagePlaceholder: "/placeholder-sandbox.jpg",
-		themeColor: "cardinal"
+		themeColor: "lever-red"
 	},
 	{
 		id: "garage",
@@ -106,6 +106,6 @@ export const platformTabs: TabContent[] = [
 		],
 		ctaLink: "/garage",
 		imagePlaceholder: "/placeholder-garage.jpg",
-		themeColor: "humpback"
+		themeColor: "lever-blue"
 	}
 ]

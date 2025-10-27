@@ -12,12 +12,12 @@ import { CustomSandbox } from "../../icons/custom-sandbox"
 // Helper function to get background color class
 const getBackgroundColorClass = (themeColor: string): string => {
 	switch (themeColor) {
-		case "cardinal":
-			return "bg-cardinal/5"
-		case "bee":
-			return "bg-bee/5"
-		case "humpback":
-			return "bg-humpback/5"
+		case "lever-red":
+			return "bg-lever-red/10"
+		case "lever-yellow":
+			return "bg-lever-yellow/10"
+		case "lever-blue":
+			return "bg-lever-blue/10"
 		default:
 			return "bg-gray-500/10"
 	}
@@ -26,12 +26,12 @@ const getBackgroundColorClass = (themeColor: string): string => {
 // Helper function to get icon color class
 const getIconColorClass = (themeColor: string): string => {
 	switch (themeColor) {
-		case "cardinal":
-			return "text-cardinal"
-		case "bee":
-			return "text-bee"
-		case "humpback":
-			return "text-humpback"
+		case "lever-red":
+			return "text-lever-red"
+		case "lever-yellow":
+			return "text-lever-yellow"
+		case "lever-blue":
+			return "text-lever-blue"
 		default:
 			return "text-gray-500"
 	}
@@ -76,7 +76,8 @@ export default function PlatformSection(): React.ReactNode {
 
 					<div className="relative">
 						{platformTabs.map((tab): React.ReactNode => {
-							const backgroundClasses = `absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full blur-[200px] rounded-full ${getBackgroundColorClass(tab.themeColor)}`
+							const baseClasses = "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full blur-[200px] rounded-full"
+							const backgroundClasses = `${baseClasses} ${getBackgroundColorClass(tab.themeColor)}`
 							return (
 								<div
 									key={tab.id}
