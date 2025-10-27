@@ -1,4 +1,4 @@
-import { StarIcon, LockKeyholeIcon, ShieldBanIcon, BatteryFullIcon, CodeIcon, ChartNoAxesCombined } from "lucide-react"
+import { BatteryFullIcon, CodeIcon, ChartNoAxesCombined } from "lucide-react"
 
 import Features from "@/components/ui/features-section"
 import LandingContainer from "./landing-container"
