@@ -1,4 +1,5 @@
-import { LucideIcon, Book, Brain, Repeat, Package, Sparkles, Search, Beaker, Smile, Users, Trophy } from "lucide-react"
+import { LucideIcon, Book, Brain, Repeat, Puzzle, Sparkles, Search, Beaker, Smile, Users, Trophy } from "lucide-react"
+import { CustomFriend } from "../../icons/custom-friend"
 
 type TabContent = {
 	id: string
@@ -25,9 +26,9 @@ export const platformTabs: TabContent[] = [
 		title: "Learn",
 		subtitle: "Learn by doing",
 		bullets: [
-			"Bite-sized lessons that keep you motivated",
-			"Personalized AI learning",
-			"Simple introductions to complex topics"
+			"Quick, bite-sized lessons designed to keep you motivated",
+			"Hands-on learning with a real robot",
+			"Progress from simple blinks to complex behaviors"
 		],
 		cards: [
 			{
@@ -39,7 +40,7 @@ export const platformTabs: TabContent[] = [
 				title: "Learning by repetition"
 			},
 			{
-				icon: Package,
+				icon: Puzzle,
 				title: "Problem solving skills"
 			}
 		],
@@ -54,22 +55,22 @@ export const platformTabs: TabContent[] = [
 		title: "Sandbox",
 		subtitle: "Your imagination is the limit",
 		bullets: [
-			"153+ blocks and (quickly) growing",
-			"Access an AI companion if you ever get stuck",
-			"Transition from blocks to writing code"
+			"Build anything you can imagine with 153+ blocks",
+			"Get unstuck with an AI companion when you need help",
+			"Graduate from blocks to real code when you're ready"
 		],
 		cards: [
 			{
-				icon: Sparkles,
-				title: "Strengthen left brain thinking"
-			},
-			{
-				icon: Search,
-				title: "Open-ended exploration"
+				icon: Brain,
+				title: "Creative thinking"
 			},
 			{
 				icon: Beaker,
-				title: "Trial and error learning"
+				title: "Experimentation"
+			},
+			{
+				icon: Search,
+				title: "Self-directed learning"
 			}
 		],
 		imagePlaceholder: "/images/career-quest/meet-pip/s1_p3.jpeg",
@@ -83,22 +84,22 @@ export const platformTabs: TabContent[] = [
 		title: "Garage",
 		subtitle: "Just for fun",
 		bullets: [
-			"Take Pip on a joyride",
-			"Access Pip's real-time sensor data",
-			"Do tricks"
+			"Drive Pip around with your keyboard",
+			"Visualize sensor data in real-time",
+			"Challenge friends to races and competitions"
 		],
 		cards: [
 			{
 				icon: Smile,
-				title: "Relax"
+				title: "Stress-free play"
 			},
 			{
-				icon: Users,
-				title: "Have fun with friends"
+				icon: CustomFriend,
+				title: "Social connection"
 			},
 			{
 				icon: Trophy,
-				title: "Compete with friends"
+				title: "Friendly competition"
 			}
 		],
 		imagePlaceholder: "/images/career-quest/meet-pip/s1_p5_1.png",

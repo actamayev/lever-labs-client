@@ -126,7 +126,7 @@ export default function PlatformSection(): React.ReactNode {
 												<h3 className="text-2xl sm:text-6xl font-semibold mb-4">
 													{tab.title}
 												</h3>
-												<p className="text-lg text-wolf">
+												<p className="text-lg text-beetle-2 font-medium">
 													{tab.subtitle}
 												</p>
 											</div>
