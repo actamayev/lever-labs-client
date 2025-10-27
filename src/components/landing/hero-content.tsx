@@ -8,11 +8,11 @@ export default function HeroContent(): React.ReactNode {
 				{/* Optional blur background - currently hidden */}
 				<div className="hidden blur-lg bg-[#dadada] xs:hidden absolute w-full h-full -z-10 opacity-60" />
 
-				<h1 className="font-heading tracking-tight text-black font-medium text-4xl xs:text-4xl sm:text-4xl sm:text-left text-center mb-4 xs:mb-3">
+				<h1 className="font-heading tracking-tight text-black font-medium text-5xl xs:text-5xl sm:text-6xl sm:text-left text-center mb-4 xs:mb-3">
 					Like Duolingo, for robotics
 				</h1>
 
-				<p className="text-sm xs:text-base sm:text-sm sm:px-0 px-6 sm:text-left text-center tracking-tight text-black font-light">
+				<p className="text-sm xs:text-lg sm:text-xl sm:px-0 px-6 sm:text-left text-center tracking-tight text-black font-light">
 					With Pip, learning feels like play.
 				</p>
 			</div>
