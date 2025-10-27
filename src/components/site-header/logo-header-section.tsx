@@ -34,7 +34,7 @@ function LogoHeaderSection(): React.ReactNode {
 				<Image
 					src="/favicon.svg"
 					alt="Logo"
-					className="size-12"
+					className="size-16"
 					style={{ verticalAlign: "middle", width: "auto" }}
 					width={32}
 					height={32}
