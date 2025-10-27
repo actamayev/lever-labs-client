@@ -10,7 +10,7 @@ const items = [
 	{
 		icon: UserIcon,
 		title: "Who is Pip for?",
-		content: "Pip is for anyone with a curiosity for STEM - whether you're 8 or 80! We've designed Pip to be accessible and engaging for all ages and skill levels, from complete beginners to experienced tinkerers."
+		content: "Pip is designed for kids ages 8 and up who want to learn robotics and coding. That said, adults love Pip too - if you're curious about STEM and want hands-on learning, age is just a number!"
 	},
 	{
 		icon: BotIcon,
