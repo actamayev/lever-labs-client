@@ -42,7 +42,7 @@ export default function SimpleFeaturesSection(): React.ReactNode {
 				</div>
 
 				<div className="grid md:grid-cols-3 gap-8 md:gap-12">
-					{features.map((feature, idx) => (
+					{features.map((feature, idx): React.ReactNode => (
 						<div key={idx} className="flex flex-col">
 							{/* Image */}
 							<div className="relative aspect-video rounded-2xl overflow-hidden bg-muted mb-6">

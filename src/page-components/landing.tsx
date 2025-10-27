@@ -5,6 +5,7 @@ import LandingNavigation from "../components/landing/landing-navigation"
 import LandingHero from "../components/landing/landing-hero"
 import PlatformSection from "../components/landing/platform-section"
 import SimpleFeaturesSection from "../components/landing/simple-features-section"
+import TestimonialsSection from "../components/landing/testimonials-section"
 
 function Landing(): React.ReactNode {
 	return (
@@ -13,6 +14,7 @@ function Landing(): React.ReactNode {
 			<LandingHero />
 			<PlatformSection />
 			<SimpleFeaturesSection />
+			<TestimonialsSection />
 		</>
 	)
 }
