@@ -52,11 +52,18 @@ export default function LandingNavigation(): React.ReactNode {
 								Log in
 							</Button>
 						</Link>
-						<Link href="/preorder">
-							<Button variant="default" className="rounded-full">
-								Pre-order now
-							</Button>
-						</Link>
+						<Button
+							variant="default"
+							className="rounded-full"
+							onClick={(): void => {
+								const earlyAccessSection = document.querySelector("[data-section=\"early-access\"]")
+								if (earlyAccessSection) {
+									earlyAccessSection.scrollIntoView({ behavior: "smooth" })
+								}
+							}}
+						>
+							Pre-order now
+						</Button>
 					</div>
 				</div>
 			</div>

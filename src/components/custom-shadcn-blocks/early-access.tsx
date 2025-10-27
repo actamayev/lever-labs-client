@@ -51,7 +51,7 @@ export default function EarlyAccessForm({
 	}, [formValues.email])
 
 	return (
-		<section className="bg-polar pb-16 md:pb-24">
+		<section className="bg-polar pb-16 md:pb-24" data-section="early-access">
 			<LandingContainer>
 				<div className={cn("flex flex-col gap-6", className)} {...props}>
 					<Card className="overflow-hidden p-0">
