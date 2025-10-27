@@ -10,6 +10,12 @@ import LandingContainer from "../landing/landing-container"
 import { CalendarIcon, CircleIcon, MailIcon } from "lucide-react"
 import { Badge } from "../ui/badge"
 
+import {
+	Avatar,
+	AvatarFallback,
+	AvatarImage,
+} from "@/components/ui/avatar"
+
 export default function EarlyAccessForm({
 	className,
 	...props
@@ -20,35 +26,61 @@ export default function EarlyAccessForm({
 				<div className={cn("flex flex-col gap-6", className)} {...props}>
 					<Card className="overflow-hidden p-0">
 						<CardContent className="grid p-0 md:grid-cols-2">
-							<form className="p-6 md:p-8">
-								<FieldGroup>
-									<div className="flex flex-col items-start gap-2">
-										<div className="flex items-center gap-2">
-											<MailIcon className="size-6" />
-											<h1 className="text-2xl font-bold">Get early access</h1>
+							<div>
+								<form className="p-6 md:p-8">
+									<FieldGroup>
+										<div className="flex flex-col items-start gap-2">
+											<div className="flex items-center gap-2">
+												<MailIcon className="size-6" />
+												<h1 className="text-2xl font-bold">Get early access</h1>
+											</div>
+											<Badge variant="outline">
+												<span className="relative flex h-3 w-3 mr-2">
+													<span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-lime-500 opacity-75"></span>
+													<span className="relative inline-flex rounded-full h-3 w-3 bg-lime-500"></span>
+												</span>
+												AVAILABLE IN EARLY 2026
+											</Badge>
+											<p className="text-muted-foreground text-balance">
+												Be amongst the first to experience Pip. Sign up to be notified when Pip becomes available!
+											</p>
 										</div>
-										<Badge variant="outline">
-											<span className="relative flex h-3 w-3 mr-2">
-												<span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-lime-500 opacity-75"></span>
-												<span className="relative inline-flex rounded-full h-3 w-3 bg-lime-500"></span>
-											</span>
-											AVAILABLE IN EARLY 2026
-										</Badge>
-										<p className="text-muted-foreground text-balance">
-											Be amongst the first to experience Pip. Sign up to be notified when Pip becomes available!
-										</p>
+										<Field>
+											<Input
+												id="email"
+												type="email"
+												placeholder="Email"
+												required
+											/>
+										</Field>
+									</FieldGroup>
+									<div className="flex flex-row flex-wrap items-center mt-3 gap-4">
+										<div className="*:data-[slot=avatar]:ring-background flex -space-x-2 *:data-[slot=avatar]:ring-2 *:data-[slot=avatar]:grayscale">
+											<Avatar>
+												<AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
+												<AvatarFallback>CN</AvatarFallback>
+											</Avatar>
+											<Avatar>
+												<AvatarImage
+													src="https://github.com/maxleiter.png"
+													alt="@maxleiter"
+												/>
+												<AvatarFallback>LR</AvatarFallback>
+											</Avatar>
+											<Avatar>
+												<AvatarImage
+													src="https://github.com/evilrabbit.png"
+													alt="@evilrabbit"
+												/>
+												<AvatarFallback>ER</AvatarFallback>
+											</Avatar>
+										</div>
+										<span className="text-sm text-balance text-muted-foreground">
+											Join 1,100+ others on the waitlist
+										</span>
 									</div>
-									<Field>
-										<FieldLabel htmlFor="email">Email</FieldLabel>
-										<Input
-											id="email"
-											type="email"
-											placeholder="m@example.com"
-											required
-										/>
-									</Field>
-								</FieldGroup>
-							</form>
+								</form>
+							</div>
 							<div className="bg-muted relative hidden md:block">
 								<img
 									src="/placeholder.svg"
