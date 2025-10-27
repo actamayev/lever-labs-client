@@ -5,16 +5,16 @@ import LandingSectionHeaderText from "./landing-section-header-text"
 
 const stats = [
 	{
-		stat: "95% of parents",
-		description: "recommend for kids interested in STEM"
+		stat: "9 out of 10 parents",
+		description: "recommend Pip to other families"
 	},
 	{
-		stat: "88% of users",
-		description: "Improve their critical thinking skills"
+		stat: "96% of kids",
+		description: "say Pip makes learning fun"
 	},
 	{
-		stat: "100% of kids",
-		description: "Have fun"
+		stat: "89% of parents",
+		description: "see increased confidence in STEM"
 	}
 ]
 
@@ -32,7 +32,7 @@ export default function TestimonialsSection(): React.ReactNode {
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 divide-y md:divide-y-0 md:divide-x divide-hare">
 						{stats.map((item, idx): React.ReactNode => (
 							<div key={idx} className="flex flex-col items-center justify-center text-center px-4 py-6 md:py-0 md:px-8">
-								<div className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3">
+								<div className="text-3xl font-bold mb-3">
 									{item.stat}
 								</div>
 								<p className="text-base sm:text-lg text-foreground/80">
