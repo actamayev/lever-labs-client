@@ -162,9 +162,9 @@ export default function PlatformSection(): React.ReactNode {
 
 										{/* Right column - Image */}
 										<div className="order-last">
-											<div className="relative rounded-lg overflow-hidden bg-muted h-full border-2 border-border">
+											<div className="relative rounded-2xl overflow-hidden bg-muted h-full">
 												<Image
-													src={"/images/career-quest/meet-pip/s1_p1.png"}
+													src={tab.imagePlaceholder}
 													alt={`${tab.title} preview`}
 													width={500}
 													height={400}

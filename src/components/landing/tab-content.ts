@@ -69,10 +69,10 @@ export const platformTabs: TabContent[] = [
 			},
 			{
 				icon: Beaker,
-				title: "Learn by trial-and-error"
+				title: "Trial and error learning"
 			}
 		],
-		imagePlaceholder: "/images/career-quest/meet-pip/s1_p3.png",
+		imagePlaceholder: "/images/career-quest/meet-pip/s1_p3.jpeg",
 		themeColor: "lever-red"
 	},
 	{
@@ -101,7 +101,7 @@ export const platformTabs: TabContent[] = [
 				title: "Compete with friends"
 			}
 		],
-		imagePlaceholder: "/images/career-quest/meet-pip/s1_p4.png",
+		imagePlaceholder: "/images/career-quest/meet-pip/s1_p5_1.png",
 		themeColor: "lever-blue"
 	}
 ]

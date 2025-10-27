@@ -15,19 +15,19 @@ const features: Feature[] = [
 		step: "1",
 		title: "Take Pip out of the box",
 		description: "No assembly required.",
-		imagePlaceholder: "/placeholder-unbox.jpg"
+		imagePlaceholder: "/images/career-quest/meet-pip/s1_p1.png"
 	},
 	{
 		step: "2",
 		title: "Give Pip Wi-Fi access",
 		description: "Plug Pip into your computer, and give Pip access to your Wi-Fi (takes less than a minute).",
-		imagePlaceholder: "/placeholder-wifi.jpg"
+		imagePlaceholder: "/images/career-quest/meet-pip/s1_p5_1.png"
 	},
 	{
 		step: "3",
 		title: "That's it!",
 		description: "Now you can control and communicate with your Pip completely wirelessly.",
-		imagePlaceholder: "/placeholder-learning.jpg"
+		imagePlaceholder: "/images/career-quest/meet-pip/s1_p3.jpeg"
 	}
 ]
 
