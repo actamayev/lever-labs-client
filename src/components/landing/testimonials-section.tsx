@@ -22,7 +22,6 @@ const testimonials: TestimonialItem[] = [
 	{
 		name: "Craig",
 		role: "Proud parent of a future engineer",
-		childName: "Jamie",
 		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-5.png?width=40&height=40&format=auto",
 		rating: 5,
 		content: "Jamie was skeptical about coding at first, but Pip made it click. Now he's programming light shows and racing Pip around the house!"
@@ -30,7 +29,6 @@ const testimonials: TestimonialItem[] = [
 	{
 		name: "Martin",
 		role: "Parent who finally found screen time he approves of",
-		childName: "Chris",
 		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-3.png?width=40&height=40&format=auto",
 		rating: 5,
 		content: "Chris spends hours with Pip and doesn't even realize he's learning. The setup was so easy - within minutes, he was coding his first program."
@@ -38,7 +36,6 @@ const testimonials: TestimonialItem[] = [
 	{
 		name: "Sarah",
 		role: "Mom of the neighborhood's coolest kid",
-		childName: "Alex",
 		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-2.png?width=40&height=40&format=auto",
 		rating: 5,
 		content: "I bought Pip for my daughter Alex, and now all her friends want one! It's brought coding from abstract concepts to something they can see and touch."
@@ -46,9 +43,8 @@ const testimonials: TestimonialItem[] = [
 	{
 		name: "Zach",
 		role: "Dad desperately trying to keep up with his kid",
-		childName: "Max",
 		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-7.png?width=40&height=40&format=auto",
-		rating: 5,
+		rating: 4,
 		content: "Max went from drag-and-drop blocks to writing real code in weeks. The AI assistance is perfect for when I'm not around to help."
 	}
 ]

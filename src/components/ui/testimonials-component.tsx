@@ -12,7 +12,6 @@ import { Rating } from './rating'
 export type TestimonialItem = {
   name: string
   role: string
-  childName: string
   avatar: string
   rating: number
   content: string
@@ -74,8 +73,7 @@ const TestimonialsComponent = ({ testimonials }: TestimonialsComponentProps) => 
                       <div className='flex-1'>
                         <h4 className='font-medium'>{testimonial.name}</h4>
                         <p className='text-muted-foreground text-sm'>
-                          {testimonial.role} of{' '}
-                          <span className='text-card-foreground font-semibold'>{testimonial.childName}</span>
+                          {testimonial.role}
                         </p>
                       </div>
                     </div>
