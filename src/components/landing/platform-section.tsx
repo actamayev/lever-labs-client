@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import Image from "next/image"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { platformTabs } from "./tab-content"
 import LandingContainer from "./landing-container"
@@ -161,10 +162,12 @@ export default function PlatformSection(): React.ReactNode {
 
 										{/* Right column - Image */}
 										<div className="order-last">
-											<div className="relative aspect-video md:aspect-square rounded-lg overflow-hidden bg-muted">
-												<img
-													src={tab.imagePlaceholder}
+											<div className="relative rounded-lg overflow-hidden bg-muted h-full border-2 border-border">
+												<Image
+													src={"/images/career-quest/meet-pip/s1_p1.png"}
 													alt={`${tab.title} preview`}
+													width={500}
+													height={400}
 													className="w-full h-full object-cover"
 												/>
 											</div>

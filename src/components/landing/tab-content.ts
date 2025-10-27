@@ -43,7 +43,7 @@ export const platformTabs: TabContent[] = [
 				title: "Problem solving skills"
 			}
 		],
-		imagePlaceholder: "/placeholder-learn.jpg",
+		imagePlaceholder: "/images/career-quest/meet-pip/s1_p1.png",
 		themeColor: "lever-yellow"
 	},
 	{
@@ -72,7 +72,7 @@ export const platformTabs: TabContent[] = [
 				title: "Learn by trial-and-error"
 			}
 		],
-		imagePlaceholder: "/placeholder-sandbox.jpg",
+		imagePlaceholder: "/images/career-quest/meet-pip/s1_p3.png",
 		themeColor: "lever-red"
 	},
 	{
@@ -101,7 +101,7 @@ export const platformTabs: TabContent[] = [
 				title: "Compete with friends"
 			}
 		],
-		imagePlaceholder: "/placeholder-garage.jpg",
+		imagePlaceholder: "/images/career-quest/meet-pip/s1_p4.png",
 		themeColor: "lever-blue"
 	}
 ]
