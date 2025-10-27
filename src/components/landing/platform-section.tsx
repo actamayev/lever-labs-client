@@ -11,7 +11,7 @@ import { CustomSandbox } from "../../icons/custom-sandbox"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
 // Helper function to get background color class
-const getBackgroundColorClass = (themeColor: string): string => {
+const getBackgroundColorClass = (themeColor: "lever-red" | "lever-yellow" | "lever-blue"): string => {
 	switch (themeColor) {
 		case "lever-red":
 			return "bg-lever-red/8"
@@ -20,12 +20,12 @@ const getBackgroundColorClass = (themeColor: string): string => {
 		case "lever-blue":
 			return "bg-lever-blue/8"
 		default:
-			return "bg-gray-500/10"
+			return ""
 	}
 }
 
 // Helper function to get icon color class
-const getIconColorClass = (themeColor: string): string => {
+const getIconColorClass = (themeColor: "lever-red" | "lever-yellow" | "lever-blue"): string => {
 	switch (themeColor) {
 		case "lever-red":
 			return "text-lever-red"
@@ -34,13 +34,13 @@ const getIconColorClass = (themeColor: string): string => {
 		case "lever-blue":
 			return "text-lever-blue"
 		default:
-			return "text-gray-500"
+			return ""
 	}
 }
 
 // eslint-disable-next-line max-lines-per-function
 export default function PlatformSection(): React.ReactNode {
-	const [activeTab, setActiveTab] = useState<string>("learn")
+	const [activeTab, setActiveTab] = useState<"learn" | "sandbox" | "garage">("learn")
 
 	return (
 		<section className="bg-polar py-8 md:py-16">
@@ -54,7 +54,11 @@ export default function PlatformSection(): React.ReactNode {
 				</div>
 
 				{/* Tabs */}
-				<Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+				<Tabs
+					value={activeTab}
+					onValueChange={(value): void => setActiveTab(value as "learn" | "sandbox" | "garage")}
+					className="w-full"
+				>
 					{/* Mobile: Scrollable tabs */}
 					<div className="md:hidden mb-6 md:mb-8">
 						<div className="overflow-x-auto scrollbar-hide px-1">
@@ -94,7 +98,7 @@ export default function PlatformSection(): React.ReactNode {
 									key={tab.id}
 									value={tab.id}
 									aria-label={tab.label}
-									className="gap-2 text-2xl sm:text-3xl font-semibold h-auto"
+									className="gap-2 text-2xl sm:text-3xl font-semibold h-auto data-[state=active]:bg"
 								>
 									<IconComponent className={cn("size-6 sm:size-8", getIconColorClass(tab.themeColor))} />
 									{tab.label}

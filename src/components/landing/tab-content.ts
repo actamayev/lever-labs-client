@@ -14,7 +14,7 @@ type TabContent = {
 		title: string
 	}>
 	imagePlaceholder: string
-	themeColor: string
+	themeColor: "lever-red" | "lever-yellow" | "lever-blue"
 }
 
 export const platformTabs: TabContent[] = [
