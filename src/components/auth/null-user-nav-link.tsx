@@ -14,7 +14,6 @@ function NullUserNavLink(): React.ReactNode {
 		pathname === "/" ||
 		pathname === "/contact" ||
 		pathname === "/mission" ||
-		pathname === "/schools" ||
 		pathname === "/community-guidelines" ||
 		pathname === "/privacy" ||
 		pathname === "/terms" ||

@@ -9,7 +9,7 @@ import FooterThemeToggle from "./footer-theme-toggle"
 import FooterSocialSection from "./footer-social-section"
 import LandingContainer from "../landing/landing-container"
 
-// eslint-disable-next-line max-lines-per-function
+
 export default function Footer(): React.ReactNode {
 	const pathname = usePathname()
 	if (
@@ -18,7 +18,6 @@ export default function Footer(): React.ReactNode {
 		pathname !== "/privacy" &&
 		pathname !== "/mission" &&
 		pathname !== "/contact" &&
-		pathname !== "/schools" &&
 		pathname !== "/community-guidelines"
 	) return null
 
@@ -65,13 +64,6 @@ export default function Footer(): React.ReactNode {
 									<FooterLink
 										linkTo="/contact"
 										linkTitle="Contact Us"
-										extraClasses="font-medium hover:text-primary"
-									/>
-								</li>
-								<li className="text-muted-foreground hover:text-primary">
-									<FooterLink
-										linkTo="/schools"
-										linkTitle="Schools"
 										extraClasses="font-medium hover:text-primary"
 									/>
 								</li>

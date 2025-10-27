@@ -7,7 +7,6 @@ export default function robots(): MetadataRoute.Robots {
 				userAgent: "*",
 				allow: [
 					"/",
-					"/schools",
 					"/mission",
 					"/contact",
 					"/login",

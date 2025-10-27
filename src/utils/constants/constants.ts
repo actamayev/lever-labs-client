@@ -2,8 +2,6 @@
 import { FunSounds } from "@lever-labs/common-ts/types/garage"
 import rgbToBlocklyColor from "../blockly/rgb-to-hex"
 
-export const bentoIconSize = 40
-
 export const logicCategoryColour = rgbToBlocklyColor(28, 176, 246) // macaw
 export const sensorsCategoryColour = rgbToBlocklyColor(255, 75, 75) //cardinal
 export const motorsCategoryColour = rgbToBlocklyColor(35, 200, 100) //chargingGreen

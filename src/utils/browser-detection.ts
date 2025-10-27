@@ -2,7 +2,7 @@
  * Browser detection utilities
  */
 
-export type BrowserType =
+type BrowserType =
 	| "chrome"
 	| "edge"
 	| "firefox"
@@ -16,7 +16,7 @@ export type BrowserType =
 	| "ie"
 	| "unknown"
 
-export interface BrowserInfo {
+interface BrowserInfo {
 	type: BrowserType
 	name: string
 	isUsbSerialSupported: boolean

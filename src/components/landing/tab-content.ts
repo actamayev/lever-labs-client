@@ -1,6 +1,6 @@
 import { LucideIcon, Book, Brain, Repeat, Package, Sparkles, Search, Beaker, Smile, Users, Trophy } from "lucide-react"
 
-export type TabContent = {
+type TabContent = {
 	id: string
 	label: string
 	icon: LucideIcon

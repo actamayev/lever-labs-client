@@ -5,7 +5,6 @@ import { observer } from "mobx-react"
 import { cn } from "../../lib/shadcn/utils"
 import { ButtonProps } from "../ui/button"
 import { TactileButton } from "./tactile-button"
-import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import personalInfoClass from "../../classes/personal-info-class"
 
 type ColoredTactileButtonProps = Omit<ButtonProps, "variant"> & {
@@ -51,33 +50,6 @@ export const BlackWhiteTactileButton = observer(React.forwardRef<HTMLButtonEleme
 				shadowHeight={shadowHeight}
 				{...props}
 			/>
-		)
-	}
-))
-
-type LandingCTAProps = ColoredTactileButtonProps & {
-	navigateTo: PageNames
-}
-
-export const LandingCTAButton = observer(React.forwardRef<HTMLButtonElement, LandingCTAProps>(
-	({ children, navigateTo, ...props }, ref): React.ReactNode => { // Add ref parameter here
-		const navigate = useTypedNavigate()
-		return (
-			<TactileButton
-				ref={ref} // Add this line to pass the ref to TactileButton
-				onClick={(): void => navigate(navigateTo)}
-				className={cn(
-					"px-4 sm:px-6 md:px-8 text-lg sm:text-xl md:text-2xl duration-150",
-					"rounded-xl sm:rounded-2xl border-2 w-full md:w-2/3",
-					"h-auto min-h-10 md:min-h-12 whitespace-normal",
-					"bg-green-500 border-none text-white",
-					"dark:bg-green-900 dark:border-green-600 dark:text-green-200"
-				)}
-				shadowColor={personalInfoClass.defaultSiteTheme === "light" ? "rgb(34, 160, 94)" : "rgb(22 163 74)"}
-				{...props}
-			>
-				{children}
-			</TactileButton>
 		)
 	}
 ))
