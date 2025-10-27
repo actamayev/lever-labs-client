@@ -7,6 +7,7 @@ import PlatformSection from "../components/landing/platform-section"
 import SimpleFeaturesSection from "../components/landing/simple-features-section"
 import TestimonialsSection from "../components/landing/testimonials-section"
 import FeaturesSection from "../components/landing/features-section"
+import EarlyAccessForm from "../components/custom-shadcn-blocks/early-access"
 
 function Landing(): React.ReactNode {
 	return (
@@ -17,6 +18,7 @@ function Landing(): React.ReactNode {
 			<SimpleFeaturesSection />
 			<TestimonialsSection />
 			<FeaturesSection />
+			<EarlyAccessForm />
 		</>
 	)
 }
