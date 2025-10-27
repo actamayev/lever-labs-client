@@ -1,14 +1,14 @@
 "use client"
 
-import { useState } from "react"
 import Image from "next/image"
+import { useState } from "react"
+import { cn } from "@/lib/shadcn/utils"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { platformTabs } from "./tab-content"
 import LandingContainer from "./landing-container"
 import { CustomGarage } from "../../icons/custom-garage"
 import { CustomSandbox } from "../../icons/custom-sandbox"
 import LandingSectionHeaderText from "./landing-section-header-text"
-import { cn } from "@/lib/shadcn/utils"
 
 // Helper function to get background color class
 const getBackgroundColorClass = (themeColor: string): string => {
@@ -48,7 +48,7 @@ export default function PlatformSection(): React.ReactNode {
 				{/* Section header */}
 				<div className="text-center space-y-3 mb-6 md:mb-8">
 					<LandingSectionHeaderText text="The Lever Labs Platform" />
-					<p className="text-lg sm:text-xl text-wolf font-semibold">
+					<p className="text-lg sm:text-2xl text-beetle-2 font-semibold">
 						Free. Fun. Effective.
 					</p>
 				</div>
