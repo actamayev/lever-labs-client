@@ -1,6 +1,7 @@
 "use client"
 
 import LandingContainer from "./landing-container"
+import LandingSectionHeaderText from "./landing-section-header-text"
 
 interface Feature {
 	step: string
@@ -36,9 +37,7 @@ export default function SimpleFeaturesSection(): React.ReactNode {
 			<LandingContainer>
 				{/* Section title */}
 				<div className="text-center mb-12">
-					<h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold text-white">
-						Setup as easy as 1-2-3
-					</h2>
+					<LandingSectionHeaderText text="Setup as easy as 1-2-3" extraClasses="text-white" />
 				</div>
 
 				<div className="grid md:grid-cols-3 gap-8 md:gap-12">

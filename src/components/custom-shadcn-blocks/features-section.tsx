@@ -4,6 +4,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 
 import { cn } from "@/lib/shadcn/utils"
+import LandingSectionHeaderText from "../landing/landing-section-header-text"
 
 type Features = {
 	icon: ComponentType
@@ -20,9 +21,7 @@ export default function Features({ featuresList }: { featuresList: Features }): 
 			<div>
 				{/* Header */}
 				<div className='mb-6 space-y-4 sm:mb-8 lg:mb-12 text-center'>
-					<h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold">
-						Small details. Big smiles.
-					</h2>
+					<LandingSectionHeaderText text="Small details. Big smiles." />
 				</div>
 
 				<div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>

@@ -3,6 +3,7 @@
 
 import LandingContainer from "./landing-container"
 import TestimonialsComponent, { type TestimonialItem } from "@/components/ui/testimonials-component"
+import LandingSectionHeaderText from "./landing-section-header-text"
 
 const stats = [
 	{
@@ -56,9 +57,7 @@ export default function TestimonialsSection(): React.ReactNode {
 			<LandingContainer>
 				{/* Section title */}
 				<div className="text-center mb-12">
-					<h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-semibold">
-						Don't take our word for it
-					</h2>
+					<LandingSectionHeaderText text="Don't take our word for it" />
 				</div>
 
 				{/* Stats section */}

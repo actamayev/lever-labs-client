@@ -1,13 +1,12 @@
 "use client"
 
-import Link from "next/link"
 import { useState } from "react"
-import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { platformTabs } from "./tab-content"
 import LandingContainer from "./landing-container"
 import { CustomGarage } from "../../icons/custom-garage"
 import { CustomSandbox } from "../../icons/custom-sandbox"
+import LandingSectionHeaderText from "./landing-section-header-text"
 
 // Helper function to get background color class
 const getBackgroundColorClass = (themeColor: string): string => {
@@ -46,9 +45,7 @@ export default function PlatformSection(): React.ReactNode {
 			<LandingContainer>
 				{/* Section header */}
 				<div className="text-center mb-12">
-					<h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-medium mb-4">
-						The Lever Labs Platform
-					</h2>
+					<LandingSectionHeaderText text="The Lever Labs Platform" />
 					<p className="text-lg sm:text-xl text-wolf font-semibold">
 						Free. Fun. Effective.
 					</p>
