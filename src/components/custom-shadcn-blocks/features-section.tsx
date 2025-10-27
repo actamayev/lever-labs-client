@@ -1,9 +1,6 @@
 import type { ComponentType } from "react"
 
-import { ArrowRightIcon } from "lucide-react"
-
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 
 import { cn } from "@/lib/shadcn/utils"
@@ -17,7 +14,7 @@ type Features = {
 	avatarBgColor: string
 }[]
 
-const Features = ({ featuresList }: { featuresList: Features }) => {
+export default function Features({ featuresList }: { featuresList: Features }): React.ReactNode {
 	return (
 		<section className='pb-8 sm:pb-16 lg:pb-24'>
 			<div>
@@ -29,7 +26,7 @@ const Features = ({ featuresList }: { featuresList: Features }) => {
 				</div>
 
 				<div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
-					{featuresList.map((features, index) => (
+					{featuresList.map((features, index): React.ReactNode => (
 						<Card key={index} className={cn("shadow-none transition-colors duration-300", features.cardBorderColor)}>
 							<CardContent>
 								<Avatar className={cn("mb-6 size-10 rounded-md", features.avatarTextColor)}>
@@ -47,5 +44,3 @@ const Features = ({ featuresList }: { featuresList: Features }) => {
 		</section>
 	)
 }
-
-export default Features

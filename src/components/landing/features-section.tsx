@@ -1,6 +1,6 @@
 import { BatteryFullIcon, CodeIcon, ChartNoAxesCombined } from "lucide-react"
 
-import Features from "@/components/ui/features-section"
+import Features from "@/components/custom-shadcn-blocks/features-section"
 import LandingContainer from "./landing-container"
 
 const featuresList = [
