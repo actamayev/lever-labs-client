@@ -1,4 +1,4 @@
-import { LucideIcon, Book, Brain, Repeat, Puzzle, Sparkles, Search, Beaker, Smile, Users, Trophy } from "lucide-react"
+import { LucideIcon, Book, Brain, Repeat, Puzzle, Sparkles, Search, Beaker, Smile, Trophy } from "lucide-react"
 import { CustomFriend } from "../../icons/custom-friend"
 
 type TabContent = {
@@ -61,7 +61,7 @@ export const platformTabs: TabContent[] = [
 		],
 		cards: [
 			{
-				icon: Brain,
+				icon: Sparkles,
 				title: "Creative thinking"
 			},
 			{
