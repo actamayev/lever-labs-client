@@ -1,14 +1,16 @@
+/* eslint-disable max-len */
+import { cn } from "@/lib/shadcn/utils"
+import { Card, CardContent } from "@/components/ui/card"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { BatteryFullIcon, CodeIcon, ChartNoAxesCombined } from "lucide-react"
-
-import Features from "@/components/custom-shadcn-blocks/features-section"
 import LandingContainer from "./landing-container"
+import LandingSectionHeaderText from "../landing/landing-section-header-text"
 
 const featuresList = [
 	{
 		icon: BatteryFullIcon,
 		title: "Keep the fun going",
-		description:
-      "Get 2 hours of learning on a single charge. Need more? USB-C fast charging gets you back to building in just 30 minutes.",
+		description: "Get 2 hours of learning on a single charge. Need more? USB-C fast charging gets you back to building in just 30 minutes.",
 		cardBorderColor: "border-green-600/40 hover:border-green-600 dark:border-green-400/40 dark:hover:border-green-400",
 		avatarTextColor: "text-green-600 dark:text-green-400",
 		avatarBgColor: "bg-green-600/10 dark:bg-green-400/10"
@@ -16,8 +18,7 @@ const featuresList = [
 	{
 		icon: CodeIcon,
 		title: "Learn at your own pace",
-		description:
-      "Start with drag-and-drop blocks and move to text-based coding whenever you're ready. No pressure, just progress at your own pace.",
+		description: "Start with drag-and-drop blocks and move to text-based coding whenever you're ready. No pressure, just progress at your own pace.",
 		cardBorderColor: "border-lever-red/40 hover:border-lever-red",
 		avatarTextColor: "text-lever-red",
 		avatarBgColor: "bg-lever-red/10"
@@ -25,8 +26,7 @@ const featuresList = [
 	{
 		icon: ChartNoAxesCombined,
 		title: "Celebrate your wins",
-		description:
-      "See how far you've come! Our progress tracking celebrates every win, from your first basic movement to advanced robotics projects.",
+		description: "See how far you've come! Our progress tracking celebrates every win, from your first basic movement to advanced robotics projects.",
 		cardBorderColor: "border-lever-blue/40 hover:border-lever-blue",
 		avatarTextColor: "text-lever-blue",
 		avatarBgColor: "bg-lever-blue/10"
@@ -37,7 +37,30 @@ export default function FeaturesSection(): React.ReactNode {
 	return (
 		<section className="bg-polar pt-8 md:pt-16">
 			<LandingContainer>
-				<Features featuresList={featuresList} />
+				<section className='pb-8 sm:pb-16 lg:pb-24'>
+					<div>
+						{/* Header */}
+						<div className='mb-6 space-y-4 sm:mb-8 lg:mb-12 text-center'>
+							<LandingSectionHeaderText text="Small details. Big smiles." />
+						</div>
+
+						<div className='grid gap-6 sm:grid-cols-2 lg:grid-cols-3'>
+							{featuresList.map((features, index): React.ReactNode => (
+								<Card key={index} className={cn("shadow-none transition-colors duration-300", features.cardBorderColor)}>
+									<CardContent>
+										<Avatar className={cn("mb-6 size-10 rounded-md", features.avatarTextColor)}>
+											<AvatarFallback className={cn("rounded-md [&>svg]:size-6", features.avatarBgColor)}>
+												<features.icon />
+											</AvatarFallback>
+										</Avatar>
+										<h6 className='mb-2 text-lg font-semibold'>{features.title}</h6>
+										<p className='text-muted-foreground'>{features.description}</p>
+									</CardContent>
+								</Card>
+							))}
+						</div>
+					</div>
+				</section>
 			</LandingContainer>
 		</section>
 	)
