@@ -1,6 +1,7 @@
 "use client"
 
 import LandingContainer from "./landing-container"
+import TestimonialsComponent, { type TestimonialItem } from "@/components/ui/testimonials-component"
 
 const stats = [
 	{
@@ -17,6 +18,41 @@ const stats = [
 	}
 ]
 
+const testimonials: TestimonialItem[] = [
+	{
+		name: "Craig",
+		role: "Proud Parent",
+		childName: "Jamie",
+		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-5.png?width=40&height=40&format=auto",
+		rating: 5,
+		content: "Jamie was skeptical about coding at first, but Pip made it click. Now he's programming light shows and racing Pip around the house!"
+	},
+	{
+		name: "Martin",
+		role: "Incredibly happy parent",
+		childName: "Chris",
+		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-3.png?width=40&height=40&format=auto",
+		rating: 5,
+		content: "Chris spends hours with Pip and doesn't even realize he's learning. The setup was so easy - within minutes, he was coding his first program."
+	},
+	{
+		name: "Sarah",
+		role: "Middle School Teacher",
+		childName: "Alex",
+		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-2.png?width=40&height=40&format=auto",
+		rating: 5,
+		content: "I bought Pip for my daughter Alex, and now all her friends want one! It's brought coding from abstract concepts to something they can see and touch."
+	},
+	{
+		name: "Zach",
+		role: "Software Engineer & Parent",
+		childName: "Max",
+		avatar: "https://cdn.shadcnstudio.com/ss-assets/avatar/avatar-7.png?width=40&height=40&format=auto",
+		rating: 5,
+		content: "Max went from drag-and-drop blocks to writing real code in weeks. The AI assistance is perfect for when I'm not around to help."
+	}
+]
+
 export default function TestimonialsSection(): React.ReactNode {
 	return (
 		<section className="bg-polar py-16 md:py-24">
@@ -29,7 +65,7 @@ export default function TestimonialsSection(): React.ReactNode {
 				</div>
 
 				{/* Stats section */}
-				<div className="bg-swan rounded-3xl p-8 md:p-12 mb-12">
+				<div className="bg-swan rounded-3xl p-8 md:p-12">
 					<div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-0 md:divide-x divide-hare">
 						{stats.map((item, idx): React.ReactNode => (
 							<div key={idx} className="flex flex-col items-center justify-center text-center px-4 md:px-8">
@@ -44,12 +80,7 @@ export default function TestimonialsSection(): React.ReactNode {
 					</div>
 				</div>
 
-				{/* Second section placeholder */}
-				<div className="bg-muted rounded-3xl p-8 md:p-12">
-					<p className="text-center text-muted-foreground">
-						Second section coming soon
-					</p>
-				</div>
+				<TestimonialsComponent testimonials={testimonials} />
 			</LandingContainer>
 		</section>
 	)
