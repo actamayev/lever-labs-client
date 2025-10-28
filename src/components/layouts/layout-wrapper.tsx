@@ -1,4 +1,3 @@
-// src/components/layouts/layout-wrapper.tsx
 "use client"
 
 import { useEffect } from "react"
