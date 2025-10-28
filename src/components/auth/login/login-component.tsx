@@ -5,15 +5,13 @@ import { observer } from "mobx-react"
 import { useForm } from "react-hook-form"
 import { usePathname } from "next/navigation"
 import { useCallback, useState } from "react"
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
+import { Form, FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { LoginRequest } from "@lever-labs/common-ts/types/api"
 import { Input } from "@/components/ui/input"
 import AuthButton from "../../buttons/auth-button"
 import Link from "next/link"
-import { GoogleLogin, CredentialResponse } from "@react-oauth/google"
-import useGoogleAuthCallback from "../../../hooks/google-auth/use-google-auth-callback"
-import { isNull, isUndefined } from "lodash-es"
+import GoogleSignIn from "../google/google-sign-in"
 import OrComponent from "../or-component"
 import ErrorMessage from "../../messages/error-message"
 import loginSubmit from "../../../utils/auth/submit/login-submit"
@@ -29,7 +27,6 @@ function LoginComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const navigate = useTypedNavigate()
 	const pathname = usePathname()
-	const googleAuthCallback = useGoogleAuthCallback()
 
 	const form = useForm<LoginRequest>({
 		resolver: zodResolver(loginSchema),
@@ -44,16 +41,6 @@ function LoginComponent(): React.ReactNode {
 		if (success === false || pathname !== "/login") return
 		navigate(PageToNavigateAfterLogin)
 	}, [navigate, pathname])
-
-	const onGoogleSuccess = useCallback(async (successResponse: CredentialResponse): Promise<void> => {
-		const response = await googleAuthCallback(successResponse)
-		if (isNull(response) || (pathname !== "/login" && pathname !== "/register")) return
-		if (response.isNewUser === true || isUndefined(response.personalInfo)) {
-			navigate("/register-google")
-			return
-		}
-		navigate(PageToNavigateAfterLogin)
-	}, [googleAuthCallback, navigate, pathname])
 
 	return (
 		<div className="grid min-h-svh lg:grid-cols-2">
@@ -107,16 +94,7 @@ function LoginComponent(): React.ReactNode {
 
 								<OrComponent />
 
-								<div className="flex justify-center">
-									<GoogleLogin
-										onSuccess={onGoogleSuccess}
-										onError={(): void => console.error("Login Failed")}
-										shape="pill"
-										width={300}
-										text="continue_with"
-										logo_alignment="center"
-									/>
-								</div>
+								<GoogleSignIn />
 
 								<div className="text-center text-sm">
 									Don&apos;t have an account?{" "}
