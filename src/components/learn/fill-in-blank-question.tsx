@@ -41,12 +41,7 @@ function FillInBlankQuestion(): React.ReactNode {
 		if (!fillInTheBlank?.initialBlocklyJson) {
 			return { blocks: { blocks: [] } }
 		}
-		try {
-			return JSON.parse(fillInTheBlank.initialBlocklyJson as unknown as string) as BlocklyJson
-		} catch (error) {
-			console.error("Failed to parse initial blockly JSON:", error)
-			return { blocks: { blocks: [] } }
-		}
+		return fillInTheBlank.initialBlocklyJson
 	}, [fillInTheBlank?.initialBlocklyJson])
 
 	// Create toolbox config from fillInTheBlankBlockBank

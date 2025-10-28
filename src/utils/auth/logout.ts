@@ -26,6 +26,7 @@ export default async function logout(): Promise<void> {
 		await serialConnectionManagerClass.logout()
 		// Call logout API (this clears the HTTP cookie on the server via clearAuthCookie)
 		await leverLabsApiClient.authDataService.logout()
+		authClass.logout()
 		soundManager.cleanup()
 
 		// Clear all client state
@@ -36,7 +37,6 @@ export default async function logout(): Promise<void> {
 		navigationManagerClass.logout()
 		chatManagerClass.logout()
 		careerQuestTriggersClass.logout()
-		authClass.logout()
 		workbenchClass.logout()
 		sandboxClass.logout()
 		garageClass.logout()
@@ -46,6 +46,7 @@ export default async function logout(): Promise<void> {
 		teacherClass.logout()
 	} catch (error) {
 		console.error("Logout error:", error)
+		authClass.logout()
 		soundManager.cleanup()
 
 		// Even if API fails, clear local state and redirect
@@ -56,7 +57,6 @@ export default async function logout(): Promise<void> {
 		navigationManagerClass.logout()
 		chatManagerClass.logout()
 		careerQuestTriggersClass.logout()
-		authClass.logout()
 		workbenchClass.logout()
 		sandboxClass.logout()
 		garageClass.logout()

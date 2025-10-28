@@ -7,7 +7,7 @@ import { cn } from "../../lib/utils"
 
 export function SupportBorder(): React.ReactNode {
 	return (
-		<div className="container mx-auto w-full">
+		<div className="mx-auto w-full">
 			<div className="border-b-2 border-swan rounded-xl"></div>
 		</div>
 	)
@@ -22,8 +22,8 @@ function SupportLink({ page } : { page: "mission" | "contact" }): React.ReactNod
 			<Link
 				href={page}
 				className={cn(
-					"text-hare hover:!text-humpbackText duration-0 text-base px-4 py-2 flex flex-col items-center",
-					active ? "!text-humpbackText" : ""
+					"text-hare hover:text-humpbackText! duration-0 text-base px-4 py-2 flex flex-col items-center",
+					active ? "text-humpbackText!" : ""
 				)}
 			>
 				<span>{toUpper(page)}</span>
@@ -41,7 +41,7 @@ function SupportLink({ page } : { page: "mission" | "contact" }): React.ReactNod
 export default function SupportHeader (): React.ReactNode {
 	return (
 		<header className="py-6">
-			<nav className="container">
+			<nav>
 				<ul className="flex justify-start items-center space-x-0 text-lg font-medium">
 					<SupportLink page="mission" />
 					<SupportLink page="contact" />

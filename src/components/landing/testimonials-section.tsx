@@ -6,7 +6,7 @@ import LandingSectionHeaderText from "./landing-section-header-text"
 const stats = [
 	{
 		stat: "89% of parents",
-		description: "see increased confidence in STEM in their kids"
+		description: "say their kids gained confidence in STEM"
 	},
 	{
 		stat: "96% of kids",

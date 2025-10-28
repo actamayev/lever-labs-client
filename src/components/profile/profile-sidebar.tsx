@@ -52,6 +52,7 @@ const BelowSidebarLink = ({ href, children }: SidebarLinkProps): React.ReactNode
 		</Link>
 	)
 }
+
 export default function ProfileSidebar(): React.ReactNode {
 	const navigate = useTypedNavigate()
 

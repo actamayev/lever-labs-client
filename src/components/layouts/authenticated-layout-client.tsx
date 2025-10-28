@@ -1,5 +1,6 @@
 "use client"
 
+import { useEffect } from "react"
 import { observer } from "mobx-react"
 import authClass from "@/classes/auth-class"
 import { AuthState } from "@/lib/auth-server"
@@ -16,17 +17,19 @@ function AuthenticatedLayoutClient({
 	authState
 }: AuthenticatedLayoutClientProps): React.ReactNode {
 
-	// Sync server auth state with client immediately if needed
-	if (!authClass.isLoggedIn && authState.isAuthenticated) {
-		authClass.setAuthState({
-			isAuthenticated: authState.isAuthenticated,
-			hasCompletedSignup: authState.hasCompletedSignup
-		})
-		careerQuestClass.reinitialize()
-	}
+	// Sync server auth state with client in effect to avoid setState during render
+	useEffect((): void => {
+		if (!authClass.isLoggedIn && authState.isAuthenticated) {
+			authClass.setAuthState({
+				isAuthenticated: authState.isAuthenticated,
+				hasCompletedSignup: authState.hasCompletedSignup
+			})
+			careerQuestClass.reinitialize()
+		}
+	}, [authState.isAuthenticated, authState.hasCompletedSignup])
 
-	// Use client auth state (prioritized for smooth updates) or fall back to server state
-	const isAuthenticated = authClass.isLoggedIn || authState.isAuthenticated
+	// Prioritize client state when user is logging out to prevent stale server state issues
+	const isAuthenticated = authClass.isLoggingOut ? authClass.isLoggedIn : (authClass.isLoggedIn || authState.isAuthenticated)
 
 	// If not authenticated, show auth component
 	if (!isAuthenticated) {

@@ -9,7 +9,6 @@ import FooterThemeToggle from "./footer-theme-toggle"
 import FooterSocialSection from "./footer-social-section"
 import LandingContainer from "../landing/landing-container"
 
-
 export default function Footer(): React.ReactNode {
 	const pathname = usePathname()
 	if (
