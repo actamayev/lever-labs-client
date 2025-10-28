@@ -82,7 +82,7 @@ export default function LoginComponent(): React.ReactNode {
 														<Input
 															id="contact"
 															type="text"
-															placeholder="m@example.com"
+															placeholder="nikola@tesla.com"
 															{...field}
 															maxLength={100}
 															required
