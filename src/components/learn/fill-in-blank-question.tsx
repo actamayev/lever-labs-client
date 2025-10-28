@@ -15,6 +15,8 @@ import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 import getCppGenerator from "../../utils/cpp/cpp-generator"
+// @ts-expect-error - No type definitions available for this plugin
+import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
 
 // eslint-disable-next-line max-lines-per-function
 function FillInBlankQuestion(): React.ReactNode {
@@ -85,6 +87,27 @@ function FillInBlankQuestion(): React.ReactNode {
 	const handleWorkspaceChange = useCallback(async (workspace: Blockly.WorkspaceSvg): Promise<void> => {
 		workspaceRef.current = workspace
 
+		// Initialize multiselect plugin if not already initialized
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		if (!(workspace as any).multiselectPlugin) {
+			try {
+				const multiselectPlugin = new Multiselect(workspace)
+				multiselectPlugin.init({
+					multiSelectKeys: ["Shift"],
+					multiFieldUpdate: true,
+					useDoubleClick: false,
+					bumpNeighbors: false,
+					multiselectIcon: {
+						hideIcon: false,
+						weight: 3,
+					}
+				})
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				;(workspace as any).multiselectPlugin = multiselectPlugin
+			} catch (error) {
+				console.warn("Failed to initialize multiselect plugin:", error)
+			}
+		}
 		// Skip the first change event which happens during workspace initialization
 		if (isFirstChangeRef.current) {
 			isFirstChangeRef.current = false
