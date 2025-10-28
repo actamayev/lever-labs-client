@@ -48,6 +48,7 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 	const [isCentered, setIsCentered] = useState(false)
 	const pathname = usePathname()
 	const [isCentering, setIsCentering] = useState(false)
+
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, false)
 	}, [isDarkMode])
