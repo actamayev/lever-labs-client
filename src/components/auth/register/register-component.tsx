@@ -2,12 +2,11 @@
 
 import Link from "next/link"
 import Image from "next/image"
+import { observer } from "mobx-react"
 import { useForm } from "react-hook-form"
 import { useCallback, useState } from "react"
-import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
+import { Form, FormField, FormItem, FormControl, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Eye, EyeOff } from "lucide-react"
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google"
 import useGoogleAuthCallback from "../../../hooks/google-auth/use-google-auth-callback"
 import { isNull, isUndefined } from "lodash-es"
@@ -18,17 +17,17 @@ import { registerSchema } from "../../../utils/auth/auth-schemas"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { usePathname } from "next/navigation"
-import { handleTypeAge, handleTypeUsername } from "../../../utils/handle-type-validation/handle-type-fields"
-import CharacterCounter from "../../character-counter"
+import AgeInput from "../age-input"
+import UsernameInput from "../username-input"
+import PasswordField from "../password-input"
+import AuthButton from "../../buttons/auth-button"
 import { zodResolver } from "@hookform/resolvers/zod"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import authClass from "../../../classes/auth-class"
-import { observer } from "mobx-react"
 
 // eslint-disable-next-line max-lines-per-function
 function RegisterComponent(): React.ReactNode {
 	const [error, setError] = useState("")
-	const [showPassword, setShowPassword] = useState(false)
 	const navigate = useTypedNavigate()
 	const pathname = usePathname()
 	const googleAuthCallback = useGoogleAuthCallback()
@@ -80,85 +79,9 @@ function RegisterComponent(): React.ReactNode {
 
 								{error && <ErrorMessage error={error} />}
 
-								<div className="grid gap-2">
-									<FormField
-										control={form.control}
-										name="age"
-										render={({ field }): React.ReactElement => (
-											<FormItem>
-												<FormLabel htmlFor="age">Age</FormLabel>
-												<FormControl>
-													<Input
-														id="age"
-														type="text"
-														inputMode="numeric"
-														placeholder="Age"
-														{...field}
-														value={field.value?.toString() || ""}
-														onChange={(event): void => {
-															const sanitizedValue = handleTypeAge(event)
-															const numericValue = sanitizedValue === ""
-																? null
-																: parseInt(sanitizedValue, 10)
-															field.onChange(numericValue)
-														}}
-														maxLength={3}
-														required
-													/>
-												</FormControl>
-												<FormMessage />
-												<div className="text-sm text-muted-foreground mt-1">
-													<span>
-														Providing your age ensures you get the right Lever Labs experience.
-														For more details, please visit our{" "}
-													</span>
-													<Link
-														href="/privacy"
-														className="text-primary underline underline-offset-4"
-													>
-														Privacy Policy
-													</Link>
-													<span>.</span>
-												</div>
-											</FormItem>
-										)}
-									/>
-								</div>
+								<AgeInput control={form.control} />
 
-								<div className="grid gap-2">
-									<FormField
-										control={form.control}
-										name="username"
-										render={({ field }): React.ReactElement => (
-											<FormItem>
-												<FormLabel htmlFor="username">Username</FormLabel>
-												<FormControl>
-													<div className="relative">
-														<Input
-															id="username"
-															placeholder="Username"
-															{...field}
-															value={field.value.toString() || ""}
-															onChange={(event): void => {
-																const sanitizedValue = handleTypeUsername(event)
-																field.onChange(sanitizedValue)
-															}}
-															maxLength={100}
-															required
-															className="pr-16"
-														/>
-														<CharacterCounter
-															value={field.value.toString() || ""}
-															characterLimit={100}
-															extraClasses="right-3"
-														/>
-													</div>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								</div>
+								<UsernameInput control={form.control} />
 
 								<div className="grid gap-2">
 									<FormField
@@ -170,7 +93,6 @@ function RegisterComponent(): React.ReactNode {
 
 											return (
 												<FormItem>
-													<FormLabel htmlFor="email">Email</FormLabel>
 													<FormControl>
 														<Input
 															id="email"
@@ -179,6 +101,8 @@ function RegisterComponent(): React.ReactNode {
 															{...field}
 															maxLength={100}
 															required
+															// eslint-disable-next-line max-len
+															className="w-full h-12 rounded-xl text-xl! font-light border-2 bg-polar shadow-none border-swan"
 														/>
 													</FormControl>
 													<FormMessage />
@@ -188,52 +112,9 @@ function RegisterComponent(): React.ReactNode {
 									/>
 								</div>
 
-								<div className="grid gap-2">
-									<FormField
-										control={form.control}
-										name="password"
-										render={({ field }): React.ReactElement => (
-											<FormItem>
-												<FormLabel htmlFor="password">Password</FormLabel>
-												<FormControl>
-													<div className="relative">
-														<Input
-															id="password"
-															type={showPassword ? "text" : "password"}
-															{...field}
-															value={field.value?.toString() || ""}
-															placeholder="Password"
-															maxLength={100}
-															required
-															className="pr-16"
-														/>
-														<Button
-															type="button"
-															variant="ghost"
-															size="sm"
-															className="absolute right-2 top-1/2 -translate-y-1/2 h-auto p-1"
-															onClick={(): void => setShowPassword(!showPassword)}
-														>
-															{showPassword ? (
-																<EyeOff className="h-4 w-4" />
-															) : (
-																<Eye className="h-4 w-4" />
-															)}
-														</Button>
-													</div>
-												</FormControl>
-												<FormMessage />
-												<div className="text-sm text-muted-foreground">
-													Must be at least 6 characters long.
-												</div>
-											</FormItem>
-										)}
-									/>
-								</div>
+								<PasswordField control={form.control} name={"password"} />
 
-								<Button type="submit" className="w-full">
-									Create Account
-								</Button>
+								<AuthButton title="CREATE ACCOUNT" />
 
 								<OrComponent />
 
