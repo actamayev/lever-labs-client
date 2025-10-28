@@ -7,7 +7,7 @@ export const metadata = createMetadata({
 	// eslint-disable-next-line max-len
 	description: "Sign in to your Lever Labs account to access Career Quest, track your progress, and continue helping Pip discover his perfect robot career.",
 	path: "/login",
-	keywords: ["login", "educational robotics", "student dashboard"]
+	keywords: ["login", "educational robotics", "sign in"]
 })
 
 // Simplified - no wrapper needed, middleware handles redirects
