@@ -334,14 +334,29 @@
     stroke: none !important;
   }
   
+  /* Apply Lexend font to all Blockly text elements */
   .blocklyToolboxCategoryLabel,
   .blocklyToolboxCategory,
-  .blocklyToolboxDiv {
+  .blocklyToolboxDiv,
+  .blocklyText,
+  .blocklyDropDownDiv,
+  .blocklyDropDownMenu,
+  .blocklyMenuItem,
+  .blocklyWidgetDiv input,
+  .blocklyWidgetDiv textarea,
+  text.blocklyText {
     font-family: 'Lexend', sans-serif !important;
+    font-weight: 400 !important;
   }
-  
+
   .blocklyToolboxCategoryLabel {
-    font-weight: normal !important;
+    font-weight: 400 !important;
+  }
+
+  /* Ensure SVG text elements use Lexend */
+  .blocklySvg text {
+    font-family: 'Lexend', sans-serif !important;
+    font-weight: 400 !important;
   }
   
   .blocklyScrollbar,

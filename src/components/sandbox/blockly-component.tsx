@@ -5,6 +5,8 @@ import { observer } from "mobx-react"
 import isEmpty from "lodash-es/isEmpty"
 import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
+// @ts-expect-error - No type definitions available for this plugin
+import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import personalInfoClass from "../../classes/personal-info-class"
@@ -71,6 +73,28 @@ function BlocklyComponent(props: BlocklyComponentProps): React.ReactNode {
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
 		const newJson = Blockly.serialization.workspaces.save(workspace)
+
+		// Initialize multiselect plugin if not already initialized
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		if (!(workspace as any).multiselectPlugin) {
+			try {
+				const multiselectPlugin = new Multiselect(workspace)
+				multiselectPlugin.init({
+					multiSelectKeys: ["Shift"],
+					multiFieldUpdate: true,
+					useDoubleClick: false,
+					bumpNeighbors: false,
+					multiselectIcon: {
+						hideIcon: true,
+						weight: 3,
+					}
+				})
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				;(workspace as any).multiselectPlugin = multiselectPlugin
+			} catch (error) {
+				console.warn("Failed to initialize multiselect plugin:", error)
+			}
+		}
 
 		if (!isSwitchingMode && !isCentering) {
 			onJsonChange(newJson)
