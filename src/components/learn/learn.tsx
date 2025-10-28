@@ -5,11 +5,13 @@ import { observer } from "mobx-react"
 import WorkbenchLayout from "../layouts/workbench-layout"
 import LessonList from "./lesson-list"
 import retrieveAllLessons from "../../utils/learn/retrieve-all-lessons"
+import authClass from "../../classes/auth-class"
 
 function Learn(): React.ReactNode {
 	useEffect((): void => {
 		void retrieveAllLessons()
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [authClass.isFinishedWithSignup])
 
 	return (
 		<WorkbenchLayout preventElasticScroll={true} extraChildrenClasses="p-10">

@@ -12,6 +12,7 @@ import ClassroomStatsCards from "./classroom-stats-cards"
 import ClassroomHubsSection from "./classroom-hubs-section"
 import ClassroomScoreboardSection from "./classroom-scoreboard-section"
 import StudentsTable from "./students-table"
+import authClass from "../../classes/auth-class"
 
 function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode {
 	const navigate = useTypedNavigate()
@@ -19,7 +20,8 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 	// Fetch detailed classroom data on component mount
 	useEffect((): void => {
 		retrieveDetailedClassroomInfo(classCode)
-	}, [classCode])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [classCode, authClass.isFinishedWithSignup])
 
 	const classroomData = teacherClass.getDetailedClassroomData(classCode)
 

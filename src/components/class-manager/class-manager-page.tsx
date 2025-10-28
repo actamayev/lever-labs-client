@@ -12,6 +12,7 @@ import RenameClassroomDialog from "./rename-classroom-dialog"
 import retrieveTeacherClassrooms from "../../utils/teacher/retrieve-teacher-classrooms"
 import SingleClassCard from "./single-class-card"
 import ClassManagerStatsCards from "./class-manager-stats-cards"
+import authClass from "../../classes/auth-class"
 
 function ClassManagerPage(): React.ReactNode {
 	const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false)
@@ -22,7 +23,8 @@ function ClassManagerPage(): React.ReactNode {
 	// Fetch classroom data on component mount
 	useEffect((): void => {
 		retrieveTeacherClassrooms()
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [authClass.isFinishedWithSignup])
 
 	const handleRenameClick = useCallback((e: React.MouseEvent, classroom: BasicTeacherClassroomData): void => {
 		e.stopPropagation()
