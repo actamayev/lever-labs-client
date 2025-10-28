@@ -29,7 +29,7 @@ const getButtonClasses = (isDisabled: boolean): string => {
 
 // Helper function to get border classes for the index span
 const getBorderClasses = (isDisabled: boolean): string => {
-	const baseClasses = "absolute top-1 left-1 w-5 h-5 flex items-center justify-center border-2 rounded-md text-xs font-medium"
+	const baseClasses = "absolute top-1 left-1 w-5 h-5 flex items-center justify-center border-2 rounded-sm text-xs font-medium"
 	const stateClasses = isDisabled
 		? "border-gray-300/40 dark:border-gray-500/40"
 		: "border-blue-400 dark:border-blue-600 " +
