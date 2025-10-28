@@ -21,6 +21,7 @@ import { loginSchema } from "../../../utils/auth/auth-schemas"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
+import Image from "next/image"
 
 // eslint-disable-next-line max-lines-per-function
 export default function LoginComponent(): React.ReactNode {
@@ -161,10 +162,14 @@ export default function LoginComponent(): React.ReactNode {
 							</form>
 						</Form>
 						<div className="relative hidden md:block">
-							<img
-								src="/pip_mobile.jpg"
+							<Image
+								src="/favicon.svg"
 								alt="Image"
 								className="absolute inset-0 h-full w-full object-cover"
+								width={400}
+								height={400}
+								quality={100}
+								priority
 							/>
 						</div>
 					</CardContent>

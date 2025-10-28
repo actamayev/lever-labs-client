@@ -22,6 +22,7 @@ import { handleTypeAge, handleTypeUsername } from "../../../utils/handle-type-va
 import CharacterCounter from "../../character-counter"
 import { zodResolver } from "@hookform/resolvers/zod"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
+import Image from "next/image"
 
 // eslint-disable-next-line max-lines-per-function
 export default function RegisterComponent(): React.ReactNode {
@@ -91,6 +92,7 @@ export default function RegisterComponent(): React.ReactNode {
 															value={field.value?.toString() || ""}
 															onChange={(event): void => {
 																const sanitizedValue = handleTypeAge(event)
+																// eslint-disable-next-line max-len
 																const numericValue = sanitizedValue === "" ? null : parseInt(sanitizedValue, 10)
 																field.onChange(numericValue)
 															}}
@@ -101,7 +103,8 @@ export default function RegisterComponent(): React.ReactNode {
 													<FormMessage />
 													<div className="text-sm text-muted-foreground mt-1">
 														<span>
-															Providing your age ensures you get the right Lever Labs experience. For more details, please visit our{" "}
+															Providing your age ensures you get the right Lever Labs experience.
+															For more details, please visit our{" "}
 														</span>
 														<Link
 															href="/privacy"
@@ -249,10 +252,14 @@ export default function RegisterComponent(): React.ReactNode {
 							</form>
 						</Form>
 						<div className="relative hidden md:block">
-							<img
-								src="/pip_mobile.jpg"
+							<Image
+								src="/favicon.svg"
 								alt="Image"
-								className="absolute inset-0 h-full w-full object-cover"
+								className="items-center justify-center h-3/4 w-full object-cover"
+								width={100}
+								height={100}
+								quality={100}
+								priority
 							/>
 						</div>
 					</CardContent>
