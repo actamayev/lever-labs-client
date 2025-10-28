@@ -122,7 +122,7 @@ export default function PlatformSection(): React.ReactNode {
 									<div className="absolute inset-0 pointer-events-none">
 										<div className={backgroundClasses} />
 									</div>
-									<div className="grid md:grid-cols-2 gap-8 md:gap-12 items-start relative">
+									<div className="grid md:grid-cols-2 gap-8 md:gap-12 items-stretch relative">
 										{/* Left column - Content */}
 										<div className="space-y-6">
 											{/* Title and subtitle */}
