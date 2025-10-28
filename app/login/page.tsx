@@ -5,7 +5,7 @@ import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 export const metadata = createMetadata({
 	title: "Login",
 	// eslint-disable-next-line max-len
-	description: "Login to your Lever Labs account to access Career Quest, track your progress, and continue helping Pip discover his perfect robot career.",
+	description: "Sign in to your Lever Labs account to access Career Quest, track your progress, and continue helping Pip discover his perfect robot career.",
 	path: "/login",
 	keywords: ["login", "educational robotics", "student dashboard"]
 })

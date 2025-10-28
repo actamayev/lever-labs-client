@@ -68,9 +68,6 @@ export default function RegisterComponent(): React.ReactNode {
 								<div className="flex flex-col gap-6">
 									<div className="flex flex-col items-center text-center">
 										<h1 className="text-2xl font-bold">Create your account</h1>
-										<p className="text-balance text-muted-foreground">
-											Enter your information below to create your account
-										</p>
 									</div>
 
 									{error && <ErrorMessage error={error} />}
