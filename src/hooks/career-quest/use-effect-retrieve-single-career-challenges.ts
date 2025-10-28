@@ -15,5 +15,6 @@ export default function useEffectRetrieveSingleCareerChallenges(careerUUID: Care
 		} catch (error) {
 			console.error("Failed to retrieve challenge data for career:", careerUUID, error)
 		}
-	}, [careerUUID	])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [careerUUID, authClass.isFinishedWithSignup])
 }

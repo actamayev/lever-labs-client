@@ -16,6 +16,7 @@ import retrieveDetailedClassroomInfo from "../../utils/teacher/retrieve-detailed
 import updateTeamDrivingStatus from "../../utils/teacher/scoreboard/update-team-driving-status"
 import updateTeamLightsStatus from "../../utils/teacher/scoreboard/update-team-lights-status"
 import TeamMemberAssignmentDialog from "./team-member-assignment-dialog"
+import authClass from "../../classes/auth-class"
 
 // eslint-disable-next-line max-lines-per-function
 function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode; scoreboardId: ScoreboardUUID }): React.ReactNode {
@@ -31,7 +32,8 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 	// Fetch detailed classroom data on component mount
 	useEffect((): void => {
 		retrieveDetailedClassroomInfo(classCode)
-	}, [classCode])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [classCode, authClass.isFinishedWithSignup])
 
 	// Initialize display time when scoreboard data loads
 	useEffect((): void => {

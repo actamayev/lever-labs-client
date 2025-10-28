@@ -27,6 +27,7 @@ import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positi
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import LoadingSandboxProjectPage from "./loading-sandbox-project-page"
+import authClass from "../../../classes/auth-class"
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const BlocklyComponent = lazy(() => import("../blockly-component"))
@@ -35,7 +36,9 @@ const BlocklyComponent = lazy(() => import("../blockly-component"))
 function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }): React.ReactNode {
 	useEffect((): void => {
 		void retrieveSingleSandboxProject(projectUUID)
-	}, [projectUUID])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [projectUUID, authClass.isFinishedWithSignup])
+
 	const [searchTerm, setSearchTerm] = useState("")
 	const [isSwitchingMode, setIsSwitchingMode] = useState(false)
 	const searchBarRef = useRef<HTMLInputElement>(null)

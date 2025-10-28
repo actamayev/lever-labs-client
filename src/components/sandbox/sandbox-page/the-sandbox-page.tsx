@@ -24,12 +24,15 @@ import {
 	EmptyMedia,
 	EmptyTitle,
 } from "@/components/ui/empty"
+import authClass from "../../../classes/auth-class"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage(): React.ReactNode {
 	useEffect((): void => {
 		void retrieveAllSandboxProjects()
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [authClass.isFinishedWithSignup])
+
 	const navigate = useTypedNavigate()
 	const [isCreating, setIsCreating] = useState(false)
 	const [searchQuery, setSearchQuery] = useState("")

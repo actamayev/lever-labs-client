@@ -16,5 +16,6 @@ export default function useEffectRetrieveAllCareersChallenges(): void {
 				console.error("Failed to retrieve challenge data for career:", career.careerDefinition.careerUUID, error)
 			}
 		})
-	}, [])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [authClass.isFinishedWithSignup])
 }

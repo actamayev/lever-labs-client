@@ -9,11 +9,14 @@ import LessonHeader from "./lesson-header"
 import LessonFooter from "./lesson-footer"
 import LessonQuestions from "./lesson-questions"
 import { soundManager } from "../../classes/utility/sound-manager-class"
+import authClass from "../../classes/auth-class"
 
 function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	useEffect((): void => {
 		void retrieveDetailedLesson(lessonId)
-	}, [lessonId])
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [lessonId, authClass.isFinishedWithSignup])
+
 	const isLoading = learnClass.isRetrievingDetailedData(lessonId)
 	useEffect((): void => soundManager.initialize(), [])
 
