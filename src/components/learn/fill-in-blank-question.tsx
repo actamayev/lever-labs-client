@@ -98,7 +98,7 @@ function FillInBlankQuestion(): React.ReactNode {
 					useDoubleClick: false,
 					bumpNeighbors: false,
 					multiselectIcon: {
-						hideIcon: false,
+						hideIcon: true,
 						weight: 3,
 					}
 				})
