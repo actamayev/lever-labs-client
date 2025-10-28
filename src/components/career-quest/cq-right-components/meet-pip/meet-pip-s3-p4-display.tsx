@@ -1,40 +1,22 @@
 "use client"
 
+import Image from "next/image"
 import { observer } from "mobx-react"
 import { Input } from "../../../ui/input"
 import { cn } from "../../../../lib/utils"
 import editName from "../../../../utils/personal-info/edit-name"
 import RenderDisplay from "../../../garage/display/render-display"
+import { filterProfanity } from "../../../../utils/profanity-filter"
 import personalInfoClass from "../../../../classes/personal-info-class"
 import careerQuestTriggersClass from "../../../../classes/career-quest-triggers-class"
-import Image from "next/image"
 
 function MeetPipS3P4Display(): React.ReactNode {
-	const profanityWords: string[] = [
-		"fuck", "shit", "damn", "ass", "bitch", "bastard", "crap",
-		"piss", "cock", "dick", "pussy", "whore", "slut", "fag", "nigger",
-		"retard", "gay", "stupid", "idiot", "moron", "dumb"
-	]
-
-	const containsProfanity = (newText: string, currentText: string): boolean => {
-		const lowerNewText = newText.toLowerCase()
-
-		// If text is being shortened (backspace/delete), always allow it
-		if (newText.length < currentText.length) {
-			return false
-		}
-
-		// Check if the new text contains a complete profanity word
-		return profanityWords.some((word: string): boolean => {
-			return lowerNewText.includes(word)
-		})
-	}
-
 	const setTextInput = async (text: string): Promise<void> => {
 		const currentText = personalInfoClass.name || ""
-		if (containsProfanity(text, currentText)) return
-		await careerQuestTriggersClass.setTextInput(text)
-		void editName(text)
+		await filterProfanity(text, currentText, async (cleanText: string): Promise<void> => {
+			await careerQuestTriggersClass.setTextInput(cleanText)
+			void editName(cleanText)
+		})
 	}
 
 	return (
