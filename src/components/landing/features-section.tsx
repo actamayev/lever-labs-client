@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-import { cn } from "@/lib/shadcn/utils"
+import { cn } from "@/lib/utils"
 import { Card, CardContent } from "@/components/ui/card"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { CodeIcon, ChartNoAxesCombined, Share2 } from "lucide-react"

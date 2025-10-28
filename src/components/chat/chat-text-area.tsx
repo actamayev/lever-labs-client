@@ -6,7 +6,7 @@ import { Lightbulb, Send, Square } from "lucide-react"
 import { Dispatch, RefObject, SetStateAction, useCallback } from "react"
 import { Textarea } from "../ui/textarea"
 import { TactileButton } from "../buttons/tactile-button"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import CustomTooltip from "../custom-tooltip"
 
 interface Props {

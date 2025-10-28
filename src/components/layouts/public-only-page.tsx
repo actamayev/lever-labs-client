@@ -2,7 +2,7 @@
 
 import Footer from "../footer/footer"
 import HeaderNav from "../site-header/header-nav"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 
 interface PublicOnlyPageProps {
 	extraClasses?: string

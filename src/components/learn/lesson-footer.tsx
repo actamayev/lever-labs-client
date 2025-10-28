@@ -13,7 +13,7 @@ import isEmpty from "lodash-es/isEmpty"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import pipClass from "../../classes/pip-class"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {

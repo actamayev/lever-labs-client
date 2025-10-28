@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 "use client"
 
-import { cn } from "@/lib/shadcn/utils"
+import { cn } from "@/lib/utils"
 import { Card, CardContent } from "@/components/ui/card"
 import {
 	Field,

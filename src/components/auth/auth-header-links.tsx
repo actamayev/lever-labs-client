@@ -4,7 +4,7 @@ import Link from "next/link"
 import { observer } from "mobx-react"
 import authClass from "../../classes/auth-class"
 import { Button } from "../ui/button"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 
 interface LinkAuthHeaderProps {
 	title: string

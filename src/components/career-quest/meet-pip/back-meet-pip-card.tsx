@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { Hourglass } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import BackFlipButton from "../back-flip-button"
 import { Separator } from "../../ui/separator"
 import SingleComponentUsed from "../single-component-used"

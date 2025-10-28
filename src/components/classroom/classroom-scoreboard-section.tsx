@@ -15,7 +15,7 @@ import {
 } from "../ui/dropdown-menu"
 import teacherClass from "../../classes/teacher-class"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import deleteScoreboard from "../../utils/teacher/scoreboard/delete-scoreboard"
 

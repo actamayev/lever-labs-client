@@ -3,7 +3,7 @@
 import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
 import BatteryWorkbenchIcon from "../../workbench/battery/battery-workbench-icon"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import workbenchClass from "../../../classes/workbench-class"
 
 function CQBatterySection(): React.ReactNode {

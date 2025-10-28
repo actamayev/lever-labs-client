@@ -11,7 +11,7 @@ import {
 	SidebarMenu,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { CustomGarage } from "../../icons/custom-garage"
 import CustomSidebarButton from "./custom-sidebar-button"
 import studentClass from "../../classes/student-class"

@@ -10,7 +10,7 @@ import { Input } from "../../ui/input"
 import { Button } from "../../ui/button"
 import garageClass from "../../../classes/garage-class"
 import CustomTooltip from "../../custom-tooltip"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 
 const INITIAL_DELAY_MS = 400
 const REPEAT_INTERVAL_MS = 60

@@ -16,7 +16,7 @@ import {
 import teacherClass from "../../classes/teacher-class"
 import careerQuestClass from "../../classes/career-quest-class"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { careerData, meetPipData } from "../../utils/constants/career-quest/career-data"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 

@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { Slider } from "../../ui/slider"
 import garageClass from "../../../classes/garage-class"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import CustomTooltip from "../../custom-tooltip"
 
 // Helper function to get slider colors based on disabled state

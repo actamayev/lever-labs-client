@@ -22,7 +22,7 @@ import uploadProfilePicture from "../../../utils/personal-info/upload-profile-pi
 import removeCurrentProfilePicture from "../../../utils/personal-info/remove-current-profile-picture"
 import { Avatar, AvatarFallback } from "../../ui/avatar"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 
 interface EditProfileImageDialogProps {
 	isOpen: boolean

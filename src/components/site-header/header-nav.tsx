@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import LogoHeaderSection from "./logo-header-section"
 import LoginLogoutHeaderItem from "../auth/login-logout-header-item"
 import { LinkAuthHeaderButton } from "../auth/auth-header-links"

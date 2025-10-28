@@ -14,7 +14,7 @@ import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import createSandboxProject from "../../../utils/sandbox/create-sandbox-project"
 import retrieveAllSandboxProjects from "../../../utils/sandbox/retrieve-all-sandbox-projects"
 import { TactileButton } from "../../buttons/tactile-button"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import {
 	Empty,

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import { observer } from "mobx-react"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { ButtonProps } from "../ui/button"
 import { TactileButton } from "./tactile-button"
 import personalInfoClass from "../../classes/personal-info-class"

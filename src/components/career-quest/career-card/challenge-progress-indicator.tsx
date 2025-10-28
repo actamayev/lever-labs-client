@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { observer } from "mobx-react"
 import { CareerUUID } from "@lever-labs/common-ts/types/utils"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import CustomTooltip from "../../custom-tooltip"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import careerQuestClass from "../../../classes/career-quest-class"

@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { useRef, useEffect } from "react"
 import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import garageClass from "../../../classes/garage-class"
 import { TactileButton } from "../../buttons/tactile-button"
 import personalInfoClass from "../../../classes/personal-info-class"

@@ -4,7 +4,7 @@
 import { ArrowLeft, MessageCircle } from "lucide-react"
 import { Particles } from "../../magicui/particles"
 import personalInfoClass from "../../../classes/personal-info-class"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 
 interface Props {
 	careerTitle?: string

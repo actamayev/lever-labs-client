@@ -12,7 +12,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import playTune from "../../../utils/workbench/play-tune"
 import workbenchClass from "../../../classes/workbench-class"
 import garageClass from "../../../classes/garage-class"

@@ -3,7 +3,7 @@
 import { useCallback, useState, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import { BotIcon, WifiHighIcon } from "lucide-react"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"

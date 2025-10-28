@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { BatteryCharging, BatteryFull, BatteryWarning, BatteryLow, BatteryMedium } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import pipClass from "../../../classes/pip-class"
 import workbenchClass from "../../../classes/workbench-class"
 import useGetBatteryColorClasses from "../../../hooks/workbench/use-get-battery-color-classes"

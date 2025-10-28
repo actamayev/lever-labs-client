@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { Input } from "../../../ui/input"
-import { cn } from "../../../../lib/shadcn/utils"
+import { cn } from "../../../../lib/utils"
 import editName from "../../../../utils/personal-info/edit-name"
 import RenderDisplay from "../../../garage/display/render-display"
 import personalInfoClass from "../../../../classes/personal-info-class"

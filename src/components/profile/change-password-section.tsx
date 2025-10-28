@@ -8,7 +8,7 @@ import { Label } from "../ui/label"
 import { Button } from "../ui/button"
 import changePassword from "../../utils/personal-info/change-password"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
