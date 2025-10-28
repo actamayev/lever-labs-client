@@ -8,8 +8,8 @@ const commonStyles: ITheme = {
 	base: Blockly.Themes.Classic,
 	startHats: true,
 	fontStyle: {
-		family: "Lexend",
-		weight: "normal",
+		family: "Lexend, sans-serif",
+		weight: "400",
 		size: 10,
 	},
 	name: "",
