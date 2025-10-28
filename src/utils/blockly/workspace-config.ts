@@ -10,7 +10,7 @@ const commonStyles: ITheme = {
 	fontStyle: {
 		family: "Lexend, sans-serif",
 		weight: "400",
-		size: 12,
+		size: 10,
 	},
 	name: "",
 }

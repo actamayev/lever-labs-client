@@ -349,8 +349,25 @@
     font-weight: 400 !important;
   }
 
-  .blocklyToolboxCategoryLabel {
+  /* More specific targeting for category labels - covers all possible selectors */
+  .blocklyToolboxCategoryLabel,
+  .blocklyTreeLabel,
+  .blocklyTreeRow > .blocklyTreeLabel,
+  .goog-tree-item-label,
+  div.blocklyToolboxCategoryLabel,
+  .blocklyToolboxDiv .blocklyTreeLabel,
+  .blocklyToolboxDiv .goog-tree-item-label,
+  .goog-tree-row .goog-tree-item-label,
+  .blocklyToolboxCategory > .blocklyTreeLabel,
+  span.blocklyTreeLabel {
+    font-family: 'Lexend', sans-serif !important;
     font-weight: 400 !important;
+    font-style: normal !important;
+  }
+
+  /* Catch any remaining category text with universal selector */
+  .blocklyToolboxDiv * {
+    font-family: 'Lexend', sans-serif !important;
   }
 
   /* Ensure SVG text elements use Lexend */
