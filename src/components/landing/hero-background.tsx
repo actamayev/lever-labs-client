@@ -4,7 +4,7 @@ export default function HeroBackground(): React.ReactNode {
 			{/* Desktop/tablet image */}
 			<img
 				className="wide:opacity-0 sm:opacity-100 opacity-0 w-full h-full object-cover absolute"
-				src="/pip2_new.jpg"
+				src="/pip_standard_view.jpg"
 				alt="Pip Hero Desktop"
 				style={{ objectPosition: "left center" }}
 			/>
@@ -27,4 +27,3 @@ export default function HeroBackground(): React.ReactNode {
 		</>
 	)
 }
-

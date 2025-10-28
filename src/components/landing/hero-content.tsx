@@ -12,7 +12,7 @@ export default function HeroContent(): React.ReactNode {
 					Like Duolingo, for robotics
 				</h1>
 
-				<p className="text-sm xs:text-lg sm:text-xl sm:px-0 px-6 sm:text-left text-center tracking-tight text-black font-light">
+				<p className="text-lg sm:text-xl sm:px-0 px-6 sm:text-left text-center tracking-tight text-black font-light">
 					With Pip, learning feels like play.
 				</p>
 			</div>
