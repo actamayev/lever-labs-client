@@ -59,7 +59,19 @@ function FillInBlankQuestion(): React.ReactNode {
 	}, [fillInTheBlank?.availableBlocks])
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
-		return getWorkspaceConfig(isDarkMode, false)
+		const config = getWorkspaceConfig(isDarkMode, false)
+		// Override global CSS that disables scrolling/panning
+		return {
+			...config,
+			move: {
+				scrollbars: {
+					horizontal: true,
+					vertical: true,
+				},
+				drag: true,
+				wheel: true,
+			}
+		}
 	}, [isDarkMode])
 
 	const centerWorkspace = useCallback((): void => {
@@ -202,6 +214,7 @@ function FillInBlankQuestion(): React.ReactNode {
 			<div
 				ref={containerRef}
 				className={cn("relative z-0 rounded-3xl overflow-hidden border-swan border-2 h-[500px] flex-1")}
+				style={{ pointerEvents: "auto" }}
 			>
 				{/* Reset Workspace Button */}
 				<Button
@@ -209,7 +222,7 @@ function FillInBlankQuestion(): React.ReactNode {
 					size="sm"
 					onClick={(): void => { void resetWorkspace() }}
 					className={cn(
-						"absolute top-2 right-2 z-10 p-2 h-8 w-8",
+						"absolute top-2 right-2 z-1 p-2 h-8 w-8 pointer-events-auto",
 						"bg-background/80 backdrop-blur-xs border-border/50",
 						"hover:bg-accent hover:text-accent-foreground",
 						"transition-all duration-200"
@@ -223,7 +236,12 @@ function FillInBlankQuestion(): React.ReactNode {
 					toolboxConfiguration={toolboxConfig}
 					initialJson={parsedInitialJson}
 					workspaceConfiguration={workspaceConfiguration}
-					className="h-full duration-0"
+					className={cn(
+						"h-full duration-0",
+						"[&_.blocklyScrollbar]:pointer-events-auto",
+						"[&_.blocklyScrollbarBackground]:pointer-events-auto",
+						"[&_.blocklyScrollbarHandle]:pointer-events-auto"
+					)}
 					onWorkspaceChange={handleWorkspaceChange}
 				/>
 			</div>
