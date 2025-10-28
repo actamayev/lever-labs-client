@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion"
 import { useCallback, useState } from "react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import FrontMeetPipCard from "./front-meet-pip-card"
 import BackMeetPipCard from "./back-meet-pip-card"
 

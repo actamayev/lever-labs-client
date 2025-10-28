@@ -14,8 +14,16 @@ import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import createSandboxProject from "../../../utils/sandbox/create-sandbox-project"
 import retrieveAllSandboxProjects from "../../../utils/sandbox/retrieve-all-sandbox-projects"
 import { TactileButton } from "../../buttons/tactile-button"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
+import {
+	Empty,
+	EmptyContent,
+	EmptyDescription,
+	EmptyHeader,
+	EmptyMedia,
+	EmptyTitle,
+} from "@/components/ui/empty"
 
 // eslint-disable-next-line max-lines-per-function
 function TheSandboxPage(): React.ReactNode {
@@ -143,16 +151,35 @@ function TheSandboxPage(): React.ReactNode {
 									{searchQuery ? (
 										<p className="text-hare mb-4">No projects match your search</p>
 									) : (
-										<>
-											<p className="text-hare mb-4">You don't have any projects yet</p>
-											<TactileButton
-												className="px-4 py-2 bg-blue-600 text-white rounded-md"
-												onClick={handleCreateProject}
-												disabled={isCreating}
-											>
-												Create your first project
-											</TactileButton>
-										</>
+										<Empty>
+											<EmptyHeader>
+												<EmptyMedia variant="icon">
+													<Folder />
+												</EmptyMedia>
+												<EmptyTitle>No Projects Yet</EmptyTitle>
+												<EmptyDescription>
+													You haven&apos;t created any projects yet. Get started by creating
+													your first project.
+												</EmptyDescription>
+											</EmptyHeader>
+											<EmptyContent>
+												<div className="flex gap-2">
+													<TactileButton
+														onClick={handleCreateProject}
+														className={cn(
+															"flex-1 px-4 py-2 mb-10 h-10 rounded-xl text-lg text-white",
+															colors.bg
+														)}
+														shadowHeight={4}
+														shadowClass={colors.shadow2}
+														disabled={isCreating}
+														size="lg"
+													>
+														Create Project
+													</TactileButton>
+												</div>
+											</EmptyContent>
+										</Empty>
 									)}
 								</div>
 							)

@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { ReactNode, useRef, useEffect } from "react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import { CustomHorn } from "../../../icons/custom-horn"
 import { TactileButton } from "../../buttons/tactile-button"
 import { CustomHeadlights } from "../../../icons/custom-headlights"

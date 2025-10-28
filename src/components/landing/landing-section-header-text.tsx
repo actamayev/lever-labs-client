@@ -1,6 +1,6 @@
 "use client"
 
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 
 interface Props {
 	text: string
@@ -9,7 +9,7 @@ interface Props {
 
 export default function LandingSectionHeaderText({ text, extraClasses = "" } : Props): React.ReactNode {
 	return (
-		<h2 className={cn("text-5xl md:text-5xl lg:text-5xl font-bold text-humpbackText", extraClasses)}>
+		<h2 className={cn("font-heading text-3xl sm:text-4xl md:text-5xl font-semibold", extraClasses)}>
 			{text}
 		</h2>
 	)

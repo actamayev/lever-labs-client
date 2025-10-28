@@ -2,7 +2,7 @@
 
 import { useMemo } from "react"
 import { observer } from "mobx-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import careerQuestClass from "../../../classes/career-quest-class"
 
 function ChallengeProgressCircle({ careerData } : { careerData: CareerQuestData }): React.ReactNode {

@@ -1,5 +1,5 @@
 "use client"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { buttonVariants } from "../ui/button"
 
 interface Props {

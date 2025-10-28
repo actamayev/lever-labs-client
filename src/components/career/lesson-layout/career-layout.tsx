@@ -1,7 +1,7 @@
 
 "use client"
 import RightContent from "./right-content"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import TransitionOverlay from "../transition/transition-overlay"
 import LeftContentSwiper from "./left-content-swiper"
 

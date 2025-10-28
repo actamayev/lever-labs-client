@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef } from "react"
-import { cn } from "@/lib/shadcn/utils"
+import { cn } from "@/lib/utils"
 
 interface NavigationMorphingTextProps {
 	className?: string

@@ -1,7 +1,7 @@
 "use client"
 
 import { Binary, Repeat2, SquareFunction, Variable } from "lucide-react"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import CustomTooltip from "../custom-tooltip"
 import { CustomConditional } from "../../icons/custom-conditional"
 import getDuolingoColors from "../../utils/get-duolingo-colors"

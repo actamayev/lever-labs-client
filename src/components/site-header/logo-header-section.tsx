@@ -10,7 +10,7 @@ import authClass from "../../classes/auth-class"
 import { PageToNavigateAfterLogin } from "../../utils/constants/page-constants"
 import personalInfoClass from "../../classes/personal-info-class"
 
-function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.ReactNode {
+function LogoHeaderSection(): React.ReactNode {
 	const pathname = usePathname()
 
 	const whereToNavigate = useMemo((): PageNames => {
@@ -25,9 +25,7 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.React
 
 	return (
 		<div
-			className={`inline-flex items-center grow-0 shrink-0 z-10 ${
-				!isScrolled ? "justify-center" : ""
-			}`}
+			className={"inline-flex items-center grow-0 shrink-0 z-10"}
 		>
 			<Link
 				href={whereToNavigate}
@@ -36,15 +34,11 @@ function LogoHeaderSection({ isScrolled } : { isScrolled: boolean}): React.React
 				<Image
 					src="/favicon.svg"
 					alt="Logo"
-					className="h-8 sm:h-10"
+					className="size-16"
 					style={{ verticalAlign: "middle", width: "auto" }}
 					width={32}
 					height={32}
 				/>
-				{/* Text visibility: always show on mobile when not scrolled, hidden on mobile when scrolled */}
-				<span className={`ml-2 ${isScrolled ? "hidden sm:inline" : "inline"}`}>
-					Lever Labs
-				</span>
 			</Link>
 		</div>
 	)

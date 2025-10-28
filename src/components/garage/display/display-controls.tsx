@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { ChevronDown } from "lucide-react"
 import { Input } from "../../ui/input"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import CustomTooltip from "../../custom-tooltip"
 import { buttonVariants } from "../../ui/button"
 import garageClass from "../../../classes/garage-class"

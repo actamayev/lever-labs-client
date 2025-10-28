@@ -2,7 +2,7 @@
 
 import { TvMinimal, Volume2 } from "lucide-react"
 
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import CustomTooltip from "../custom-tooltip"
 import { CustomMotor } from "../../icons/custom-motor"
 import { CustomRuler } from "../../icons/custom-ruler"

@@ -11,7 +11,7 @@ import {
 	DialogClose
 } from "../ui/dialog"
 import { Input } from "../ui/input"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import editClassroomName from "../../utils/teacher/edit-classroom-name"

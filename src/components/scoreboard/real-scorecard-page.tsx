@@ -7,7 +7,7 @@ import { ArrowLeft, Play, Pause, Car, Lightbulb, Plus, Minus, Users, RotateCcw }
 import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../buttons/tactile-button"
 import { Card, CardContent } from "../ui/card"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import updateScoreboardTime from "../../utils/teacher/scoreboard/update-scoreboard-time"

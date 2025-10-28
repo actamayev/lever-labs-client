@@ -1,6 +1,6 @@
 "use client"
 
-import { cn } from "../lib/shadcn/utils"
+import { cn } from "../lib/utils"
 import isUndefined from "lodash-es/isUndefined"
 
 interface Props {

@@ -1,7 +1,7 @@
 "use client"
 import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import BatteryWorkbench from "./battery/battery-workbench"
 import NetworkWorkbench from "./network/network-workbench"
 import SoundWorkbench from "./sound/sound-workbench"

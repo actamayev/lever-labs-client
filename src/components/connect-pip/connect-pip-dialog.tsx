@@ -9,7 +9,7 @@ import {
 	DialogTitle,
 	DialogClose
 } from "../ui/dialog"
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "../ui/tabs"
+import { Tabs, TabsList, TabsTrigger, TabsContent, TabsContents } from "../ui/shadcn-io/tabs"
 import pipClass from "../../classes/pip-class"
 import UsbConnectionSection from "./usb-connection-section"
 import WifiConnectionSection from "./wifi-connection-section"
@@ -17,7 +17,7 @@ import WifiConnectionSection from "./wifi-connection-section"
 function ConnectToPipDialog(): React.ReactNode {
 	return (
 		<Dialog open={pipClass.isConnectPipDialogOpen} onOpenChange={pipClass.setIsConnectPipDialogOpen}>
-			<DialogContent className="w-96 border-none" onClick={(e): void => e.stopPropagation()}>
+			<DialogContent className="w-full max-w-md sm:max-w-lg border-none" onClick={(e): void => e.stopPropagation()}>
 				<DialogHeader>
 					<DialogTitle className="text-2xl">Connect to Pip</DialogTitle>
 					<DialogClose />
@@ -34,13 +34,15 @@ function ConnectToPipDialog(): React.ReactNode {
 						</TabsTrigger>
 					</TabsList>
 
-					<TabsContent value="wifi">
-						<WifiConnectionSection />
-					</TabsContent>
+					<TabsContents className="w-full">
+						<TabsContent value="wifi" className="w-full">
+							<WifiConnectionSection />
+						</TabsContent>
 
-					<TabsContent value="usb">
-						<UsbConnectionSection />
-					</TabsContent>
+						<TabsContent value="usb" className="w-full">
+							<UsbConnectionSection />
+						</TabsContent>
+					</TabsContents>
 				</Tabs>
 			</DialogContent>
 		</Dialog>

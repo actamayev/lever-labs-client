@@ -4,7 +4,7 @@
 import { observer } from "mobx-react"
 import ReactMarkdown from "react-markdown"
 import { Highlight, themes } from "prism-react-renderer"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import personalInfoClass from "../../classes/personal-info-class"
 
 interface AssistantMessageMarkdownProps {

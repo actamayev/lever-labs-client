@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 
 interface Props {
 	linkTo: StaticPageNames

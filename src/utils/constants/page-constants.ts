@@ -15,7 +15,6 @@ export const PrivatePageNames: PageNames[] = [
 export const OpenPages: PageNames[] = [
 	"/contact",
 	"/mission",
-	"/schools",
 	"/terms",
 	"/privacy",
 	"/community-guidelines"
@@ -45,7 +44,6 @@ export const staticPages = [
 	// Open:
 	"/contact",
 	"/mission",
-	"/schools",
 	"/terms",
 	"/privacy",
 	"/community-guidelines",

@@ -3,7 +3,7 @@
 import { useCallback, useState, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import { BotIcon, WifiHighIcon } from "lucide-react"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import requestToConnectToPip from "../../utils/pip/request-to-connect-to-pip"
@@ -137,10 +137,10 @@ function WifiConnectionSection(): React.ReactNode {
 	return (
 		<div ref={sectionRef} className="space-y-4">
 			<div>
-				<label htmlFor="pipUUID" className="block text-sm font-medium text-wolf mb-2">
+				<label htmlFor="pipUUID" className="block text-lg font-medium text-wolf mb-2">
 					Pip ID
 				</label>
-				<div onClick={handleSlotClick} className="cursor-text">
+				<div onClick={handleSlotClick} className="cursor-text items-center justify-center">
 					<InputOTP
 						maxLength={5}
 						value={pipClass.pipUUIDSearchTerm}
@@ -154,7 +154,7 @@ function WifiConnectionSection(): React.ReactNode {
 							<InputOTPSlot
 								index={0}
 								className={cn(
-									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"w-14 h-20 text-4xl border-2 border-swan rounded-lg",
 									"transition-all ring-0! data-[active=true]:border-humpback!",
 									"first:rounded-l-lg first:border-l-2"
 								)}
@@ -162,28 +162,28 @@ function WifiConnectionSection(): React.ReactNode {
 							<InputOTPSlot
 								index={1}
 								className={cn(
-									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"w-14 h-20 text-4xl border-2 border-swan rounded-lg",
 									"transition-all ring-0! data-[active=true]:border-humpback!"
 								)}
 							/>
 							<InputOTPSlot
 								index={2}
 								className={cn(
-									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"w-14 h-20 text-4xl border-2 border-swan rounded-lg",
 									"transition-all ring-0! data-[active=true]:border-humpback!"
 								)}
 							/>
 							<InputOTPSlot
 								index={3}
 								className={cn(
-									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"w-14 h-20 text-4xl border-2 border-swan rounded-lg",
 									"transition-all ring-0! data-[active=true]:border-humpback!"
 								)}
 							/>
 							<InputOTPSlot
 								index={4}
 								className={cn(
-									"w-12 h-14 text-xl border-2 border-swan rounded-lg",
+									"w-14 h-20 text-4xl border-2 border-swan rounded-lg",
 									"transition-all ring-0! data-[active=true]:border-humpback!",
 									"last:rounded-r-lg last:border-r-2"
 								)}

@@ -2,7 +2,7 @@
 
 import * as React from "react"
 
-import { cn } from "@/lib/shadcn/utils"
+import { cn } from "@/lib/utils"
 
 const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
 	({ className, type, autoComplete = "off", ...props }, ref) => {
@@ -11,7 +11,7 @@ const Input = React.forwardRef<HTMLInputElement, React.ComponentProps<"input">>(
 				type={type}
 				autoComplete={autoComplete} // ⬅️ this ensures no history/autofill
 				className={cn(
-					"flex h-9 w-full rounded-xl border-2 border-input bg-transparent px-3 py-1 text-base shadow-none",
+					"flex h-9 w-full rounded-xl border-2 border-swan bg-transparent px-3 py-1 text-base shadow-none",
 					"file:border-0 file:bg-transparent file:text-sm file:font-medium",
 					"focus-visible:outline-hidden focus-visible:border-ring", // Changed here
 					"disabled:cursor-not-allowed disabled:opacity-50",

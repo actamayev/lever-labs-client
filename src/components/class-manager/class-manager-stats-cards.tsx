@@ -2,7 +2,7 @@
 
 import { Plus, BookOpen, Calendar } from "lucide-react"
 import { observer } from "mobx-react"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import teacherClass from "../../classes/teacher-class"
 import { TactileButton } from "../buttons/tactile-button"

@@ -2,7 +2,7 @@
 
 import { useMemo } from "react"
 import { TriangleIcon } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import CustomTooltip from "../../custom-tooltip"
 
 interface DisplayActionTriangleProps {

@@ -11,12 +11,11 @@ import {
 	SidebarMenu,
 	SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { CustomGarage } from "../../icons/custom-garage"
 import CustomSidebarButton from "./custom-sidebar-button"
 import studentClass from "../../classes/student-class"
 import { CustomSandbox } from "../../icons/custom-sandbox"
-import { CustomBriefcase } from "../../icons/custom-briefcase"
 import teacherClass from "../../classes/teacher-class"
 
 const baseNavData: SidebarNavData[] = [
@@ -26,12 +25,12 @@ const baseNavData: SidebarNavData[] = [
 		icon: Book,
 		textColor: "text-fox"
 	},
-	{
-		title: "Career Quest",
-		url: "/career-quest",
-		icon: CustomBriefcase,
-		textColor: "text-career-quest-yellow"
-	},
+	// {
+	// 	title: "Career Quest",
+	// 	url: "/career-quest",
+	// 	icon: CustomBriefcase,
+	// 	textColor: "text-career-quest-yellow"
+	// },
 	{
 		title: "Sandbox",
 		url: "/sandbox",

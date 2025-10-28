@@ -3,7 +3,7 @@
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
 import { Usb, Wifi, WifiOff } from "lucide-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import pipClass from "../../../classes/pip-class"
 
 interface NetworkIconToShowProps {

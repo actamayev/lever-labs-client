@@ -14,7 +14,6 @@ function NullUserNavLink(): React.ReactNode {
 		pathname === "/" ||
 		pathname === "/contact" ||
 		pathname === "/mission" ||
-		pathname === "/schools" ||
 		pathname === "/community-guidelines" ||
 		pathname === "/privacy" ||
 		pathname === "/terms" ||
@@ -22,25 +21,25 @@ function NullUserNavLink(): React.ReactNode {
 	) {
 		return (
 			<div className="space-x-1 sm:space-x-2 flex flex-row">
-				<LinkAuthHeaderButton title="LOG IN" linkTo="/login" />
-				<LinkAuthHeaderButton title="SIGN UP" linkTo="/register"/>
+				<LinkAuthHeaderButton title="Login" linkTo="/login" />
+				<LinkAuthHeaderButton title="Buy now" linkTo="/" className="border border-swan rounded-full"/>
 			</div>
 		)
 	} else if (pathname === "/register") {
 		return (
-			<LinkAuthHeaderButton title="LOG IN" linkTo="/login" />
+			<LinkAuthHeaderButton title="Login" linkTo="/login" />
 		)
 	} else if (pathname === "/login") {
 		return (
-			<LinkAuthHeaderButton title="SIGN UP" linkTo="/register"/>
+			<LinkAuthHeaderButton title="Register" linkTo="/register"/>
 		)
 	} else if (authClass.showLoginOrRegister === "Login") {
 		return (
-			<SetLoginOrRegisterAuthHeaderButton title="SIGN UP" setShowLoginOrRegister="Register" />
+			<SetLoginOrRegisterAuthHeaderButton title="Register" setShowLoginOrRegister="Register" />
 		)
 	}
 	return (
-		<SetLoginOrRegisterAuthHeaderButton title="LOG IN" setShowLoginOrRegister="Login" />
+		<SetLoginOrRegisterAuthHeaderButton title="Login" setShowLoginOrRegister="Login" />
 	)
 }
 
