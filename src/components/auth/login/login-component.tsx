@@ -21,9 +21,11 @@ import { loginSchema } from "../../../utils/auth/auth-schemas"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
+import authClass from "../../../classes/auth-class"
+import { observer } from "mobx-react"
 
 // eslint-disable-next-line max-lines-per-function
-export default function LoginComponent(): React.ReactNode {
+function LoginComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const [showPassword, setShowPassword] = useState(false)
 	const navigate = useTypedNavigate()
@@ -156,9 +158,19 @@ export default function LoginComponent(): React.ReactNode {
 
 								<div className="text-center text-sm">
 									Don&apos;t have an account?{" "}
-									<Link href="/register" className="underline underline-offset-4">
-										<span className="font-semibold">Register</span>
-									</Link>
+									{pathname === "/login" ? (
+										<Link href="/register" className="underline underline-offset-4">
+											<span className="font-semibold">Register</span>
+										</Link>
+									) : (
+										<button
+											type="button"
+											onClick={(): void => authClass.setShowLoginOrRegister("Register")}
+											className="underline underline-offset-4 font-semibold"
+										>
+											Register
+										</button>
+									)}
 								</div>
 							</form>
 						</Form>
@@ -178,3 +190,5 @@ export default function LoginComponent(): React.ReactNode {
 		</div>
 	)
 }
+
+export default observer(LoginComponent)

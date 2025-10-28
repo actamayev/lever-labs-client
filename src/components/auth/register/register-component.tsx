@@ -22,9 +22,11 @@ import { handleTypeAge, handleTypeUsername } from "../../../utils/handle-type-va
 import CharacterCounter from "../../character-counter"
 import { zodResolver } from "@hookform/resolvers/zod"
 import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
+import authClass from "../../../classes/auth-class"
+import { observer } from "mobx-react"
 
 // eslint-disable-next-line max-lines-per-function
-export default function RegisterComponent(): React.ReactNode {
+function RegisterComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const [showPassword, setShowPassword] = useState(false)
 	const navigate = useTypedNavigate()
@@ -248,9 +250,19 @@ export default function RegisterComponent(): React.ReactNode {
 
 								<div className="text-center text-sm">
 									Already have an account?{" "}
-									<Link href="/login" className="underline underline-offset-4">
-										Login
-									</Link>
+									{pathname === "/register" ? (
+										<Link href="/login" className="underline underline-offset-4">
+											Login
+										</Link>
+									) : (
+										<button
+											type="button"
+											onClick={(): void => authClass.setShowLoginOrRegister("Login")}
+											className="underline underline-offset-4"
+										>
+											Login
+										</button>
+									)}
 								</div>
 							</form>
 						</Form>
@@ -270,3 +282,5 @@ export default function RegisterComponent(): React.ReactNode {
 		</div>
 	)
 }
+
+export default observer(RegisterComponent)
