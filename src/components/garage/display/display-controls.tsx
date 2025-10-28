@@ -10,6 +10,7 @@ import garageClass from "../../../classes/garage-class"
 import DisplayActionTriangle from "./display-action-triangle"
 import { PRE_DEFINED_DESIGNS } from "../../../utils/constants/display-constants"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../../ui/dropdown-menu"
+import { filterProfanity } from "../../../utils/profanity-filter"
 
 // eslint-disable-next-line max-lines-per-function
 function DisplayControls(): React.ReactNode {
@@ -87,9 +88,9 @@ function DisplayControls(): React.ReactNode {
 			<Input
 				placeholder="Enter text..."
 				value={garageClass.textInput}
-				onChange={(e): void => {
+				onChange={async (e): Promise<void> => {
 					if (!isDisabled) {
-						garageClass.setTextInput(e.target.value)
+						await filterProfanity(e.target.value, garageClass.textInput, garageClass.setTextInput)
 					}
 				}}
 				onKeyDown={(e): void => {

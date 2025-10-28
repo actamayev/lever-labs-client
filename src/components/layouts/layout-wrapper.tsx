@@ -1,4 +1,3 @@
-// src/components/layouts/layout-wrapper.tsx
 "use client"
 
 import { useEffect } from "react"
@@ -44,7 +43,7 @@ function LayoutWrapper({ children, initialAuthState }: LayoutWrapperProps): Reac
 			{shouldShowInternalLayout ? (
 				<InternalPagesLayout>{children}</InternalPagesLayout>
 			) : (
-				<PublicOnlyPage isIncompleteSignup={isIncompleteSignup}>
+				<PublicOnlyPage>
 					{children}
 				</PublicOnlyPage>
 			)}

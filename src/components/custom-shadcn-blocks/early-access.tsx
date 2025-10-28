@@ -63,7 +63,7 @@ export default function EarlyAccessForm({
 										<FieldGroup>
 											<div className="flex flex-col items-start gap-2">
 												<div className="flex items-center gap-2">
-													<h1 className="text-2xl font-bold">Get early access</h1>
+													<h2 className="text-2xl font-bold">Get early access</h2>
 												</div>
 												<Badge variant="outline">
 													<span className="relative flex h-3 w-3 mr-2">
