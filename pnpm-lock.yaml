@@ -12,8 +12,8 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.65.0(react@19.2.0))
       '@lever-labs/common-ts':
-        specifier: ^1.0.325
-        version: 1.0.325
+        specifier: ^1.0.327
+        version: 1.0.327
       '@mit-app-inventor/blockly-plugin-workspace-multiselect':
         specifier: ^1.0.2
         version: 1.0.2(blockly@11.1.1)
@@ -753,8 +753,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@lever-labs/common-ts@1.0.325':
-    resolution: {integrity: sha512-19EavVyHSc5EMqeKrL5cXJyKcL746P8nWXs/7aLdDEus228afhaK3U144y2cmKVzX6TRQrHhkRbw6dYG0crKwg==, tarball: https://npm.pkg.github.com/download/@lever-labs/common-ts/1.0.325/c274c4b96ec51f802ce4ce0b0ae75b5ec6818fe3}
+  '@lever-labs/common-ts@1.0.327':
+    resolution: {integrity: sha512-GgjvkwWmDHAklXcGZlrXoxbaJV+Arm6hhKrBP3USAgjdJwAwTeWY89wnMxshQZ+MCm4fDDR6EM0UBw5Wbm592Q==, tarball: https://npm.pkg.github.com/download/@lever-labs/common-ts/1.0.327/237d486af4952f71364ec2deff5caa8d0ea7946d}
 
   '@mit-app-inventor/blockly-plugin-workspace-multiselect@1.0.2':
     resolution: {integrity: sha512-uC0E9ZqQ+ru8e9BFbLkHylYrXRQ3NFg7zG04W6X8dfMY9+AnMICXY9lnt8xpLd4Tr4osYNsEGHF4W0a82flzaQ==}
@@ -4387,7 +4387,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@lever-labs/common-ts@1.0.325':
+  '@lever-labs/common-ts@1.0.327':
     dependencies:
       blockly: 12.3.1
     transitivePeerDependencies:

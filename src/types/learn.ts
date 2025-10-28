@@ -1,16 +1,22 @@
-import { LessonQuestionMap, Question, Lesson } from "@lever-labs/common-ts/types/learn"
+import { LessonQuestionMap, Question, Lesson, QuestionType } from "@lever-labs/common-ts/types/learn"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 
 declare global {
 	interface LocalQuestion extends Omit<Question, "questionType"> {
 		userHasAnsweredCorrectly?: boolean
-		questionType: Question["questionType"] | "DEMO"
+		questionType: QuestionType | "DEMO"
 		fillInBlankAnswer?: {
 			blocklyJson: BlocklyJson
 			cppCode: string
 		}
 		// Server-provided feedback for fill-in-the-blank submissions
 		fillInBlankFeedback?: string
+		actionToCodeOpenEndedAnswer?: {
+			blocklyJson: BlocklyJson
+			cppCode: string
+		}
+		// Server-provided feedback for action-to-code-open-ended submissions
+		actionToCodeOpenEndedFeedback?: string
 	}
 
 	interface LocalLessonQuestionMap extends Omit<LessonQuestionMap, "question"> {

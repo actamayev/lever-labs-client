@@ -7,7 +7,10 @@ import FunctionToBlockQuestion from "./function-to-block-question"
 import BlockToFunctionQuestion from "./block-to-function-question"
 import DemoQuestion from "./demo-question"
 import FillInBlankQuestion from "./fill-in-blank-question"
+import ActionToCodeMultipleChoiceQuestion from "./action-to-code-multiple-choice-question"
+import ActionToCodeOpenEndedQuestion from "./action-to-code-open-ended-question"
 
+// eslint-disable-next-line complexity
 function LessonQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 
@@ -37,6 +40,14 @@ function LessonQuestion(): React.ReactNode {
 
 	if (question.questionType === "FILL_IN_BLANK" && question.fillInTheBlank) {
 		return <FillInBlankQuestion />
+	}
+
+	if (question.questionType === "ACTION_TO_CODE_MULTIPLE_CHOICE" && question.actionToCodeMultipleChoice) {
+		return <ActionToCodeMultipleChoiceQuestion />
+	}
+
+	if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED" && question.actionToCodeOpenEnded) {
+		return <ActionToCodeOpenEndedQuestion />
 	}
 
 	return (

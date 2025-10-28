@@ -54,4 +54,23 @@ export default class LearnDataService extends BaseDataService {
 			this.buildUrl(`/submit-fill-in-the-blank/${lessonId}`), { fillInTheBlankId, userCode }
 		)
 	}
+
+	async submitActionToCodeMultipleChoiceAnswer(
+		lessonId: LessonUUID,
+		answerChoiceId: number
+	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
+			this.buildUrl(`/submit-action-to-code-multiple-choice/${lessonId}`), { answerChoiceId }
+		)
+	}
+
+	async submitActionToCodeOpenEndedAnswer(
+		lessonId: LessonUUID,
+		actionToCodeOpenEndedId: string,
+		userCode: string
+	): Promise<AxiosResponse<CheckCodeResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<CheckCodeResponse | ErrorResponses>(
+			this.buildUrl(`/submit-action-to-code-open-ended/${lessonId}`), { actionToCodeOpenEndedId, userCode }
+		)
+	}
 }

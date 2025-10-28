@@ -6,6 +6,8 @@ import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
+import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
+import submitActionToCodeOpenEndedAnswer from "../utils/learn/submit-action-to-code-open-ended-answer"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -85,6 +87,11 @@ class LearnClass {
 					(c): boolean => c.functionToBlockAnswerChoiceId === answerChoiceId
 				)
 				isCorrect = choice ? choice.isCorrect : false
+			} else if (q.questionType === "ACTION_TO_CODE_MULTIPLE_CHOICE" && q.actionToCodeMultipleChoice) {
+				const choice = q.actionToCodeMultipleChoice.actionToCodeMultipleChoiceAnswerChoice.find(
+					(c): boolean => c.actionToCodeMultipleChoiceAnswerChoiceId === answerChoiceId
+				)
+				isCorrect = choice ? choice.isCorrect : false
 			}
 
 			(mapEntry.question as LocalQuestion).userHasAnsweredCorrectly = isCorrect
@@ -128,6 +135,38 @@ class LearnClass {
 			} else if (!isCorrect && wasCorrect) {
 				lesson.numberQuestionsCorrect -= 1
 			}
+		}
+	})
+
+	public setActionToCodeOpenEndedAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson || !lesson.lessonQuestionMap) return
+
+		let wasCorrect = false
+		let questionFound = false
+
+		for (const mapEntry of lesson.lessonQuestionMap) {
+			if (mapEntry.question.questionId !== questionId) continue
+			const q = mapEntry.question
+			wasCorrect = q.userHasAnsweredCorrectly === true;
+			(mapEntry.question as LocalQuestion).userHasAnsweredCorrectly = isCorrect
+			questionFound = true
+			break
+		}
+
+		// Only update the counter if we actually found and updated the question
+		if (questionFound) {
+			if (isCorrect && !wasCorrect) {
+				lesson.numberQuestionsCorrect += 1
+			} else if (!isCorrect && wasCorrect) {
+				lesson.numberQuestionsCorrect -= 1
+			}
+		}
+
+		if (isCorrect) {
+			soundManager.playCorrect()
+		} else {
+			soundManager.playWrong()
 		}
 	})
 
@@ -188,6 +227,23 @@ class LearnClass {
 		}
 	})
 
+	public setActionToCodeOpenEndedAnswer = action((questionId: string, blocklyJson: BlocklyJson, cppCode: string): void => {
+		// Find the question in the current lesson and store the answer
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+
+		if (!lesson?.lessonQuestionMap) return
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return
+
+		questionMap.question.actionToCodeOpenEndedAnswer = {
+			blocklyJson,
+			cppCode
+		}
+	})
+
 	// eslint-disable-next-line complexity
 	public checkCurrentAnswer = action(async (lessonId: LessonUUID): Promise<boolean> => {
 		if (!this.currentQuestionState) return false
@@ -226,11 +282,35 @@ class LearnClass {
 			)
 			isCorrect = choice ? choice.isCorrect : false
 			await submitBlockToFunctionAnswer(lessonId, question.questionId, selectedAnswerId || 0)
+		} else if (question.questionType === "ACTION_TO_CODE_MULTIPLE_CHOICE" && question.actionToCodeMultipleChoice) {
+			const choice = question.actionToCodeMultipleChoice.actionToCodeMultipleChoiceAnswerChoice.find(
+				(c): boolean => c.actionToCodeMultipleChoiceAnswerChoiceId === selectedAnswerId
+			)
+			isCorrect = choice ? choice.isCorrect : false
+			await submitActionToCodeMultipleChoiceAnswer(lessonId, question.questionId, selectedAnswerId || 0)
+		} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED" && question.actionToCodeOpenEndedAnswer) {
+			// For action-to-code-open-ended, submit the CPP code and capture feedback
+			const result = await submitActionToCodeOpenEndedAnswer(
+				lessonId,
+				question.actionToCodeOpenEnded?.actionToCodeOpenEndedId || "",
+				question.actionToCodeOpenEndedAnswer.cppCode
+			)
+			isCorrect = result.isCorrect
+			;((): void => {
+				// Persist feedback on the question for rendering in the footer
+				const lesson = this.lessonsById.get(lessonId)
+				if (!lesson?.lessonQuestionMap) return
+				const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
+				if (!questionMap) return
+				(questionMap.question as LocalQuestion).actionToCodeOpenEndedFeedback = result.feedback
+			})()
 		}
 
 		// Update the question's correctness in the learn class
 		if (question.questionType === "FILL_IN_BLANK") {
 			this.setFillInBlankAnsweredCorrectness(lessonId, question.questionId, isCorrect)
+		} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+			this.setActionToCodeOpenEndedAnsweredCorrectness(lessonId, question.questionId, isCorrect)
 		} else {
 			this.setQuestionAnsweredCorrectness(lessonId, question.questionId, selectedAnswerId || 0)
 		}
@@ -271,17 +351,21 @@ class LearnClass {
 		this.isInQuestionConfirmationStage = false
 		this.lastAnswerWasCorrect = false
 		this.setSelectedAnswer(null)
-		// Clear any previous fill-in-the-blank feedback when retrying
+		// Clear any previous feedback when retrying
 		if (!this.currentQuestionState) return
 		const { question } = this.currentQuestionState
-		if (question.questionType === "FILL_IN_BLANK") {
+		if (question.questionType === "FILL_IN_BLANK" || question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
 			const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
 				l.lessonQuestionMap?.some((q): boolean => q.question.questionId === question.questionId) ?? false
 			)
 			if (!lesson?.lessonQuestionMap) return
 			const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
 			if (!questionMap) return
-			;(questionMap.question as LocalQuestion).fillInBlankFeedback = ""
+			if (question.questionType === "FILL_IN_BLANK") {
+				;(questionMap.question as LocalQuestion).fillInBlankFeedback = ""
+			} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+				;(questionMap.question as LocalQuestion).actionToCodeOpenEndedFeedback = ""
+			}
 		}
 	})
 
@@ -303,10 +387,13 @@ class LearnClass {
 		// Reset all questions to unanswered state
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			mapEntry.question.userHasAnsweredCorrectly = undefined
-			// Clear any fill-in-blank answers and feedback
+			// Clear any answers and feedback
 			if (mapEntry.question.questionType === "FILL_IN_BLANK") {
 				mapEntry.question.fillInBlankAnswer = undefined
 				mapEntry.question.fillInBlankFeedback = undefined
+			} else if (mapEntry.question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+				mapEntry.question.actionToCodeOpenEndedAnswer = undefined
+				mapEntry.question.actionToCodeOpenEndedFeedback = undefined
 			}
 		}
 

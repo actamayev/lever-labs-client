@@ -23,7 +23,9 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const currentQuestion = learnClass.currentQuestionState?.question
 	const currentCppCode = currentQuestion?.questionType === "FILL_IN_BLANK"
 		? (currentQuestion.fillInBlankAnswer?.cppCode || "")
-		: ""
+		: currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED"
+			? (currentQuestion.actionToCodeOpenEndedAnswer?.cppCode || "")
+			: ""
 	const isSendDisabled = isEmpty(currentCppCode) || pipClass.isSendingCppToPip
 
 	// Get the correct answer for display
@@ -47,6 +49,16 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			return correctChoice ? correctChoice.functionDescriptionText : null
 		}
 
+		if (currentQuestion.questionType === "ACTION_TO_CODE_MULTIPLE_CHOICE" && currentQuestion.actionToCodeMultipleChoice) {
+			const correctChoice = currentQuestion.actionToCodeMultipleChoice.actionToCodeMultipleChoiceAnswerChoice.find(
+				(choice): boolean => choice.isCorrect
+			)
+			return correctChoice ? {
+				codingBlock: correctChoice.codingBlock,
+				codingBlockId: correctChoice.codingBlock.codingBlockId.toString()
+			} : null
+		}
+
 		return null
 	}
 
@@ -55,8 +67,8 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 
 	const handleCheckClick = async (): Promise<void> => {
 		if (isInConfirmationStage) {
-			// For FILL_IN_BLANK: if incorrect, do not advance; let user try again
-			if (currentQuestion?.questionType === "FILL_IN_BLANK" && !lastAnswerWasCorrect) {
+			// For FILL_IN_BLANK and ACTION_TO_CODE_OPEN_ENDED: if incorrect, do not advance; let user try again
+			if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && !lastAnswerWasCorrect) {
 				learnClass.retryCurrentQuestion()
 				return
 			}
@@ -67,7 +79,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				learnClass.continueToNextQuestion(lessonId)
 				return
 			}
-			if (currentQuestion?.questionType !== "FILL_IN_BLANK") {
+			if (currentQuestion?.questionType !== "FILL_IN_BLANK" && currentQuestion?.questionType !== "ACTION_TO_CODE_OPEN_ENDED") {
 				await learnClass.checkCurrentAnswer(lessonId)
 				return
 			}
@@ -112,6 +124,15 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 					</span>
 				</div>
 			)
+		} else if (currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+			return (
+				<div className="flex items-center gap-3">
+					<X className="size-10 text-cardinal" />
+					<span className="text-xl font-medium text-cardinal text-center max-w-[48ch]">
+						{currentQuestion.actionToCodeOpenEndedFeedback || "Incorrect. Try again!"}
+					</span>
+				</div>
+			)
 		} else if (currentQuestion?.questionType === "FUNCTION_TO_BLOCK") {
 			return (
 				<div className="flex items-center gap-3">
@@ -142,6 +163,21 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 					</div>
 				</div>
 			)
+		} else if (currentQuestion?.questionType === "ACTION_TO_CODE_MULTIPLE_CHOICE") {
+			return (
+				<div className="flex items-center gap-3">
+					<X className="size-10 text-cardinal" />
+					<span className="text-3xl font-semibold text-question-incorrect-red-2">Correct solution:</span>
+					{correctAnswer && typeof correctAnswer === "object" && (
+						<div className="relative h-32 w-96">
+							<LearnMiniSandbox
+								blocklyJson={correctAnswer.codingBlock.codingBlockJson}
+								className="w-full h-full"
+							/>
+						</div>
+					)}
+				</div>
+			)
 		}
 		return null
 	}
@@ -154,9 +190,9 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				footerBackgroundColor
 			)}
 		>
-			{/* Left: Send Code button for Fill-In-The-Blank */}
+			{/* Left: Send Code button for Fill-In-The-Blank and Action-To-Code-Open-Ended */}
 			<div className="h-12 w-48">
-				{currentQuestion?.questionType === "FILL_IN_BLANK" && (
+				{(currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && (
 					<div className="w-48 h-12">
 						<AnimatedStateButton
 							buttonText="Send Code"
@@ -191,20 +227,21 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				className={tactileButtonClass()}
 				shadowHeight={4}
 				disabled={
-					(isSubmitting && currentQuestion?.questionType === "FILL_IN_BLANK") ||
+					(isSubmitting && (currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED")) ||
 					(!isInConfirmationStage &&
 						!hasSelectedAnswer &&
 						currentQuestion?.questionType !== "DEMO" &&
-						currentQuestion?.questionType !== "FILL_IN_BLANK")
+						currentQuestion?.questionType !== "FILL_IN_BLANK" &&
+						currentQuestion?.questionType !== "ACTION_TO_CODE_OPEN_ENDED")
 				}
 			>
 				{((): React.ReactNode => {
 					if (isInConfirmationStage) {
-						if (currentQuestion?.questionType === "FILL_IN_BLANK" && !lastAnswerWasCorrect) return "TRY AGAIN"
+						if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && !lastAnswerWasCorrect) return "TRY AGAIN"
 						return "CONTINUE"
 					}
 					if (currentQuestion?.questionType === "DEMO") return "CONTINUE"
-					if (currentQuestion?.questionType === "FILL_IN_BLANK" && isSubmitting) {
+					if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && isSubmitting) {
 						return (
 							<span className="flex items-center gap-2">
 								<span>CHECKING</span>
