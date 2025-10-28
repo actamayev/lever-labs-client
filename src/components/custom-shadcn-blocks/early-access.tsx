@@ -135,7 +135,7 @@ export default function EarlyAccessForm({
 							</div>
 							<div className="bg-muted relative hidden md:block">
 								<Image
-									src="/side_view.jpg"
+									src="/pip_side_view.jpg"
 									alt="Image"
 									className="absolute inset-0 h-full w-full object-cover"
 									width={500}
