@@ -44,7 +44,7 @@ function LayoutWrapper({ children, initialAuthState }: LayoutWrapperProps): Reac
 			{shouldShowInternalLayout ? (
 				<InternalPagesLayout>{children}</InternalPagesLayout>
 			) : (
-				<PublicOnlyPage isIncompleteSignup={isIncompleteSignup}>
+				<PublicOnlyPage>
 					{children}
 				</PublicOnlyPage>
 			)}
