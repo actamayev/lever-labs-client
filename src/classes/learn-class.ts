@@ -292,7 +292,7 @@ class LearnClass {
 			// For action-to-code-open-ended, submit the CPP code and capture feedback
 			const result = await submitActionToCodeOpenEndedAnswer(
 				lessonId,
-				question.actionToCodeOpenEnded?.actionToCodeOpenEndedId || "",
+				question.questionId,
 				question.actionToCodeOpenEndedAnswer.cppCode
 			)
 			isCorrect = result.isCorrect

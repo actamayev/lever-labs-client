@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 
 "use client"
 
@@ -21,11 +22,17 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
 	const hasSelectedAnswer = learnClass.currentQuestionState?.selectedAnswerId !== null
 	const currentQuestion = learnClass.currentQuestionState?.question
-	const currentCppCode = currentQuestion?.questionType === "FILL_IN_BLANK"
-		? (currentQuestion.fillInBlankAnswer?.cppCode || "")
-		: currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED"
-			? (currentQuestion.actionToCodeOpenEndedAnswer?.cppCode || "")
-			: ""
+	const getCurrentCppCode = (): string => {
+		if (!currentQuestion) return ""
+		if (currentQuestion.questionType === "FILL_IN_BLANK") {
+			return currentQuestion.fillInBlankAnswer?.cppCode || ""
+		}
+		if (currentQuestion.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+			return currentQuestion.actionToCodeOpenEndedAnswer?.cppCode || ""
+		}
+		return ""
+	}
+	const currentCppCode = getCurrentCppCode()
 	const isSendDisabled = isEmpty(currentCppCode) || pipClass.isSendingCppToPip
 
 	// Get the correct answer for display
@@ -73,22 +80,22 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				return
 			}
 			learnClass.continueToNextQuestion(lessonId)
-		} else {
-			// For demo questions, skip confirmation and go directly to next question
-			if (currentQuestion?.questionType === "DEMO") {
-				learnClass.continueToNextQuestion(lessonId)
-				return
-			}
-			if (currentQuestion?.questionType !== "FILL_IN_BLANK" && currentQuestion?.questionType !== "ACTION_TO_CODE_OPEN_ENDED") {
-				await learnClass.checkCurrentAnswer(lessonId)
-				return
-			}
-			setIsSubmitting(true)
-			try {
-				await learnClass.checkCurrentAnswer(lessonId)
-			} finally {
-				setIsSubmitting(false)
-			}
+			return
+		}
+		// For demo questions, skip confirmation and go directly to next question
+		if (currentQuestion?.questionType === "DEMO") {
+			learnClass.continueToNextQuestion(lessonId)
+			return
+		}
+		if (currentQuestion?.questionType !== "FILL_IN_BLANK" && currentQuestion?.questionType !== "ACTION_TO_CODE_OPEN_ENDED") {
+			await learnClass.checkCurrentAnswer(lessonId)
+			return
+		}
+		setIsSubmitting(true)
+		try {
+			await learnClass.checkCurrentAnswer(lessonId)
+		} finally {
+			setIsSubmitting(false)
 		}
 	}
 
