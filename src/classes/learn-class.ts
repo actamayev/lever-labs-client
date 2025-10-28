@@ -8,6 +8,7 @@ import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
 import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
 import submitActionToCodeOpenEndedAnswer from "../utils/learn/submit-action-to-code-open-ended-answer"
+import stopCareerTrigger from "../utils/career-quest/stop-career-trigger"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -326,6 +327,9 @@ class LearnClass {
 		if (!this.currentQuestionState) return
 
 		const { currentQuestionIndex, question } = this.currentQuestionState
+
+		// Stop any career trigger before moving to next question
+		void stopCareerTrigger()
 
 		// If this is a demo question, mark it as correct and increment progress
 		if (question.questionType === "DEMO") {
