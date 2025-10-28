@@ -1,6 +1,5 @@
 "use client"
 
-import Image from "next/image"
 import { observer } from "mobx-react"
 import { useForm } from "react-hook-form"
 import { usePathname } from "next/navigation"
@@ -18,11 +17,10 @@ import loginSubmit from "../../../utils/auth/submit/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
-import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 import authClass from "../../../classes/auth-class"
 import PasswordField from "../password-input"
+import AuthTemplate from "../auth-template"
 
-// eslint-disable-next-line max-lines-per-function
 function LoginComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const navigate = useTypedNavigate()
@@ -43,91 +41,68 @@ function LoginComponent(): React.ReactNode {
 	}, [navigate, pathname])
 
 	return (
-		<div className="grid min-h-svh lg:grid-cols-2">
-			<div className="flex flex-col gap-4 p-6 md:p-10">
-				<div className="flex justify-center gap-2 md:justify-start">
-					<Link href="/" className="flex items-center gap-2 font-medium">
-						<div className="flex size-8 items-center justify-center rounded-md">
-							<Image src="/favicon.svg" alt="Lever Labs" width={40} height={40} />
-						</div>
-						<span className="text-2xl font-bold">Lever Labs</span>
-					</Link>
-				</div>
-				<div className="flex flex-1 items-center justify-center">
-					<div className="w-full max-w-sm md:max-w-md">
-						<Form {...form}>
-							<form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
-								<div className="flex flex-col items-center text-center">
-									<h1 className="text-2xl font-bold">Welcome back</h1>
-									<p className="text-balance text-muted-foreground">Sign in to your account</p>
-								</div>
-
-								{error && <ErrorMessage error={error} />}
-
-								<div className="grid gap-2">
-									<FormField
-										control={form.control}
-										name="contact"
-										render={({ field }): React.ReactElement => (
-											<FormItem>
-												<FormControl>
-													<Input
-														id="contact"
-														type="text"
-														placeholder="Email or Username"
-														{...field}
-														maxLength={100}
-														required
-														// eslint-disable-next-line max-len
-														className="w-full h-12 rounded-xl text-xl! font-light border-2 bg-polar shadow-none border-swan"
-													/>
-												</FormControl>
-												<FormMessage />
-											</FormItem>
-										)}
-									/>
-								</div>
-
-								<PasswordField control={form.control} name={"password"} />
-
-								<AuthButton title="LOGIN" />
-
-								<OrComponent />
-
-								<GoogleSignIn />
-
-								<div className="text-center text-sm">
-									Don&apos;t have an account?{" "}
-									{pathname === "/login" ? (
-										<Link href="/register" className="underline underline-offset-4">
-											<span className="font-semibold">Register</span>
-										</Link>
-									) : (
-										<button
-											type="button"
-											onClick={(): void => authClass.setShowLoginOrRegister("Register")}
-											className="underline underline-offset-4 font-semibold"
-										>
-											Register
-										</button>
-									)}
-								</div>
-							</form>
-						</Form>
-						<TermsAndPrivacyAgreement />
+		<AuthTemplate>
+			<Form {...form}>
+				<form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
+					<div className="flex flex-col items-center text-center">
+						<h1 className="text-2xl font-bold">Welcome back</h1>
+						<p className="text-balance text-muted-foreground">Sign in to your account</p>
 					</div>
-				</div>
-			</div>
-			<div className="relative hidden bg-muted lg:block">
-				<Image
-					src="/favicon.svg"
-					alt="Image"
-					className="absolute inset-0 h-full w-full object-cover"
-					fill
-					priority
-				/>
-			</div>
-		</div>
+
+					{error && <ErrorMessage error={error} />}
+
+					<div className="grid gap-2">
+						<FormField
+							control={form.control}
+							name="contact"
+							render={({ field }): React.ReactElement => (
+								<FormItem>
+									<FormControl>
+										<Input
+											id="contact"
+											type="text"
+											placeholder="Email or Username"
+											{...field}
+											maxLength={100}
+											required
+
+											className="w-full h-12 rounded-xl text-xl! font-light border-2 bg-polar shadow-none border-swan"
+										/>
+									</FormControl>
+									<FormMessage />
+								</FormItem>
+							)}
+						/>
+					</div>
+
+					<PasswordField control={form.control} name={"password"} />
+
+					<AuthButton title="LOGIN" />
+
+					<OrComponent />
+
+					<GoogleSignIn />
+
+					<div className="text-center text-sm">
+						Don&apos;t have an account?{" "}
+						{pathname === "/login" ? (
+							<Link href="/register" className="underline underline-offset-4">
+								<span className="font-semibold">Register</span>
+							</Link>
+						) : (
+							<button
+								type="button"
+								onClick={(): void => authClass.setShowLoginOrRegister("Register")}
+								className="underline underline-offset-4 font-semibold"
+							>
+								Register
+							</button>
+						)}
+					</div>
+				</form>
+			</Form>
+		</AuthTemplate>
+
 	)
 }
 
