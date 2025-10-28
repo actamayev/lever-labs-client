@@ -12,7 +12,7 @@ export default function HeroBackground(): React.ReactNode {
 			{/* Wide screen image */}
 			<img
 				className="wide:opacity-100 opacity-0 w-full h-full object-cover absolute"
-				src="/pip2_new.jpg"
+				src="/pip_wide.jpg"
 				alt="Pip Hero Wide"
 				style={{ objectPosition: "center center" }}
 			/>
@@ -20,7 +20,7 @@ export default function HeroBackground(): React.ReactNode {
 			{/* Mobile image */}
 			<img
 				className="sm:opacity-0 opacity-100 w-full h-full object-cover absolute"
-				src="/pip2_new.jpg"
+				src="/pip_mobile.jpg"
 				alt="Pip Hero Mobile"
 				style={{ objectPosition: "center center" }}
 			/>
