@@ -2,7 +2,6 @@
 
 import { useForm } from "react-hook-form"
 import { usePathname } from "next/navigation"
-import Link from "next/link"
 import { useCallback, useState } from "react"
 import { Form, FormField, FormItem, FormLabel, FormControl, FormMessage } from "@/components/ui/form"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -11,6 +10,7 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Eye, EyeOff } from "lucide-react"
+import Link from "next/link"
 import { GoogleLogin, CredentialResponse } from "@react-oauth/google"
 import useGoogleAuthCallback from "../../../hooks/google-auth/use-google-auth-callback"
 import { isNull, isUndefined } from "lodash-es"
@@ -20,6 +20,7 @@ import loginSubmit from "../../../utils/auth/submit/login-submit"
 import { loginSchema } from "../../../utils/auth/auth-schemas"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { PageToNavigateAfterLogin } from "../../../utils/constants/page-constants"
+import TermsAndPrivacyAgreement from "../terms-and-privacy-agreement"
 
 // eslint-disable-next-line max-lines-per-function
 export default function LoginComponent(): React.ReactNode {
@@ -152,9 +153,9 @@ export default function LoginComponent(): React.ReactNode {
 
 									<div className="text-center text-sm">
 										Don&apos;t have an account?{" "}
-										<a href="/register" className="underline underline-offset-4">
-											Sign up
-										</a>
+										<Link href="/register" className="underline underline-offset-4">
+											<span className="font-semibold">Register</span>
+										</Link>
 									</div>
 								</div>
 							</form>
@@ -168,12 +169,7 @@ export default function LoginComponent(): React.ReactNode {
 						</div>
 					</CardContent>
 				</Card>
-				<div className="text-balance text-center text-xs text-muted-foreground mt-4">
-					By clicking continue, you agree to our {""}
-					<Link href="/terms" className="underline underline-offset-4 hover:text-primary">Terms of Service</Link>{" "}
-					and {""}
-					<Link href="/privacy" className="underline underline-offset-4 hover:text-primary">Privacy Policy</Link>
-				</div>
+				<TermsAndPrivacyAgreement />
 			</div>
 		</div>
 	)
