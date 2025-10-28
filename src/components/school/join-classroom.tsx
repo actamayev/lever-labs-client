@@ -2,7 +2,7 @@
 import { useCallback, useState } from "react"
 import { AlertCircle, CheckCircle } from "lucide-react"
 import { Input } from "../ui/input"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import joinClassroom from "../../utils/student/join-classroom"

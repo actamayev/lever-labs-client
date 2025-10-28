@@ -1,7 +1,7 @@
 "use client"
 import { isNull } from "lodash-es"
 import { observer } from "mobx-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import BatteryWorkbenchIcon from "./battery-workbench-icon"
 import workbenchClass from "../../../classes/workbench-class"
 import WorkbenchIconTemplate from "../workbench-icon-template"

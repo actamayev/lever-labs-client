@@ -4,19 +4,28 @@ const config: Config = {
 	darkMode: "class",
 	content: [
 		"./src/**/*.{js,ts,jsx,tsx}",
-		"./src/styles/**.css"
+		"./app/**/*.{js,ts,jsx,tsx}",
+		"./src/styles/**/*.css"
 	],
-	// Note: safelist is not supported in Tailwind v4
-	// Use @source inline() in your CSS file instead
 	theme: {
 		extend: {
+			screens: {
+				"xs": "475px",
+				"wide": "1900px",
+			},
+			maxWidth: {
+				"9xl": "1536px",
+			},
 			fontFamily: {
 				sans: ["var(--font-lexend)", "sans-serif"],
+				heading: ["var(--font-lexend)", "sans-serif"], // Add your heading font here if different
 			},
 			colors: {
+				// shadcn-compatible base colors
 				background: "hsl(var(--background))",
 				foreground: "hsl(var(--foreground))",
 
+				// Your custom application colors
 				standardBackground: "rgb(var(--standard-background))",
 				standardBackgroundHover: "rgb(var(--standard-background-hover))",
 				selectedSidebarButtonBackground: "rgb(var(--selected-sidebar-button-background))",
@@ -32,11 +41,15 @@ const config: Config = {
 				landingOuterBorder: "rgb(var(--landing-outer-border))",
 				landingDottedLine: "rgb(var(--landing-dotted-line))",
 
+				// Status colors
 				"charging-green": "rgb(var(--charging-green))",
 				"charging-green-1": "rgb(var(--charging-green-1))",
 				"charging-green-2": "rgb(var(--charging-green-2))",
 				"charging-green-3": "rgb(var(--charging-green-3))",
 				careerQuestYellow: "rgb(var(--career-quest-yellow))",
+				"lever-yellow": "rgb(var(--lever-yellow))",
+				"lever-blue": "rgb(var(--lever-blue))",
+				"lever-red": "rgb(var(--lever-red))",
 				"question-correct-green": "rgb(var(--question-correct-green))",
 				"question-correct-green-1": "rgb(var(--question-correct-green-1))",
 				"question-correct-green-2": "rgb(var(--question-correct-green-2))",
@@ -44,7 +57,7 @@ const config: Config = {
 				"question-incorrect-red": "rgb(var(--question-incorrect-red))",
 				"question-incorrect-red-2": "rgb(var(--question-incorrect-red-2))",
 
-				/* Duolingo colors */
+				// Duolingo color palette
 				eel: "rgb(var(--eel))",
 				swan: "rgb(var(--swan))",
 				hare: "rgb(var(--hare))",
@@ -81,6 +94,7 @@ const config: Config = {
 				iMessageBlue: "rgb(var(--iMessageBlue))",
 				iMessageGreen: "rgb(var(--iMessageGreen))",
 
+				// shadcn component colors
 				card: {
 					DEFAULT: "hsl(var(--card))",
 					foreground: "hsl(var(--card-foreground))"
@@ -176,10 +190,14 @@ const config: Config = {
 				"question-correct-green-1": "0 4px 0 0 rgb(var(--question-correct-green-1))",
 				"question-correct-green-2": "0 4px 0 0 rgb(var(--question-correct-green-2))",
 				"question-correct-green-3": "0 4px 0 0 rgb(var(--question-correct-green-3))",
+				"lever-yellow": "0 4px 0 0 rgb(220 200 0)",
+				"lever-blue": "0 4px 0 0 rgb(0 90 160)",
+				"lever-red": "0 4px 0 0 rgb(200 50 30)",
 				"iMessageBlue": "0 4px 0 0 rgb(var(--iMessageBlue))",
 				"iMessageGreen": "0 4px 0 0 rgb(var(--iMessageGreen))",
 			},
 			borderRadius: {
+				xl: "calc(var(--radius) + 4px)",
 				lg: "var(--radius)",
 				md: "calc(var(--radius) - 2px)",
 				sm: "calc(var(--radius) - 4px)"
@@ -193,10 +211,6 @@ const config: Config = {
 						height: "var(--radix-accordion-content-height)"
 					}
 				},
-				"caret-blink": {
-					"0%,70%,100%": { opacity: "1" },
-					"20%,50%": { opacity: "0" },
-				},
 				"accordion-up": {
 					from: {
 						height: "var(--radix-accordion-content-height)"
@@ -204,6 +218,10 @@ const config: Config = {
 					to: {
 						height: "0"
 					}
+				},
+				"caret-blink": {
+					"0%,70%,100%": { opacity: "1" },
+					"20%,50%": { opacity: "0" },
 				},
 				slide: {
 					"0%, 15%, 100%": {
@@ -263,6 +281,10 @@ const config: Config = {
 			}
 		}
 	},
+	plugins: [
+		require("tailwindcss-animate"),
+		require("@tailwindcss/container-queries"),
+	],
 }
 
 export default config

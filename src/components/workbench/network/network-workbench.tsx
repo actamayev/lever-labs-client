@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { observer } from "mobx-react"
 import isNull from "lodash-es/isNull"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import NetworkContent from "./network-content"
 import pipClass from "../../../classes/pip-class"
 import NetworkIconToShow from "./network-icon-to-show"

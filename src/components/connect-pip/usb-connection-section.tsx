@@ -2,7 +2,7 @@
 
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
@@ -40,8 +40,27 @@ function ConnectToPipDialog(): React.ReactNode {
 	const browserInfo = detectBrowser()
 
 	return (
-		<div className="border-t pt-4">
-			{isSupported ? (
+		<div>
+			{!isSupported ? (
+				<div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-4">
+					<div className="text-sm text-beak-inner-2 font-medium mb-3">
+						{browserInfo.name} Not Supported
+					</div>
+					<div className="text-sm text-fox-2 mb-3">
+						Please use one of the following browsers to connect to Pip over USB and upload your WiFi credentials:
+					</div>
+					<div className="flex items-center gap-3">
+						<div className="flex items-center gap-2">
+							<CustomChrome size={20} />
+							<span className="text-sm text-fox-2">Google Chrome</span>
+						</div>
+						<div className="flex items-center gap-2">
+							<CustomEdge size={20} />
+							<span className="text-sm text-fox-2">Microsoft Edge</span>
+						</div>
+					</div>
+				</div>
+			) : (
 				<>
 					<div className="text-sm font-medium text-wolf mb-3">
 						First time connecting Pip to Wi-Fi?
@@ -75,25 +94,6 @@ function ConnectToPipDialog(): React.ReactNode {
 						</div>
 					</TactileButton>
 				</>
-			) : (
-				<div className="bg-orange-50 dark:bg-orange-900/20 border border-orange-200 dark:border-orange-800 rounded-xl p-4">
-					<div className="text-sm text-beak-inner-2 font-medium mb-3">
-						{browserInfo.name} Not Supported
-					</div>
-					<div className="text-sm text-fox-2 mb-3">
-						Please use one of the following browsers to connect to Pip over USB and upload your WiFi credentials:
-					</div>
-					<div className="flex items-center gap-3">
-						<div className="flex items-center gap-2">
-							<CustomChrome size={20} />
-							<span className="text-sm text-fox-2">Google Chrome</span>
-						</div>
-						<div className="flex items-center gap-2">
-							<CustomEdge size={20} />
-							<span className="text-sm text-fox-2">Microsoft Edge</span>
-						</div>
-					</div>
-				</div>
 			)}
 		</div>
 	)

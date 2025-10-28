@@ -8,7 +8,7 @@ import { Label } from "../ui/label"
 import { Button } from "../ui/button"
 import changePassword from "../../utils/personal-info/change-password"
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 
@@ -56,7 +56,7 @@ function ChangePasswordSection(): React.ReactNode {
 	const colors = getDuolingoColors("humpback")
 
 	return (
-		<Card className="mb-8 max-w-xl w-full">
+		<Card className="mb-8 max-w-xl w-full border-2">
 			<CardHeader className="px-4 md:px-6">
 				<CardTitle className="text-xl md:text-2xl">Change Password</CardTitle>
 			</CardHeader>

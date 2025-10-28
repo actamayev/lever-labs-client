@@ -1,5 +1,5 @@
 import LoginComponent from "../../src/components/auth/login/login-component"
-import PublicOnlyPage from "../../src/components/layouts/classic-layout"
+import PublicOnlyPage from "../../src/components/layouts/public-only-page"
 import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
 
 export const metadata = createMetadata({

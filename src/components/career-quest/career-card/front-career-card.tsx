@@ -2,7 +2,7 @@
 "use client"
 import { motion } from "framer-motion"
 import { observer } from "mobx-react"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import BackFlipButton from "../back-flip-button"
 import SingleComponentUsed from "../single-component-used"
 import { TactileButton } from "../../buttons/tactile-button"

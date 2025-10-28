@@ -13,7 +13,7 @@ import {
 import { Input } from "../../ui/input"
 import editSandboxProjectName from "../../../utils/sandbox/edit-sandbox-project-name"
 import { TactileButton } from "../../buttons/tactile-button"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
 import sandboxClass from "../../../classes/sandbox-class"
 

@@ -3,7 +3,7 @@
 import Link from "next/link"
 import toUpper from "lodash-es/toUpper"
 import { usePathname } from "next/navigation"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 
 export function SupportBorder(): React.ReactNode {
 	return (

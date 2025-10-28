@@ -7,7 +7,7 @@ import learnClass from "../../classes/learn-class"
 import { TactileButton } from "../buttons/tactile-button"
 import LearnMiniSandbox from "./learn-mini-sandbox"
 import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import isOtpInputFocused from "../../utils/check-otp-input-focused"
 
 // eslint-disable-next-line max-lines-per-function

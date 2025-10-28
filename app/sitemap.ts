@@ -38,7 +38,6 @@ const userRoutes: RouteConfig[] = [
 // Account and user pages
 const miscRoutes: RouteConfig[] = [
 	{ path: "/privacy", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/schools", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/mission", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/terms", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/community-guidelines", changeFreq: "monthly", priority: 0.8 },

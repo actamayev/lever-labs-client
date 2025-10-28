@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import LogoHeaderSection from "./logo-header-section"
 import LoginLogoutHeaderItem from "../auth/login-logout-header-item"
 import { LinkAuthHeaderButton } from "../auth/auth-header-links"
@@ -33,7 +33,7 @@ export default function HeaderNav({ isIncompleteSignup = false }: { isIncomplete
 				}`}
 			>
 				{/* Logo section */}
-				<LogoHeaderSection isScrolled={isScrolled} />
+				<LogoHeaderSection />
 
 				{/* Right section with buttons */}
 				<div
@@ -42,10 +42,14 @@ export default function HeaderNav({ isIncompleteSignup = false }: { isIncomplete
 						isScrolled ? "flex" : "hidden sm:flex"
 					)}
 				>
-					{isIncompleteSignup ? <LinkAuthHeaderButton
-						title="FINISH REGISTRATION"
-						linkTo="/register-google"
-					/> : <LoginLogoutHeaderItem />}
+					{!isIncompleteSignup ? (
+						<LoginLogoutHeaderItem />
+					) : (
+						<LinkAuthHeaderButton
+							title="Finish Registration"
+							linkTo="/register-google"
+						/>
+					)}
 				</div>
 			</div>
 		</nav>

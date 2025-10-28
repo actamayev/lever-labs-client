@@ -4,7 +4,7 @@
 import { Car, Lightbulb, Volume2, Monitor } from "lucide-react"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import { TactileButton } from "../buttons/tactile-button"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import teacherClass from "../../classes/teacher-class"
 import updateIndividualStudentDrivingStatus from "../../utils/teacher/update-individual-student-driving-status"
 import updateIndividualStudentLightsStatus from "../../utils/teacher/update-individual-student-lights-status"

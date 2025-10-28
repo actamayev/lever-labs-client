@@ -2,7 +2,7 @@
 
 import isNull from "lodash-es/isNull"
 import { observer } from "mobx-react"
-import { cn } from "../../../../lib/shadcn/utils"
+import { cn } from "../../../../lib/utils"
 import workbenchClass from "../../../../classes/workbench-class"
 import BatteryWorkbenchIcon from "../../../workbench/battery/battery-workbench-icon"
 import useGetBatteryColorClasses from "../../../../hooks/workbench/use-get-battery-color-classes"

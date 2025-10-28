@@ -6,7 +6,7 @@ import { TactileButton } from "../buttons/tactile-button"
 import ConnectToPipDialog from "./connect-pip-dialog"
 import { DuolingoColorVariants } from "../../utils/get-duolingo-colors"
 import pipClass from "../../classes/pip-class"
-import { cn } from "../../lib/shadcn/utils"
+import { cn } from "../../lib/utils"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../utils/constants/constants"
 import searchPipByUUIDUtil from "../../utils/pip/search-pip-by-uuid-util"
 

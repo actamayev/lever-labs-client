@@ -12,7 +12,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuContent
 } from "../../ui/dropdown-menu"
-import { cn } from "../../../lib/shadcn/utils"
+import { cn } from "../../../lib/utils"
 import { Button } from "../../ui/button"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import relativeDateFormatter from "../../../utils/sandbox/date-formatting"
