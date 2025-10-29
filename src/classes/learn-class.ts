@@ -3,9 +3,13 @@ import { Lesson } from "@lever-labs/common-ts/types/learn"
 import { soundManager } from "./utility/sound-manager-class"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import markLessonComplete from "../utils/learn/mark-lesson-complete"
+import stopCareerTrigger from "../utils/career-quest/stop-career-trigger"
 import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
+import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
+import submitActionToCodeOpenEndedAnswer from "../utils/learn/submit-action-to-code-open-ended-answer"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -15,6 +19,8 @@ class LearnClass {
 	public isInQuestionConfirmationStage = false
 	public lastAnswerWasCorrect = false
 	public isExitDialogOpen = false
+	public isLessonCompleted = false
+	public isNavigatingAway = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -35,6 +41,7 @@ class LearnClass {
 				isRetrievingDetailedData: false,
 				hasRetrievedDetailedData: false,
 				numberQuestionsCorrect: 0,
+				numberQuestionsCorrectFirstTry: 0,
 			})
 		}
 	})
@@ -42,7 +49,8 @@ class LearnClass {
 	public setSingleLesson = action((lesson: LocalLesson): void => {
 		this.lessonsById.set(lesson.lessonId, {
 			...lesson,
-			numberQuestionsCorrect: lesson.numberQuestionsCorrect ?? 0
+			numberQuestionsCorrect: lesson.numberQuestionsCorrect ?? 0,
+			numberQuestionsCorrectFirstTry: lesson.numberQuestionsCorrectFirstTry ?? 0
 		})
 	})
 
@@ -59,35 +67,21 @@ class LearnClass {
 	})
 
 	// eslint-disable-next-line complexity
-	public setQuestionAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, answerChoiceId: number): void => {
+	public setQuestionAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
 
 		let wasCorrect = false
-		let isCorrect = false
+		let wasFirstAttempt = false
 
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			if (mapEntry.question.questionId !== questionId) continue
 
 			const q = mapEntry.question
 			wasCorrect = q.userHasAnsweredCorrectly === true
+			wasFirstAttempt = q.userHasAnsweredCorrectly === undefined
 
-			if (q.questionType === "DEMO") {
-				// Demo questions are always considered correct
-				isCorrect = true
-			} else if (q.questionType === "BLOCK_TO_FUNCTION" && q.blockToFunctionFlashcard) {
-				const choice = q.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
-					(c): boolean => c.blockToFunctionAnswerChoiceId === answerChoiceId
-				)
-				isCorrect = choice ? choice.isCorrect : false
-			} else if (q.questionType === "FUNCTION_TO_BLOCK" && q.functionToBlockFlashcard) {
-				const choice = q.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
-					(c): boolean => c.functionToBlockAnswerChoiceId === answerChoiceId
-				)
-				isCorrect = choice ? choice.isCorrect : false
-			}
-
-			(mapEntry.question as LocalQuestion).userHasAnsweredCorrectly = isCorrect
+			mapEntry.question.userHasAnsweredCorrectly = isCorrect
 			break
 		}
 
@@ -98,6 +92,11 @@ class LearnClass {
 			lesson.numberQuestionsCorrect -= 1
 		}
 
+		// Track first-try correct answers
+		if (isCorrect && wasFirstAttempt) {
+			lesson.numberQuestionsCorrectFirstTry += 1
+		}
+
 		if (isCorrect) {
 			soundManager.playCorrect()
 		} else {
@@ -105,18 +104,21 @@ class LearnClass {
 		}
 	})
 
+	// eslint-disable-next-line complexity
 	public setFillInBlankAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
 
 		let wasCorrect = false
+		let wasFirstAttempt = false
 		let questionFound = false
 
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			if (mapEntry.question.questionId !== questionId) continue
 			const q = mapEntry.question
-			wasCorrect = q.userHasAnsweredCorrectly === true;
-			(mapEntry.question as LocalQuestion).userHasAnsweredCorrectly = isCorrect
+			wasCorrect = q.userHasAnsweredCorrectly === true
+			wasFirstAttempt = q.userHasAnsweredCorrectly === undefined
+			mapEntry.question.userHasAnsweredCorrectly = isCorrect
 			questionFound = true
 			break
 		}
@@ -128,6 +130,51 @@ class LearnClass {
 			} else if (!isCorrect && wasCorrect) {
 				lesson.numberQuestionsCorrect -= 1
 			}
+
+			// Track first-try correct answers
+			if (isCorrect && wasFirstAttempt) {
+				lesson.numberQuestionsCorrectFirstTry += 1
+			}
+		}
+	})
+
+	// eslint-disable-next-line complexity
+	public setActionToCodeOpenEndedAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson || !lesson.lessonQuestionMap) return
+
+		let wasCorrect = false
+		let wasFirstAttempt = false
+		let questionFound = false
+
+		for (const mapEntry of lesson.lessonQuestionMap) {
+			if (mapEntry.question.questionId !== questionId) continue
+			const q = mapEntry.question
+			wasCorrect = q.userHasAnsweredCorrectly === true
+			wasFirstAttempt = q.userHasAnsweredCorrectly === undefined
+			mapEntry.question.userHasAnsweredCorrectly = isCorrect
+			questionFound = true
+			break
+		}
+
+		// Only update the counter if we actually found and updated the question
+		if (questionFound) {
+			if (isCorrect && !wasCorrect) {
+				lesson.numberQuestionsCorrect += 1
+			} else if (!isCorrect && wasCorrect) {
+				lesson.numberQuestionsCorrect -= 1
+			}
+
+			// Track first-try correct answers
+			if (isCorrect && wasFirstAttempt) {
+				lesson.numberQuestionsCorrectFirstTry += 1
+			}
+		}
+
+		if (isCorrect) {
+			soundManager.playCorrect()
+		} else {
+			soundManager.playWrong()
 		}
 	})
 
@@ -149,20 +196,33 @@ class LearnClass {
 		lesson.isCompleted = true
 	})
 
+	// eslint-disable-next-line complexity
 	public setCurrentQuestion = action((lessonId: LessonUUID, questionIndex: number): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson?.lessonQuestionMap) return
 
 		const sortedQuestions = [...lesson.lessonQuestionMap].sort((a, b): number => a.order - b.order)
-		const currentQuestion = sortedQuestions[questionIndex]
+
+		// Initialize question order if starting fresh or if it doesn't exist
+		const questionOrder = this.currentQuestionState?.questionOrder ??
+			Array.from({ length: sortedQuestions.length }, (_, i): number => i)
+		const currentOrderPosition = this.currentQuestionState?.currentOrderPosition ?? 0
+		const originalQuestionCount = this.currentQuestionState?.originalQuestionCount ?? sortedQuestions.length
+
+		// Get the actual question index from the order
+		const actualQuestionIndex = questionOrder[currentOrderPosition] ?? questionIndex
+		const currentQuestion = sortedQuestions[actualQuestionIndex]
 
 		if (!currentQuestion) return
 
 		this.currentQuestionState = {
 			question: currentQuestion.question,
 			selectedAnswerId: null,
-			currentQuestionIndex: questionIndex,
-			totalQuestions: sortedQuestions.length
+			currentQuestionIndex: actualQuestionIndex,
+			totalQuestions: sortedQuestions.length,
+			questionOrder,
+			currentOrderPosition,
+			originalQuestionCount
 		}
 	})
 
@@ -183,6 +243,25 @@ class LearnClass {
 		if (!questionMap) return
 
 		questionMap.question.fillInBlankAnswer = {
+			initialJson: questionMap.question.fillInTheBlank?.initialBlocklyJson as BlocklyJson,
+			blocklyJson,
+			cppCode
+		}
+	})
+
+	public setActionToCodeOpenEndedAnswer = action((questionId: string, blocklyJson: BlocklyJson, cppCode: string): void => {
+		// Find the question in the current lesson and store the answer
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+
+		if (!lesson?.lessonQuestionMap) return
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return
+
+		questionMap.question.actionToCodeOpenEndedAnswer = {
+			initialJson: questionMap.question.actionToCodeOpenEnded?.initialBlocklyJson as BlocklyJson,
 			blocklyJson,
 			cppCode
 		}
@@ -201,38 +280,73 @@ class LearnClass {
 		} else if (question.questionType === "FILL_IN_BLANK" && question.fillInBlankAnswer) {
 			// For fill-in-blank, submit the CPP code and capture feedback
 			const result = await submitFillInBlankAnswer(
-				lessonId,
 				question.questionId,
 				question.fillInBlankAnswer.cppCode
 			)
-			isCorrect = result.isCorrect
-			;((): void => {
+			isCorrect = result.isCorrect;
+			((): void => {
 				// Persist feedback on the question for rendering in the footer
 				const lesson = this.lessonsById.get(lessonId)
 				if (!lesson?.lessonQuestionMap) return
 				const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
 				if (!questionMap) return
-				(questionMap.question as LocalQuestion).fillInBlankFeedback = result.feedback
+				questionMap.question.fillInBlankFeedback = result.feedback
 			})()
 		} else if (question.questionType === "FUNCTION_TO_BLOCK" && question.functionToBlockFlashcard) {
-			const choice = question.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
-				(c): boolean => c.functionToBlockAnswerChoiceId === selectedAnswerId
-			)
-			isCorrect = choice ? choice.isCorrect : false
-			await submitFunctionToBlockAnswer(lessonId, question.questionId, selectedAnswerId || 0)
+			const result = await submitFunctionToBlockAnswer(question.questionId, selectedAnswerId || 0)
+			isCorrect = result.isCorrect
+			// Store the correct answer choice ID for display purposes
+			if (result.correctAnswerChoiceId) {
+				question.correctAnswerChoiceId = result.correctAnswerChoiceId
+			}
 		} else if (question.questionType === "BLOCK_TO_FUNCTION" && question.blockToFunctionFlashcard) {
-			const choice = question.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
-				(c): boolean => c.blockToFunctionAnswerChoiceId === selectedAnswerId
+			const result = await submitBlockToFunctionAnswer(question.questionId, selectedAnswerId || 0)
+			isCorrect = result.isCorrect
+			// Store the correct answer choice ID for display purposes
+			if (result.correctAnswerChoiceId) {
+				question.correctAnswerChoiceId = result.correctAnswerChoiceId
+			}
+		} else if (question.questionType === "ACTION_TO_CODE_MULTIPLE_CHOICE" && question.actionToCodeMultipleChoice) {
+			const result = await submitActionToCodeMultipleChoiceAnswer(question.questionId, selectedAnswerId || 0)
+			isCorrect = result.isCorrect
+			// Store the correct answer choice ID for display purposes
+			if (result.correctAnswerChoiceId) {
+				question.correctAnswerChoiceId = result.correctAnswerChoiceId
+			}
+		} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED" && question.actionToCodeOpenEndedAnswer) {
+			// For action-to-code-open-ended, submit the CPP code and capture feedback
+			const result = await submitActionToCodeOpenEndedAnswer(
+				question.questionId,
+				question.actionToCodeOpenEndedAnswer.cppCode
 			)
-			isCorrect = choice ? choice.isCorrect : false
-			await submitBlockToFunctionAnswer(lessonId, question.questionId, selectedAnswerId || 0)
+			isCorrect = result.isCorrect;
+			((): void => {
+				// Persist feedback on the question for rendering in the footer
+				const lesson = this.lessonsById.get(lessonId)
+				if (!lesson?.lessonQuestionMap) return
+				const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
+				if (!questionMap) return
+				questionMap.question.actionToCodeOpenEndedFeedback = result.feedback
+			})()
 		}
 
 		// Update the question's correctness in the learn class
 		if (question.questionType === "FILL_IN_BLANK") {
 			this.setFillInBlankAnsweredCorrectness(lessonId, question.questionId, isCorrect)
+		} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+			this.setActionToCodeOpenEndedAnsweredCorrectness(lessonId, question.questionId, isCorrect)
 		} else {
-			this.setQuestionAnsweredCorrectness(lessonId, question.questionId, selectedAnswerId || 0)
+			this.setQuestionAnsweredCorrectness(lessonId, question.questionId, isCorrect)
+		}
+
+		// If answer is incorrect and we have current question state, add to retry queue
+		if (!isCorrect && this.currentQuestionState) {
+			const { currentQuestionIndex, questionOrder } = this.currentQuestionState
+			// Only add to retry queue if this question isn't already scheduled for retry later
+			const futureOccurrences = questionOrder.slice(this.currentQuestionState.currentOrderPosition + 1)
+			if (!futureOccurrences.includes(currentQuestionIndex)) {
+				this.currentQuestionState.questionOrder.push(currentQuestionIndex)
+			}
 		}
 
 		// Set confirmation stage state
@@ -245,7 +359,10 @@ class LearnClass {
 	public continueToNextQuestion = action((lessonId: LessonUUID): void => {
 		if (!this.currentQuestionState) return
 
-		const { currentQuestionIndex, question } = this.currentQuestionState
+		const { currentQuestionIndex, question, questionOrder, currentOrderPosition } = this.currentQuestionState
+
+		// Stop any career trigger before moving to next question
+		void stopCareerTrigger()
 
 		// If this is a demo question, mark it as correct and increment progress
 		if (question.questionType === "DEMO") {
@@ -256,9 +373,30 @@ class LearnClass {
 			}
 		}
 
-		// Move to next question if not the last question
-		if (currentQuestionIndex < this.currentQuestionState.totalQuestions - 1) {
-			this.setCurrentQuestion(lessonId, currentQuestionIndex + 1)
+		// If question was answered correctly, remove any future occurrences from the order
+		if (question.userHasAnsweredCorrectly === true) {
+			const newQuestionOrder = [...questionOrder]
+			// Remove all future occurrences of this question index (keep current one for now)
+			for (let i = currentOrderPosition + 1; i < newQuestionOrder.length; i++) {
+				if (newQuestionOrder[i] === currentQuestionIndex) {
+					newQuestionOrder.splice(i, 1)
+					i-- // Adjust index after removal
+				}
+			}
+			this.currentQuestionState.questionOrder = newQuestionOrder
+		}
+
+		// Move to next position in the order
+		const nextOrderPosition = currentOrderPosition + 1
+		if (nextOrderPosition < this.currentQuestionState.questionOrder.length) {
+			this.currentQuestionState.currentOrderPosition = nextOrderPosition
+			const nextQuestionIndex = this.currentQuestionState.questionOrder[nextOrderPosition]
+			this.setCurrentQuestion(lessonId, nextQuestionIndex)
+		} else {
+			// Lesson is complete - all questions have been answered
+			this.isLessonCompleted = true
+			this.currentQuestionState = null
+			void markLessonComplete(lessonId)
 		}
 
 		// Exit confirmation stage
@@ -271,17 +409,21 @@ class LearnClass {
 		this.isInQuestionConfirmationStage = false
 		this.lastAnswerWasCorrect = false
 		this.setSelectedAnswer(null)
-		// Clear any previous fill-in-the-blank feedback when retrying
+		// Clear any previous feedback when retrying
 		if (!this.currentQuestionState) return
 		const { question } = this.currentQuestionState
-		if (question.questionType === "FILL_IN_BLANK") {
+		if (question.questionType === "FILL_IN_BLANK" || question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
 			const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
 				l.lessonQuestionMap?.some((q): boolean => q.question.questionId === question.questionId) ?? false
 			)
 			if (!lesson?.lessonQuestionMap) return
 			const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
 			if (!questionMap) return
-			;(questionMap.question as LocalQuestion).fillInBlankFeedback = ""
+			if (question.questionType === "FILL_IN_BLANK") {
+				questionMap.question.fillInBlankFeedback = ""
+			} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+				questionMap.question.actionToCodeOpenEndedFeedback = ""
+			}
 		}
 	})
 
@@ -299,14 +441,18 @@ class LearnClass {
 
 		// Reset the progress counter to 0
 		lesson.numberQuestionsCorrect = 0
+		lesson.numberQuestionsCorrectFirstTry = 0
 
 		// Reset all questions to unanswered state
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			mapEntry.question.userHasAnsweredCorrectly = undefined
-			// Clear any fill-in-blank answers and feedback
+			// Clear any answers and feedback
 			if (mapEntry.question.questionType === "FILL_IN_BLANK") {
 				mapEntry.question.fillInBlankAnswer = undefined
 				mapEntry.question.fillInBlankFeedback = undefined
+			} else if (mapEntry.question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+				mapEntry.question.actionToCodeOpenEndedAnswer = undefined
+				mapEntry.question.actionToCodeOpenEndedFeedback = undefined
 			}
 		}
 
@@ -319,12 +465,22 @@ class LearnClass {
 				this.currentQuestionState = null
 				this.isInQuestionConfirmationStage = false
 				this.lastAnswerWasCorrect = false
+				this.isLessonCompleted = false
+				this.isNavigatingAway = false
 			}
 		}
 	})
 
 	public setIsExitDialogOpen = action((isOpen: boolean): void => {
 		this.isExitDialogOpen = isOpen
+	})
+
+	public setIsLessonCompleted = action((isCompleted: boolean): void => {
+		this.isLessonCompleted = isCompleted
+	})
+
+	public setIsNavigatingAway = action((isNavigating: boolean): void => {
+		this.isNavigatingAway = isNavigating
 	})
 
 	public logout(): void {
@@ -335,6 +491,8 @@ class LearnClass {
 		this.isInQuestionConfirmationStage = false
 		this.lastAnswerWasCorrect = false
 		this.isExitDialogOpen = false
+		this.isLessonCompleted = false
+		this.isNavigatingAway = false
 	}
 }
 

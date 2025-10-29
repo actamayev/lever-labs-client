@@ -17,6 +17,7 @@ interface LearnMiniSandboxProps {
 	className?: string
 }
 
+
 function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps): React.ReactNode {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)

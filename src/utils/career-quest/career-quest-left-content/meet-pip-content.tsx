@@ -80,7 +80,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 						}
 					}, 500)
 				}}
-				className="duration-150 rounded-xl text-4xl h-12"
+				className="rounded-xl text-4xl h-12"
 			/>
 		</div>
 	),
@@ -130,7 +130,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 			<AnimatedStateButton
 				buttonText="YES"
 				onClick={(): Promise<void> => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S2_P4_ENTER)}
-				className="duration-150 rounded-xl text-4xl h-12"
+				className="rounded-xl text-4xl h-12"
 			/>
 		</div>
 	),
@@ -238,7 +238,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 			<AnimatedStateButton
 				buttonText="YES"
 				onClick={(): Promise<void> => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S4_P5_ENTER)}
-				className="duration-150 rounded-xl text-4xl h-12"
+				className="rounded-xl text-4xl h-12"
 
 			/>
 		</div>
@@ -521,7 +521,7 @@ const MEET_PIP_CONTENT_COMPONENTS: Record<string, (onAdvance?: () => void) => Re
 			<AnimatedStateButton
 				buttonText="DANCE"
 				onClick={(): Promise<void> => careerQuestTrigger(CareerType.MEET_PIP, MeetPipTriggerType.S9_P3_ENTER)}
-				className="duration-150 rounded-xl text-4xl h-12"
+				className="rounded-xl text-4xl h-12"
 
 			/>
 		</div>

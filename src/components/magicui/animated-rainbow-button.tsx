@@ -34,7 +34,7 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 		// Add cursor-pointer since it's a button
 		"cursor-pointer",
 		// Add transition duration for tactile effect
-		"duration-150",
+		"duration-0",
 		className
 	)
 	const shadowClass = "shadow-[0_4px_0_0_var(--shadow-color)]"

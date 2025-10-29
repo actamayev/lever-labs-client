@@ -22,7 +22,6 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import authClass from "../../../classes/auth-class"
 import AuthTemplate from "../auth-template"
 
-
 function RegisterComponent(): React.ReactNode {
 	const [error, setError] = useState("")
 	const navigate = useTypedNavigate()
