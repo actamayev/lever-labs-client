@@ -6,12 +6,14 @@ declare global {
 		userHasAnsweredCorrectly?: boolean
 		questionType: QuestionType | "DEMO"
 		fillInBlankAnswer?: {
+			initialJson: BlocklyJson
 			blocklyJson: BlocklyJson
 			cppCode: string
 		}
 		// Server-provided feedback for fill-in-the-blank submissions
 		fillInBlankFeedback?: string
 		actionToCodeOpenEndedAnswer?: {
+			initialJson: BlocklyJson
 			blocklyJson: BlocklyJson
 			cppCode: string
 		}

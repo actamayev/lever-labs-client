@@ -104,6 +104,7 @@ class LearnClass {
 		}
 	})
 
+	// eslint-disable-next-line complexity
 	public setFillInBlankAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
@@ -242,6 +243,7 @@ class LearnClass {
 		if (!questionMap) return
 
 		questionMap.question.fillInBlankAnswer = {
+			initialJson: questionMap.question.fillInTheBlank?.initialBlocklyJson as BlocklyJson,
 			blocklyJson,
 			cppCode
 		}
@@ -259,6 +261,7 @@ class LearnClass {
 		if (!questionMap) return
 
 		questionMap.question.actionToCodeOpenEndedAnswer = {
+			initialJson: questionMap.question.actionToCodeOpenEnded?.initialBlocklyJson as BlocklyJson,
 			blocklyJson,
 			cppCode
 		}

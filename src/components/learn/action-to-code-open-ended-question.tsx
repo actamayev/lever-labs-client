@@ -218,7 +218,10 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 
 	return (
 		<div className="space-y-6">
-			{/* Play Demo Button */}
+			<h2 className="text-3xl font-semibold text-question-text text-center">
+				{questionText}
+			</h2>
+
 			<div className="flex justify-center">
 				<TactileButton
 					onClick={handlePlayDemo}
@@ -234,13 +237,9 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 				</TactileButton>
 			</div>
 
-			<h2 className="text-3xl font-semibold text-question-text text-center">
-				{questionText}
-			</h2>
-
 			<div
 				ref={containerRef}
-				className={cn("relative z-0 rounded-3xl overflow-hidden border-swan border-2 h-[500px] flex-1")}
+				className={cn("relative z-0 rounded-3xl overflow-hidden border-swan border-2 h-[400px] flex-1")}
 				style={{ pointerEvents: "auto" }}
 			>
 				<BlocklyWorkspace

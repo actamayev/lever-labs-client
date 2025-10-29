@@ -60,6 +60,20 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 		}
 	}
 
+	const isDisabled = useCallback((): boolean => {
+		if (isLessonCompleted) return false
+
+		const isOpenEndedQuestion = currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED"
+
+		if (isOpenEndedQuestion && isSubmitting) return true
+
+		if (!isInConfirmationStage && currentQuestion?.questionType !== "DEMO" && !isOpenEndedQuestion && !hasSelectedAnswer) {
+			return true
+		}
+
+		return false
+	}, [isLessonCompleted, currentQuestion?.questionType, isSubmitting, isInConfirmationStage, hasSelectedAnswer])
+
 	const shadowClass = useCallback((): string => {
 		if (!isInConfirmationStage || lastAnswerWasCorrect) {
 			return "shadow-charging-green-2"
@@ -81,15 +95,7 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 			shadowClass={shadowClass()}
 			className={tactileButtonClass()}
 			shadowHeight={4}
-			disabled={
-				!isLessonCompleted &&
-					((isSubmitting && (currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED")) ||
-					(!isInConfirmationStage &&
-						!hasSelectedAnswer &&
-						currentQuestion?.questionType !== "DEMO" &&
-						currentQuestion?.questionType !== "FILL_IN_BLANK" &&
-						currentQuestion?.questionType !== "ACTION_TO_CODE_OPEN_ENDED"))
-			}
+			disabled={isDisabled()}
 		>
 			{((): React.ReactNode => {
 				if (isLessonCompleted) return "CONTINUE"
