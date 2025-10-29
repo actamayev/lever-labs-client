@@ -27,7 +27,7 @@ function LessonQuestions({ lessonId }: { lessonId: LessonUUID}): React.ReactNode
 	}
 
 	return (
-		<div className="min-h-[400px] flex flex-col justify-center">
+		<div className="flex-1 min-h-0 flex flex-col justify-start">
 			<LessonQuestion />
 		</div>
 	)

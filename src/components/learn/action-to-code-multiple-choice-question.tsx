@@ -81,7 +81,7 @@ function ActionToCodeMultipleChoiceQuestion(): React.ReactNode {
 					shadowHeight={4}
 				>
 					<Play className="size-6 fill-current" />
-					Play Demo
+					PLAY DEMO
 				</TactileButton>
 			</div>
 
