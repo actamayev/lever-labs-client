@@ -20,6 +20,7 @@ class LearnClass {
 	public lastAnswerWasCorrect = false
 	public isExitDialogOpen = false
 	public isLessonCompleted = false
+	public isNavigatingAway = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -436,6 +437,7 @@ class LearnClass {
 				this.isInQuestionConfirmationStage = false
 				this.lastAnswerWasCorrect = false
 				this.isLessonCompleted = false
+				this.isNavigatingAway = false
 			}
 		}
 	})
@@ -448,6 +450,10 @@ class LearnClass {
 		this.isLessonCompleted = isCompleted
 	})
 
+	public setIsNavigatingAway = action((isNavigating: boolean): void => {
+		this.isNavigatingAway = isNavigating
+	})
+
 	public logout(): void {
 		this.isRetrievingAllLessons = false
 		this.hasRetrievedAllLessons = false
@@ -457,6 +463,7 @@ class LearnClass {
 		this.lastAnswerWasCorrect = false
 		this.isExitDialogOpen = false
 		this.isLessonCompleted = false
+		this.isNavigatingAway = false
 	}
 }
 

@@ -81,9 +81,14 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const handleCheckClick = async (): Promise<void> => {
 		// Handle lesson completion screen - navigate back to learn
 		if (isLessonCompleted) {
-			learnClass.setIsLessonCompleted(false)
+			learnClass.setIsNavigatingAway(true)
 			navigate("/learn")
-			learnClass.resetLessonProgress(lessonId)
+			// Reset states after navigation has started
+			setTimeout((): void => {
+				learnClass.resetLessonProgress(lessonId)
+				learnClass.setIsLessonCompleted(false)
+				learnClass.setIsNavigatingAway(false)
+			}, 100)
 			return
 		}
 
