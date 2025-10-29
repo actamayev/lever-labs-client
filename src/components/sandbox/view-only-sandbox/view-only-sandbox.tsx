@@ -189,7 +189,7 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 						buttonText="SEND CODE"
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 						onClick={handleSendCode}
-						className="flex-1 duration-150 rounded-xl text-xl h-12 font-semibold"
+						className="flex-1 rounded-xl text-xl h-12 font-semibold"
 					/>
 					<TactileButton
 						className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"

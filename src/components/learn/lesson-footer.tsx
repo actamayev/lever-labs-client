@@ -83,6 +83,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		if (isLessonCompleted) {
 			learnClass.setIsLessonCompleted(false)
 			navigate("/learn")
+			learnClass.resetLessonProgress(lessonId)
 			return
 		}
 
@@ -229,7 +230,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				{(currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && (
 					<div className="w-48 h-12">
 						<AnimatedStateButton
-							buttonText="Send Code"
+							buttonText="SEND CODE"
 							isDisabled={isSendDisabled}
 							onClick={async (event): Promise<void> => {
 								await sendCppToPip(currentCppCode, (event.currentTarget as HTMLButtonElement).getBoundingClientRect())

@@ -5,17 +5,14 @@ import { useCallback, useEffect, useMemo } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import pipClass from "../../classes/pip-class"
 import learnClass from "../../classes/learn-class"
+import ExitLessonDialog from "./exit-lesson-dialog"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-// import { TactileButton } from "../shadcn/ui/tactile-button"
-// import { BotIcon } from "lucide-react"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import NetworkWorkbench from "../workbench/network/network-workbench"
 import ConnectToPipButton from "../connect-pip/connect-to-pip-button"
 import stopCareerTrigger from "../../utils/career-quest/stop-career-trigger"
 import SandboxBatterySection from "../sandbox/sandbox-project/header/sandbox-battery-section"
-import ExitLessonDialog from "./exit-lesson-dialog"
 
-// eslint-disable-next-line max-lines-per-function
 function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const lesson = learnClass.getLesson(lessonId)
@@ -61,13 +58,6 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		navigate("/learn")
 		stopCareerTrigger()
 		learnClass.resetLessonProgress(lessonId)
-	}, [navigate, lesson, lessonId])
-
-	const handleEndSession = useCallback((): void => {
-		// Reset lesson progress before navigating away
-		if (lesson) learnClass.resetLessonProgress(lessonId)
-		navigate("/learn")
-		stopCareerTrigger()
 	}, [navigate, lesson, lessonId])
 
 	return (
@@ -117,17 +107,8 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 						/>
 					</div>
 				)}
-
-				{/* Right: Bot button */}
-				{/* <TactileButton
-					onClick={handleBotClick}
-					shadowClass="shadow-macaw-2"
-					className="w-10 h-10 bg-macaw"
-				>
-					<BotIcon className="size-10 text-standard-background"/>
-				</TactileButton> */}
 			</header>
-			<ExitLessonDialog onEndSession={handleEndSession} />
+			<ExitLessonDialog lessonId={lessonId}/>
 		</>
 	)
 }
