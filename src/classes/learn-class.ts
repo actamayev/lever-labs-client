@@ -3,13 +3,13 @@ import { Lesson } from "@lever-labs/common-ts/types/learn"
 import { soundManager } from "./utility/sound-manager-class"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import markLessonComplete from "../utils/learn/mark-lesson-complete"
+import stopCareerTrigger from "../utils/career-quest/stop-career-trigger"
 import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
 import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
 import submitActionToCodeOpenEndedAnswer from "../utils/learn/submit-action-to-code-open-ended-answer"
-import stopCareerTrigger from "../utils/career-quest/stop-career-trigger"
-import markLessonComplete from "../utils/learn/mark-lesson-complete"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -41,6 +41,7 @@ class LearnClass {
 				isRetrievingDetailedData: false,
 				hasRetrievedDetailedData: false,
 				numberQuestionsCorrect: 0,
+				numberQuestionsCorrectFirstTry: 0,
 			})
 		}
 	})
@@ -48,7 +49,8 @@ class LearnClass {
 	public setSingleLesson = action((lesson: LocalLesson): void => {
 		this.lessonsById.set(lesson.lessonId, {
 			...lesson,
-			numberQuestionsCorrect: lesson.numberQuestionsCorrect ?? 0
+			numberQuestionsCorrect: lesson.numberQuestionsCorrect ?? 0,
+			numberQuestionsCorrectFirstTry: lesson.numberQuestionsCorrectFirstTry ?? 0
 		})
 	})
 
@@ -64,17 +66,20 @@ class LearnClass {
 		lesson.hasRetrievedDetailedData = hasRetrieved
 	})
 
+	// eslint-disable-next-line complexity
 	public setQuestionAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
 
 		let wasCorrect = false
+		let wasFirstAttempt = false
 
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			if (mapEntry.question.questionId !== questionId) continue
 
 			const q = mapEntry.question
 			wasCorrect = q.userHasAnsweredCorrectly === true
+			wasFirstAttempt = q.userHasAnsweredCorrectly === undefined
 
 			mapEntry.question.userHasAnsweredCorrectly = isCorrect
 			break
@@ -85,6 +90,11 @@ class LearnClass {
 			lesson.numberQuestionsCorrect += 1
 		} else if (!isCorrect && wasCorrect) {
 			lesson.numberQuestionsCorrect -= 1
+		}
+
+		// Track first-try correct answers
+		if (isCorrect && wasFirstAttempt) {
+			lesson.numberQuestionsCorrectFirstTry += 1
 		}
 
 		if (isCorrect) {
@@ -99,13 +109,15 @@ class LearnClass {
 		if (!lesson || !lesson.lessonQuestionMap) return
 
 		let wasCorrect = false
+		let wasFirstAttempt = false
 		let questionFound = false
 
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			if (mapEntry.question.questionId !== questionId) continue
 			const q = mapEntry.question
-			wasCorrect = q.userHasAnsweredCorrectly === true;
-			(mapEntry.question as LocalQuestion).userHasAnsweredCorrectly = isCorrect
+			wasCorrect = q.userHasAnsweredCorrectly === true
+			wasFirstAttempt = q.userHasAnsweredCorrectly === undefined
+			mapEntry.question.userHasAnsweredCorrectly = isCorrect
 			questionFound = true
 			break
 		}
@@ -117,6 +129,11 @@ class LearnClass {
 			} else if (!isCorrect && wasCorrect) {
 				lesson.numberQuestionsCorrect -= 1
 			}
+
+			// Track first-try correct answers
+			if (isCorrect && wasFirstAttempt) {
+				lesson.numberQuestionsCorrectFirstTry += 1
+			}
 		}
 	})
 
@@ -126,13 +143,15 @@ class LearnClass {
 		if (!lesson || !lesson.lessonQuestionMap) return
 
 		let wasCorrect = false
+		let wasFirstAttempt = false
 		let questionFound = false
 
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			if (mapEntry.question.questionId !== questionId) continue
 			const q = mapEntry.question
-			wasCorrect = q.userHasAnsweredCorrectly === true;
-			(mapEntry.question as LocalQuestion).userHasAnsweredCorrectly = isCorrect
+			wasCorrect = q.userHasAnsweredCorrectly === true
+			wasFirstAttempt = q.userHasAnsweredCorrectly === undefined
+			mapEntry.question.userHasAnsweredCorrectly = isCorrect
 			questionFound = true
 			break
 		}
@@ -143,6 +162,11 @@ class LearnClass {
 				lesson.numberQuestionsCorrect += 1
 			} else if (!isCorrect && wasCorrect) {
 				lesson.numberQuestionsCorrect -= 1
+			}
+
+			// Track first-try correct answers
+			if (isCorrect && wasFirstAttempt) {
+				lesson.numberQuestionsCorrectFirstTry += 1
 			}
 		}
 
@@ -263,7 +287,7 @@ class LearnClass {
 				if (!lesson?.lessonQuestionMap) return
 				const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
 				if (!questionMap) return
-				(questionMap.question as LocalQuestion).fillInBlankFeedback = result.feedback
+				questionMap.question.fillInBlankFeedback = result.feedback
 			})()
 		} else if (question.questionType === "FUNCTION_TO_BLOCK" && question.functionToBlockFlashcard) {
 			const result = await submitFunctionToBlockAnswer(question.questionId, selectedAnswerId || 0)
@@ -299,7 +323,7 @@ class LearnClass {
 				if (!lesson?.lessonQuestionMap) return
 				const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
 				if (!questionMap) return
-				(questionMap.question as LocalQuestion).actionToCodeOpenEndedFeedback = result.feedback
+				questionMap.question.actionToCodeOpenEndedFeedback = result.feedback
 			})()
 		}
 
@@ -393,9 +417,9 @@ class LearnClass {
 			const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
 			if (!questionMap) return
 			if (question.questionType === "FILL_IN_BLANK") {
-				;(questionMap.question as LocalQuestion).fillInBlankFeedback = ""
+				questionMap.question.fillInBlankFeedback = ""
 			} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
-				;(questionMap.question as LocalQuestion).actionToCodeOpenEndedFeedback = ""
+				questionMap.question.actionToCodeOpenEndedFeedback = ""
 			}
 		}
 	})
@@ -414,6 +438,7 @@ class LearnClass {
 
 		// Reset the progress counter to 0
 		lesson.numberQuestionsCorrect = 0
+		lesson.numberQuestionsCorrectFirstTry = 0
 
 		// Reset all questions to unanswered state
 		for (const mapEntry of lesson.lessonQuestionMap) {

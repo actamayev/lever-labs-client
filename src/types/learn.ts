@@ -30,6 +30,7 @@ declare global {
 		hasRetrievedDetailedData: boolean
 		lessonQuestionMap?: LocalLessonQuestionMap[]
 		numberQuestionsCorrect: number
+		numberQuestionsCorrectFirstTry: number
 	}
 
 	interface CurrentQuestionState {
