@@ -5,14 +5,14 @@ import { isErrorResponses } from "../type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
 
-export default async function submitFunctionToBlockAnswer(
+export default async function submitActionToCodeMultipleChoiceAnswer(
 	questionId: QuestionUUID,
 	answerChoiceId: number,
 ): Promise<SubmitMCQResponse> {
 	try {
-		const response = await leverLabsApiClient.learnDataService.submitFunctionToBlockAnswer(questionId, answerChoiceId)
+		const response = await leverLabsApiClient.learnDataService.submitActionToCodeMultipleChoiceAnswer(questionId, answerChoiceId)
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {
-			throw Error("Unable to submit function-to-block answer")
+			throw Error("Unable to submit action-to-code-multiple-choice answer")
 		}
 
 		const isCorrect = response.data.correctAnswerId === answerChoiceId

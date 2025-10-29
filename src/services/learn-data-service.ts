@@ -1,8 +1,9 @@
 import { AxiosResponse } from "axios"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 import { BaseDataService } from "./base-data-service"
-import { ErrorResponses, SuccessResponse, LessonsResponse, DetailedLessonResponse, CheckCodeResponse} from "@lever-labs/common-ts/types/api"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { ErrorResponses, SuccessResponse, LessonsResponse,
+	DetailedLessonResponse, CheckCodeResponse, CheckMCQResponse } from "@lever-labs/common-ts/types/api"
+import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
 
 export default class LearnDataService extends BaseDataService {
 	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {
@@ -28,30 +29,47 @@ export default class LearnDataService extends BaseDataService {
 	}
 
 	async submitBlockToFunctionAnswer(
-		lessonId: LessonUUID,
+		questionId: QuestionUUID,
 		answerChoiceId: number,
-	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
-		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl(`/submit-block-to-function/${lessonId}`), { answerChoiceId }
+	): Promise<AxiosResponse<CheckMCQResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<CheckMCQResponse | ErrorResponses>(
+			this.buildUrl(`/submit-block-to-function/${questionId}`), { answerChoiceId }
 		)
 	}
 
 	async submitFunctionToBlockAnswer(
-		lessonId: LessonUUID,
+		questionId: QuestionUUID,
 		answerChoiceId: number
-	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
-		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
-			this.buildUrl(`/submit-function-to-block/${lessonId}`), { answerChoiceId }
+	): Promise<AxiosResponse<CheckMCQResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<CheckMCQResponse | ErrorResponses>(
+			this.buildUrl(`/submit-function-to-block/${questionId}`), { answerChoiceId }
 		)
 	}
 
 	async submitFillInTheBlankAnswer(
-		lessonId: LessonUUID,
-		fillInTheBlankId: string,
+		questionId: QuestionUUID,
 		userCode: string
 	): Promise<AxiosResponse<CheckCodeResponse | ErrorResponses>> {
 		return await this.httpClient.http.post<CheckCodeResponse | ErrorResponses>(
-			this.buildUrl(`/submit-fill-in-the-blank/${lessonId}`), { fillInTheBlankId, userCode }
+			this.buildUrl(`/submit-fill-in-the-blank/${questionId}`), { userCode }
+		)
+	}
+
+	async submitActionToCodeMultipleChoiceAnswer(
+		questionId: QuestionUUID,
+		answerChoiceId: number
+	): Promise<AxiosResponse<CheckMCQResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<CheckMCQResponse | ErrorResponses>(
+			this.buildUrl(`/submit-action-to-code-multiple-choice/${questionId}`), { answerChoiceId }
+		)
+	}
+
+	async submitActionToCodeOpenEndedAnswer(
+		questionId: QuestionUUID,
+		userCode: string
+	): Promise<AxiosResponse<CheckCodeResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<CheckCodeResponse | ErrorResponses>(
+			this.buildUrl(`/submit-action-to-code-open-ended/${questionId}`), { userCode }
 		)
 	}
 }

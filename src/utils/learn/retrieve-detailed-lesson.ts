@@ -64,6 +64,7 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 			isRetrievingDetailedData: false,
 			hasRetrievedDetailedData: true,
 			numberQuestionsCorrect: 0, // Start with 0, demo will increment when passed
+			numberQuestionsCorrectFirstTry: 0, // Start with 0, will increment for first-try correct answers
 		})
 	} catch (error) {
 		console.error(error)

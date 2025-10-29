@@ -235,7 +235,7 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 									onClick={async (event): Promise<void> => {
 										return await sendCppToPip(project.cppCode, event.currentTarget.getBoundingClientRect())
 									}}
-									className="duration-150 rounded-xl text-4xl"
+									className="rounded-xl text-4xl"
 								/>
 								<TactileButton
 									className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl px-10!"

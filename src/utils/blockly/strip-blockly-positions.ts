@@ -18,3 +18,24 @@ export function stripBlockPositions(blocklyJson: BlocklyJson): BlocklyJson {
 
 	return cloned
 }
+
+function normalizeJson (obj: any): any {
+	if (Array.isArray(obj)) {
+		return obj.map(normalizeJson)
+	}
+	if (obj && typeof obj === "object") {
+		return Object.keys(obj)
+			.sort()
+			.reduce((result: any, key: string): any => {
+				result[key] = normalizeJson(obj[key])
+				return result
+			}, {})
+	}
+	return obj
+}
+
+export function stripAndNormalizeJson(blocklyJson: BlocklyJson): BlocklyJson {
+	const stripped = stripBlockPositions(blocklyJson)
+	const normalized = normalizeJson(stripped)
+	return normalized
+}

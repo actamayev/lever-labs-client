@@ -218,7 +218,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 						buttonText="SEND CODE"
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 						onClick={(event): Promise<void> => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
-						className="flex-1 duration-150 rounded-xl text-xl h-12 font-semibold"
+						className="flex-1 rounded-xl text-xl h-12 font-semibold"
 					/>
 					<TactileButton
 						className={cn(

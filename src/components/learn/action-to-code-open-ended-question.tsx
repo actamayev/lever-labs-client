@@ -7,19 +7,20 @@ import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { BlockNames } from "@lever-labs/common-ts/types/blockly/blockly"
 import { createChallengeToolbox } from "@lever-labs/common-ts/types/utils/blockly-helpers"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { RotateCcw } from "lucide-react"
+import { Play } from "lucide-react"
 import { cn } from "../../lib/utils"
-import { Button } from "../ui/button"
+import { TactileButton } from "../buttons/tactile-button"
 import learnClass from "../../classes/learn-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 import getCppGenerator from "../../utils/cpp/cpp-generator"
+import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 // @ts-expect-error - No type definitions available for this plugin
 import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
 
 // eslint-disable-next-line max-lines-per-function
-function FillInBlankQuestion(): React.ReactNode {
+function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -27,7 +28,7 @@ function FillInBlankQuestion(): React.ReactNode {
 	const [blocksInitialized, setBlocksInitialized] = useState(false)
 	const isFirstChangeRef = useRef(true)
 
-	const fillInTheBlank = currentQuestionState?.question.fillInTheBlank
+	const actionToCodeOpenEnded = currentQuestionState?.question.actionToCodeOpenEnded
 
 	// Initialize blocks before anything else
 	useEffect((): void => {
@@ -40,25 +41,25 @@ function FillInBlankQuestion(): React.ReactNode {
 
 	// Parse the initial blockly JSON from string
 	const parsedInitialJson = useMemo((): BlocklyJson => {
-		if (!fillInTheBlank?.initialBlocklyJson) {
+		if (!actionToCodeOpenEnded?.initialBlocklyJson) {
 			return { blocks: { blocks: [] } }
 		}
-		return fillInTheBlank.initialBlocklyJson
-	}, [fillInTheBlank?.initialBlocklyJson])
+		return actionToCodeOpenEnded.initialBlocklyJson
+	}, [actionToCodeOpenEnded?.initialBlocklyJson])
 
-	// Create toolbox config from fillInTheBlankBlockBank
+	// Create toolbox config from available blocks
 	const toolboxConfig = useMemo((): Blockly.utils.toolbox.ToolboxDefinition => {
-		if (!fillInTheBlank?.availableBlocks) {
+		if (!actionToCodeOpenEnded?.availableBlocks) {
 			return { kind: "flyoutToolbox", contents: [] }
 		}
 		const blockNames = Array.from(new Set(
-			fillInTheBlank.availableBlocks.map((block): BlockNames => block.blockName)
+			actionToCodeOpenEnded.availableBlocks.map((block): BlockNames => block.blockName)
 		))
 
 		// Use createChallengeToolbox to generate the toolbox
 		const blockData = createChallengeToolbox(blockNames)
 		return blockData.toolboxConfig
-	}, [fillInTheBlank?.availableBlocks])
+	}, [actionToCodeOpenEnded?.availableBlocks])
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		const config = getWorkspaceConfig(isDarkMode, false)
@@ -127,33 +128,20 @@ function FillInBlankQuestion(): React.ReactNode {
 			const cppCode = await getCppGenerator().generateCppFromJson(newJson)
 
 			// Store the current answer in the learn class
-			learnClass.setFillInBlankAnswer(currentQuestionState.question.questionId, newJson, cppCode)
+			learnClass.setActionToCodeOpenEndedAnswer(currentQuestionState.question.questionId, newJson, cppCode)
 		} catch (error) {
 			console.error("Failed to generate CPP code:", error)
 		}
 	}, [centerWorkspace, currentQuestionState])
 
-	const resetWorkspace = useCallback(async (): Promise<void> => {
-		const workspace = workspaceRef.current
-		if (!workspace) return
-
-		try {
-		// Load initial JSON back into the workspace
-			Blockly.serialization.workspaces.load(parsedInitialJson, workspace)
-			// Generate fresh CPP from the initial JSON and persist as the current answer
-			const cppCode = await getCppGenerator().generateCppFromJson(parsedInitialJson)
-			if (currentQuestionState) {
-				learnClass.setFillInBlankAnswer(currentQuestionState.question.questionId, parsedInitialJson, cppCode)
-			}
-			// Recenter after reset
-			setTimeout((): void => {
-				centerWorkspace()
-				Blockly.svgResize(workspace)
-			}, 50)
-		} catch (error) {
-			console.error("Failed to reset workspace:", error)
+	const handlePlayDemo = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
+		if (actionToCodeOpenEnded?.referenceSolutionCpp) {
+			await sendCppToPip(
+				actionToCodeOpenEnded.referenceSolutionCpp,
+				(event.currentTarget as HTMLButtonElement).getBoundingClientRect()
+			)
 		}
-	}, [centerWorkspace, currentQuestionState, parsedInitialJson])
+	}
 
 	useEffect((): () => void => {
 		if (!containerRef.current) return (): void => {}
@@ -192,7 +180,7 @@ function FillInBlankQuestion(): React.ReactNode {
 			void (async (): Promise<void> => {
 				const cppCode = await getCppGenerator().generateCppFromJson(parsedInitialJson)
 				if (currentQuestionState) {
-					learnClass.setFillInBlankAnswer(currentQuestionState.question.questionId, parsedInitialJson, cppCode)
+					learnClass.setActionToCodeOpenEndedAnswer(currentQuestionState.question.questionId, parsedInitialJson, cppCode)
 				}
 				setTimeout((): void => {
 					centerWorkspace()
@@ -216,17 +204,17 @@ function FillInBlankQuestion(): React.ReactNode {
 		)
 	}
 
-	if (!fillInTheBlank) {
+	if (!actionToCodeOpenEnded) {
 		return (
 			<div className="text-center">
 				<p className="text-gray-500 dark:text-gray-400">
-					No fill-in-the-blank data available
+					No action-to-code-open-ended data available
 				</p>
 			</div>
 		)
 	}
 
-	const { questionText } = fillInTheBlank
+	const { questionText } = actionToCodeOpenEnded
 
 	return (
 		<div className="space-y-6 flex flex-col min-h-0 flex-1">
@@ -234,27 +222,25 @@ function FillInBlankQuestion(): React.ReactNode {
 				{questionText}
 			</h2>
 
+			<div className="flex justify-center">
+				<TactileButton
+					onClick={handlePlayDemo}
+					shadowClass="shadow-charging-green-2"
+					className={cn(
+						"h-14 px-8 py-4 text-xl font-semibold rounded-2xl text-standard-background",
+						"bg-charging-green duration-0 flex items-center gap-3"
+					)}
+					shadowHeight={4}
+				>
+					<Play className="size-6 fill-current" />
+					PLAY DEMO
+				</TactileButton>
+			</div>
 			<div
 				ref={containerRef}
 				className={cn("relative z-0 rounded-3xl overflow-hidden border-swan border-2 flex-1 min-h-0")}
 				style={{ pointerEvents: "auto" }}
 			>
-				{/* Reset Workspace Button */}
-				<Button
-					variant="outline"
-					size="sm"
-					onClick={(): void => { void resetWorkspace() }}
-					className={cn(
-						"absolute top-2 right-2 z-1 p-2 h-8 w-8 pointer-events-auto",
-						"bg-background/80 backdrop-blur-xs border-border/50",
-						"hover:bg-accent hover:text-accent-foreground",
-						"transition-all duration-200"
-					)}
-					title="Reset blocks to start"
-				>
-					<RotateCcw className="h-4 w-4" />
-				</Button>
-
 				<BlocklyWorkspace
 					toolboxConfiguration={toolboxConfig}
 					initialJson={parsedInitialJson}
@@ -272,5 +258,4 @@ function FillInBlankQuestion(): React.ReactNode {
 	)
 }
 
-export default observer(FillInBlankQuestion)
-
+export default observer(ActionToCodeOpenEndedQuestion)

@@ -87,7 +87,7 @@ function LoginComponent(): React.ReactNode {
 						Don&apos;t have an account?{" "}
 						{pathname === "/login" ? (
 							<Link href="/register" className="underline underline-offset-4">
-								<span className="font-semibold">Register</span>
+								Register
 							</Link>
 						) : (
 							<button
