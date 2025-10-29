@@ -67,7 +67,9 @@ function ActionToCodeMultipleChoiceQuestion(): React.ReactNode {
 
 	return (
 		<div>
-			{/* Play Demo Button */}
+			<h2 className="text-3xl font-semibold text-question-text mb-8">
+				{questionText}
+			</h2>
 			<div className="flex justify-center mb-8">
 				<TactileButton
 					onClick={handlePlayDemo}
@@ -82,10 +84,6 @@ function ActionToCodeMultipleChoiceQuestion(): React.ReactNode {
 					Play Demo
 				</TactileButton>
 			</div>
-
-			<h2 className="text-3xl font-semibold text-question-text mb-8">
-				{questionText}
-			</h2>
 
 			<div
 				className="flex flex-col lg:flex-row justify-center lg:justify-start gap-4 px-4 lg:px-0"

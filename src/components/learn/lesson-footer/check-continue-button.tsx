@@ -8,6 +8,7 @@ import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../../classes/learn-class"
 import { useCallback, useState } from "react"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
+import { stripAndNormalizeJson } from "../../../utils/blockly/strip-blockly-positions"
 
 // eslint-disable-next-line max-lines-per-function
 function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
@@ -67,12 +68,34 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 
 		if (isOpenEndedQuestion && isSubmitting) return true
 
+		// For open-ended questions, check if current JSON matches initial JSON
+		if (isOpenEndedQuestion && !isInConfirmationStage) {
+			let currentJson = {}
+			let initialJson = {}
+
+			if (currentQuestion?.questionType === "FILL_IN_BLANK") {
+				currentJson = currentQuestion.fillInBlankAnswer?.blocklyJson || {}
+				initialJson = currentQuestion.fillInTheBlank?.initialBlocklyJson || {}
+			} else if (currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+				currentJson = currentQuestion.actionToCodeOpenEndedAnswer?.blocklyJson || {}
+				initialJson = currentQuestion.actionToCodeOpenEnded?.initialBlocklyJson || {}
+			}
+
+			const currentJsonStripedAndNormalized = stripAndNormalizeJson(currentJson)
+			const initialJsonStripedAndNormalized = stripAndNormalizeJson(initialJson)
+
+			// Compare the normalized JSONs
+			if (JSON.stringify(currentJsonStripedAndNormalized) === JSON.stringify(initialJsonStripedAndNormalized)) {
+				return true
+			}
+		}
+
 		if (!isInConfirmationStage && currentQuestion?.questionType !== "DEMO" && !isOpenEndedQuestion && !hasSelectedAnswer) {
 			return true
 		}
 
 		return false
-	}, [isLessonCompleted, currentQuestion?.questionType, isSubmitting, isInConfirmationStage, hasSelectedAnswer])
+	}, [isLessonCompleted, currentQuestion, isSubmitting, isInConfirmationStage, hasSelectedAnswer])
 
 	const shadowClass = useCallback((): string => {
 		if (!isInConfirmationStage || lastAnswerWasCorrect) {
