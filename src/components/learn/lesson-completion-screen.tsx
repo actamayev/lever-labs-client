@@ -1,6 +1,5 @@
 "use client"
 
-import { Check } from "lucide-react"
 import { useEffect } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import { soundManager } from "../../classes/utility/sound-manager-class"
@@ -12,7 +11,7 @@ export default function LessonCompletionScreen({ lessonId }: { lessonId: LessonU
 	}, [])
 
 	return (
-		<div className="flex-1 flex items-center justify-center">
+		<div className="h-full flex items-center justify-center">
 			<div className="text-center space-y-8">
 				<h1 className="text-4xl font-bold text-gray-900 dark:text-white">
 					Lesson complete!
