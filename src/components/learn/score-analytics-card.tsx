@@ -5,13 +5,14 @@ import { useMemo } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import { cn } from "../../lib/utils"
+import { observer } from "mobx-react"
 
 interface ScoreAnalyticsCardProps {
 	lessonId: LessonUUID
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function ScoreAnalyticsCard({ lessonId }: ScoreAnalyticsCardProps): React.ReactNode {
+function ScoreAnalyticsCard({ lessonId }: ScoreAnalyticsCardProps): React.ReactNode {
 	const { score, totalQuestions } = useMemo((): { score: number; totalQuestions: number } => {
 		const lesson = learnClass.getLesson(lessonId)
 		if (!lesson?.lessonQuestionMap) {
@@ -116,3 +117,5 @@ export default function ScoreAnalyticsCard({ lessonId }: ScoreAnalyticsCardProps
 		</div>
 	)
 }
+
+export default observer(ScoreAnalyticsCard)
