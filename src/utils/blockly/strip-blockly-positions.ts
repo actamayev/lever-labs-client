@@ -26,7 +26,7 @@ function normalizeJson (obj: any): any {
 	if (obj && typeof obj === "object") {
 		return Object.keys(obj)
 			.sort()
-			.reduce((result: any, key: string) => {
+			.reduce((result: any, key: string): any => {
 				result[key] = normalizeJson(obj[key])
 				return result
 			}, {})
