@@ -199,7 +199,7 @@ class LearnClass {
 
 		// Initialize question order if starting fresh or if it doesn't exist
 		const questionOrder = this.currentQuestionState?.questionOrder ??
-			Array.from({ length: sortedQuestions.length }, (_, i) => i)
+			Array.from({ length: sortedQuestions.length }, (_, i): number => i)
 		const currentOrderPosition = this.currentQuestionState?.currentOrderPosition ?? 0
 		const originalQuestionCount = this.currentQuestionState?.originalQuestionCount ?? sortedQuestions.length
 
