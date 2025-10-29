@@ -17,7 +17,7 @@ function LessonQuestion(): React.ReactNode {
 	if (!currentQuestionState) {
 		return (
 			<div className="text-center">
-				<p className="text-gray-500 dark:text-gray-400">
+				<p className="text-wolf">
 					Loading question...
 				</p>
 			</div>
