@@ -368,6 +368,7 @@ class LearnClass {
 		} else {
 			// Lesson is complete - all questions have been answered
 			this.isLessonCompleted = true
+			this.currentQuestionState = null
 			void markLessonComplete(lessonId)
 		}
 

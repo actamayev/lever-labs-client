@@ -30,7 +30,7 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 				learnClass.resetLessonProgress(lessonId)
 				learnClass.setIsLessonCompleted(false)
 				learnClass.setIsNavigatingAway(false)
-			}, 100)
+			}, 500) // 500ms to allow the navigation to start
 			return
 		}
 
