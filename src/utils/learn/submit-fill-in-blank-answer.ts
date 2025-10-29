@@ -3,18 +3,16 @@
 import isEqual from "lodash-es/isEqual"
 import { isErrorResponses } from "../type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
 import { soundManager } from "../../classes/utility/sound-manager-class"
 
 export default async function submitFillInBlankAnswer(
-	lessonUuid: LessonUUID,
-	fillInTheBlankId: string,
+	questionId: QuestionUUID,
 	cppCode: string,
 ): Promise<{ isCorrect: boolean; feedback: string }> {
 	try {
 		const response = await leverLabsApiClient.learnDataService.submitFillInTheBlankAnswer(
-			lessonUuid,
-			fillInTheBlankId,
+			questionId,
 			cppCode
 		)
 		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {

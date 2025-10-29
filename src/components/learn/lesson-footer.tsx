@@ -36,13 +36,15 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const currentCppCode = getCurrentCppCode()
 	const isSendDisabled = isEmpty(currentCppCode) || pipClass.isSendingCppToPip
 
-	// Get the correct answer for display
+	// Get the correct answer for display using the server-provided correct answer choice ID
 	const getCorrectAnswer = (): { codingBlock: CodingBlock; codingBlockId: string } | string | null => {
-		if (!currentQuestion) return null
+		if (!currentQuestion || !currentQuestion.correctAnswerChoiceId) return null
+
+		const correctAnswerChoiceId = currentQuestion.correctAnswerChoiceId
 
 		if (currentQuestion.questionType === "FUNCTION_TO_BLOCK" && currentQuestion.functionToBlockFlashcard) {
 			const correctChoice = currentQuestion.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
-				(choice): boolean => choice.isCorrect
+				(choice): boolean => choice.functionToBlockAnswerChoiceId === correctAnswerChoiceId
 			)
 			return correctChoice ? {
 				codingBlock: correctChoice.codingBlock,
@@ -52,14 +54,14 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 
 		if (currentQuestion.questionType === "BLOCK_TO_FUNCTION" && currentQuestion.blockToFunctionFlashcard) {
 			const correctChoice = currentQuestion.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
-				(choice): boolean => choice.isCorrect
+				(choice): boolean => choice.blockToFunctionAnswerChoiceId === correctAnswerChoiceId
 			)
 			return correctChoice ? correctChoice.functionDescriptionText : null
 		}
 
 		if (currentQuestion.questionType === "ACTION_TO_CODE_MULTIPLE_CHOICE" && currentQuestion.actionToCodeMultipleChoice) {
 			const correctChoice = currentQuestion.actionToCodeMultipleChoice.actionToCodeMultipleChoiceAnswerChoice.find(
-				(choice): boolean => choice.isCorrect
+				(choice): boolean => choice.actionToCodeMultipleChoiceAnswerChoiceId === correctAnswerChoiceId
 			)
 			return correctChoice ? {
 				codingBlock: correctChoice.codingBlock,
@@ -144,7 +146,6 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		} else if (currentQuestion?.questionType === "FUNCTION_TO_BLOCK") {
 			return (
 				<div className="flex items-center gap-3">
-
 					<X className="size-10 text-cardinal" />
 					<span className="text-3xl font-semibold text-question-incorrect-red-2">Correct solution:</span>
 					{correctAnswer && typeof correctAnswer === "object" && (
@@ -154,6 +155,11 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 								className="w-full h-full"
 							/>
 						</div>
+					)}
+					{!correctAnswer && (
+						<span className="text-xl font-medium text-cardinal text-center max-w-[48ch]">
+							Incorrect. Try again!
+						</span>
 					)}
 				</div>
 			)
@@ -167,6 +173,11 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 							<div className="relative h-32 w-96">
 								{correctAnswer}
 							</div>
+						)}
+						{!correctAnswer && (
+							<span className="text-xl font-medium text-cardinal text-center max-w-[48ch]">
+								Incorrect. Try again!
+							</span>
 						)}
 					</div>
 				</div>
@@ -183,6 +194,11 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 								className="w-full h-full"
 							/>
 						</div>
+					)}
+					{!correctAnswer && (
+						<span className="text-xl font-medium text-cardinal text-center max-w-[48ch]">
+							Incorrect. Try again!
+						</span>
 					)}
 				</div>
 			)

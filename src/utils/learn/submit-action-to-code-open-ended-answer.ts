@@ -3,17 +3,15 @@
 import isEqual from "lodash-es/isEqual"
 import { isErrorResponses } from "../type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
 
 export default async function submitActionToCodeOpenEndedAnswer(
-	lessonUuid: LessonUUID,
-	actionToCodeOpenEndedId: string,
+	questionId: QuestionUUID,
 	userCode: string,
 ): Promise<{ isCorrect: boolean; feedback: string }> {
 	try {
 		const response = await leverLabsApiClient.learnDataService.submitActionToCodeOpenEndedAnswer(
-			lessonUuid,
-			actionToCodeOpenEndedId,
+			questionId,
 			userCode
 		)
 

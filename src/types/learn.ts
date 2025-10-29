@@ -17,6 +17,8 @@ declare global {
 		}
 		// Server-provided feedback for action-to-code-open-ended submissions
 		actionToCodeOpenEndedFeedback?: string
+		// Server-provided correct answer choice ID for multiple choice questions
+		correctAnswerChoiceId?: number
 	}
 
 	interface LocalLessonQuestionMap extends Omit<LessonQuestionMap, "question"> {
@@ -38,6 +40,11 @@ declare global {
 		questionOrder: number[]
 		currentOrderPosition: number
 		originalQuestionCount: number
+	}
+
+	interface SubmitMCQResponse {
+		isCorrect: boolean
+		correctAnswerChoiceId?: number
 	}
 }
 

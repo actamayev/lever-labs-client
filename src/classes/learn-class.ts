@@ -61,13 +61,11 @@ class LearnClass {
 		lesson.hasRetrievedDetailedData = hasRetrieved
 	})
 
-	// eslint-disable-next-line complexity
-	public setQuestionAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, answerChoiceId: number): void => {
+	public setQuestionAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
 
 		let wasCorrect = false
-		let isCorrect = false
 
 		for (const mapEntry of lesson.lessonQuestionMap) {
 			if (mapEntry.question.questionId !== questionId) continue
@@ -75,27 +73,7 @@ class LearnClass {
 			const q = mapEntry.question
 			wasCorrect = q.userHasAnsweredCorrectly === true
 
-			if (q.questionType === "DEMO") {
-				// Demo questions are always considered correct
-				isCorrect = true
-			} else if (q.questionType === "BLOCK_TO_FUNCTION" && q.blockToFunctionFlashcard) {
-				const choice = q.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
-					(c): boolean => c.blockToFunctionAnswerChoiceId === answerChoiceId
-				)
-				isCorrect = choice ? choice.isCorrect : false
-			} else if (q.questionType === "FUNCTION_TO_BLOCK" && q.functionToBlockFlashcard) {
-				const choice = q.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
-					(c): boolean => c.functionToBlockAnswerChoiceId === answerChoiceId
-				)
-				isCorrect = choice ? choice.isCorrect : false
-			} else if (q.questionType === "ACTION_TO_CODE_MULTIPLE_CHOICE" && q.actionToCodeMultipleChoice) {
-				const choice = q.actionToCodeMultipleChoice.actionToCodeMultipleChoiceAnswerChoice.find(
-					(c): boolean => c.actionToCodeMultipleChoiceAnswerChoiceId === answerChoiceId
-				)
-				isCorrect = choice ? choice.isCorrect : false
-			}
-
-			(mapEntry.question as LocalQuestion).userHasAnsweredCorrectly = isCorrect
+			mapEntry.question.userHasAnsweredCorrectly = isCorrect
 			break
 		}
 
@@ -272,7 +250,6 @@ class LearnClass {
 		} else if (question.questionType === "FILL_IN_BLANK" && question.fillInBlankAnswer) {
 			// For fill-in-blank, submit the CPP code and capture feedback
 			const result = await submitFillInBlankAnswer(
-				lessonId,
 				question.questionId,
 				question.fillInBlankAnswer.cppCode
 			)
@@ -286,27 +263,29 @@ class LearnClass {
 				(questionMap.question as LocalQuestion).fillInBlankFeedback = result.feedback
 			})()
 		} else if (question.questionType === "FUNCTION_TO_BLOCK" && question.functionToBlockFlashcard) {
-			const choice = question.functionToBlockFlashcard.functionToBlockAnswerChoice.find(
-				(c): boolean => c.functionToBlockAnswerChoiceId === selectedAnswerId
-			)
-			isCorrect = choice ? choice.isCorrect : false
-			await submitFunctionToBlockAnswer(lessonId, question.questionId, selectedAnswerId || 0)
+			const result = await submitFunctionToBlockAnswer(question.questionId, selectedAnswerId || 0)
+			isCorrect = result.isCorrect
+			// Store the correct answer choice ID for display purposes
+			if (result.correctAnswerChoiceId) {
+				question.correctAnswerChoiceId = result.correctAnswerChoiceId
+			}
 		} else if (question.questionType === "BLOCK_TO_FUNCTION" && question.blockToFunctionFlashcard) {
-			const choice = question.blockToFunctionFlashcard.blockToFunctionAnswerChoice.find(
-				(c): boolean => c.blockToFunctionAnswerChoiceId === selectedAnswerId
-			)
-			isCorrect = choice ? choice.isCorrect : false
-			await submitBlockToFunctionAnswer(lessonId, question.questionId, selectedAnswerId || 0)
+			const result = await submitBlockToFunctionAnswer(question.questionId, selectedAnswerId || 0)
+			isCorrect = result.isCorrect
+			// Store the correct answer choice ID for display purposes
+			if (result.correctAnswerChoiceId) {
+				question.correctAnswerChoiceId = result.correctAnswerChoiceId
+			}
 		} else if (question.questionType === "ACTION_TO_CODE_MULTIPLE_CHOICE" && question.actionToCodeMultipleChoice) {
-			const choice = question.actionToCodeMultipleChoice.actionToCodeMultipleChoiceAnswerChoice.find(
-				(c): boolean => c.actionToCodeMultipleChoiceAnswerChoiceId === selectedAnswerId
-			)
-			isCorrect = choice ? choice.isCorrect : false
-			await submitActionToCodeMultipleChoiceAnswer(lessonId, question.questionId, selectedAnswerId || 0)
+			const result = await submitActionToCodeMultipleChoiceAnswer(question.questionId, selectedAnswerId || 0)
+			isCorrect = result.isCorrect
+			// Store the correct answer choice ID for display purposes
+			if (result.correctAnswerChoiceId) {
+				question.correctAnswerChoiceId = result.correctAnswerChoiceId
+			}
 		} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED" && question.actionToCodeOpenEndedAnswer) {
 			// For action-to-code-open-ended, submit the CPP code and capture feedback
 			const result = await submitActionToCodeOpenEndedAnswer(
-				lessonId,
 				question.questionId,
 				question.actionToCodeOpenEndedAnswer.cppCode
 			)
@@ -327,7 +306,7 @@ class LearnClass {
 		} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
 			this.setActionToCodeOpenEndedAnsweredCorrectness(lessonId, question.questionId, isCorrect)
 		} else {
-			this.setQuestionAnsweredCorrectness(lessonId, question.questionId, selectedAnswerId || 0)
+			this.setQuestionAnsweredCorrectness(lessonId, question.questionId, isCorrect)
 		}
 
 		// If answer is incorrect and we have current question state, add to retry queue
