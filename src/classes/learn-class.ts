@@ -139,6 +139,7 @@ class LearnClass {
 		}
 	})
 
+	// eslint-disable-next-line complexity
 	public setActionToCodeOpenEndedAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
@@ -189,6 +190,7 @@ class LearnClass {
 		lesson.isCompleted = true
 	})
 
+	// eslint-disable-next-line complexity
 	public setCurrentQuestion = action((lessonId: LessonUUID, questionIndex: number): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson?.lessonQuestionMap) return

@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 /* eslint-disable max-len */
 
 "use client"
@@ -16,7 +17,7 @@ import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import pipClass from "../../classes/pip-class"
 import { cn } from "../../lib/utils"
 
-// eslint-disable-next-line max-lines-per-function, complexity
+// eslint-disable-next-line max-lines-per-function
 function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 	const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
@@ -120,7 +121,7 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		return "bg-question-incorrect-red border-question-incorrect-red!"
 	}, [isInConfirmationStage, lastAnswerWasCorrect])
 
-	// eslint-disable-next-line complexity
+
 	function ShowIncorrectAnswerContent(): React.ReactNode {
 		if (currentQuestion?.questionType === "FILL_IN_BLANK") {
 			return (
