@@ -16,13 +16,16 @@ import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import pipClass from "../../classes/pip-class"
 import { cn } from "../../lib/utils"
+import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 
 // eslint-disable-next-line max-lines-per-function
 function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
+	const navigate = useTypedNavigate()
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 	const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
 	const hasSelectedAnswer = learnClass.currentQuestionState?.selectedAnswerId !== null
 	const currentQuestion = learnClass.currentQuestionState?.question
+	const isLessonCompleted = learnClass.isLessonCompleted
 	const getCurrentCppCode = (): string => {
 		if (!currentQuestion) return ""
 		if (currentQuestion.questionType === "FILL_IN_BLANK") {
@@ -76,6 +79,13 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const [isSubmitting, setIsSubmitting] = useState(false)
 
 	const handleCheckClick = async (): Promise<void> => {
+		// Handle lesson completion screen - navigate back to learn
+		if (isLessonCompleted) {
+			learnClass.setIsLessonCompleted(false)
+			navigate("/learn")
+			return
+		}
+
 		if (isInConfirmationStage) {
 			// For FILL_IN_BLANK and ACTION_TO_CODE_OPEN_ENDED: if incorrect, do not advance; let user try again
 			if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && !lastAnswerWasCorrect) {
@@ -251,15 +261,17 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				className={tactileButtonClass()}
 				shadowHeight={4}
 				disabled={
-					(isSubmitting && (currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED")) ||
+					!isLessonCompleted &&
+					((isSubmitting && (currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED")) ||
 					(!isInConfirmationStage &&
 						!hasSelectedAnswer &&
 						currentQuestion?.questionType !== "DEMO" &&
 						currentQuestion?.questionType !== "FILL_IN_BLANK" &&
-						currentQuestion?.questionType !== "ACTION_TO_CODE_OPEN_ENDED")
+						currentQuestion?.questionType !== "ACTION_TO_CODE_OPEN_ENDED"))
 				}
 			>
 				{((): React.ReactNode => {
+					if (isLessonCompleted) return "CONTINUE"
 					if (isInConfirmationStage) {
 						if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && !lastAnswerWasCorrect) return "TRY AGAIN"
 						return "CONTINUE"

@@ -9,6 +9,7 @@ import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function
 import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
 import submitActionToCodeOpenEndedAnswer from "../utils/learn/submit-action-to-code-open-ended-answer"
 import stopCareerTrigger from "../utils/career-quest/stop-career-trigger"
+import markLessonComplete from "../utils/learn/mark-lesson-complete"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -18,6 +19,7 @@ class LearnClass {
 	public isInQuestionConfirmationStage = false
 	public lastAnswerWasCorrect = false
 	public isExitDialogOpen = false
+	public isLessonCompleted = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -253,8 +255,8 @@ class LearnClass {
 				question.questionId,
 				question.fillInBlankAnswer.cppCode
 			)
-			isCorrect = result.isCorrect
-			;((): void => {
+			isCorrect = result.isCorrect;
+			((): void => {
 				// Persist feedback on the question for rendering in the footer
 				const lesson = this.lessonsById.get(lessonId)
 				if (!lesson?.lessonQuestionMap) return
@@ -289,8 +291,8 @@ class LearnClass {
 				question.questionId,
 				question.actionToCodeOpenEndedAnswer.cppCode
 			)
-			isCorrect = result.isCorrect
-			;((): void => {
+			isCorrect = result.isCorrect;
+			((): void => {
 				// Persist feedback on the question for rendering in the footer
 				const lesson = this.lessonsById.get(lessonId)
 				if (!lesson?.lessonQuestionMap) return
@@ -362,6 +364,10 @@ class LearnClass {
 			this.currentQuestionState.currentOrderPosition = nextOrderPosition
 			const nextQuestionIndex = this.currentQuestionState.questionOrder[nextOrderPosition]
 			this.setCurrentQuestion(lessonId, nextQuestionIndex)
+		} else {
+			// Lesson is complete - all questions have been answered
+			this.isLessonCompleted = true
+			void markLessonComplete(lessonId)
 		}
 
 		// Exit confirmation stage
@@ -429,12 +435,17 @@ class LearnClass {
 				this.currentQuestionState = null
 				this.isInQuestionConfirmationStage = false
 				this.lastAnswerWasCorrect = false
+				this.isLessonCompleted = false
 			}
 		}
 	})
 
 	public setIsExitDialogOpen = action((isOpen: boolean): void => {
 		this.isExitDialogOpen = isOpen
+	})
+
+	public setIsLessonCompleted = action((isCompleted: boolean): void => {
+		this.isLessonCompleted = isCompleted
 	})
 
 	public logout(): void {
@@ -445,6 +456,7 @@ class LearnClass {
 		this.isInQuestionConfirmationStage = false
 		this.lastAnswerWasCorrect = false
 		this.isExitDialogOpen = false
+		this.isLessonCompleted = false
 	}
 }
 

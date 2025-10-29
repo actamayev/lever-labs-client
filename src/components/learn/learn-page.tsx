@@ -8,6 +8,7 @@ import retrieveDetailedLesson from "../../utils/learn/retrieve-detailed-lesson"
 import LessonHeader from "./lesson-header"
 import LessonFooter from "./lesson-footer"
 import LessonQuestions from "./lesson-questions"
+import LessonCompletionScreen from "./lesson-completion-screen"
 import { soundManager } from "../../classes/utility/sound-manager-class"
 import authClass from "../../classes/auth-class"
 
@@ -44,6 +45,18 @@ function LearnPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				<div className="flex-1 flex items-center justify-center">
 					<h1 className="text-xl">Lesson not found</h1>
 				</div>
+				<LessonFooter lessonId={lessonId} />
+			</div>
+		)
+	}
+
+	// Show completion screen if lesson is completed
+	if (learnClass.isLessonCompleted) {
+		return (
+			<div className="h-screen flex flex-col">
+				<main className="flex-1 overflow-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-24 py-6">
+					<LessonCompletionScreen lessonId={lessonId} />
+				</main>
 				<LessonFooter lessonId={lessonId} />
 			</div>
 		)
