@@ -229,14 +229,14 @@ function FillInBlankQuestion(): React.ReactNode {
 	const { questionText } = fillInTheBlank
 
 	return (
-		<div className="space-y-6">
+		<div className="space-y-6 flex flex-col min-h-0 flex-1">
 			<h2 className="text-3xl font-semibold text-question-text text-center">
 				{questionText}
 			</h2>
 
 			<div
 				ref={containerRef}
-				className={cn("relative z-0 rounded-3xl overflow-hidden border-swan border-2 h-[500px] flex-1")}
+				className={cn("relative z-0 rounded-3xl overflow-hidden border-swan border-2 flex-1 min-h-0")}
 				style={{ pointerEvents: "auto" }}
 			>
 				{/* Reset Workspace Button */}
@@ -260,7 +260,7 @@ function FillInBlankQuestion(): React.ReactNode {
 					initialJson={parsedInitialJson}
 					workspaceConfiguration={workspaceConfiguration}
 					className={cn(
-						"h-full duration-0",
+						"h-full min-h-0 duration-0",
 						"[&_.blocklyScrollbar]:pointer-events-auto",
 						"[&_.blocklyScrollbarBackground]:pointer-events-auto",
 						"[&_.blocklyScrollbarHandle]:pointer-events-auto"
