@@ -7,12 +7,8 @@ import learnClass from "../../classes/learn-class"
 import { cn } from "../../lib/utils"
 import { observer } from "mobx-react"
 
-interface ScoreAnalyticsCardProps {
-	lessonId: LessonUUID
-}
-
 // eslint-disable-next-line max-lines-per-function
-function ScoreAnalyticsCard({ lessonId }: ScoreAnalyticsCardProps): React.ReactNode {
+function ScoreAnalyticsCard({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const { score, totalQuestions } = useMemo((): { score: number; totalQuestions: number } => {
 		const lesson = learnClass.getLesson(lessonId)
 		if (!lesson?.lessonQuestionMap) {
@@ -110,7 +106,7 @@ function ScoreAnalyticsCard({ lessonId }: ScoreAnalyticsCardProps): React.ReactN
 				</div>
 
 				{/* Questions correct subtitle */}
-				<p className="text-lg text-gray-600 dark:text-gray-400">
+				<p className="text-lg text-wolf">
 					{score} out of {totalQuestions} questions correct
 				</p>
 			</div>

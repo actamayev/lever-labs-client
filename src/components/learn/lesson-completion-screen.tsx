@@ -14,7 +14,6 @@ export default function LessonCompletionScreen({ lessonId }: { lessonId: LessonU
 	return (
 		<div className="flex-1 flex items-center justify-center">
 			<div className="text-center space-y-8">
-				<Check className="size-24 text-charging-green mx-auto" />
 				<h1 className="text-4xl font-bold text-gray-900 dark:text-white">
 					Lesson complete!
 				</h1>
