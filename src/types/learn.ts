@@ -35,6 +35,9 @@ declare global {
 		selectedAnswerId: number | null
 		currentQuestionIndex: number
 		totalQuestions: number
+		questionOrder: number[]
+		currentOrderPosition: number
+		originalQuestionCount: number
 	}
 }
 

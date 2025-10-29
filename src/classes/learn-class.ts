@@ -194,15 +194,27 @@ class LearnClass {
 		if (!lesson?.lessonQuestionMap) return
 
 		const sortedQuestions = [...lesson.lessonQuestionMap].sort((a, b): number => a.order - b.order)
-		const currentQuestion = sortedQuestions[questionIndex]
+
+		// Initialize question order if starting fresh or if it doesn't exist
+		const questionOrder = this.currentQuestionState?.questionOrder ??
+			Array.from({ length: sortedQuestions.length }, (_, i) => i)
+		const currentOrderPosition = this.currentQuestionState?.currentOrderPosition ?? 0
+		const originalQuestionCount = this.currentQuestionState?.originalQuestionCount ?? sortedQuestions.length
+
+		// Get the actual question index from the order
+		const actualQuestionIndex = questionOrder[currentOrderPosition] ?? questionIndex
+		const currentQuestion = sortedQuestions[actualQuestionIndex]
 
 		if (!currentQuestion) return
 
 		this.currentQuestionState = {
 			question: currentQuestion.question,
 			selectedAnswerId: null,
-			currentQuestionIndex: questionIndex,
-			totalQuestions: sortedQuestions.length
+			currentQuestionIndex: actualQuestionIndex,
+			totalQuestions: sortedQuestions.length,
+			questionOrder,
+			currentOrderPosition,
+			originalQuestionCount
 		}
 	})
 
@@ -316,6 +328,16 @@ class LearnClass {
 			this.setQuestionAnsweredCorrectness(lessonId, question.questionId, selectedAnswerId || 0)
 		}
 
+		// If answer is incorrect and we have current question state, add to retry queue
+		if (!isCorrect && this.currentQuestionState) {
+			const { currentQuestionIndex, questionOrder } = this.currentQuestionState
+			// Only add to retry queue if this question isn't already scheduled for retry later
+			const futureOccurrences = questionOrder.slice(this.currentQuestionState.currentOrderPosition + 1)
+			if (!futureOccurrences.includes(currentQuestionIndex)) {
+				this.currentQuestionState.questionOrder.push(currentQuestionIndex)
+			}
+		}
+
 		// Set confirmation stage state
 		this.setIsInQuestionConfirmationStage(true)
 		this.setLastAnswerWasCorrect(isCorrect)
@@ -326,7 +348,7 @@ class LearnClass {
 	public continueToNextQuestion = action((lessonId: LessonUUID): void => {
 		if (!this.currentQuestionState) return
 
-		const { currentQuestionIndex, question } = this.currentQuestionState
+		const { currentQuestionIndex, question, questionOrder, currentOrderPosition } = this.currentQuestionState
 
 		// Stop any career trigger before moving to next question
 		void stopCareerTrigger()
@@ -340,9 +362,25 @@ class LearnClass {
 			}
 		}
 
-		// Move to next question if not the last question
-		if (currentQuestionIndex < this.currentQuestionState.totalQuestions - 1) {
-			this.setCurrentQuestion(lessonId, currentQuestionIndex + 1)
+		// If question was answered correctly, remove any future occurrences from the order
+		if (question.userHasAnsweredCorrectly === true) {
+			const newQuestionOrder = [...questionOrder]
+			// Remove all future occurrences of this question index (keep current one for now)
+			for (let i = currentOrderPosition + 1; i < newQuestionOrder.length; i++) {
+				if (newQuestionOrder[i] === currentQuestionIndex) {
+					newQuestionOrder.splice(i, 1)
+					i-- // Adjust index after removal
+				}
+			}
+			this.currentQuestionState.questionOrder = newQuestionOrder
+		}
+
+		// Move to next position in the order
+		const nextOrderPosition = currentOrderPosition + 1
+		if (nextOrderPosition < this.currentQuestionState.questionOrder.length) {
+			this.currentQuestionState.currentOrderPosition = nextOrderPosition
+			const nextQuestionIndex = this.currentQuestionState.questionOrder[nextOrderPosition]
+			this.setCurrentQuestion(lessonId, nextQuestionIndex)
 		}
 
 		// Exit confirmation stage
