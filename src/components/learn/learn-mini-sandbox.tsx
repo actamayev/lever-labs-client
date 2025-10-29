@@ -17,6 +17,7 @@ interface LearnMiniSandboxProps {
 	className?: string
 }
 
+// eslint-disable-next-line max-lines-per-function
 function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps): React.ReactNode {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -25,6 +26,7 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 	const [isCentered, setIsCentered] = useState(false)
 	const [isCentering, setIsCentering] = useState(false)
 	const [blocksInitialized, setBlocksInitialized] = useState(false)
+	const [hasCollapsedInitially, setHasCollapsedInitially] = useState(false)
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, true, 1, true)
@@ -46,21 +48,34 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
 
+		// Collapse all blocks once on initial load
+		if (!hasCollapsedInitially && workspace.getAllBlocks().length > 0) {
+			workspace.getAllBlocks().forEach((block): void => {
+				// Only collapse top-level blocks; nested blocks follow their parent
+				if (!block.getParent()) {
+					block.setCollapsed(true)
+				}
+			})
+			setHasCollapsedInitially(true)
+		}
+
 		// Center workspace after blocks are loaded
 		if (workspace.getAllBlocks().length > 0 && !isCentered) {
 			setTimeout((): void => {
 				centerWorkspace()
 			}, 100)
 		}
-	}, [isCentered, centerWorkspace])
+	}, [isCentered, centerWorkspace, hasCollapsedInitially])
 
 	useEffect((): void => {
 		setIsCentered(false)
+		setHasCollapsedInitially(false)
 	}, [blocklyJson])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect((): void => {
 		setIsCentered(false)
+		setHasCollapsedInitially(false)
 	}, [pathname])
 
 	// Add effect to center workspace after blocks are loaded
