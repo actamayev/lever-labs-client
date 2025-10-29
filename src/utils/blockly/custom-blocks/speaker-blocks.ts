@@ -34,7 +34,7 @@ export const speakerBlocks: Record<SPEAKER_BLOCK_TYPES, CustomBlock> = {
 			const state = block.getFieldValue(SPEAKER_BLOCK_TYPES.PLAY_SOUND) as SoundNameSensorType
 			// Make the first letter uppercase, rest lowercase
 			const upperFirstState = upperFirst(state.toLowerCase())
-			return `play_sound("${upperFirstState}");\n`
+			return `speaker.play_sound("${upperFirstState}");\n`
 		}
 	},
 	[SPEAKER_BLOCK_TYPES.PLAY_TONE]: {
@@ -63,7 +63,7 @@ export const speakerBlocks: Record<SPEAKER_BLOCK_TYPES, CustomBlock> = {
 			const state = block.getFieldValue(SPEAKER_BLOCK_TYPES.PLAY_TONE) as SoundNameSensorType
 			// Make the first letter uppercase, rest lowercase
 			const upperFirstState = upperFirst(state.toLowerCase())
-			return `play_tone("${upperFirstState}");\n`
+			return `speaker.play_tone("${upperFirstState}");\n`
 		}
 	},
 }

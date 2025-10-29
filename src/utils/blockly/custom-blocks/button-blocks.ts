@@ -18,7 +18,7 @@ export const buttonBlocks: Record<BUTTON_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["button", "press", "click", "touch", "tap", "right", "left", "up", "down"]
 		},
 		generator: (_block: Blockly.Block): [string, number] => {
-			return ["is_right_button_pressed()", Order.FUNCTION_CALL]
+			return ["right_button.is_pressed()", Order.FUNCTION_CALL]
 		}
 	},
 }

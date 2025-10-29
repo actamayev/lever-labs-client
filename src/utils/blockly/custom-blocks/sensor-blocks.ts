@@ -33,7 +33,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const value = block.getFieldValue(SENSORS_FIELD_VALUES.IMU_READ) as IMUSensorType
-			return [`Sensors::getInstance().${value}`, Order.FUNCTION_CALL]
+			return [`imu.${value}`, Order.FUNCTION_CALL]
 		}
 	},
 	[SENSORS_BLOCK_TYPES.SIDE_TOF_READ]: {
@@ -99,6 +99,23 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 		generator: (block: Blockly.Block): [string, number] => {
 			const value = block.getFieldValue(SENSORS_FIELD_VALUES.COLOR_SENSOR_READ) as ColorSensorReadColorsType
 			return [`is_object_${value.toLowerCase()}()`, Order.FUNCTION_CALL]
+		}
+	},
+	[SENSORS_BLOCK_TYPES.GET_FRONT_TOF_DISTANCE]: {
+		definition: {
+			init: function(this: Blockly.Block): void {
+				this.appendDummyInput()
+					.appendField("Inches from object in front")
+				this.setOutput(true, "Number")
+				this.setColour(sensorsCategoryColour)
+				this.setTooltip("Get inches from object in front")
+			},
+			keywords: [
+				"distance", "proximity", "detect", "obstacle", "wall", "barrier", "collision", "avoidance", "front", "ahead"
+			]
+		},
+		generator: (_block: Blockly.Block): [string, number] => {
+			return ["front_tof.get_distance()", Order.FUNCTION_CALL]
 		}
 	}
 }
