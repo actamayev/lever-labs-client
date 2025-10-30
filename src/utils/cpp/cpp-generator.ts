@@ -95,7 +95,7 @@ class CppGenerator {
 		}
 
 		// Get the cpp generator and generate code
-		const cppCode = await getCppGenerator().workspaceToCode(tempWorkspace as Blockly.WorkspaceSvg)
+		const cppCode = await this.workspaceToCode(tempWorkspace as Blockly.WorkspaceSvg)
 
 		// Clean up the temporary workspace
 		tempWorkspace.dispose()

@@ -14,10 +14,10 @@ export const startBlocks: Record<START_BLOCK_TYPES, CustomBlock> = {
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Program will wait until the button is pressed before starting")
 			},
-			keywords: ["begin", "initialize", "trigger", "launch", "wait", "user", "input", "press", "click"]
+			keywords: ["begin", "initialize", "trigger", "launch", "wait", "user", "input", "press", "click", "button", "left"]
 		},
 		generator: (_block: Blockly.Block): string => {
-			return "wait_for_button_press();\n"
+			return "left_button.wait_for_press();\n"
 		}
 	}
 }
