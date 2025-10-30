@@ -73,7 +73,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["distance", "proximity", "detect", "obstacle", "wall", "barrier", "collision", "avoidance", "front", "ahead"]
 		},
 		generator: (_block: Blockly.Block): [string, number] => {
-			return ["is_object_in_front()", Order.FUNCTION_CALL]
+			return ["front_distance_sensor.is_object_in_front()", Order.FUNCTION_CALL]
 		}
 	},
 	[SENSORS_BLOCK_TYPES.COLOR_SENSOR_READ]: {
@@ -115,7 +115,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 			]
 		},
 		generator: (_block: Blockly.Block): [string, number] => {
-			return ["front_tof.get_distance()", Order.FUNCTION_CALL]
+			return ["front_distance_sensor.get_distance()", Order.FUNCTION_CALL]
 		}
 	}
 }

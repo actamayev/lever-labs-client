@@ -233,7 +233,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 			keywords: ["motor", "halt", "brake", "pause", "cease", "end", "quit", "freeze", "standstill"]
 		},
 		generator: (_block: Blockly.Block): string => {
-			return "stopMotors();\n"
+			return "motors.stop();\n"
 		}
 	}
 }

@@ -2,9 +2,9 @@
 
 import * as Blockly from "blockly"
 import { ledCategoryColour } from "../../constants/constants"
-import { LED_BLOCK_TYPES, LED_FIELD_VALUES } from "@lever-labs/common-ts/types/blockly/led"
-import { LEDSensorType, SENSOR_TYPES } from "@lever-labs/common-ts/types/blockly/sensor"
 import { upperFirst } from "lodash-es"
+import { LEDSensorType, SENSOR_TYPES } from "@lever-labs/common-ts/types/blockly/sensor"
+import { LED_BLOCK_TYPES, LED_FIELD_VALUES } from "@lever-labs/common-ts/types/blockly/led"
 
 export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
 	[LED_BLOCK_TYPES.CONTROL_ALL_LEDS]: {
@@ -25,12 +25,12 @@ export const ledBlocks: Record<LED_BLOCK_TYPES, CustomBlock> = {
 				this.setColour(ledCategoryColour)
 				this.setTooltip("Change LED Status")
 			},
-			keywords: ["light", "color", "bright", "dim", "illuminate", "glow", "flash", "blink", "RGB", "bulb"]
+			keywords: ["red", "green", "blue", "purple", "yellow", "white", "off",
+				"light", "color", "bright", "dim", "illuminate", "glow", "flash", "blink", "RGB", "bulb"]
 		},
 		generator: (block: Blockly.Block): string => {
 			const state = block.getFieldValue(LED_FIELD_VALUES.LED_COLOR) as LEDSensorType
-			if (state === "OFF") return "rgbLed.turn_led_off();\n"
-			else return `rgbLed.set_led_${state.toLowerCase()}();\n`
+			return `all_leds.set_color(${state});\n`
 		}
 	}
 }
