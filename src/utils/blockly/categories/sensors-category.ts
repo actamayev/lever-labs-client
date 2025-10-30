@@ -22,7 +22,8 @@ const distanceSensorsCategory: CustomCategoryInfo = {
 	colour: sensorsCategoryColour,
 	contents: [
 		{ kind: "block", type: SENSORS_BLOCK_TYPES.SIDE_TOF_READ},
-		{ kind: "block", type: SENSORS_BLOCK_TYPES.CENTER_TOF_READ}
+		{ kind: "block", type: SENSORS_BLOCK_TYPES.CENTER_TOF_READ},
+		{ kind: "block", type: SENSORS_BLOCK_TYPES.GET_FRONT_TOF_DISTANCE}
 	]
 }
 
