@@ -1,7 +1,6 @@
 "use client"
 
 import * as Blockly from "blockly"
-import toLower from "lodash-es/toLower"
 import { Order } from "../order"
 import { SENSORS_BLOCK_TYPES, SENSORS_FIELD_VALUES,
 	SENSOR_TYPES, IMUSensorType, LeftRightSensorType, ColorSensorReadColorsType } from "@lever-labs/common-ts/types/blockly/sensor"
@@ -58,7 +57,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const sensor = block.getFieldValue(SENSORS_FIELD_VALUES.SIDE_TOF_READ) as LeftRightSensorType
-			return [`is_object_near_side_${toLower(sensor)}()`, Order.FUNCTION_CALL]
+			return [`${sensor.toLowerCase()}_distance_sensor.is_object_near()`, Order.FUNCTION_CALL]
 		}
 	},
 	[SENSORS_BLOCK_TYPES.CENTER_TOF_READ]: {
@@ -98,7 +97,7 @@ export const sensorsBlocks: Record<SENSORS_BLOCK_TYPES, CustomBlock> = {
 		},
 		generator: (block: Blockly.Block): [string, number] => {
 			const value = block.getFieldValue(SENSORS_FIELD_VALUES.COLOR_SENSOR_READ) as ColorSensorReadColorsType
-			return [`is_object_${value.toLowerCase()}()`, Order.FUNCTION_CALL]
+			return [`color_sensor.is_object(${value})`, Order.FUNCTION_CALL]
 		}
 	},
 	[SENSORS_BLOCK_TYPES.GET_FRONT_TOF_DISTANCE]: {

@@ -40,7 +40,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 		generator: (block: Blockly.Block): string => {
 			const direction = block.getFieldValue(MOTOR_FIELD_VALUES.DIRECTION) || MOTOR_DIRECTIONS.FORWARD
 			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
-			return `drive(${toUpper(direction)}, ${percentage});\n`
+			return `motors.drive(${toUpper(direction)}, ${percentage});\n`
 		}
 	},
 	[MOTOR_BLOCK_TYPES.DRIVE_TIME]: {
@@ -101,7 +101,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 			const direction = block.getFieldValue(MOTOR_FIELD_VALUES.DIRECTION) || MOTOR_DIRECTIONS.FORWARD
 			const seconds = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_SECONDS) || "0"
 			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
-			return `drive_time(${toUpper(direction)}, ${seconds}, ${percentage});\n`
+			return `motors.drive_time(${toUpper(direction)}, ${seconds}, ${percentage});\n`
 		}
 	},
 	[MOTOR_BLOCK_TYPES.DRIVE_DISTANCE]: {
@@ -161,7 +161,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 			const direction = block.getFieldValue(MOTOR_FIELD_VALUES.DIRECTION) || MOTOR_DIRECTIONS.FORWARD
 			const distance = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_DISTANCE) || "0"
 			const percentage = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
-			return `drive_distance(${toUpper(direction)}, ${distance}, ${percentage});\n`
+			return `motors.drive_distance(${toUpper(direction)}, ${distance}, ${percentage});\n`
 		}
 	},
 	[MOTOR_BLOCK_TYPES.TURN]: {
@@ -216,7 +216,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 			const direction = block.getFieldValue(MOTOR_FIELD_VALUES.TURN_DIRECTION)
 			const angle = block.getFieldValue(MOTOR_FIELD_VALUES.TURN_DEGREES) || "0"
 
-			return `turn(${direction}, ${angle});\n`
+			return `motors.turn(${direction}, ${angle});\n`
 		}
 	},
 	[MOTOR_BLOCK_TYPES.STOP]: {
