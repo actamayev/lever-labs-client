@@ -4,10 +4,11 @@ import confetti from "canvas-confetti"
 
 // eslint-disable-next-line complexity
 export default function fireConfetti(
-	rect: DOMRect,
+	rect?: DOMRect,
 	confettiOptions?: confetti.Options
 ): void {
 	try {
+		if (!rect) return
 		const x = rect.left + rect.width / 2
 		const y = rect.top + rect.height / 2
 

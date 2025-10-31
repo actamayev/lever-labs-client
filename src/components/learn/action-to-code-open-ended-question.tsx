@@ -16,6 +16,7 @@ import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 import getCppGenerator from "../../utils/cpp/cpp-generator"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
+import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 // @ts-expect-error - No type definitions available for this plugin
 import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
 
@@ -134,11 +135,10 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 		}
 	}, [centerWorkspace, currentQuestionState])
 
-	const handlePlayDemo = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
+	const handlePlayDemo = async (): Promise<void> => {
 		if (actionToCodeOpenEnded?.referenceSolutionCpp) {
 			await sendCppToPip(
-				actionToCodeOpenEnded.referenceSolutionCpp,
-				(event.currentTarget as HTMLButtonElement).getBoundingClientRect()
+				actionToCodeOpenEnded.referenceSolutionCpp
 			)
 		}
 	}
@@ -222,7 +222,7 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 				{questionText}
 			</h2>
 
-			<div className="flex justify-center">
+			<div className="flex justify-center gap-3">
 				<TactileButton
 					onClick={handlePlayDemo}
 					shadowClass="shadow-charging-green-2"
@@ -234,6 +234,13 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 				>
 					<Play className="size-6 fill-current" />
 					PLAY DEMO
+				</TactileButton>
+				<TactileButton
+					className="h-14 px-8 py-4 text-xl font-semibold rounded-2xl bg-cardinal text-white duration-0"
+					shadowColor="rgb(150, 50, 75)"
+					onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
+				>
+					STOP
 				</TactileButton>
 			</div>
 			<div
