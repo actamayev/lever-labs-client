@@ -27,7 +27,7 @@ export default async function RootLayout({
 			className={`${lexend.variable} ${isDark ? "dark" : ""}`}
 			suppressHydrationWarning
 		>
-			<body className="overscroll-none antialiased">
+			<body className="overscroll-none">
 				<Providers>
 					{children}
 				</Providers>

@@ -22,9 +22,14 @@ export default function handlePipStatusUpdate(data: PipConnectionUpdate): void {
 		case "offline": {
 			workbenchClass.setBatteryDataNull()
 			pipClass.deletePip()
-			return toastClass.neutral({
+			return toastClass.pipDisconnection({
 				title: "Your Pip has disconnected from the internet"
 			})
+		}
+		case "connected online to you": {
+			// Dismiss any existing disconnect toast when pip reconnects
+			toastClass.dismissPipDisconnectionToast()
+			break
 		}
 	}
 }
