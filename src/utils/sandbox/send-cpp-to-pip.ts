@@ -15,7 +15,7 @@ import { checkForMotorCommands, checkForStartButton } from "./sandbox-safety-mea
 // eslint-disable-next-line complexity
 export default async function sendCppToPip(
 	cppCode: string,
-	rect: DOMRect
+	rect?: DOMRect
 ) : Promise<void> {
 	try {
 		if (serialConnectionManagerClass.pipTurnedOn) {

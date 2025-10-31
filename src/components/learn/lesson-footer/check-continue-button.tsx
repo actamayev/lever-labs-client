@@ -9,6 +9,7 @@ import learnClass from "../../../classes/learn-class"
 import { useCallback, useState } from "react"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { stripAndNormalizeJson } from "../../../utils/blockly/strip-blockly-positions"
+import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 
 // eslint-disable-next-line max-lines-per-function
 function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
@@ -41,6 +42,7 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 				learnClass.retryCurrentQuestion()
 				return
 			}
+			await stopCurrentlyRunningCode(false)
 			learnClass.continueToNextQuestion(lessonId)
 			return
 		}

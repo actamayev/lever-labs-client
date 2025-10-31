@@ -9,6 +9,7 @@ import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-
 import { cn } from "../../lib/utils"
 import isOtpInputFocused from "../../utils/check-otp-input-focused"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
+import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import { TactileButton } from "../buttons/tactile-button"
 
 // eslint-disable-next-line max-lines-per-function
@@ -59,9 +60,9 @@ function ActionToCodeMultipleChoiceQuestion(): React.ReactNode {
 	// Sort answer choices by order
 	const sortedChoices = [...actionToCodeMultipleChoiceAnswerChoice].sort((a, b): number => a.order - b.order)
 
-	const handlePlayDemo = async (event: React.MouseEvent<HTMLButtonElement>): Promise<void> => {
+	const handlePlayDemo = async (): Promise<void> => {
 		if (referenceSolutionCpp) {
-			await sendCppToPip(referenceSolutionCpp, (event.currentTarget as HTMLButtonElement).getBoundingClientRect())
+			await sendCppToPip(referenceSolutionCpp)
 		}
 	}
 
@@ -70,7 +71,7 @@ function ActionToCodeMultipleChoiceQuestion(): React.ReactNode {
 			<h2 className="text-3xl font-semibold text-question-text mb-8">
 				{questionText}
 			</h2>
-			<div className="flex justify-center mb-8">
+			<div className="flex justify-center gap-3 mb-8">
 				<TactileButton
 					onClick={handlePlayDemo}
 					shadowClass="shadow-charging-green-2"
@@ -82,6 +83,13 @@ function ActionToCodeMultipleChoiceQuestion(): React.ReactNode {
 				>
 					<Play className="size-6 fill-current" />
 					PLAY DEMO
+				</TactileButton>
+				<TactileButton
+					className="h-14 px-8 py-4 text-xl font-semibold rounded-2xl bg-cardinal text-white duration-0"
+					shadowColor="rgb(150, 50, 75)"
+					onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
+				>
+					STOP
 				</TactileButton>
 			</div>
 
