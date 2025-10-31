@@ -12,6 +12,7 @@ interface CustomToastOptions {
 
 class ToastClass {
 	private isToastActive: boolean = false
+	private pipDisconnectionToastId: Id | null = null
 
 	private createToastContent = (
 		title: string,
@@ -28,6 +29,13 @@ class ToastClass {
 			</div>
 		</div>
 	)
+
+	public dismissPipDisconnectionToast = (): void => {
+		if (!this.pipDisconnectionToastId) return
+		toast.dismiss(this.pipDisconnectionToastId)
+		this.pipDisconnectionToastId = null
+		this.isToastActive = false
+	}
 
 	// Helper function to display a toast only if no toast is active
 	private showToastIfNotActive = <TData,>(
@@ -81,7 +89,7 @@ class ToastClass {
 		return this.showToastIfNotActive(toast, content, options)
 	}
 
-	public neutral = ({ title, description, action, duration = 5000 }: CustomToastOptions): void => {
+	public neutral = ({ title, description, action, duration = 100000 }: CustomToastOptions): void => {
 		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,
@@ -92,6 +100,30 @@ class ToastClass {
 		}
 
 		return this.showToastIfNotActive(toast, content, options)
+	}
+
+	public pipDisconnection = ({ title, description, action, duration = 5000 }: CustomToastOptions): void => {
+		const content = this.createToastContent(title, description, action)
+		const options: ReactToastifyOptions = {
+			autoClose: duration,
+			closeButton: true,
+			pauseOnHover: true,
+			draggable: true,
+			theme: personalInfoClass.defaultSiteTheme,
+			onClose: (): void => {
+				this.isToastActive = false
+				this.pipDisconnectionToastId = null
+			}
+		}
+
+		// If a toast is already active, don't create a new one
+		if (this.isToastActive) return
+
+		// Set active flag to true
+		this.isToastActive = true
+
+		// Create the toast and store its ID
+		this.pipDisconnectionToastId = toast(content, options)
 	}
 
 	public negative = ({ title, description, action, duration = 5000 }: CustomToastOptions): void => {
