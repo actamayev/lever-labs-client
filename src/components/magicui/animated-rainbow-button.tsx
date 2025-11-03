@@ -4,24 +4,27 @@
 import React from "react"
 import { AnimatePresence, motion } from "framer-motion"
 import { cn } from "@/lib/utils"
+import { Upload } from "lucide-react"
 
 interface AnimatedStateButtonProps {
 	buttonText: React.ReactNode
-	icon?: React.ReactNode
 	isDisabled?: boolean
 	className?: string
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void
 	type?: "button" | "submit" | "reset"
+	uploadClasses?: string
+	needsUploadIcon?: boolean
 }
 
 // eslint-disable-next-line max-lines-per-function
 const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 	buttonText,
-	icon,
 	isDisabled = false,
 	className = "",
 	onClick,
 	type = "button",
+	uploadClasses = "",
+	needsUploadIcon = true,
 }) => {
 	const rainbowButtonClasses = cn(
 		"group relative inline-flex w-full h-full items-center justify-center rounded-xl border-0 px-8 py-2 font-medium text-primary-foreground transition-all focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
@@ -116,8 +119,8 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 							key="button-text"
 							className="relative flex items-center gap-2 font-semibold text-black"
 						>
+							{needsUploadIcon && <Upload className={cn("size-6", uploadClasses)} />}
 							{buttonText}
-							{icon}
 						</motion.span>
 					</div>
 				</motion.button>

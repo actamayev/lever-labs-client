@@ -30,7 +30,7 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 				shadowClass="shadow-charging-green-2"
 				className={cn(
 					"h-14 w-full px-8 py-4 text-xl font-semibold rounded-2xl text-standard-background",
-					"bg-charging-green duration-0 flex items-center gap-3 justify-center"
+					"bg-charging-green flex items-center gap-3 justify-center"
 				)}
 				shadowHeight={4}
 			>

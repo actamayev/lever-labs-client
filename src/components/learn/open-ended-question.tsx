@@ -10,19 +10,18 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { RotateCcw } from "lucide-react"
 import { cn } from "../../lib/utils"
 import { Button } from "../ui/button"
-import { TactileButton } from "../buttons/tactile-button"
 import learnClass from "../../classes/learn-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 import getCppGenerator from "../../utils/cpp/cpp-generator"
-import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import AnimatedStateButton from "../magicui/animated-rainbow-button"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import pipClass from "../../classes/pip-class"
 import isEmpty from "lodash-es/isEmpty"
 // @ts-expect-error - No type definitions available for this plugin
 import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
+import StopCodeButton from "../buttons/stop-code-button"
 
 interface QuestionData {
 	questionText: string
@@ -292,18 +291,13 @@ function OpenEndedQuestion({
 								await sendCppToPip(currentCppCode, (event.currentTarget as HTMLButtonElement).getBoundingClientRect())
 							}}
 							className="rounded-2xl text-xl h-14"
+							uploadClasses="size-4!"
 						/>
 					</div>
-					<TactileButton
-						className={cn(
-							"bg-cardinal text-white duration-0 flex items-center justify-center",
-							"h-14 w-full px-8 py-4 text-xl font-semibold rounded-2xl"
-						)}
-						shadowColor="rgb(150, 50, 75)"
-						onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
-					>
-						STOP
-					</TactileButton>
+					<StopCodeButton
+						className="h-14 w-full px-8 py-4 text-xl font-semibold rounded-2xl gap-3"
+						pauseClasses="size-4!"
+					/>
 				</div>
 			</div>
 
