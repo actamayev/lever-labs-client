@@ -127,7 +127,7 @@ export default function EarlyAccessForm({
 												</Avatar>
 											</div>
 											<span className="text-sm text-balance text-muted-foreground">
-												Join 1,100+ others on the waitlist
+												Join many others on the waitlist
 											</span>
 										</div>
 									</form>
