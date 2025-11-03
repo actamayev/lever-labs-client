@@ -17,6 +17,10 @@ import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 import getCppGenerator from "../../utils/cpp/cpp-generator"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
+import AnimatedStateButton from "../magicui/animated-rainbow-button"
+import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
+import pipClass from "../../classes/pip-class"
+import isEmpty from "lodash-es/isEmpty"
 // @ts-expect-error - No type definitions available for this plugin
 import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
 
@@ -224,6 +228,21 @@ function OpenEndedQuestion({
 	// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [parsedInitialJson, currentQuestionState?.question.questionId, centerWorkspace, onAnswerChange])
 
+	// Get current CPP code for SEND CODE button
+	const getCurrentCppCode = (): string => {
+		if (!currentQuestionState?.question) return ""
+		const currentQuestion = currentQuestionState.question
+		if (currentQuestion.questionType === "FILL_IN_BLANK") {
+			return currentQuestion.fillInBlankAnswer?.cppCode || ""
+		}
+		if (currentQuestion.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+			return currentQuestion.actionToCodeOpenEndedAnswer?.cppCode || ""
+		}
+		return ""
+	}
+	const currentCppCode = getCurrentCppCode()
+	const isSendDisabled = isEmpty(currentCppCode) || pipClass.isSendingCppToPip
+
 	// Don't render until blocks are initialized
 	if (!blocksInitialized) {
 		return (
@@ -265,6 +284,16 @@ function OpenEndedQuestion({
 							{renderLeftButtons(questionData.referenceSolutionCpp)}
 						</div>
 					)}
+					<div className="w-full">
+						<AnimatedStateButton
+							buttonText="SEND CODE"
+							isDisabled={isSendDisabled}
+							onClick={async (event): Promise<void> => {
+								await sendCppToPip(currentCppCode, (event.currentTarget as HTMLButtonElement).getBoundingClientRect())
+							}}
+							className="rounded-2xl text-xl h-14"
+						/>
+					</div>
 					<TactileButton
 						className={cn(
 							"bg-cardinal text-white duration-0 flex items-center justify-center",
