@@ -9,8 +9,6 @@ export default function robots(): MetadataRoute.Robots {
 					"/",
 					"/mission",
 					"/contact",
-					"/login",
-					"/register",
 					"/privacy",
 					"/community-guidelines",
 					"/terms"
@@ -18,11 +16,16 @@ export default function robots(): MetadataRoute.Robots {
 				disallow: [
 					"/garage/",
 					"/sandbox/",
-					"/settings/",
+					"/settings/profile/",
+					"/settings/schools/",
 					"/career-quest/",
 					"/class-manager/",
 					"/whiteboard/",
 					"/scoreboard/",
+					"/learn/",
+					"/login",             // Utility pages
+					"/register",
+					"/register-google"
 				]
 			}
 		],

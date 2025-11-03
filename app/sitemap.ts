@@ -14,39 +14,28 @@ type RouteConfig = {
 	priority: number
 }
 
-// Main pages with higher priority
-const mainRoutes: RouteConfig[] = [
+// ONLY include public, indexable pages in your sitemap
+// DO NOT include pages that require login or are utility pages
+
+// Main public pages
+const publicRoutes: RouteConfig[] = [
+	// Homepage - highest priority, changes most frequently
 	{ path: "/", changeFreq: "weekly", priority: 1.0 },
-	{ path: "/sandbox", changeFreq: "monthly", priority: 1 },
-	{ path: "/career-quest", changeFreq: "monthly", priority: 1 },
-	{ path: "/whiteboard", changeFreq: "monthly", priority: 1 },
-	{ path: "/scoreboard", changeFreq: "monthly", priority: 1 },
-	{ path: "/class-manager", changeFreq: "monthly", priority: 1 },
-	{ path: "/garage", changeFreq: "monthly", priority: 1 },
-	{ path: "/settings/profile", changeFreq: "monthly", priority: 1 },
-	{ path: "/settings/schools", changeFreq: "monthly", priority: 1 },
-]
 
-// Account and user pages
-const userRoutes: RouteConfig[] = [
-	{ path: "/login", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/register", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/register-google", changeFreq: "monthly", priority: 0.8 }
-]
+	// Main marketing/content pages
+	{ path: "/mission", changeFreq: "monthly", priority: 0.9 },
+	{ path: "/contact", changeFreq: "monthly", priority: 0.8 },
 
-// Account and user pages
-const miscRoutes: RouteConfig[] = [
-	{ path: "/privacy", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/mission", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/terms", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/community-guidelines", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/contact", changeFreq: "monthly", priority: 0.8 }
+	// Legal pages - lower priority, rarely change
+	{ path: "/privacy", changeFreq: "yearly", priority: 0.5 },
+	{ path: "/terms", changeFreq: "yearly", priority: 0.5 },
+	{ path: "/community-guidelines", changeFreq: "yearly", priority: 0.5 },
 ]
 
 // Helper function to convert routes to sitemap entries
 function routesToSitemapEntries(routes: RouteConfig[]): MetadataRoute.Sitemap {
 	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-	return routes.map(route => ({
+	return routes.map((route: RouteConfig) => ({
 		url: `${BASE_URL}${route.path}`,
 		lastModified: currentDate,
 		changeFrequency: route.changeFreq,
@@ -56,11 +45,10 @@ function routesToSitemapEntries(routes: RouteConfig[]): MetadataRoute.Sitemap {
 
 // Generate the sitemap
 export default function sitemap(): MetadataRoute.Sitemap {
-	const allRoutes = [
-		...routesToSitemapEntries(mainRoutes),
-		...routesToSitemapEntries(userRoutes),
-		...routesToSitemapEntries(miscRoutes),
-	]
-
-	return allRoutes
+	return routesToSitemapEntries(publicRoutes)
 }
+
+// Note: The following pages are intentionally EXCLUDED from the sitemap:
+// - /sandbox, /garage, /settings/* (require authentication)
+// - /career-quest, /class-manager, /whiteboard, /scoreboard (protected pages)
+// - /login, /register, /register-google (utility pages, not content)
