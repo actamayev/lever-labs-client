@@ -2,6 +2,7 @@
 
 import { observer } from "mobx-react"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
 import learnClass from "../../classes/learn-class"
 import OpenEndedQuestion from "./open-ended-question"
 
@@ -9,7 +10,7 @@ function FillInBlankQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const fillInTheBlank = currentQuestionState?.question.fillInTheBlank
 
-	const handleAnswerChange = (questionId: string, blocklyJson: BlocklyJson, cppCode: string): void => {
+	const handleAnswerChange = (questionId: QuestionUUID, blocklyJson: BlocklyJson, cppCode: string): void => {
 		learnClass.setFillInBlankAnswer(questionId, blocklyJson, cppCode)
 	}
 

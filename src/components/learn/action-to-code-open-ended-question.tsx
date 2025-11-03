@@ -8,12 +8,13 @@ import { TactileButton } from "../buttons/tactile-button"
 import learnClass from "../../classes/learn-class"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import OpenEndedQuestion from "./open-ended-question"
+import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
 
 function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const actionToCodeOpenEnded = currentQuestionState?.question.actionToCodeOpenEnded
 
-	const handleAnswerChange = (questionId: string, blocklyJson: BlocklyJson, cppCode: string): void => {
+	const handleAnswerChange = (questionId: QuestionUUID, blocklyJson: BlocklyJson, cppCode: string): void => {
 		learnClass.setActionToCodeOpenEndedAnswer(questionId, blocklyJson, cppCode)
 	}
 

@@ -22,6 +22,7 @@ import isEmpty from "lodash-es/isEmpty"
 // @ts-expect-error - No type definitions available for this plugin
 import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
 import StopCodeButton from "../buttons/stop-code-button"
+import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
 
 interface QuestionData {
 	questionText: string
@@ -32,7 +33,7 @@ interface QuestionData {
 
 interface OpenEndedQuestionProps {
 	questionData: QuestionData
-	onAnswerChange: (questionId: string, blocklyJson: BlocklyJson, cppCode: string) => void
+	onAnswerChange: (questionId: QuestionUUID, blocklyJson: BlocklyJson, cppCode: string) => void
 	errorMessage?: string
 	renderLeftButtons?: (referenceSolutionCpp?: string) => React.ReactNode
 }
