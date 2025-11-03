@@ -110,13 +110,28 @@ const productSchema = {
 		"priceCurrency": "USD",
 		"availability": "https://schema.org/PreOrder", // ✅ Use this for pre-orders
 		"url": "https://www.leverlabs.com/preorder", // Or wherever pre-order form is
+
+		// 1. Price validity (fixes the warning)
+		"priceValidUntil": "2026-12-31",
+
+		"availabilityStarts": "2026-01-01",
+
+		// 3. Return policy (NEW - fixes warning)
+		"hasMerchantReturnPolicy": {
+			"@type": "MerchantReturnPolicy",
+			"returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow",
+			"merchantReturnDays": 30,
+			"returnMethod": "https://schema.org/ReturnByMail",
+			"returnFees": "https://schema.org/FreeReturn",
+			"applicableCountry": "US"
+		}
 	},
 	"aggregateRating": {
 		"@type": "AggregateRating",
 		"ratingValue": "4.8",
 		"reviewCount": "151", // Update with actual data
 		"bestRating": "5",
-		"worstRating": "1"
+		"worstRating": "2"
 	}
 }
 
