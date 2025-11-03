@@ -14,12 +14,11 @@ import { isEmpty } from "lodash-es"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
 import pipClass from "../../../classes/pip-class"
-import { TactileButton } from "../../buttons/tactile-button"
-import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import getCppGenerator from "../../../utils/cpp/cpp-generator"
 import careerQuestClass from "../../../classes/career-quest-class"
 import navigationManagerClass from "../../../classes/navigation-manager-class"
 import { CareerUUID } from "@lever-labs/common-ts/types/utils"
+import StopCodeButton from "../../buttons/stop-code-button"
 
 interface Props {
 	blocklyJson: BlocklyJson
@@ -190,14 +189,12 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 						onClick={handleSendCode}
 						className="flex-1 rounded-xl text-xl h-12 font-semibold"
+						uploadClasses="size-4!"
 					/>
-					<TactileButton
-						className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"
-						shadowColor="rgb(150, 50, 75)"
-						onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
-					>
-						STOP
-					</TactileButton>
+					<StopCodeButton
+						className="w-24 text-xl h-12 font-semibold gap-2"
+						pauseClasses="size-4!"
+					/>
 				</div>
 			</div>
 		</div>

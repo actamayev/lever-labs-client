@@ -5,7 +5,7 @@ import { structuredData } from "../src/utils/seo/landing-data"
 export const metadata = createMetadata({
 	title: "Lever Labs | Duolingo for Robotics",
 	// eslint-disable-next-line max-len
-	description: "Duolingo for Robotics. Learn to code with Pip, the educational robot designed to make learning robotics fun and seamless. From coding basics to advanced control algorithms, start your robotics journey today.",
+	description: "Learn robotics and coding with Pip, the educational robot that makes STEM fun. Bite-sized lessons, hands-on learning, no subscription fees. Perfect for ages 8+.",
 	path: "/",
 	keywords: [
 		"educational robot",
@@ -13,7 +13,9 @@ export const metadata = createMetadata({
 		"duolingo for robotics",
 		"stem education",
 		"coding for kids",
-		"robotics platform"
+		"robotics platform",
+		"pip robot",
+		"learn to code"
 	],
 	needsLeverLabsSuffix: false
 })
@@ -21,7 +23,6 @@ export const metadata = createMetadata({
 export default function Home(): React.ReactNode {
 	return (
 		<>
-			{/* Structured data for search engines */}
 			<script
 				type="application/ld+json"
 				dangerouslySetInnerHTML={{

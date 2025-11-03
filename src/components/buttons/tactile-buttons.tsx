@@ -18,7 +18,7 @@ export const BlueTactileButton = observer(React.forwardRef<HTMLButtonElement, Co
 			<TactileButton
 				ref={ref}
 				className={cn(
-					"flex items-center duration-150 rounded-2xl",
+					"flex items-center duration-0 rounded-2xl",
 					"bg-blue-100 text-blue-800",
 					"dark:bg-blue-900 dark:text-blue-200",
 					className,

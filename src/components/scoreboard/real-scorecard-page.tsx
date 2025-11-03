@@ -304,7 +304,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 							<div className="flex justify-center gap-4">
 								<TactileButton
 									onClick={(): void => handleTeamDrivingToggle(1)}
-									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamDrivingButtonClass(1))}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-0", getTeamDrivingButtonClass(1))}
 									shadowHeight={4}
 									shadowClass={getTeamDrivingShadowClass(1)}
 								>
@@ -313,7 +313,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 								<TactileButton
 									onClick={(): void => handleTeamLightsToggle(1)}
-									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamLightsButtonClass(1))}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-0", getTeamLightsButtonClass(1))}
 									shadowHeight={4}
 									shadowClass={getTeamLightsShadowClass(1)}
 								>
@@ -370,7 +370,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 							<div className="flex justify-center gap-4">
 								<TactileButton
 									onClick={(): void => handleTeamDrivingToggle(2)}
-									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamDrivingButtonClass(2))}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-0", getTeamDrivingButtonClass(2))}
 									shadowHeight={4}
 									shadowClass={getTeamDrivingShadowClass(2)}
 								>
@@ -379,7 +379,7 @@ function RealScoreboardPage({ classCode, scoreboardId }: { classCode: ClassCode;
 
 								<TactileButton
 									onClick={(): void => handleTeamLightsToggle(2)}
-									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-150", getTeamLightsButtonClass(2))}
+									className={cn("px-4 py-2 rounded-xl text-lg text-white duration-0", getTeamLightsButtonClass(2))}
 									shadowHeight={4}
 									shadowClass={getTeamLightsShadowClass(2)}
 								>

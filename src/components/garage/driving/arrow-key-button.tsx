@@ -13,7 +13,7 @@ import CustomTooltip from "../../custom-tooltip"
 
 // Helper function to get button classes based on disabled state
 const getButtonClasses = (isDisabled: boolean): string => {
-	const baseClasses = "duration-150 w-20 h-20 flex items-center justify-center rounded-xl"
+	const baseClasses = "duration-0 w-20 h-20 flex items-center justify-center rounded-xl"
 	const stateClasses = isDisabled
 		? "bg-gray-300/20 text-gray-400 cursor-not-allowed dark:bg-gray-600/20 dark:text-gray-500"
 		: "bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-200"

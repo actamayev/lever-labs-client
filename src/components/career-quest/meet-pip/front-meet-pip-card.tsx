@@ -83,7 +83,7 @@ function FrontMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNod
 				{/* Continue Button */}
 				<div className="flex flex-row items-center mb-6 w-full gap-3">
 					<TactileButton
-						className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
+						className={cn("duration-0 bg-white h-10 rounded-full text-base w-full", colors.text2)}
 						shadowClass={colors.shadow}
 						shadowHeight={4}
 						onClick={enterCareerOnClick}

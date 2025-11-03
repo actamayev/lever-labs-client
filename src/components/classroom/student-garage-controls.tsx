@@ -53,7 +53,7 @@ function StudentGarageControls({
 					<TactileButton
 						onClick={handleDrivingToggle}
 						className={cn(
-							"h-6 w-6 rounded flex items-center justify-center duration-150",
+							"h-6 w-6 rounded flex items-center justify-center",
 							garageDrivingAllowed
 								? "bg-charging-green text-standard-background border border-charging-green"
 								: "bg-cardinal text-standard-background border border-cardinal"
@@ -79,7 +79,7 @@ function StudentGarageControls({
 					<TactileButton
 						onClick={handleLightsToggle}
 						className={cn(
-							"h-6 w-6 rounded flex items-center justify-center duration-150",
+							"h-6 w-6 rounded flex items-center justify-center",
 							garageLightsAllowed
 								? "bg-charging-green text-standard-background border border-charging-green"
 								: "bg-cardinal text-standard-background border border-cardinal"
@@ -105,7 +105,7 @@ function StudentGarageControls({
 					<TactileButton
 						onClick={handleSoundsToggle}
 						className={cn(
-							"h-6 w-6 rounded flex items-center justify-center duration-150",
+							"h-6 w-6 rounded flex items-center justify-center",
 							garageSoundsAllowed
 								? "bg-charging-green text-standard-background border border-charging-green"
 								: "bg-cardinal text-standard-background border border-cardinal"
@@ -131,7 +131,7 @@ function StudentGarageControls({
 					<TactileButton
 						onClick={handleDisplayToggle}
 						className={cn(
-							"h-6 w-6 rounded flex items-center justify-center duration-150",
+							"h-6 w-6 rounded flex items-center justify-center",
 							garageDisplayAllowed
 								? "bg-charging-green text-standard-background border border-charging-green"
 								: "bg-cardinal text-standard-background border border-cardinal"

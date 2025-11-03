@@ -17,10 +17,10 @@ import checkCareerQuestCode from "../../../utils/chat/check-cq-code"
 import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import getCppGenerator from "../../../utils/cpp/cpp-generator"
 import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positions"
-import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import InteractiveMiniSandbox from "../../sandbox/interactive-mini-sandbox/interactive-mini-sandbox"
 import editCareerQuestSandboxProject from "../../../utils/career-quest/edit-career-quest-sandbox-project"
 import chatManagerClass from "../../../classes/chat-manager-class"
+import StopCodeButton from "../../buttons/stop-code-button"
 
 function getBlockCount(blocklyJson: BlocklyJson): number {
 	if (!blocklyJson.blocks?.blocks) return 0
@@ -219,6 +219,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 						isDisabled={isEmpty(cppCode) || pipClass.isSendingCppToPip}
 						onClick={(event): Promise<void> => sendCppToPip(cppCode, event.currentTarget.getBoundingClientRect())}
 						className="flex-1 rounded-xl text-xl h-12 font-semibold"
+						uploadClasses="size-4!"
 					/>
 					<TactileButton
 						className={cn(
@@ -237,13 +238,7 @@ function ChallengeSection({ challengeData } : { challengeData: CqChallengeData }
 					>
 						CHECK CODE
 					</TactileButton>
-					<TactileButton
-						className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"
-						shadowColor="rgb(150, 50, 75)"
-						onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
-					>
-						STOP
-					</TactileButton>
+					<StopCodeButton className="text-white w-24 text-xl h-12 font-semibold gap-2" />
 				</div>
 			</div>
 		</div>

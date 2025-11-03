@@ -88,7 +88,7 @@ export default function JoinClassroom(): React.ReactNode {
 
 				<TactileButton
 					onClick={submit}
-					className={cn("duration-150 text-white h-10 rounded-2xl mt-5 text-xl w-1/5", colors.bg)}
+					className={cn("duration-0 text-white h-10 rounded-2xl mt-5 text-xl w-1/5", colors.bg)}
 					shadowHeight={4}
 					shadowClass={colors.shadow2}
 					disabled={!isValidClassCode(classCode)}

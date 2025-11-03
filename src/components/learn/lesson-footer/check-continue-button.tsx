@@ -10,6 +10,7 @@ import { useCallback, useState } from "react"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { stripAndNormalizeJson } from "../../../utils/blockly/strip-blockly-positions"
 import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
+import CustomTooltip from "../../custom-tooltip"
 
 // eslint-disable-next-line max-lines-per-function
 function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
@@ -42,7 +43,7 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 				learnClass.retryCurrentQuestion()
 				return
 			}
-			await stopCurrentlyRunningCode(false)
+			await stopCurrentlyRunningCode(true)
 			learnClass.continueToNextQuestion(lessonId)
 			return
 		}
@@ -90,6 +91,11 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 			if (JSON.stringify(currentJsonStripedAndNormalized) === JSON.stringify(initialJsonStripedAndNormalized)) {
 				return true
 			}
+
+			// For open-ended questions, disable if code hasn't been sent yet
+			if (!learnClass.hasCodeBeenSentForCurrentQuestion()) {
+				return true
+			}
 		}
 
 		if (!isInConfirmationStage && currentQuestion?.questionType !== "DEMO" && !isOpenEndedQuestion && !hasSelectedAnswer) {
@@ -98,6 +104,17 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 
 		return false
 	}, [isLessonCompleted, currentQuestion, isSubmitting, isInConfirmationStage, hasSelectedAnswer])
+
+	const shouldShowTooltip = useCallback((): boolean => {
+		if (isLessonCompleted) return false
+		if (isInConfirmationStage) return false
+
+		const isOpenEndedQuestion = currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED"
+		if (!isOpenEndedQuestion) return false
+
+		// Show tooltip if code hasn't been sent
+		return !learnClass.hasCodeBeenSentForCurrentQuestion()
+	}, [isLessonCompleted, isInConfirmationStage, currentQuestion])
 
 	const shadowClass = useCallback((): string => {
 		if (!isInConfirmationStage || lastAnswerWasCorrect) {
@@ -114,7 +131,29 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 		return `${baseClass} bg-cardinal-1`
 	}, [lastAnswerWasCorrect, isInConfirmationStage])
 
-	return (
+	const buttonContent = (): React.ReactNode => {
+		if (isLessonCompleted) return "CONTINUE"
+		if (isInConfirmationStage) {
+			if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && !lastAnswerWasCorrect) return "TRY AGAIN"
+			return "CONTINUE"
+		}
+		if (currentQuestion?.questionType === "DEMO") return "CONTINUE"
+		if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && isSubmitting) {
+			return (
+				<span className="flex items-center gap-2">
+					<span>CHECKING</span>
+					<span className="flex items-end gap-1">
+						<span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.3s]" />
+						<span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.15s]" />
+						<span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce" />
+					</span>
+				</span>
+			)
+		}
+		return "CHECK"
+	}
+
+	const button = (
 		<TactileButton
 			onClick={handleCheckClick}
 			shadowClass={shadowClass()}
@@ -122,29 +161,27 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 			shadowHeight={4}
 			disabled={isDisabled()}
 		>
-			{((): React.ReactNode => {
-				if (isLessonCompleted) return "CONTINUE"
-				if (isInConfirmationStage) {
-					if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && !lastAnswerWasCorrect) return "TRY AGAIN"
-					return "CONTINUE"
-				}
-				if (currentQuestion?.questionType === "DEMO") return "CONTINUE"
-				if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && isSubmitting) {
-					return (
-						<span className="flex items-center gap-2">
-							<span>CHECKING</span>
-							<span className="flex items-end gap-1">
-								<span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.3s]" />
-								<span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce [animation-delay:-0.15s]" />
-								<span className="w-1.5 h-1.5 rounded-full bg-current animate-bounce" />
-							</span>
-						</span>
-					)
-				}
-				return "CHECK"
-			})()}
+			{buttonContent()}
 		</TactileButton>
 	)
+
+	if (shouldShowTooltip()) {
+		return (
+			<CustomTooltip
+				tooltipTrigger={
+					<div className="relative inline-block">
+						{button}
+						{/* Invisible overlay for tooltip when disabled */}
+						<div className="absolute inset-0 cursor-not-allowed" />
+					</div>
+				}
+				tooltipContent="Please send your code to Pip before checking your answer"
+				contentSide="top"
+			/>
+		)
+	}
+
+	return button
 }
 
 export default observer(CheckContinueButton)

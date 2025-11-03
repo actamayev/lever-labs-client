@@ -1,7 +1,7 @@
 import { action, makeAutoObservable } from "mobx"
 import { Lesson } from "@lever-labs/common-ts/types/learn"
 import { soundManager } from "./utility/sound-manager-class"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import markLessonComplete from "../utils/learn/mark-lesson-complete"
 import stopCareerTrigger from "../utils/career-quest/stop-career-trigger"
@@ -21,6 +21,7 @@ class LearnClass {
 	public isExitDialogOpen = false
 	public isLessonCompleted = false
 	public isNavigatingAway = false
+	public lastSentCppCodeByQuestionId: Map<QuestionUUID, string> = new Map()
 
 	constructor() {
 		makeAutoObservable(this)
@@ -67,7 +68,7 @@ class LearnClass {
 	})
 
 	// eslint-disable-next-line complexity
-	public setQuestionAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
+	public setQuestionAnsweredCorrectness = action((lessonId: LessonUUID, questionId: QuestionUUID, isCorrect: boolean): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
 
@@ -105,7 +106,7 @@ class LearnClass {
 	})
 
 	// eslint-disable-next-line complexity
-	public setFillInBlankAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
+	public setFillInBlankAnsweredCorrectness = action((lessonId: LessonUUID, questionId: QuestionUUID, isCorrect: boolean): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
 
@@ -138,8 +139,13 @@ class LearnClass {
 		}
 	})
 
+
+	public setActionToCodeOpenEndedAnsweredCorrectness = action((
+		lessonId: LessonUUID,
+		questionId: QuestionUUID,
+		isCorrect: boolean
 	// eslint-disable-next-line complexity
-	public setActionToCodeOpenEndedAnsweredCorrectness = action((lessonId: LessonUUID, questionId: string, isCorrect: boolean): void => {
+	): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson || !lesson.lessonQuestionMap) return
 
@@ -231,7 +237,7 @@ class LearnClass {
 		this.currentQuestionState.selectedAnswerId = answerId
 	})
 
-	public setFillInBlankAnswer = action((questionId: string, blocklyJson: BlocklyJson, cppCode: string): void => {
+	public setFillInBlankAnswer = action((questionId: QuestionUUID, blocklyJson: BlocklyJson, cppCode: string): void => {
 		// Find the question in the current lesson and store the answer
 		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
 			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
@@ -247,9 +253,15 @@ class LearnClass {
 			blocklyJson,
 			cppCode
 		}
+
+		// Clear last sent code if the code has changed
+		const lastSentCode = this.lastSentCppCodeByQuestionId.get(questionId)
+		if (lastSentCode !== cppCode) {
+			this.lastSentCppCodeByQuestionId.delete(questionId)
+		}
 	})
 
-	public setActionToCodeOpenEndedAnswer = action((questionId: string, blocklyJson: BlocklyJson, cppCode: string): void => {
+	public setActionToCodeOpenEndedAnswer = action((questionId: QuestionUUID, blocklyJson: BlocklyJson, cppCode: string): void => {
 		// Find the question in the current lesson and store the answer
 		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
 			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
@@ -264,6 +276,12 @@ class LearnClass {
 			initialJson: questionMap.question.actionToCodeOpenEnded?.initialBlocklyJson as BlocklyJson,
 			blocklyJson,
 			cppCode
+		}
+
+		// Clear last sent code if the code has changed
+		const lastSentCode = this.lastSentCppCodeByQuestionId.get(questionId)
+		if (lastSentCode !== cppCode) {
+			this.lastSentCppCodeByQuestionId.delete(questionId)
 		}
 	})
 
@@ -483,6 +501,28 @@ class LearnClass {
 		this.isNavigatingAway = isNavigating
 	})
 
+	public recordCodeSent = action((questionId: QuestionUUID, cppCode: string): void => {
+		this.lastSentCppCodeByQuestionId.set(questionId, cppCode)
+	})
+
+	public hasCodeBeenSentForCurrentQuestion = (): boolean => {
+		if (!this.currentQuestionState) return false
+		const questionId = this.currentQuestionState.question.questionId
+		const currentQuestion = this.currentQuestionState.question
+
+		let currentCppCode = ""
+		if (currentQuestion.questionType === "FILL_IN_BLANK") {
+			currentCppCode = currentQuestion.fillInBlankAnswer?.cppCode || ""
+		} else if (currentQuestion.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+			currentCppCode = currentQuestion.actionToCodeOpenEndedAnswer?.cppCode || ""
+		}
+
+		if (!currentCppCode) return false
+
+		const lastSentCode = this.lastSentCppCodeByQuestionId.get(questionId)
+		return lastSentCode === currentCppCode
+	}
+
 	public logout(): void {
 		this.isRetrievingAllLessons = false
 		this.hasRetrievedAllLessons = false
@@ -493,6 +533,7 @@ class LearnClass {
 		this.isExitDialogOpen = false
 		this.isLessonCompleted = false
 		this.isNavigatingAway = false
+		this.lastSentCppCodeByQuestionId = new Map()
 	}
 }
 

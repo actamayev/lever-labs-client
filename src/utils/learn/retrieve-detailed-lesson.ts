@@ -25,6 +25,12 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 		// Get existing questions
 		const existingQuestions = response.data.lesson.lessonQuestionMap || []
 
+		// Filter to only ACTION_TO_CODE_MULTIPLE_CHOICE questions and take first two
+		// const filteredQuestions = existingQuestions
+		// 	// .filter(q => q.question.questionType === "FILL_IN_BLANK")
+		// 	.filter(q => q.question.questionType === "ACTION_TO_CODE_OPEN_ENDED")
+		// 	.slice(0, 2)
+
 		// Only add demo question if this is the first lesson (lessonOrder === 1)
 		// let finalQuestionMap: LocalLessonQuestionMap[]
 

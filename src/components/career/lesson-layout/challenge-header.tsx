@@ -80,7 +80,7 @@ export default function ChallengeHeader({ challengeData, onReset }: ChallengeHea
 									<CustomTooltip
 										tooltipTrigger={
 											<TactileButton
-												className="bg-bee text-white flex items-center justify-center rounded-lg p-2 h-10"
+												className="bg-bee text-white flex items-center justify-center rounded-3xl p-2 h-10"
 												shadowClass="shadow-bee-2"
 												onClick={onReset}
 											>

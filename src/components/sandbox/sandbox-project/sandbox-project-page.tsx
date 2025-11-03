@@ -24,10 +24,10 @@ import AnimatedStateButton from "../../magicui/animated-rainbow-button"
 import BlocklySearchFilter from "../../../utils/sandbox/search-helpers"
 import editSandboxProject from "../../../utils/sandbox/edit-sandbox-project"
 import { stripBlockPositions } from "../../../utils/blockly/strip-blockly-positions"
-import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import LoadingSandboxProjectPage from "./loading-sandbox-project-page"
 import authClass from "../../../classes/auth-class"
+import StopCodeButton from "../../buttons/stop-code-button"
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const BlocklyComponent = lazy(() => import("../blockly-component"))
@@ -236,14 +236,9 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 										return await sendCppToPip(project.cppCode, event.currentTarget.getBoundingClientRect())
 									}}
 									className="rounded-xl text-4xl"
+									uploadClasses="size-8!"
 								/>
-								<TactileButton
-									className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl px-10!"
-									shadowColor="rgb(150, 50, 75)"
-									onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
-								>
-									STOP
-								</TactileButton>
+								<StopCodeButton className="-mt-0.5 px-10" pauseClasses="size-7!"/>
 							</div>
 						</div>
 					</div>

@@ -56,7 +56,7 @@ const getSoundIcon = (sound: FunSounds, iconSize: string): React.ReactNode => {
 
 // Helper function to get button classes based on disabled state
 const getButtonClasses = (isDisabled: boolean, extraClasses?: string): string => {
-	const baseClasses = "duration-150 w-20 h-20 flex items-center justify-center rounded-xl"
+	const baseClasses = "duration-0 w-20 h-20 flex items-center justify-center rounded-xl"
 	const stateClasses = isDisabled
 		? "bg-gray-300/20 text-gray-400 cursor-not-allowed dark:bg-gray-600/20 dark:text-gray-500"
 		: "bg-sandbox-orange/20 text-sandbox-orange dark:bg-sandbox-orange/80 dark:text-orange-200"

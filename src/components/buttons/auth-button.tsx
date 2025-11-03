@@ -16,7 +16,7 @@ function AuthButton(props: Props): React.ReactNode {
 		<BlueTactileButton
 			type="submit"
 			disabled={loading || authClass.isAuthenticating}
-			className="w-full h-12 my-2"
+			className="w-full h-12 my-2 duration-0"
 		>
 			{title}
 		</BlueTactileButton>
