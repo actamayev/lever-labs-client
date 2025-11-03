@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 // Comprehensive Organization Schema
 const organizationSchema = {
 	"@context": "https://schema.org",
@@ -11,7 +12,7 @@ const organizationSchema = {
 		"width": 512,
 		"height": 512
 	},
-	// eslint-disable-next-line max-len
+
 	"description": "Duolingo for Robotics. Educational robotics platform designed to make learning coding and robotics fun, engaging, and accessible for learners of all ages.",
 	"slogan": "Like Duolingo, for robotics",
 	"foundingDate": "2025", // Update with actual founding year
@@ -113,18 +114,91 @@ const productSchema = {
 	"aggregateRating": {
 		"@type": "AggregateRating",
 		"ratingValue": "4.8",
-		"reviewCount": "150", // Update with actual data
+		"reviewCount": "151", // Update with actual data
 		"bestRating": "5",
 		"worstRating": "1"
 	}
 }
 
-// Combine all schemas
+// Complete FAQ Schema using your FAQ items
+const faqSchema = {
+	"@context": "https://schema.org",
+	"@type": "FAQPage",
+	"mainEntity": [
+		{
+			"@type": "Question",
+			"name": "Who is Pip for?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Pip is designed for kids ages 8 and up who want to learn robotics and coding. That said, adults love Pip too - if you're curious about STEM and want hands-on learning, age is just a number!"
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "What does Pip do?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Like all robots, Pip has a job. Pip's job is to help you improve your understanding of robotics and coding through hands-on, interactive learning experiences."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "Are there recurring subscription fees?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Nope. Buy Pip once, then use it, along with our web portal, for free, forever."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "Does Pip work wirelessly or with a cable?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Pip works completely wirelessly! After a quick initial setup where you connect Pip to your Wi-Fi, you can control and program Pip from anywhere without any cables."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "How much does Pip cost?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Customers pay a one-time $200 fee to buy a Pip, then get lifetime access to software updates. No hidden fees, no surprises."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "What comes included with Pip?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Your Pip comes ready to use right out of the box with a USB-C charging cable, quick start guide, and lifetime access to our complete learning platform."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "What is your return policy?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "We offer a 30-day return policy. If Pip isn't the right fit, simply contact our support team to initiate a return. Products must be in their original condition."
+			}
+		},
+		{
+			"@type": "Question",
+			"name": "How can I contact customer support?",
+			"acceptedAnswer": {
+				"@type": "Answer",
+				"text": "Our support team is here to help! You can reach us via email at hello@leverlabs.com. We try our best to respond within a couple hours."
+			}
+		}
+	]
+}
+
+// Then add to your existing structuredData @graph:
 export const structuredData = {
 	"@context": "https://schema.org",
 	"@graph": [
 		organizationSchema,
 		websiteSchema,
-		productSchema
+		productSchema,
+		faqSchema
 	]
 }
