@@ -2,7 +2,7 @@ import { notFound } from "next/navigation"
 import { ClassCode } from "@lever-labs/common-ts/types/utils"
 import ClassroomPage from "../../../src/components/classroom/classroom-page"
 import AuthenticatedLayout from "../../../src/components/layouts/authenticated-layout"
-import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
+import { createMetadata } from "../../../src/utils/seo/create-metadata"
 import { Metadata } from "next"
 
 interface ClassroomPageProps {

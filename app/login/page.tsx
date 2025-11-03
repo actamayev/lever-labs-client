@@ -1,5 +1,5 @@
 import LoginComponent from "../../src/components/auth/login/login-component"
-import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
+import { createMetadata } from "../../src/utils/seo/create-metadata"
 
 export const metadata = createMetadata({
 	title: "Login",

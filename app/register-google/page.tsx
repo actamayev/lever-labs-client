@@ -1,6 +1,6 @@
 
 import RegisterGoogleInfoComponent from "../../src/components/auth/register-google-info/register-google-info-component"
-import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
+import { createMetadata } from "../../src/utils/seo/create-metadata"
 
 export const metadata = createMetadata({
 	title: "Register Username",
