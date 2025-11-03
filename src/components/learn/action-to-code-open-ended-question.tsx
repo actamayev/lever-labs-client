@@ -7,7 +7,6 @@ import { cn } from "../../lib/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import learnClass from "../../classes/learn-class"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
-import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import OpenEndedQuestion from "./open-ended-question"
 
 function ActionToCodeOpenEndedQuestion(): React.ReactNode {
@@ -18,7 +17,7 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 		learnClass.setActionToCodeOpenEndedAnswer(questionId, blocklyJson, cppCode)
 	}
 
-	const renderDemoButtons = (referenceSolutionCpp?: string): React.ReactNode => {
+	const renderLeftButtons = (referenceSolutionCpp?: string): React.ReactNode => {
 		const handlePlayDemo = async (): Promise<void> => {
 			if (referenceSolutionCpp) {
 				await sendCppToPip(referenceSolutionCpp)
@@ -26,27 +25,18 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 		}
 
 		return (
-			<div className="flex justify-center gap-3">
-				<TactileButton
-					onClick={handlePlayDemo}
-					shadowClass="shadow-charging-green-2"
-					className={cn(
-						"h-14 px-8 py-4 text-xl font-semibold rounded-2xl text-standard-background",
-						"bg-charging-green duration-0 flex items-center gap-3"
-					)}
-					shadowHeight={4}
-				>
-					<Play className="size-6 fill-current" />
-					PLAY DEMO
-				</TactileButton>
-				<TactileButton
-					className="h-14 px-8 py-4 text-xl font-semibold rounded-2xl bg-cardinal text-white duration-0"
-					shadowColor="rgb(150, 50, 75)"
-					onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
-				>
-					STOP
-				</TactileButton>
-			</div>
+			<TactileButton
+				onClick={handlePlayDemo}
+				shadowClass="shadow-charging-green-2"
+				className={cn(
+					"h-14 w-full px-8 py-4 text-xl font-semibold rounded-2xl text-standard-background",
+					"bg-charging-green duration-0 flex items-center gap-3 justify-center"
+				)}
+				shadowHeight={4}
+			>
+				<Play className="size-6 fill-current" />
+				PLAY DEMO
+			</TactileButton>
 		)
 	}
 
@@ -65,7 +55,7 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 			questionData={actionToCodeOpenEnded}
 			onAnswerChange={handleAnswerChange}
 			errorMessage="No action-to-code-open-ended data available"
-			renderDemoButtons={renderDemoButtons}
+			renderLeftButtons={renderLeftButtons}
 		/>
 	)
 }

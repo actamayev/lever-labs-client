@@ -10,11 +10,13 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { RotateCcw } from "lucide-react"
 import { cn } from "../../lib/utils"
 import { Button } from "../ui/button"
+import { TactileButton } from "../buttons/tactile-button"
 import learnClass from "../../classes/learn-class"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
 import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/workspace-config"
 import getCppGenerator from "../../utils/cpp/cpp-generator"
+import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 // @ts-expect-error - No type definitions available for this plugin
 import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
 
@@ -29,7 +31,7 @@ interface OpenEndedQuestionProps {
 	questionData: QuestionData
 	onAnswerChange: (questionId: string, blocklyJson: BlocklyJson, cppCode: string) => void
 	errorMessage?: string
-	renderDemoButtons?: (referenceSolutionCpp?: string) => React.ReactNode
+	renderLeftButtons?: (referenceSolutionCpp?: string) => React.ReactNode
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -37,7 +39,7 @@ function OpenEndedQuestion({
 	questionData,
 	onAnswerChange,
 	errorMessage = "No question data available",
-	renderDemoButtons,
+	renderLeftButtons
 }: OpenEndedQuestionProps): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
@@ -246,16 +248,40 @@ function OpenEndedQuestion({
 	const { questionText } = questionData
 
 	return (
-		<div className="space-y-6 flex flex-col min-h-0 flex-1">
-			<h2 className="text-3xl font-semibold text-question-text text-center">
-				{questionText}
-			</h2>
+		<div className="flex flex-row min-h-0 flex-1 gap-0">
+			{/* Left sidebar with question text and buttons */}
+			<div className="flex flex-col border-swan border-l-2 border-t-2 border-b-2 rounded-l-3xl bg-polar min-w-[300px] max-w-[300px]">
+				{/* Question text at top */}
+				<div className="flex-1 p-6 flex items-start">
+					<h2 className="text-xl font-semibold text-question-text">
+						{questionText}
+					</h2>
+				</div>
 
-			{renderDemoButtons && renderDemoButtons(questionData.referenceSolutionCpp)}
+				{/* Buttons at bottom */}
+				<div className="flex flex-col gap-3 pt-3 pb-4 px-4">
+					{renderLeftButtons && (
+						<div className="w-full">
+							{renderLeftButtons(questionData.referenceSolutionCpp)}
+						</div>
+					)}
+					<TactileButton
+						className={cn(
+							"bg-cardinal text-white duration-0 flex items-center justify-center",
+							"h-14 w-full px-8 py-4 text-xl font-semibold rounded-2xl"
+						)}
+						shadowColor="rgb(150, 50, 75)"
+						onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
+					>
+						STOP
+					</TactileButton>
+				</div>
+			</div>
 
+			{/* Blockly workspace area */}
 			<div
 				ref={containerRef}
-				className={cn("relative z-0 rounded-3xl overflow-hidden border-swan border-2 flex-1 min-h-0")}
+				className={cn("relative z-0 rounded-r-3xl overflow-hidden border-swan border-r-2 border-t-2 border-b-2 flex-1 min-h-0")}
 				style={{ pointerEvents: "auto" }}
 			>
 				<Button
