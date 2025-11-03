@@ -117,7 +117,7 @@ const AnimatedStateButton: React.FC<AnimatedStateButtonProps> = ({
 					<div className={buttonContentClasses}>
 						<motion.span
 							key="button-text"
-							className="relative flex items-center gap-2 font-semibold text-black"
+							className="relative flex items-center gap-3 font-semibold text-black"
 						>
 							{needsUploadIcon && <Upload className={cn("size-6", uploadClasses)} strokeWidth={3}/>}
 							{buttonText}
