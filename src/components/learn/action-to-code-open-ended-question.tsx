@@ -7,7 +7,7 @@ import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { BlockNames } from "@lever-labs/common-ts/types/blockly/blockly"
 import { createChallengeToolbox } from "@lever-labs/common-ts/types/utils/blockly-helpers"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { Play } from "lucide-react"
+import { Play, RotateCcw } from "lucide-react"
 import { cn } from "../../lib/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import learnClass from "../../classes/learn-class"
@@ -19,6 +19,7 @@ import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 // @ts-expect-error - No type definitions available for this plugin
 import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
+import { Button } from "../ui/button"
 
 // eslint-disable-next-line max-lines-per-function
 function ActionToCodeOpenEndedQuestion(): React.ReactNode {
@@ -143,6 +144,28 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 		}
 	}
 
+	const resetWorkspace = useCallback(async (): Promise<void> => {
+		const workspace = workspaceRef.current
+		if (!workspace) return
+
+		try {
+		// Load initial JSON back into the workspace
+			Blockly.serialization.workspaces.load(parsedInitialJson, workspace)
+			// Generate fresh CPP from the initial JSON and persist as the current answer
+			const cppCode = await getCppGenerator().generateCppFromJson(parsedInitialJson)
+			if (currentQuestionState) {
+				learnClass.setActionToCodeOpenEndedAnswer(currentQuestionState.question.questionId, parsedInitialJson, cppCode)
+			}
+			// Recenter after reset
+			setTimeout((): void => {
+				centerWorkspace()
+				Blockly.svgResize(workspace)
+			}, 50)
+		} catch (error) {
+			console.error("Failed to reset workspace:", error)
+		}
+	}, [centerWorkspace, currentQuestionState, parsedInitialJson])
+
 	useEffect((): () => void => {
 		if (!containerRef.current) return (): void => {}
 
@@ -248,6 +271,20 @@ function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 				className={cn("relative z-0 rounded-3xl overflow-hidden border-swan border-2 flex-1 min-h-0")}
 				style={{ pointerEvents: "auto" }}
 			>
+				<Button
+					variant="outline"
+					size="sm"
+					onClick={(): void => { void resetWorkspace() }}
+					className={cn(
+						"absolute top-2 right-2 z-1 p-2 h-8 w-8 pointer-events-auto",
+						"bg-background/80 backdrop-blur-xs border-border/50",
+						"hover:bg-accent hover:text-accent-foreground",
+						"transition-all duration-200"
+					)}
+					title="Reset blocks to start"
+				>
+					<RotateCcw className="h-4 w-4" />
+				</Button>
 				<BlocklyWorkspace
 					toolboxConfiguration={toolboxConfig}
 					initialJson={parsedInitialJson}
