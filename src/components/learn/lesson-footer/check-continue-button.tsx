@@ -62,6 +62,29 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 		}
 	}
 
+	const hasCodeChanged = useCallback((): boolean => {
+		if (!currentQuestion) return false
+
+		const isOpenEndedQuestion = currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED"
+		if (!isOpenEndedQuestion) return true
+
+		let currentJson = {}
+		let initialJson = {}
+
+		if (currentQuestion.questionType === "FILL_IN_BLANK") {
+			currentJson = currentQuestion.fillInBlankAnswer?.blocklyJson || {}
+			initialJson = currentQuestion.fillInTheBlank?.initialBlocklyJson || {}
+		} else if (currentQuestion.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+			currentJson = currentQuestion.actionToCodeOpenEndedAnswer?.blocklyJson || {}
+			initialJson = currentQuestion.actionToCodeOpenEnded?.initialBlocklyJson || {}
+		}
+
+		const currentJsonStripedAndNormalized = stripAndNormalizeJson(currentJson)
+		const initialJsonStripedAndNormalized = stripAndNormalizeJson(initialJson)
+
+		return JSON.stringify(currentJsonStripedAndNormalized) !== JSON.stringify(initialJsonStripedAndNormalized)
+	}, [currentQuestion])
+
 	const isDisabled = useCallback((): boolean => {
 		if (isLessonCompleted) return false
 
@@ -69,28 +92,14 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 
 		if (isOpenEndedQuestion && isSubmitting) return true
 
-		// For open-ended questions, check if current JSON matches initial JSON
+		// For open-ended questions, check if code has changed and been sent
 		if (isOpenEndedQuestion && !isInConfirmationStage) {
-			let currentJson = {}
-			let initialJson = {}
-
-			if (currentQuestion?.questionType === "FILL_IN_BLANK") {
-				currentJson = currentQuestion.fillInBlankAnswer?.blocklyJson || {}
-				initialJson = currentQuestion.fillInTheBlank?.initialBlocklyJson || {}
-			} else if (currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
-				currentJson = currentQuestion.actionToCodeOpenEndedAnswer?.blocklyJson || {}
-				initialJson = currentQuestion.actionToCodeOpenEnded?.initialBlocklyJson || {}
-			}
-
-			const currentJsonStripedAndNormalized = stripAndNormalizeJson(currentJson)
-			const initialJsonStripedAndNormalized = stripAndNormalizeJson(initialJson)
-
-			// Compare the normalized JSONs
-			if (JSON.stringify(currentJsonStripedAndNormalized) === JSON.stringify(initialJsonStripedAndNormalized)) {
+			// Disable if code hasn't changed from initial state
+			if (!hasCodeChanged()) {
 				return true
 			}
 
-			// For open-ended questions, disable if code hasn't been sent yet
+			// Disable if code hasn't been sent yet
 			if (!learnClass.hasCodeBeenSentForCurrentQuestion()) {
 				return true
 			}
@@ -101,7 +110,7 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 		}
 
 		return false
-	}, [isLessonCompleted, currentQuestion, isSubmitting, isInConfirmationStage, hasSelectedAnswer])
+	}, [isLessonCompleted, currentQuestion, isSubmitting, isInConfirmationStage, hasSelectedAnswer, hasCodeChanged])
 
 	const shouldShowTooltip = useCallback((): boolean => {
 		if (isLessonCompleted) return false
@@ -110,9 +119,26 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 		const isOpenEndedQuestion = currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED"
 		if (!isOpenEndedQuestion) return false
 
-		// Show tooltip if code hasn't been sent
-		return !learnClass.hasCodeBeenSentForCurrentQuestion()
-	}, [isLessonCompleted, isInConfirmationStage, currentQuestion])
+		// Show tooltip if code hasn't changed or code hasn't been sent
+		return !hasCodeChanged() || !learnClass.hasCodeBeenSentForCurrentQuestion()
+	}, [isLessonCompleted, isInConfirmationStage, currentQuestion, hasCodeChanged])
+
+	const getTooltipMessage = useCallback((): string => {
+		const isOpenEndedQuestion = currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED"
+		if (!isOpenEndedQuestion) return ""
+
+		// Check if code hasn't changed
+		if (!hasCodeChanged()) {
+			return "Please modify the starter code before checking your answer"
+		}
+
+		// Check if code hasn't been sent
+		if (!learnClass.hasCodeBeenSentForCurrentQuestion()) {
+			return "Please send your code to Pip before checking your answer"
+		}
+
+		return ""
+	}, [currentQuestion, hasCodeChanged])
 
 	const shadowClass = useCallback((): string => {
 		if (!isInConfirmationStage || lastAnswerWasCorrect) {
@@ -173,7 +199,7 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 						<div className="absolute inset-0 cursor-not-allowed" />
 					</div>
 				}
-				tooltipContent="Please send your code to Pip before checking your answer"
+				tooltipContent={getTooltipMessage()}
 				contentSide="top"
 			/>
 		)
