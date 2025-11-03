@@ -315,7 +315,7 @@ function OpenEndedQuestion({
 						"absolute top-2 right-2 z-1 p-2 h-8 w-8 pointer-events-auto",
 						"bg-background/80 backdrop-blur-xs border-border/50",
 						"hover:bg-accent hover:text-accent-foreground",
-						"transition-all duration-200"
+						"duration-0 rounded-3xl"
 					)}
 					title="Reset blocks to start"
 				>
