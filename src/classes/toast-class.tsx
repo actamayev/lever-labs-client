@@ -89,7 +89,7 @@ class ToastClass {
 		return this.showToastIfNotActive(toast, content, options)
 	}
 
-	public neutral = ({ title, description, action, duration = 100000 }: CustomToastOptions): void => {
+	public neutral = ({ title, description, action, duration = 5000 }: CustomToastOptions): void => {
 		const content = this.createToastContent(title, description, action)
 		const options: ReactToastifyOptions = {
 			autoClose: duration,

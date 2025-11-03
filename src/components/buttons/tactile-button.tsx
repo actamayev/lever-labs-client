@@ -44,7 +44,7 @@ const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
 					ref={ref}
 					variant="tactile"
 					className={cn(
-						"duration-150",
+						"duration-0",
 						baseShadowClass,
 						hoverClass,
 						activeShadowClass,
@@ -75,7 +75,7 @@ const TactileButton = React.forwardRef<HTMLButtonElement, TactileButtonProps>(
 					ref={ref}
 					variant="tactile"
 					className={cn(
-						"duration-150",
+						"duration-0",
 						legacyShadowClass,
 						hoverClass,
 						activeShadowClass,

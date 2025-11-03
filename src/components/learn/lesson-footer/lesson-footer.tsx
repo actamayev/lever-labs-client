@@ -1,35 +1,18 @@
 
 "use client"
 
+import { useMemo } from "react"
+import { Check } from "lucide-react"
 import { observer } from "mobx-react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
-import learnClass from "../../../classes/learn-class"
-import { Check } from "lucide-react"
-import { useMemo } from "react"
-import isEmpty from "lodash-es/isEmpty"
-import AnimatedStateButton from "../../magicui/animated-rainbow-button"
-import sendCppToPip from "../../../utils/sandbox/send-cpp-to-pip"
-import pipClass from "../../../classes/pip-class"
 import { cn } from "../../../lib/utils"
+import learnClass from "../../../classes/learn-class"
 import CheckContinueButton from "./check-continue-button"
 import ShowIncorrectAnswerContent from "./show-incorrect-answer-content"
 
 function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 	const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
-	const currentQuestion = learnClass.currentQuestionState?.question
-	const getCurrentCppCode = (): string => {
-		if (!currentQuestion) return ""
-		if (currentQuestion.questionType === "FILL_IN_BLANK") {
-			return currentQuestion.fillInBlankAnswer?.cppCode || ""
-		}
-		if (currentQuestion.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
-			return currentQuestion.actionToCodeOpenEndedAnswer?.cppCode || ""
-		}
-		return ""
-	}
-	const currentCppCode = getCurrentCppCode()
-	const isSendDisabled = isEmpty(currentCppCode) || pipClass.isSendingCppToPip
 
 	const footerBackgroundColor = useMemo((): string => {
 		if (!isInConfirmationStage) return ""
@@ -45,21 +28,8 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				footerBackgroundColor
 			)}
 		>
-			{/* Left: Send Code button for Fill-In-The-Blank and Action-To-Code-Open-Ended */}
-			<div className="h-12 w-48">
-				{(currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && (
-					<div className="w-48 h-12">
-						<AnimatedStateButton
-							buttonText="SEND CODE"
-							isDisabled={isSendDisabled}
-							onClick={async (event): Promise<void> => {
-								await sendCppToPip(currentCppCode, (event.currentTarget as HTMLButtonElement).getBoundingClientRect())
-							}}
-							className="text-lg"
-						/>
-					</div>
-				)}
-			</div>
+			{/* Left: Empty space (send code button moved to sidebar) */}
+			<div className="h-12 w-48" />
 
 			{/* Center: Feedback message (only in confirmation stage) */}
 			{isInConfirmationStage && (

@@ -8,9 +8,7 @@ import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-templat
 import { AxiosResponse } from "axios"
 import { AllCommonResponses } from "@lever-labs/common-ts/types/api"
 
-export default async function stopCurrentlyRunningCode(
-	failSilently: boolean
-): Promise<void> {
+export default async function stopCurrentlyRunningCode(failSilently: boolean): Promise<void> {
 	const buffer = MessageBuilder.createStopSandboxCodeMessage()
 
 	await sendDataToSerialOrApiTemplate({
