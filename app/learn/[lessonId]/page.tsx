@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import { notFound } from "next/navigation"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import AuthenticatedLayout from "../../../src/components/layouts/authenticated-layout"
-import { createMetadata } from "../../../src/utils/helmet-data/create-metadata"
+import { createMetadata } from "../../../src/utils/seo/create-metadata"
 import LearnPage from "../../../src/components/learn/learn-page"
 
 interface LearnPageProps {

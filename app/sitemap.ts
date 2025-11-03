@@ -31,8 +31,7 @@ const mainRoutes: RouteConfig[] = [
 const userRoutes: RouteConfig[] = [
 	{ path: "/login", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/register", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/register-google", changeFreq: "monthly", priority: 0.8 },
-	{ path: "/contact", changeFreq: "monthly", priority: 0.8 },
+	{ path: "/register-google", changeFreq: "monthly", priority: 0.8 }
 ]
 
 // Account and user pages
@@ -41,6 +40,7 @@ const miscRoutes: RouteConfig[] = [
 	{ path: "/mission", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/terms", changeFreq: "monthly", priority: 0.8 },
 	{ path: "/community-guidelines", changeFreq: "monthly", priority: 0.8 },
+	{ path: "/contact", changeFreq: "monthly", priority: 0.8 }
 ]
 
 // Helper function to convert routes to sitemap entries

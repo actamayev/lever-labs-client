@@ -1,5 +1,5 @@
 import Missing from "@/page-components/missing"
-import { createMetadata } from "@/utils/helmet-data/create-metadata"
+import { createMetadata } from "@/utils/seo/create-metadata"
 
 export const metadata = createMetadata({
 	title: "Page Not Found",

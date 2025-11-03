@@ -1,6 +1,6 @@
 import AuthenticatedLayout from "../../src/components/layouts/authenticated-layout"
 import TheGaragePage from "../../src/components/garage/the-garage-page"
-import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
+import { createMetadata } from "../../src/utils/seo/create-metadata"
 
 export const metadata = createMetadata({
 	title: "Garage",

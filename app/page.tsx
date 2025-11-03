@@ -1,5 +1,5 @@
 import Landing from "../src/page-components/landing"
-import { createMetadata } from "../src/utils/helmet-data/create-metadata"
+import { createMetadata } from "../src/utils/seo/create-metadata"
 
 export const metadata = createMetadata({
 	title: "Lever Labs | Duolingo for Robotics",

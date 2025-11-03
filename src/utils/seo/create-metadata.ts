@@ -1,15 +1,14 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Metadata } from "next"
 import { PrivatePageNames } from "../constants/page-constants"
 
 // Define the base domain for your site
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const BASE_URL = "https://www.leverlabs.com"
 
 // Define common image paths
-// const DEFAULT_OG_IMAGE = "/images/og-default.jpg"
+const DEFAULT_OG_IMAGE = "/og-default.jpg"
 
 // Fixed static keywords
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const STATIC_KEYWORDS: [string, string, string] = [
 	"robotics education",
 	"lever labs",
@@ -72,14 +71,14 @@ export function createMetadata({
 			siteName: "Lever Labs",
 			locale: "en_US",
 			type: "website",
-			// images: [
-			// 	{
-			// 		url: `${BASE_URL}${ogImage}`,
-			// 		width: 1200,
-			// 		height: 630,
-			// 		alt: `Lever Labs - ${title}`,
-			// 	},
-			// ],
+			images: [
+				{
+					url: `${BASE_URL}${DEFAULT_OG_IMAGE}`,
+					width: 1200,
+					height: 630,
+					alt: `Lever Labs - ${title}`,
+				},
+			],
 		},
 
 		// Twitter metadata
@@ -88,7 +87,7 @@ export function createMetadata({
 			title: formattedTitle,
 			description,
 			creator: "@lever_labs",
-			// images: [`${BASE_URL}${twitterImageUrl}`],
+			images: [`${BASE_URL}${DEFAULT_OG_IMAGE}`],
 		},
 
 		// Fixed keywords (3 custom + 3 static)
