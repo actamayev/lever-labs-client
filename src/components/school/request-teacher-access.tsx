@@ -247,7 +247,7 @@ function RequestTeacherAccess(): React.ReactNode {
 					<TactileButton
 						onClick={submitRequest}
 						disabled={!isFormValid || isSubmitting || isFormDisabled}
-						className={cn("duration-150 text-white h-10 rounded-2xl mt-5 text-xl w-full sm:w-auto", colors.bg)}
+						className={cn("duration-0 text-white h-10 rounded-2xl mt-5 text-xl w-full sm:w-auto", colors.bg)}
 						shadowHeight={4}
 						shadowClass={colors.shadow2}
 					>

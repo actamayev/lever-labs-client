@@ -192,7 +192,10 @@ function ViewOnlySandbox(props: Props): React.ReactNode {
 						className="flex-1 rounded-xl text-xl h-12 font-semibold"
 					/>
 					<TactileButton
-						className="bg-cardinal text-white flex items-center justify-center w-24 rounded-xl text-xl h-12 font-semibold"
+						className={cn(
+							"bg-cardinal text-white flex items-center justify-center",
+							"w-24 rounded-xl text-xl h-12 font-semibold duration-0"
+						)}
 						shadowColor="rgb(150, 50, 75)"
 						onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
 					>

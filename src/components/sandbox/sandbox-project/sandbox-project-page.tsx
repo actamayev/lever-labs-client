@@ -28,6 +28,7 @@ import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-runn
 import retrieveSingleSandboxProject from "../../../utils/sandbox/retrieve-single-sandbox-project"
 import LoadingSandboxProjectPage from "./loading-sandbox-project-page"
 import authClass from "../../../classes/auth-class"
+import { cn } from "../../../lib/utils"
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const BlocklyComponent = lazy(() => import("../blockly-component"))
@@ -238,7 +239,10 @@ function SandboxProjectPage({ projectUUID }: { projectUUID: SandboxProjectUUID }
 									className="rounded-xl text-4xl"
 								/>
 								<TactileButton
-									className="h-full -mt-1 bg-cardinal flex items-center justify-center w-auto rounded-xl text-4xl px-10!"
+									className={cn(
+										"h-full -mt-1 bg-cardinal flex items-center",
+										"justify-center w-auto rounded-xl text-4xl px-10! duration-0"
+									)}
 									shadowColor="rgb(150, 50, 75)"
 									onClick={(): Promise<void> => stopCurrentlyRunningCode(false)}
 								>

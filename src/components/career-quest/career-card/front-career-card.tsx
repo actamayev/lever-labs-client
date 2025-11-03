@@ -82,7 +82,7 @@ function FrontCareerCard(props: Props): React.ReactNode {
 				<div style={{ height: "30%" }}>
 					<div className="pb-4 flex flex-row items-center gap-3">
 						<TactileButton
-							className={cn("duration-150 bg-white h-10 rounded-full text-base w-full", colors.text2)}
+							className={cn("bg-white h-10 rounded-full text-base w-full", colors.text2)}
 							shadowClass={colors.shadow}
 							shadowHeight={4}
 							disabled={careerData.isDisabled}
