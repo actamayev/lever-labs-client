@@ -85,7 +85,6 @@ export function createMetadata({
 		// Add icons configuration
 		icons: {
 			icon: "/favicon.ico",
-			shortcut: "/favicon-16x16.png",
 			apple: "/apple-touch-icon.png",
 		},
 
