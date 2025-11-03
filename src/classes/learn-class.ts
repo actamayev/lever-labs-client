@@ -21,6 +21,7 @@ class LearnClass {
 	public isExitDialogOpen = false
 	public isLessonCompleted = false
 	public isNavigatingAway = false
+	public lastSentCppCodeByQuestionId: Map<string, string> = new Map()
 
 	constructor() {
 		makeAutoObservable(this)
@@ -247,6 +248,12 @@ class LearnClass {
 			blocklyJson,
 			cppCode
 		}
+
+		// Clear last sent code if the code has changed
+		const lastSentCode = this.lastSentCppCodeByQuestionId.get(questionId)
+		if (lastSentCode !== cppCode) {
+			this.lastSentCppCodeByQuestionId.delete(questionId)
+		}
 	})
 
 	public setActionToCodeOpenEndedAnswer = action((questionId: string, blocklyJson: BlocklyJson, cppCode: string): void => {
@@ -264,6 +271,12 @@ class LearnClass {
 			initialJson: questionMap.question.actionToCodeOpenEnded?.initialBlocklyJson as BlocklyJson,
 			blocklyJson,
 			cppCode
+		}
+
+		// Clear last sent code if the code has changed
+		const lastSentCode = this.lastSentCppCodeByQuestionId.get(questionId)
+		if (lastSentCode !== cppCode) {
+			this.lastSentCppCodeByQuestionId.delete(questionId)
 		}
 	})
 
@@ -483,6 +496,28 @@ class LearnClass {
 		this.isNavigatingAway = isNavigating
 	})
 
+	public recordCodeSent = action((questionId: string, cppCode: string): void => {
+		this.lastSentCppCodeByQuestionId.set(questionId, cppCode)
+	})
+
+	public hasCodeBeenSentForCurrentQuestion = (): boolean => {
+		if (!this.currentQuestionState) return false
+		const questionId = this.currentQuestionState.question.questionId
+		const currentQuestion = this.currentQuestionState.question
+
+		let currentCppCode = ""
+		if (currentQuestion.questionType === "FILL_IN_BLANK") {
+			currentCppCode = currentQuestion.fillInBlankAnswer?.cppCode || ""
+		} else if (currentQuestion.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+			currentCppCode = currentQuestion.actionToCodeOpenEndedAnswer?.cppCode || ""
+		}
+
+		if (!currentCppCode) return false
+
+		const lastSentCode = this.lastSentCppCodeByQuestionId.get(questionId)
+		return lastSentCode === currentCppCode
+	}
+
 	public logout(): void {
 		this.isRetrievingAllLessons = false
 		this.hasRetrievedAllLessons = false
@@ -493,6 +528,7 @@ class LearnClass {
 		this.isExitDialogOpen = false
 		this.isLessonCompleted = false
 		this.isNavigatingAway = false
+		this.lastSentCppCodeByQuestionId = new Map()
 	}
 }
 

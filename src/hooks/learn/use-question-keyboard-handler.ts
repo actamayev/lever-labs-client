@@ -37,7 +37,7 @@ export default function useQuestionKeyboardHandler(): void {
 					) ?? false
 				)
 				if (lesson) {
-					void stopCurrentlyRunningCode(false)
+					void stopCurrentlyRunningCode(true)
 					learnClass.continueToNextQuestion(lesson.lessonId)
 				}
 			}

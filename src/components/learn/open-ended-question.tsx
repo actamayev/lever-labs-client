@@ -288,7 +288,10 @@ function OpenEndedQuestion({
 							buttonText="SEND CODE"
 							isDisabled={isSendDisabled}
 							onClick={async (event): Promise<void> => {
-								await sendCppToPip(currentCppCode, (event.currentTarget as HTMLButtonElement).getBoundingClientRect())
+								if (currentQuestionState?.question.questionId) {
+									await sendCppToPip(currentCppCode, (event.currentTarget as HTMLButtonElement).getBoundingClientRect())
+									learnClass.recordCodeSent(currentQuestionState.question.questionId, currentCppCode)
+								}
 							}}
 							className="rounded-2xl text-xl h-14"
 							uploadClasses="size-4!"
