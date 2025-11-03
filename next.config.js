@@ -54,6 +54,9 @@ const nextConfig = {
 		formats: ["image/webp", "image/avif"], // Use modern image formats
 		minimumCacheTTL: 60 * 60 * 24 * 30, // Cache images for 30 days
 		dangerouslyAllowSVG: false, // Security: disable SVG optimization
+		deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+		imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+		unoptimized: false,
 	},
 
 	// Security headers
@@ -79,6 +82,22 @@ const nextConfig = {
 						key: "Permissions-Policy",
 						value: "camera=(), microphone=(), geolocation=()",
 					},
+					{
+						key: "X-DNS-Prefetch-Control",
+						value: "on"
+					  },
+					  {
+						key: "Strict-Transport-Security",
+						value: "max-age=63072000; includeSubDomains; preload"
+					  },
+					  {
+						key: "Content-Security-Policy",
+						value: "frame-ancestors 'none';" // Prevents clickjacking
+					  },
+					  {
+						key: "Link",
+						value: "<https://lever-labs-production-bucket.s3.us-east-1.amazonaws.com>; rel=preconnect"
+					  }
 				],
 			},
 		]

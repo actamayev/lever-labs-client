@@ -1,34 +1,31 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 import { Metadata } from "next"
 import { PrivatePageNames } from "../constants/page-constants"
 
-// Define the base domain for your site
-// eslint-disable-next-line @typescript-eslint/naming-convention
 const BASE_URL = "https://www.leverlabs.com"
 
-// Define common image paths
-// const DEFAULT_OG_IMAGE = "/images/og-default.jpg"
+const DEFAULT_OG_IMAGE = "/og-default.jpg"
 
-// Fixed static keywords
-// eslint-disable-next-line @typescript-eslint/naming-convention
-const STATIC_KEYWORDS: [string, string, string] = [
+// Static keywords that appear on every page
+const STATIC_KEYWORDS = [
 	"robotics education",
 	"lever labs",
 	"stem learning"
-]
+] as const
 
-// Types for the custom metadata function
 type MetadataProps = {
 	title: string
 	description: string
 	path: PageNames
 	needsLeverLabsSuffix?: boolean
-	keywords: [string, string, string] // Tuple type enforces exactly 3 strings
+	keywords: string[] // Now accepts any number of keywords
 	noIndex?: boolean
+	structuredData?: Record<string, unknown> // For JSON-LD
 };
 
 /**
  * Creates consistent metadata across the site with customizable fields
- * Enforces exactly 3 custom keywords per page + 3 static keywords
+ * Accepts flexible keyword arrays and includes structured data support
  */
 export function createMetadata({
 	title,
@@ -37,21 +34,18 @@ export function createMetadata({
 	needsLeverLabsSuffix = true,
 	keywords,
 	noIndex,
+	structuredData,
 }: MetadataProps): Metadata {
-	// No need to validate count, TypeScript enforces exactly 3 keywords
-
 	// Format title based on needsLeverLabsSuffix flag
 	const formattedTitle = needsLeverLabsSuffix ? `${title} | Lever Labs` : title
 
 	// Build the full URL
 	const url = `${BASE_URL}${path}`
 
-	// Twitter image defaults to OG image if not specified
-	// const twitterImageUrl = twitterImage || ogImage
-
 	// Combine custom keywords with static keywords
 	const combinedKeywords = [...keywords, ...STATIC_KEYWORDS]
 
+	// Determine if page should be indexed
 	const shouldNoIndex = noIndex ?? isProtectedPage(path)
 
 	return {
@@ -72,14 +66,15 @@ export function createMetadata({
 			siteName: "Lever Labs",
 			locale: "en_US",
 			type: "website",
-			// images: [
-			// 	{
-			// 		url: `${BASE_URL}${ogImage}`,
-			// 		width: 1200,
-			// 		height: 630,
-			// 		alt: `Lever Labs - ${title}`,
-			// 	},
-			// ],
+			images: [
+				{
+					url: `${BASE_URL}${DEFAULT_OG_IMAGE}`,
+					width: 1200,
+					height: 630,
+					alt: `Lever Labs - ${title}`,
+					type: "image/jpeg", // Add this
+				},
+			],
 		},
 
 		// Twitter metadata
@@ -88,10 +83,10 @@ export function createMetadata({
 			title: formattedTitle,
 			description,
 			creator: "@lever_labs",
-			// images: [`${BASE_URL}${twitterImageUrl}`],
+			images: [`${BASE_URL}${DEFAULT_OG_IMAGE}`],
 		},
 
-		// Fixed keywords (3 custom + 3 static)
+		// Keywords (flexible array)
 		keywords: combinedKeywords,
 
 		// Other metadata
@@ -100,14 +95,30 @@ export function createMetadata({
 
 		// SEO settings
 		robots: shouldNoIndex
-			? { index: false, follow: false }
-			: { index: true, follow: true }
+			? {
+				index: false,
+				follow: false,
+				nocache: true, // Prevent caching of protected pages
+			}
+			: {
+				index: true,
+				follow: true,
+				"max-image-preview": "large", // Allow large preview images
+				"max-snippet": -1, // No limit on snippet length
+				"max-video-preview": -1, // No limit on video preview
+			},
+
+		// Additional metadata
+		other: {
+			"og:site_name": "Lever Labs",
+			...(structuredData && {
+				"application/ld+json": JSON.stringify(structuredData)
+			})
+		}
 	}
 }
 
 function isProtectedPage(path: PageNames): boolean {
-	// Check if the path is in your PrivatePageNames array
-	// Or use a more flexible approach checking for prefixes
 	return PrivatePageNames.includes(path) ||
 		path.startsWith("/garage/") ||
 		path.startsWith("/sandbox/") ||
@@ -115,5 +126,7 @@ function isProtectedPage(path: PageNames): boolean {
 		path.startsWith("/career-quest/") ||
 		path.startsWith("/class-manager/") ||
 		path.startsWith("/whiteboard/") ||
-		path.startsWith("/scoreboard/")
+		path.startsWith("/scoreboard/") ||
+		path.startsWith("/login") ||
+		path.startsWith("/register")
 }

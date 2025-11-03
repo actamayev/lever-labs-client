@@ -1,5 +1,5 @@
 import AuthenticatedLayout from "../../src/components/layouts/authenticated-layout"
-import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
+import { createMetadata } from "../../src/utils/seo/create-metadata"
 import TheSandboxPage from "../../src/components/sandbox/sandbox-page/the-sandbox-page"
 
 export const metadata = createMetadata({

@@ -1,6 +1,6 @@
 import TermsPage from "../../src/page-components/terms"
 import LayoutOnlyWrapper from "../../src/components/layouts/layout-only-wrapper"
-import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
+import { createMetadata } from "../../src/utils/seo/create-metadata"
 
 export const metadata = createMetadata({
 	title: "Terms",

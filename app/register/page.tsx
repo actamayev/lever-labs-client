@@ -1,4 +1,4 @@
-import { createMetadata } from "../../src/utils/helmet-data/create-metadata"
+import { createMetadata } from "../../src/utils/seo/create-metadata"
 import RegisterComponent from "../../src/components/auth/register/register-component"
 
 export const metadata = createMetadata({
