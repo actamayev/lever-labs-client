@@ -18,15 +18,11 @@ type MetadataProps = {
 	description: string
 	path: PageNames
 	needsLeverLabsSuffix?: boolean
-	keywords: string[] // Now accepts any number of keywords
+	keywords: string[]
 	noIndex?: boolean
-	structuredData?: Record<string, unknown> // For JSON-LD
-};
+	structuredData?: Record<string, unknown>
+}
 
-/**
- * Creates consistent metadata across the site with customizable fields
- * Accepts flexible keyword arrays and includes structured data support
- */
 export function createMetadata({
 	title,
 	description,
@@ -36,29 +32,25 @@ export function createMetadata({
 	noIndex,
 	structuredData,
 }: MetadataProps): Metadata {
-	// Format title based on needsLeverLabsSuffix flag
 	const formattedTitle = needsLeverLabsSuffix ? `${title} | Lever Labs` : title
-
-	// Build the full URL
 	const url = `${BASE_URL}${path}`
-
-	// Combine custom keywords with static keywords
 	const combinedKeywords = [...keywords, ...STATIC_KEYWORDS]
-
-	// Determine if page should be indexed
 	const shouldNoIndex = noIndex ?? isProtectedPage(path)
 
 	return {
-		// Basic metadata
-		title: formattedTitle,
+		metadataBase: new URL("https://www.leverlabs.com"),
+		// Add title template support
+		title: {
+			default: formattedTitle,
+			template: needsLeverLabsSuffix ? "%s | Lever Labs" : "%s"
+		},
 		description,
 
-		// Canonical URL
+		// Use relative URLs - metadataBase will resolve them
 		alternates: {
-			canonical: url,
+			canonical: path,
 		},
 
-		// Open Graph metadata
 		openGraph: {
 			title: formattedTitle,
 			description,
@@ -68,47 +60,52 @@ export function createMetadata({
 			type: "website",
 			images: [
 				{
-					url: `${BASE_URL}${DEFAULT_OG_IMAGE}`,
+					url: DEFAULT_OG_IMAGE, // Relative URL
 					width: 1200,
 					height: 630,
 					alt: `Lever Labs - ${title}`,
-					type: "image/jpeg", // Add this
+					type: "image/jpeg",
 				},
 			],
 		},
 
-		// Twitter metadata
 		twitter: {
 			card: "summary_large_image",
 			title: formattedTitle,
 			description,
 			creator: "@lever_labs",
-			images: [`${BASE_URL}${DEFAULT_OG_IMAGE}`],
+			images: [DEFAULT_OG_IMAGE], // Relative URL
 		},
 
-		// Keywords (flexible array)
 		keywords: combinedKeywords,
-
-		// Other metadata
 		authors: [{ name: "Lever Labs Team" }],
+		creator: "Lever Labs", // Add this
 		publisher: "Lever Labs",
 
-		// SEO settings
+		// Add icons configuration
+		icons: {
+			icon: "/favicon.ico",
+			shortcut: "/favicon-16x16.png",
+			apple: "/apple-touch-icon.png",
+		},
+
+		// Add manifest
+		manifest: "/manifest.webmanifest",
+
 		robots: shouldNoIndex
 			? {
 				index: false,
 				follow: false,
-				nocache: true, // Prevent caching of protected pages
+				nocache: true,
 			}
 			: {
 				index: true,
 				follow: true,
-				"max-image-preview": "large", // Allow large preview images
-				"max-snippet": -1, // No limit on snippet length
-				"max-video-preview": -1, // No limit on video preview
+				"max-image-preview": "large",
+				"max-snippet": -1,
+				"max-video-preview": -1,
 			},
 
-		// Additional metadata
 		other: {
 			"og:site_name": "Lever Labs",
 			...(structuredData && {
