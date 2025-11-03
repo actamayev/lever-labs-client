@@ -1,7 +1,6 @@
 import { useEffect } from "react"
 import learnClass from "../../classes/learn-class"
 import isOtpInputFocused from "../../utils/check-otp-input-focused"
-import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 
 /**
  * Custom hook to handle Enter key presses for question components
@@ -37,8 +36,7 @@ export default function useQuestionKeyboardHandler(): void {
 					) ?? false
 				)
 				if (lesson) {
-					void stopCurrentlyRunningCode(true)
-					learnClass.continueToNextQuestion(lesson.lessonId)
+					void learnClass.continueToNextQuestion(lesson.lessonId)
 				}
 			}
 		}

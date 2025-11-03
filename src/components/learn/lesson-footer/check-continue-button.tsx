@@ -9,7 +9,6 @@ import learnClass from "../../../classes/learn-class"
 import { useCallback, useState } from "react"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
 import { stripAndNormalizeJson } from "../../../utils/blockly/strip-blockly-positions"
-import stopCurrentlyRunningCode from "../../../utils/sandbox/stop-currently-running-code"
 import CustomTooltip from "../../custom-tooltip"
 
 // eslint-disable-next-line max-lines-per-function
@@ -43,13 +42,12 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 				learnClass.retryCurrentQuestion()
 				return
 			}
-			await stopCurrentlyRunningCode(true)
-			learnClass.continueToNextQuestion(lessonId)
+			await learnClass.continueToNextQuestion(lessonId)
 			return
 		}
 		// For demo questions, skip confirmation and go directly to next question
 		if (currentQuestion?.questionType === "DEMO") {
-			learnClass.continueToNextQuestion(lessonId)
+			await learnClass.continueToNextQuestion(lessonId)
 			return
 		}
 		if (currentQuestion?.questionType !== "FILL_IN_BLANK" && currentQuestion?.questionType !== "ACTION_TO_CODE_OPEN_ENDED") {
