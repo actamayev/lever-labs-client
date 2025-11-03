@@ -66,17 +66,20 @@ export default function FAQ(): React.ReactNode {
 						<Accordion type='single' collapsible className='w-full' defaultValue='item-1'>
 							{items.map((item, index): React.ReactNode => (
 								<AccordionItem key={index} value={`item-${index + 1}`}>
-									<AccordionPrimitive.Header className='flex'>
-										<AccordionPrimitive.Trigger
-											data-slot='accordion-trigger'
-											className='focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-45'
-										>
-											<span className='flex items-center gap-4'>
-												<item.icon className='size-6 shrink-0' />
-												<span className='text-lg font-medium'>{item.title}</span>
-											</span>
-											<PlusIcon className='text-muted-foreground pointer-events-none size-4 shrink-0 transition-transform duration-200' />
-										</AccordionPrimitive.Trigger>
+									{/* ADD asChild AND WRAP IN H4 */}
+									<AccordionPrimitive.Header asChild>
+										<h4 className='flex'>
+											<AccordionPrimitive.Trigger
+												data-slot='accordion-trigger'
+												className='focus-visible:border-ring focus-visible:ring-ring/50 flex flex-1 items-start justify-between gap-4 rounded-md py-4 text-left text-sm font-medium transition-all outline-none focus-visible:ring-[3px] disabled:pointer-events-none disabled:opacity-50 [&[data-state=open]>svg]:rotate-45'
+											>
+												<span className='flex items-center gap-4'>
+													<item.icon className='size-6 shrink-0' />
+													<span className='text-lg font-medium'>{item.title}</span>
+												</span>
+												<PlusIcon className='text-muted-foreground pointer-events-none size-4 shrink-0 transition-transform duration-200' />
+											</AccordionPrimitive.Trigger>
+										</h4>
 									</AccordionPrimitive.Header>
 									<AccordionContent className='text-muted-foreground text-base'>{item.content}</AccordionContent>
 								</AccordionItem>

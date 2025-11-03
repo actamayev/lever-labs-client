@@ -53,7 +53,7 @@ export default function FeaturesSection(): React.ReactNode {
 												<features.icon />
 											</AvatarFallback>
 										</Avatar>
-										<h6 className='mb-2 text-lg font-semibold'>{features.title}</h6>
+										<h3 className='mb-2 text-lg font-semibold'>{features.title}</h3>
 										<p className='text-muted-foreground'>{features.description}</p>
 									</CardContent>
 								</Card>
