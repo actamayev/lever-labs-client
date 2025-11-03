@@ -3,7 +3,6 @@
 	  {
 		"source": "/(.*)",
 		"destination": "https://www.leverlabs.com/$1",
-		"permanent": true,
 		"statusCode": 301,
 		"has": [
 		  {
@@ -13,4 +12,4 @@
 		]
 	  }
 	]
-  }
+}
