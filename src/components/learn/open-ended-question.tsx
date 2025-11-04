@@ -269,16 +269,19 @@ function OpenEndedQuestion({
 	return (
 		<div className="flex flex-row min-h-0 flex-1 gap-0">
 			{/* Left sidebar with question text and buttons */}
-			<div className="flex flex-col border-swan border-l-2 border-t-2 border-b-2 rounded-l-3xl bg-polar min-w-[300px] max-w-[300px]">
-				{/* Question text at top */}
-				<div className="flex-1 p-6 flex items-start">
+			<div className={cn(
+				"flex flex-col min-h-0 border-swan border-l-2 border-t-2 border-b-2",
+				"rounded-l-3xl bg-polar min-w-[300px] max-w-[300px]"
+			)}>
+				{/* Question text at top - scrollable */}
+				<div className="flex-1 min-h-0 overflow-y-auto p-6 flex items-start">
 					<h2 className="text-xs sm:text-sm md:text-base lg:text-base font-semibold text-question-text">
 						{questionText}
 					</h2>
 				</div>
 
-				{/* Buttons at bottom */}
-				<div className="flex flex-col gap-3 pt-3 pb-4 px-4">
+				{/* Buttons at bottom - always visible */}
+				<div className="shrink-0 flex flex-col gap-3 pt-3 pb-4 px-4">
 					{renderLeftButtons && (
 						<div className="w-full">
 							{renderLeftButtons(questionData.referenceSolutionCpp)}
@@ -294,20 +297,20 @@ function OpenEndedQuestion({
 									learnClass.recordCodeSent(currentQuestionState.question.questionId, currentCppCode)
 								}
 							}}
-							className="rounded-2xl text-sm sm:text-base md:text-lg lg:text-lg h-10 sm:h-11 md:h-12 lg:h-12"
-							uploadClasses="size-3! sm:size-3! md:size-4! lg:size-4!"
+							className="rounded-2xl text-sm sm:text-sm md:text-sm lg:text-lg h-10 sm:h-9 md:h-9 lg:h-12"
+							uploadClasses="size-3! sm:size-3! md:size-3! lg:size-4!"
 						/>
 					</div>
 					<StopCodeButton
 						className={cn(
-							"h-10 sm:h-11 md:h-12 lg:h-12 w-full",
-							"px-6 sm:px-6 md:px-8 lg:px-8",
-							"py-3 sm:py-3 md:py-4 lg:py-4",
-							"text-sm sm:text-base md:text-lg lg:text-lg",
+							"h-10 sm:h-9 md:h-9 lg:h-12 w-full",
+							"px-6 sm:px-5 md:px-5 lg:px-8",
+							"py-3 sm:py-2.5 md:py-2.5 lg:py-4",
+							"text-sm sm:text-sm md:text-sm lg:text-lg",
 							"font-semibold rounded-2xl",
-							"gap-2 sm:gap-2 md:gap-3 lg:gap-3"
+							"gap-2 sm:gap-2 md:gap-2 lg:gap-3"
 						)}
-						pauseClasses="size-3! sm:size-3! md:size-4! lg:size-4!"
+						pauseClasses="size-3! sm:size-3! md:size-3! lg:size-4!"
 					/>
 				</div>
 			</div>
