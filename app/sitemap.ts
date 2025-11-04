@@ -2,7 +2,7 @@ import { MetadataRoute } from "next"
 
 // Base URL for the site
 // eslint-disable-next-line @typescript-eslint/naming-convention
-const BASE_URL = "https://www.leverlabs.com"
+const BASE_URL = "https://leverlabs.com"
 
 // Current date for lastmod
 const currentDate = new Date().toISOString().split("T")[0]

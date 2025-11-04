@@ -5,10 +5,10 @@ const organizationSchema = {
 	"@type": "Organization",
 	"name": "Lever Labs",
 	"alternateName": "Lever Labs Robotics",
-	"url": "https://www.leverlabs.com",
+	"url": "https://leverlabs.com",
 	"logo": {
 		"@type": "ImageObject",
-		"url": "https://www.leverlabs.com/logo512.png",
+		"url": "https://leverlabs.com/logo512.png",
 		"width": 512,
 		"height": 512
 	},
@@ -23,7 +23,7 @@ const organizationSchema = {
 		"@type": "ContactPoint",
 		"contactType": "Customer Support",
 		"email": "hello@leverlabs.com", // Update with actual email
-		"url": "https://www.leverlabs.com/contact",
+		"url": "https://leverlabs.com/contact",
 		"availableLanguage": ["English"]
 	},
 
@@ -71,7 +71,7 @@ const websiteSchema = {
 	"@context": "https://schema.org",
 	"@type": "WebSite",
 	"name": "Lever Labs",
-	"url": "https://www.leverlabs.com",
+	"url": "https://leverlabs.com",
 	"description": "Duolingo for Robotics",
 	"publisher": {
 		"@type": "Organization",
@@ -82,7 +82,7 @@ const websiteSchema = {
 		"@type": "SearchAction",
 		"target": {
 			"@type": "EntryPoint",
-			"urlTemplate": "https://www.leverlabs.com/search?q={search_term_string}"
+			"urlTemplate": "https://leverlabs.com/search?q={search_term_string}"
 		},
 		"query-input": "required name=search_term_string"
 	}
@@ -98,7 +98,7 @@ const productSchema = {
 		"@type": "Brand",
 		"name": "Lever Labs"
 	},
-	"image": "https://www.leverlabs.com/pip_square_1200.jpg", // Square, 1200×1200px
+	"image": "https://leverlabs.com/pip_square_1200.jpg", // Square, 1200×1200px
 	"category": "Educational Robotics",
 	"audience": {
 		"@type": "PeopleAudience",
@@ -109,7 +109,7 @@ const productSchema = {
 		"price": "200.00", // Your actual price
 		"priceCurrency": "USD",
 		"availability": "https://schema.org/PreOrder", // ✅ Use this for pre-orders
-		"url": "https://www.leverlabs.com/preorder", // Or wherever pre-order form is
+		"url": "https://leverlabs.com/preorder", // Or wherever pre-order form is
 
 		// 1. Price validity (fixes the warning)
 		"priceValidUntil": "2026-12-31",

@@ -10,7 +10,7 @@ import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-
 import { cn } from "../../lib/utils"
 import isOtpInputFocused from "../../utils/check-otp-input-focused"
 
-// eslint-disable-next-line max-lines-per-function
+
 function BlockToFunctionQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
@@ -64,10 +64,7 @@ function BlockToFunctionQuestion(): React.ReactNode {
 			{/* Question: Show the block */}
 			<div className="flex justify-center">
 				<div className="relative h-48 w-96">
-					<LearnMiniSandbox
-						blocklyJson={codingBlock.codingBlockJson}
-						className="w-full h-full"
-					/>
+					<LearnMiniSandbox blocklyJson={codingBlock.codingBlockJson} className="w-full h-full" />
 				</div>
 			</div>
 

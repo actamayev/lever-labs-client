@@ -2,12 +2,12 @@
 	"redirects": [
 	  {
 		"source": "/(.*)",
-		"destination": "https://www.leverlabs.com/$1",
+		"destination": "https://leverlabs.com/$1",
 		"statusCode": 301,
 		"has": [
 		  {
 			"type": "host",
-			"value": "leverlabs.com"
+			"value": "www.leverlabs.com"
 		  }
 		]
 	  }
