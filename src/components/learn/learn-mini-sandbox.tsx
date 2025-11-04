@@ -17,7 +17,7 @@ interface LearnMiniSandboxProps {
 	className?: string
 }
 
-
+// eslint-disable-next-line max-lines-per-function
 function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps): React.ReactNode {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
@@ -31,18 +31,63 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		return getWorkspaceConfig(isDarkMode, true, 1, true)
 	}, [isDarkMode])
 
+	const calculateOptimalScale = useCallback((): number => {
+		const workspace = workspaceRef.current
+		const container = containerRef.current
+
+		if (!workspace || !container) return 1
+
+		const blocks = workspace.getAllBlocks()
+		if (blocks.length === 0) return 1
+
+		// Get container dimensions
+		const containerRect = container.getBoundingClientRect()
+		const containerWidth = containerRect.width
+		const containerHeight = containerRect.height
+
+		// Use Blockly's MetricsManager to get content dimensions
+		const metricsManager = workspace.getMetricsManager()
+		const contentMetrics = metricsManager.getContentMetrics()
+
+		const contentWidth = contentMetrics.width
+		const contentHeight = contentMetrics.height
+
+		// If no valid content dimensions, return default scale
+		if (!contentWidth || !contentHeight || contentWidth <= 0 || contentHeight <= 0) {
+			return 1
+		}
+
+		// Add padding (use 85% of container to leave margins)
+		const paddingFactor = 0.85
+		const availableWidth = containerWidth * paddingFactor
+		const availableHeight = containerHeight * paddingFactor
+
+		// Calculate scale ratios for both dimensions
+		const scaleX = availableWidth / contentWidth
+		const scaleY = availableHeight / contentHeight
+
+		// Use the smaller scale to ensure everything fits
+		const optimalScale = Math.min(scaleX, scaleY, 1) // Cap at 1 to avoid zooming in
+
+		// Set minimum scale to 0.3 (matching minScale in config) and maximum to 1
+		return Math.max(0.3, Math.min(optimalScale, 1))
+	}, [])
+
 	const centerWorkspace = useCallback((): void => {
 		setIsCentering(true)
 		const workspace = workspaceRef.current
 		if (!workspace) return
 
-		// Always center the workspace
-		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
+		// Calculate optimal scale based on block size and container size
+		const optimalScale = calculateOptimalScale()
+
+		// Set the scale and center the workspace
+		workspace.setScale(optimalScale)
 		workspace.scrollCenter()
 
 		setIsCentered(true)
 		setIsCentering(false)
-	}, [workspaceConfiguration.zoom?.startScale])
+	}, [calculateOptimalScale])
 
 	const handleWorkspaceChange = useCallback((workspace: Blockly.WorkspaceSvg): void => {
 		workspaceRef.current = workspace
@@ -89,6 +134,16 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		const resizeObserver = new ResizeObserver((): void => {
 			if (workspaceRef.current) {
 				Blockly.svgResize(workspaceRef.current)
+				// Recalculate scale when container resizes
+				if (workspaceRef.current.getAllBlocks().length > 0) {
+					setTimeout((): void => {
+						const optimalScale = calculateOptimalScale()
+						if (workspaceRef.current) {
+							workspaceRef.current.setScale(optimalScale)
+							workspaceRef.current.scrollCenter()
+						}
+					}, 100)
+				}
 			}
 		})
 
@@ -97,7 +152,7 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		return (): void => {
 			resizeObserver.disconnect()
 		}
-	}, [])
+	}, [calculateOptimalScale])
 
 	useEffect((): void => {
 		const initBlocks = async (): Promise<void> => {
