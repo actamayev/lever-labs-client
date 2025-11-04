@@ -20,6 +20,7 @@ const motorsCategory: CustomCategoryInfo = {
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.DRIVE_TIME },
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.DRIVE_DISTANCE },
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.TURN },
+		{ kind: "block", type: MOTOR_BLOCK_TYPES.SPIN },
 		{ kind: "block", type: MOTOR_BLOCK_TYPES.STOP },
 	]
 }
