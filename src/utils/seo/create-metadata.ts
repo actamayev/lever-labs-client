@@ -2,7 +2,7 @@
 import { Metadata } from "next"
 import { PrivatePageNames } from "../constants/page-constants"
 
-const BASE_URL = "https://www.leverlabs.com"
+const BASE_URL = "https://leverlabs.com"
 
 const DEFAULT_OG_IMAGE = "/og-default.jpg"
 
@@ -38,7 +38,7 @@ export function createMetadata({
 	const shouldNoIndex = noIndex ?? isProtectedPage(path)
 
 	return {
-		metadataBase: new URL("https://www.leverlabs.com"),
+		metadataBase: new URL("https://leverlabs.com"),
 		// Add title template support
 		title: {
 			default: formattedTitle,

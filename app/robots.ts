@@ -29,6 +29,6 @@ export default function robots(): MetadataRoute.Robots {
 				]
 			}
 		],
-		sitemap: "https://www.leverlabs.com/sitemap.xml",
+		sitemap: "https://leverlabs.com/sitemap.xml",
 	}
 }
