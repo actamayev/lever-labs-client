@@ -10,6 +10,7 @@ import ThemeProvider from "../theme/theme-provider"
 import InternalPagesLayout from "./internal-pages-layout"
 import personalInfoClass from "../../classes/personal-info-class"
 import { PrivatePageNames, OpenPages } from "../../utils/constants/page-constants"
+import careerQuestClass from "@/classes/career-quest-class"
 
 interface LayoutWrapperProps {
 	children: React.ReactNode
@@ -23,6 +24,17 @@ function LayoutWrapper({ children, initialAuthState }: LayoutWrapperProps): Reac
 	useEffect((): void => {
 		personalInfoClass.setDefaultSiteTheme(initialAuthState.theme, false)
 	}, [initialAuthState.theme])
+
+	// Sync server auth state with client even on open pages (covers reloads)
+	useEffect((): void => {
+		if (!authClass.isLoggedIn && initialAuthState.isAuthenticated) {
+			authClass.setAuthState({
+				isAuthenticated: initialAuthState.isAuthenticated,
+				hasCompletedSignup: initialAuthState.hasCompletedSignup
+			})
+			careerQuestClass.reinitialize()
+		}
+	}, [initialAuthState.isAuthenticated, initialAuthState.hasCompletedSignup])
 
 	const isPrivatePage = PrivatePageNames.some((path): boolean => pathname.startsWith(path))
 	const isOpenPage = OpenPages.some((path): boolean => pathname.startsWith(path))
