@@ -80,15 +80,15 @@ function OpenEndedQuestion({
 		} else if (windowWidth < 1024) {
 			return 0.7 // Medium screens
 		} else if (windowWidth < 1280) {
-			return 1.0 // Large screens
+			return 0.8 // Large screens
 		} else if (windowWidth < 1536) {
-			return 1.2 // Extra large screens
+			return 1.0 // Extra large screens
 		} else if (windowWidth < 1920) {
-			return 1.3 // Extra large screens
+			return 1.1 // Extra large screens
 		} else if (windowWidth < 2560) {
-			return 1.5 // Extra large screens
+			return 1.3 // Extra large screens
 		}
-		return 1.6 // Extra extra large screens
+		return 1.4 // Extra extra large screens
 	}, [windowWidth])
 
 	// Create toolbox config from available blocks
