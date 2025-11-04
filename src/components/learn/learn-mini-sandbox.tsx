@@ -26,34 +26,85 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 	const [isCentered, setIsCentered] = useState(false)
 	const [isCentering, setIsCentering] = useState(false)
 	const [blocksInitialized, setBlocksInitialized] = useState(false)
+	const isCalculatingScaleRef = useRef(false)
+	const lastScaleCalculationRef = useRef<number>(0)
 
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
 		return getWorkspaceConfig(isDarkMode, true, 1, true)
 	}, [isDarkMode])
 
 	const calculateOptimalScale = useCallback((): number => {
+		// Prevent multiple simultaneous calculations
+		if (isCalculatingScaleRef.current) {
+			console.log("[LearnMiniSandbox] calculateOptimalScale: Already calculating, skipping")
+			return lastScaleCalculationRef.current || 1
+		}
+
+		isCalculatingScaleRef.current = true
+
 		const workspace = workspaceRef.current
 		const container = containerRef.current
 
-		if (!workspace || !container) return 1
+		if (!workspace || !container) {
+			console.log("[LearnMiniSandbox] calculateOptimalScale: Missing workspace or container")
+			isCalculatingScaleRef.current = false
+			return 1
+		}
 
 		const blocks = workspace.getAllBlocks()
-		if (blocks.length === 0) return 1
+		if (blocks.length === 0) {
+			console.log("[LearnMiniSandbox] calculateOptimalScale: No blocks found")
+			isCalculatingScaleRef.current = false
+			return 1
+		}
+
+		// Get current scale before any changes
+		const currentScale = workspace.getScale()
+
+		// Temporarily reset to scale 1.0 to get accurate unscaled content metrics
+		// This ensures we always calculate from workspace coordinates, not view coordinates
+		// We'll restore the scale after calculation if needed
+		let scaleWasChanged = false
+		if (Math.abs(currentScale - 1) > 0.01) {
+			scaleWasChanged = true
+			workspace.setScale(1)
+			Blockly.svgResize(workspace)
+			// Give Blockly a moment to process the scale change
+			// We'll use requestAnimationFrame to ensure it's processed
+		}
+
+		// Force Blockly to resize and recalculate metrics before getting them
+		Blockly.svgResize(workspace)
 
 		// Get container dimensions
 		const containerRect = container.getBoundingClientRect()
 		const containerWidth = containerRect.width
 		const containerHeight = containerRect.height
 
-		// Use Blockly's MetricsManager to get content dimensions
+		if (containerWidth <= 0 || containerHeight <= 0) {
+			console.log("[LearnMiniSandbox] calculateOptimalScale: Invalid container dimensions", { containerWidth, containerHeight })
+			return 1
+		}
+
+		// Use Blockly's MetricsManager to get content dimensions (at scale 1.0)
 		const metricsManager = workspace.getMetricsManager()
 		const contentMetrics = metricsManager.getContentMetrics()
 
 		const contentWidth = contentMetrics.width
 		const contentHeight = contentMetrics.height
 
+		console.log("[LearnMiniSandbox] calculateOptimalScale:", {
+			containerWidth,
+			containerHeight,
+			contentWidth,
+			contentHeight,
+			blockCount: blocks.length,
+			currentScaleBefore: currentScale
+		})
+
 		// If no valid content dimensions, return default scale
 		if (!contentWidth || !contentHeight || contentWidth <= 0 || contentHeight <= 0) {
+			console.log("[LearnMiniSandbox] calculateOptimalScale: Invalid content metrics, using default scale")
 			return 1
 		}
 
@@ -70,20 +121,58 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		const optimalScale = Math.min(scaleX, scaleY, 1) // Cap at 1 to avoid zooming in
 
 		// Set minimum scale to 0.3 (matching minScale in config) and maximum to 1
-		return Math.max(0.3, Math.min(optimalScale, 1))
+		const finalScale = Math.max(0.3, Math.min(optimalScale, 1))
+
+		console.log("[LearnMiniSandbox] calculateOptimalScale result:", {
+			scaleX,
+			scaleY,
+			optimalScale,
+			finalScale,
+			scaleWasReset: scaleWasChanged
+		})
+
+		// Store the result for potential concurrent calls
+		lastScaleCalculationRef.current = finalScale
+		isCalculatingScaleRef.current = false
+
+		return finalScale
 	}, [])
 
 	const centerWorkspace = useCallback((): void => {
 		setIsCentering(true)
 		const workspace = workspaceRef.current
-		if (!workspace) return
+		if (!workspace) {
+			setIsCentering(false)
+			return
+		}
 
 		// Calculate optimal scale based on block size and container size
+		// This will temporarily reset to scale 1.0 to get accurate metrics
 		const optimalScale = calculateOptimalScale()
 
-		// Set the scale and center the workspace
-		workspace.setScale(optimalScale)
-		workspace.scrollCenter()
+		// Get current scale for comparison (after calculateOptimalScale, it might be 1.0)
+		const currentScale = workspace.getScale()
+		console.log("[LearnMiniSandbox] centerWorkspace:", {
+			currentScale,
+			optimalScale,
+			scaleChanged: Math.abs(currentScale - optimalScale) > 0.01
+		})
+
+		// Only set scale if it's meaningfully different (avoid unnecessary updates)
+		if (Math.abs(currentScale - optimalScale) > 0.01) {
+			// Set the scale and center the workspace
+			workspace.setScale(optimalScale)
+
+			// Force a resize after setting scale to ensure metrics are updated
+			Blockly.svgResize(workspace)
+		}
+
+		// Small delay before centering to ensure scale is applied
+		setTimeout((): void => {
+			if (workspaceRef.current) {
+				workspaceRef.current.scrollCenter()
+			}
+		}, 10)
 
 		setIsCentered(true)
 		setIsCentering(false)
@@ -113,11 +202,39 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 	useEffect((): () => void => {
 		if (isCentered || isCentering || !blocksInitialized) return (): void => {}
 
+		// Use a longer delay and multiple attempts to ensure blocks are fully rendered
 		const timer = setTimeout((): void => {
-			if (workspaceRef.current && workspaceRef.current.getAllBlocks().length > 0) {
-				centerWorkspace()
+			const workspace = workspaceRef.current
+			if (!workspace) return
+
+			const blocks = workspace.getAllBlocks()
+			if (blocks.length === 0) return
+
+			// Force resize to ensure metrics are calculated
+			Blockly.svgResize(workspace)
+
+			// Try multiple times with increasing delays to ensure metrics are ready
+			const attemptScale = (attempt: number): void => {
+				if (attempt > 3) {
+					console.log("[LearnMiniSandbox] Failed to get valid metrics after 3 attempts")
+					centerWorkspace() // Try anyway
+					return
+				}
+
+				const metricsManager = workspace.getMetricsManager()
+				const contentMetrics = metricsManager.getContentMetrics()
+
+				if (contentMetrics.width > 0 && contentMetrics.height > 0) {
+					console.log("[LearnMiniSandbox] Metrics ready on attempt", attempt)
+					centerWorkspace()
+				} else {
+					console.log("[LearnMiniSandbox] Metrics not ready, retrying...", attempt)
+					setTimeout((): void => attemptScale(attempt + 1), 100 * attempt)
+				}
 			}
-		}, 200) // Longer delay to ensure blocks are fully rendered
+
+			attemptScale(1)
+		}, 300) // Initial delay to ensure blocks are rendered
 
 		return (): void => clearTimeout(timer)
 	}, [centerWorkspace, blocklyJson, isCentered, isCentering, pathname, blocksInitialized])
@@ -132,18 +249,27 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		if (!containerRef.current) return (): void => {}
 
 		const resizeObserver = new ResizeObserver((): void => {
-			if (workspaceRef.current) {
-				Blockly.svgResize(workspaceRef.current)
-				// Recalculate scale when container resizes
-				if (workspaceRef.current.getAllBlocks().length > 0) {
-					setTimeout((): void => {
-						const optimalScale = calculateOptimalScale()
-						if (workspaceRef.current) {
-							workspaceRef.current.setScale(optimalScale)
-							workspaceRef.current.scrollCenter()
-						}
-					}, 100)
-				}
+			const workspace = workspaceRef.current
+			if (!workspace || isCentering) return // Don't recalculate while centering
+
+			// Recalculate scale when container resizes
+			if (workspace.getAllBlocks().length > 0) {
+				// Use a small delay to ensure resize is processed
+				setTimeout((): void => {
+					if (!workspaceRef.current || isCentering) return
+
+					const optimalScale = calculateOptimalScale()
+					const currentScale = workspaceRef.current.getScale()
+
+					if (Math.abs(currentScale - optimalScale) > 0.01) {
+						console.log("[LearnMiniSandbox] Resize: Updating scale", { currentScale, optimalScale })
+						workspaceRef.current.setScale(optimalScale)
+						Blockly.svgResize(workspaceRef.current)
+						workspaceRef.current.scrollCenter()
+					} else {
+						console.log("[LearnMiniSandbox] Resize: Scale unchanged", { currentScale, optimalScale })
+					}
+				}, 150)
 			}
 		})
 
@@ -152,7 +278,7 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		return (): void => {
 			resizeObserver.disconnect()
 		}
-	}, [calculateOptimalScale])
+	}, [calculateOptimalScale, isCentering])
 
 	useEffect((): void => {
 		const initBlocks = async (): Promise<void> => {
