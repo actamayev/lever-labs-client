@@ -31,17 +31,17 @@ function LayoutWrapper({ children, initialAuthState }: LayoutWrapperProps): Reac
 
 	const currentTheme = personalInfoClass.defaultSiteTheme
 
-	const shouldUseClassicForIncompleteSignup = isIncompleteSignup && isOpenPage
-
-	// Determine if we should show internal layout
-	const shouldShowInternalLayout = isAuthenticated &&
-		!shouldUseClassicForIncompleteSignup &&
-		(isPrivatePage || isOpenPage)
+	// Show internal layout for authenticated users on private pages, or on open pages when signup is complete
+	const shouldShowInternalLayout = isAuthenticated && (
+		isPrivatePage || (isOpenPage && !isIncompleteSignup)
+	)
 
 	return (
 		<ThemeProvider initialTheme={currentTheme}>
 			{shouldShowInternalLayout ? (
-				<InternalPagesLayout>{children}</InternalPagesLayout>
+				<InternalPagesLayout>
+					{children}
+				</InternalPagesLayout>
 			) : (
 				<PublicOnlyPage>
 					{children}
