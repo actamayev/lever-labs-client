@@ -51,6 +51,7 @@ function OpenEndedQuestion({
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [blocksInitialized, setBlocksInitialized] = useState(false)
 	const isFirstChangeRef = useRef(true)
+	const [windowWidth, setWindowWidth] = useState<number>(typeof window !== "undefined" ? window.innerWidth : 1024)
 
 	// Initialize blocks before anything else
 	useEffect((): void => {
@@ -69,6 +70,27 @@ function OpenEndedQuestion({
 		return questionData.initialBlocklyJson
 	}, [questionData.initialBlocklyJson])
 
+	// Calculate responsive scale based on window width
+	const getResponsiveScale = useCallback((): number => {
+		// Tailwind breakpoints: sm: 640px, md: 768px, lg: 1024px, xl: 1280px, 2xl: 1536px
+		if (windowWidth < 640) {
+			return 0.5 // Mobile: smaller scale
+		} else if (windowWidth < 768) {
+			return 0.6 // Small screens
+		} else if (windowWidth < 1024) {
+			return 0.7 // Medium screens
+		} else if (windowWidth < 1280) {
+			return 1.0 // Large screens
+		} else if (windowWidth < 1536) {
+			return 1.2 // Extra large screens
+		} else if (windowWidth < 1920) {
+			return 1.3 // Extra large screens
+		} else if (windowWidth < 2560) {
+			return 1.5 // Extra large screens
+		}
+		return 1.6 // Extra extra large screens
+	}, [windowWidth])
+
 	// Create toolbox config from available blocks
 	const toolboxConfig = useMemo((): Blockly.utils.toolbox.ToolboxDefinition => {
 		if (!questionData.availableBlocks) {
@@ -83,8 +105,10 @@ function OpenEndedQuestion({
 		return blockData.toolboxConfig
 	}, [questionData.availableBlocks])
 
+	const responsiveScale = getResponsiveScale()
+
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
-		const config = getWorkspaceConfig(isDarkMode, false)
+		const config = getWorkspaceConfig(isDarkMode, false, responsiveScale)
 		// Override global CSS that disables scrolling/panning
 		return {
 			...config,
@@ -97,15 +121,16 @@ function OpenEndedQuestion({
 				wheel: true,
 			}
 		}
-	}, [isDarkMode])
+	}, [isDarkMode, responsiveScale])
 
 	const centerWorkspace = useCallback((): void => {
 		const workspace = workspaceRef.current
 		if (!workspace) return
 
-		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
+		const scale = responsiveScale
+		workspace.setScale(scale)
 		workspace.scrollCenter()
-	}, [workspaceConfiguration.zoom?.startScale])
+	}, [responsiveScale])
 
 	const handleWorkspaceChange = useCallback(async (workspace: Blockly.WorkspaceSvg): Promise<void> => {
 		workspaceRef.current = workspace
@@ -177,6 +202,28 @@ function OpenEndedQuestion({
 			console.error("Failed to reset workspace:", error)
 		}
 	}, [centerWorkspace, currentQuestionState, parsedInitialJson, onAnswerChange])
+
+	// Track window width for responsive scaling
+	useEffect((): () => void => {
+		const handleResize = (): void => {
+			setWindowWidth(window.innerWidth)
+		}
+
+		window.addEventListener("resize", handleResize)
+		return (): void => {
+			window.removeEventListener("resize", handleResize)
+		}
+	}, [])
+
+	// Update workspace scale when window width changes
+	useEffect((): void => {
+		const workspace = workspaceRef.current
+		if (!workspace) return
+
+		const scale = responsiveScale
+		workspace.setScale(scale)
+		Blockly.svgResize(workspace)
+	}, [responsiveScale])
 
 	useEffect((): () => void => {
 		if (!containerRef.current) return (): void => {}
@@ -271,11 +318,11 @@ function OpenEndedQuestion({
 			{/* Left sidebar with question text and buttons */}
 			<div className={cn(
 				"flex flex-col min-h-0 border-swan border-l-2 border-t-2 border-b-2",
-				"rounded-l-3xl bg-polar min-w-[300px] max-w-[300px]"
+				"rounded-l-3xl bg-polar w-1/4"
 			)}>
 				{/* Question text at top - scrollable */}
 				<div className="flex-1 min-h-0 overflow-y-auto p-6 flex items-start">
-					<h2 className="text-xs sm:text-sm md:text-base lg:text-base font-semibold text-question-text">
+					<h2 className="text-xs sm:text-sm md:text-base lg:text-base xl:text-lg 2xl:text-xl font-semibold text-question-text">
 						{questionText}
 					</h2>
 				</div>
