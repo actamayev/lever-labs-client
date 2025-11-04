@@ -23,7 +23,8 @@ function LessonFooter({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	return (
 		<footer
 			className={cn(
-				"h-[20vh] border-t-2 border-swan flex items-center justify-between",
+				"h-[15vh] md:h-[18vh] 2xl:h-[17vh]",
+				"border-t-2 border-swan flex items-center justify-between",
 				"px-4 sm:px-6 md:px-8 lg:px-12 xl:px-60 2xl:px-96",
 				footerBackgroundColor
 			)}
