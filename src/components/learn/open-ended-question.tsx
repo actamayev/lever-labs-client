@@ -222,6 +222,7 @@ function OpenEndedQuestion({
 
 		const scale = responsiveScale
 		workspace.setScale(scale)
+		workspace.scrollCenter()
 		Blockly.svgResize(workspace)
 	}, [responsiveScale])
 
