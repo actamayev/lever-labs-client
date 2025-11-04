@@ -272,7 +272,7 @@ function OpenEndedQuestion({
 			<div className="flex flex-col border-swan border-l-2 border-t-2 border-b-2 rounded-l-3xl bg-polar min-w-[300px] max-w-[300px]">
 				{/* Question text at top */}
 				<div className="flex-1 p-6 flex items-start">
-					<h2 className="text-xl font-semibold text-question-text">
+					<h2 className="text-xs sm:text-sm md:text-base lg:text-base font-semibold text-question-text">
 						{questionText}
 					</h2>
 				</div>
@@ -294,13 +294,20 @@ function OpenEndedQuestion({
 									learnClass.recordCodeSent(currentQuestionState.question.questionId, currentCppCode)
 								}
 							}}
-							className="rounded-2xl text-xl h-14"
-							uploadClasses="size-4!"
+							className="rounded-2xl text-sm sm:text-base md:text-lg lg:text-lg h-10 sm:h-11 md:h-12 lg:h-12"
+							uploadClasses="size-3! sm:size-3! md:size-4! lg:size-4!"
 						/>
 					</div>
 					<StopCodeButton
-						className="h-14 w-full px-8 py-4 text-xl font-semibold rounded-2xl gap-3"
-						pauseClasses="size-4!"
+						className={cn(
+							"h-10 sm:h-11 md:h-12 lg:h-12 w-full",
+							"px-6 sm:px-6 md:px-8 lg:px-8",
+							"py-3 sm:py-3 md:py-4 lg:py-4",
+							"text-sm sm:text-base md:text-lg lg:text-lg",
+							"font-semibold rounded-2xl",
+							"gap-2 sm:gap-2 md:gap-3 lg:gap-3"
+						)}
+						pauseClasses="size-3! sm:size-3! md:size-4! lg:size-4!"
 					/>
 				</div>
 			</div>
