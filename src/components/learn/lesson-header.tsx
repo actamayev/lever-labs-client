@@ -10,7 +10,7 @@ import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import getDuolingoColors from "../../utils/get-duolingo-colors"
 import NetworkWorkbench from "../workbench/network/network-workbench"
 import ConnectToPipButton from "../connect-pip/connect-to-pip-button"
-import stopCareerTrigger from "../../utils/career-quest/stop-career-trigger"
+import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import SandboxBatterySection from "../sandbox/sandbox-project/header/sandbox-battery-section"
 
 function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
@@ -56,7 +56,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		}
 
 		navigate("/learn")
-		stopCareerTrigger()
+		stopCurrentlyRunningCode(true)
 		learnClass.resetLessonProgress(lessonId)
 	}, [navigate, lesson, lessonId])
 

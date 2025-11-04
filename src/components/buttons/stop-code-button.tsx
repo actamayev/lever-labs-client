@@ -13,7 +13,7 @@ export default function StopCodeButton({ className, pauseClasses }: Props): Reac
 		<TactileButton
 			className={cn(
 				"flex items-center justify-center h-full w-auto",
-				"bg-cardinal rounded-xl text-4xl duration-0 gap-4",
+				"bg-cardinal rounded-xl text-4xl duration-0 gap-3",
 				className
 			)}
 			shadowColor="rgb(150, 50, 75)"

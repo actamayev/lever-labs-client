@@ -1,6 +1,6 @@
 @import 'tailwindcss';
 @plugin "tailwindcss-animate";
-@config '../../tailwind.config.ts';
+@config '../../tailwind.config.mjs';
 
 /* Import your color definitions */
 @import './colors.css' layer(base);
