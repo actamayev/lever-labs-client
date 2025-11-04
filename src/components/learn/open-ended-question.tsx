@@ -294,7 +294,7 @@ function OpenEndedQuestion({
 	if (!blocksInitialized) {
 		return (
 			<div className="flex items-center justify-center h-[500px]">
-				<p className="text-gray-500 dark:text-gray-400">
+				<p className="text-wolf">
 					Loading blocks...
 				</p>
 			</div>
@@ -304,7 +304,7 @@ function OpenEndedQuestion({
 	if (!questionData) {
 		return (
 			<div className="text-center">
-				<p className="text-gray-500 dark:text-gray-400">
+				<p className="text-wolf">
 					{errorMessage}
 				</p>
 			</div>
