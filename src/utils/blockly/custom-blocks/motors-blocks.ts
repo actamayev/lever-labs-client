@@ -31,7 +31,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
-				this.setTooltip("Move Pip  forward at specified percentage (0-100%)")
+				this.setTooltip("Move Pip forward at a specified speed (0-100%)")
 				this.setInputsInline(true)
 			},
 			keywords: ["motor", "move", "advance", "drive", "straight", "ahead",
@@ -78,7 +78,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
-				this.setTooltip("Move Pip  forward for specified time and speed")
+				this.setTooltip("Move Pip forward for a specified duration at a given speed")
 				this.setInputsInline(true)
 
 				// Function to update the seconds label
@@ -138,7 +138,7 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 				this.setPreviousStatement(true, null)
 				this.setNextStatement(true, null)
 				this.setColour(motorsCategoryColour)
-				this.setTooltip("Move Pip  forward for specified distance at given speed")
+				this.setTooltip("Move Pip forward for a specified distance at a given speed")
 				this.setInputsInline(true)
 
 				// Function to update the inches label
@@ -234,6 +234,45 @@ export const motorsBlocks: Record<MOTOR_BLOCK_TYPES, CustomBlock> = {
 		},
 		generator: (_block: Blockly.Block): string => {
 			return "motors.stop();\n"
+		}
+	},
+	[MOTOR_BLOCK_TYPES.SPIN]: {
+		definition: {
+			init: function(this: Blockly.Block): void {
+				this.appendDummyInput()
+					.appendField("Spin")
+					.appendField(
+						new Blockly.FieldDropdown([
+							[upperFirst(TURN_DIRECTIONS.CLOCKWISE.toLowerCase()), TURN_DIRECTIONS.CLOCKWISE],
+							[upperFirst(TURN_DIRECTIONS.COUNTERCLOCKWISE.toLowerCase()), TURN_DIRECTIONS.COUNTERCLOCKWISE]
+						].map(([key, value]): [string, string] =>
+							[upperFirst(key.toLowerCase()), value]
+						)),
+						MOTOR_FIELD_VALUES.TURN_DIRECTION
+					)
+
+				this.appendDummyInput()
+					.appendField("at")
+
+				// Use a number field for speed with min and max constraints
+				const speedField = new Blockly.FieldNumber(20, 0, 100, 1)
+				this.appendDummyInput()
+					.appendField(speedField, MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE)
+					.appendField("% speed")
+
+				this.setPreviousStatement(true, null)
+				this.setNextStatement(true, null)
+				this.setColour(motorsCategoryColour)
+				this.setTooltip("Spin Pip at a specified speed")
+				this.setInputsInline(true)
+			},
+			keywords: ["motor", "turn", "rotate", "spin", "angle", "degrees", "direction", "clockwise", "counterclockwise"]
+		},
+		generator: (block: Blockly.Block): string => {
+			const direction = block.getFieldValue(MOTOR_FIELD_VALUES.TURN_DIRECTION)
+			const speed = block.getFieldValue(MOTOR_FIELD_VALUES.DRIVING_PERCENTAGE) || "0"
+
+			return `motors.spin(${direction}, ${speed});\n`
 		}
 	}
 }

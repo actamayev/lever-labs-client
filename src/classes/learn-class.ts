@@ -4,12 +4,12 @@ import { soundManager } from "./utility/sound-manager-class"
 import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import markLessonComplete from "../utils/learn/mark-lesson-complete"
-import stopCareerTrigger from "../utils/career-quest/stop-career-trigger"
 import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
 import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
 import submitActionToCodeOpenEndedAnswer from "../utils/learn/submit-action-to-code-open-ended-answer"
+import stopCurrentlyRunningCode from "../utils/sandbox/stop-currently-running-code"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -374,13 +374,12 @@ class LearnClass {
 		return isCorrect
 	})
 
-	public continueToNextQuestion = action((lessonId: LessonUUID): void => {
+	public continueToNextQuestion = action(async (lessonId: LessonUUID): Promise<void> => {
 		if (!this.currentQuestionState) return
+		await stopCurrentlyRunningCode(true)
 
 		const { currentQuestionIndex, question, questionOrder, currentOrderPosition } = this.currentQuestionState
 
-		// Stop any career trigger before moving to next question
-		void stopCareerTrigger()
 
 		// If this is a demo question, mark it as correct and increment progress
 		if (question.questionType === "DEMO") {

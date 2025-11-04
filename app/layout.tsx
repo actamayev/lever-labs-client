@@ -12,6 +12,7 @@ export const viewport: Viewport = {
 	themeColor: "#003da5",
 }
 
+
 export default async function RootLayout({
 	children,
 }: {

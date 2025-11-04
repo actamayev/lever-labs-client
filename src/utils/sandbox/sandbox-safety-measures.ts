@@ -9,7 +9,8 @@ export function checkForMotorCommands(bytecode: Float32Array): boolean {
 		BytecodeOpCode.MOTOR_STOP,
 		BytecodeOpCode.MOTOR_TURN,
 		BytecodeOpCode.MOTOR_DRIVE_TIME,
-		BytecodeOpCode.MOTOR_DRIVE_DISTANCE
+		BytecodeOpCode.MOTOR_DRIVE_DISTANCE,
+		BytecodeOpCode.MOTOR_SPIN
 	]
 
 	// Each instruction is 5 floats (opcode + 4 operands)

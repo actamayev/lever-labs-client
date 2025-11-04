@@ -12,8 +12,8 @@ import { TactileButton } from "../buttons/tactile-button"
 import learnClass from "../../classes/learn-class"
 import { observer } from "mobx-react"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import stopCareerTrigger from "../../utils/career-quest/stop-career-trigger"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 
 function ExitLessonDialog({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
@@ -27,7 +27,7 @@ function ExitLessonDialog({ lessonId }: { lessonId: LessonUUID }): React.ReactNo
 		// Reset lesson progress before navigating away
 		if (lesson) learnClass.resetLessonProgress(lessonId)
 		navigate("/learn")
-		stopCareerTrigger()
+		stopCurrentlyRunningCode(true)
 		learnClass.setIsExitDialogOpen(false)
 	}, [lesson, lessonId, navigate])
 
