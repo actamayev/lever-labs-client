@@ -253,27 +253,30 @@ function OpenEndedQuestion({
 	}, [currentQuestionState?.question.questionId])
 
 	// When the question changes, load its initial JSON into the workspace
+	// Only run when question ID changes, not when scale or other things change
 	useEffect((): void => {
 		const workspace = workspaceRef.current
-		if (!workspace) return
+		if (!workspace || !currentQuestionState) return
 
 		try {
 			Blockly.serialization.workspaces.load(parsedInitialJson, workspace)
 			void (async (): Promise<void> => {
 				const cppCode = await getCppGenerator().generateCppFromJson(parsedInitialJson)
-				if (currentQuestionState) {
-					onAnswerChange(currentQuestionState.question.questionId, parsedInitialJson, cppCode)
-				}
+				onAnswerChange(currentQuestionState.question.questionId, parsedInitialJson, cppCode)
 				setTimeout((): void => {
-					centerWorkspace()
+					// Use current responsiveScale directly instead of centerWorkspace callback
+					const scale = getResponsiveScale()
+					workspace.setScale(scale)
+					workspace.scrollCenter()
 					Blockly.svgResize(workspace)
 				}, 50)
 			})()
 		} catch (error) {
 			console.error("Failed to load initial JSON for new question:", error)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [parsedInitialJson, currentQuestionState?.question.questionId, centerWorkspace, onAnswerChange])
+		// Only depend on question ID - this effect should ONLY run when question changes
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentQuestionState?.question.questionId])
 
 	// Get current CPP code for SEND CODE button
 	const getCurrentCppCode = (): string => {
