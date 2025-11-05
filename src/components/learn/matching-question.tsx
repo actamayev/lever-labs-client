@@ -49,49 +49,47 @@ function MatchingQuestion(): React.ReactNode {
 		text: pair.matchingAnswerChoiceText.answerChoiceText
 	})).sort((a, b): number => a.order - b.order)
 
-	const getBlockButtonClass = (codingBlockId: number): string => {
-		const isSelected = learnClass.isMatchingBlockSelected(questionId, codingBlockId)
-		const isMatched = learnClass.isMatchingBlockMatched(questionId, codingBlockId)
-		const selectedAnswerId = matchingState.selectedMatchingAnswerId
-		const hasResult = selectedAnswerId !== null &&
-			learnClass.getMatchingMatchResult(questionId, codingBlockId, selectedAnswerId) !== undefined
-		const result = selectedAnswerId !== null
-			? learnClass.getMatchingMatchResult(questionId, codingBlockId, selectedAnswerId)
-			: undefined
-
-		if (isMatched) {
-			return "border-2 border-question-correct-green-1 cursor-default opacity-60"
-		}
-		if (hasResult && result === true) {
-			return "border-2 border-question-correct-green-1 cursor-default"
-		}
-		if (hasResult && result === false) {
-			return "bg-question-incorrect-red border-2 border-question-incorrect-red-1 cursor-default"
-		}
-		if (isSelected) {
-			return "bg-standard-background-hover border-2 border-macaw"
-		}
-		return "bg-standard-background border-2 border-swan cursor-pointer"
-	}
-
+	// eslint-disable-next-line complexity
 	const getMatchingButtonClass = (matchingAnswerId: number): string => {
 		const isSelected = learnClass.isMatchingAnswerChoiceSelected(questionId, matchingAnswerId)
 		const isMatched = learnClass.isMatchingChoiceMatched(questionId, matchingAnswerId)
-		const selectedBlockId = matchingState.selectedCodingBlockId
-		const hasResult = selectedBlockId !== null &&
-			learnClass.getMatchingMatchResult(questionId, selectedBlockId, matchingAnswerId) !== undefined
-		const result = selectedBlockId !== null
-			? learnClass.getMatchingMatchResult(questionId, selectedBlockId, matchingAnswerId)
-			: undefined
 
 		if (isMatched) {
 			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default opacity-60"
 		}
-		if (hasResult && result === true) {
-			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default"
+
+		// Check all match results for this matching choice to see if it has any incorrect matches
+		const matchResults = matchingState.matchResults
+		let hasIncorrectMatch = false
+		let hasCorrectMatch = false
+
+		for (const [matchKey, result] of Object.entries(matchResults)) {
+			const [, choiceIdStr] = matchKey.split("-")
+			if (parseInt(choiceIdStr, 10) === matchingAnswerId) {
+				if (result === false) {
+					hasIncorrectMatch = true
+				} else if (result === true) {
+					hasCorrectMatch = true
+				}
+			}
 		}
-		if (hasResult && result === false) {
+
+		// Check if there's a result with the currently selected coding block
+		const selectedBlockId = matchingState.selectedCodingBlockId
+		if (selectedBlockId !== null) {
+			const currentResult = learnClass.getMatchingMatchResult(questionId, selectedBlockId, matchingAnswerId)
+			if (currentResult === false) {
+				hasIncorrectMatch = true
+			} else if (currentResult === true) {
+				hasCorrectMatch = true
+			}
+		}
+
+		if (hasIncorrectMatch) {
 			return "bg-question-incorrect-red border-2 border-question-incorrect-red-1 cursor-default"
+		}
+		if (hasCorrectMatch) {
+			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default"
 		}
 		if (isSelected) {
 			return "bg-standard-background-hover border-2 border-macaw"
@@ -99,19 +97,42 @@ function MatchingQuestion(): React.ReactNode {
 		return "bg-standard-background border-2 border-swan hover:bg-polar cursor-pointer"
 	}
 
+	// eslint-disable-next-line complexity
 	const getMatchingShadowClass = (matchingAnswerId: number): string => {
 		const isSelected = learnClass.isMatchingAnswerChoiceSelected(questionId, matchingAnswerId)
 		const isMatched = learnClass.isMatchingChoiceMatched(questionId, matchingAnswerId)
-		const selectedBlockId = matchingState.selectedCodingBlockId
-		const hasResult = selectedBlockId !== null &&
-			learnClass.getMatchingMatchResult(questionId, selectedBlockId, matchingAnswerId) !== undefined
-		const result = selectedBlockId !== null
-			? learnClass.getMatchingMatchResult(questionId, selectedBlockId, matchingAnswerId)
-			: undefined
 
 		if (isMatched) return "shadow-question-correct-green-1"
-		if (hasResult && result === true) return "shadow-question-correct-green-1"
-		if (hasResult && result === false) return "shadow-question-incorrect-red-1"
+
+		// Check all match results for this matching choice to see if it has any incorrect matches
+		const matchResults = matchingState.matchResults
+		let hasIncorrectMatch = false
+		let hasCorrectMatch = false
+
+		for (const [matchKey, result] of Object.entries(matchResults)) {
+			const [, choiceIdStr] = matchKey.split("-")
+			if (parseInt(choiceIdStr, 10) === matchingAnswerId) {
+				if (result === false) {
+					hasIncorrectMatch = true
+				} else if (result === true) {
+					hasCorrectMatch = true
+				}
+			}
+		}
+
+		// Check if there's a result with the currently selected coding block
+		const selectedBlockId = matchingState.selectedCodingBlockId
+		if (selectedBlockId !== null) {
+			const currentResult = learnClass.getMatchingMatchResult(questionId, selectedBlockId, matchingAnswerId)
+			if (currentResult === false) {
+				hasIncorrectMatch = true
+			} else if (currentResult === true) {
+				hasCorrectMatch = true
+			}
+		}
+
+		if (hasIncorrectMatch) return "shadow-question-incorrect-red-1"
+		if (hasCorrectMatch) return "shadow-question-correct-green-1"
 		if (isSelected) return "shadow-macaw"
 		return "shadow-swan"
 	}
@@ -134,7 +155,6 @@ function MatchingQuestion(): React.ReactNode {
 								key={block.codingBlockId}
 								className={cn(
 									"relative w-full max-w-sm lg:w-96 rounded-3xl duration-0 shrink-0",
-									getBlockButtonClass(block.codingBlockId),
 									isInConfirmationStage ? "cursor-default" : "cursor-pointer"
 								)}
 								onClick={(): void => learnClass.handleMatchingCodingBlockClick(questionId, block.codingBlockId)}
