@@ -64,7 +64,7 @@ function SingleMatchingCodingBlock(props: SingleMatchingCodingBlockProps): React
 	return (
 		<div
 			className={cn(
-				"relative w-full max-w-sm lg:w-96 duration-0 shrink-0 flex border-2 rounded-lg",
+				"relative w-full max-w-sm lg:w-96 duration-0 shrink-0 flex border-2 rounded-lg h-12",
 				borderClassName,
 				isInConfirmationStage || isMatched ? "cursor-default" : "cursor-pointer",
 				isMatched && "opacity-50"
@@ -81,7 +81,7 @@ function SingleMatchingCodingBlock(props: SingleMatchingCodingBlockProps): React
 			)}>
 				{cardNumber}
 			</div>
-			<div className="h-14 flex-1 rounded-r-3xl overflow-hidden">
+			<div className="h-10 flex-1 rounded-r-3xl overflow-hidden">
 				<LearnMiniSandbox blocklyJson={codingBlockJson} />
 			</div>
 		</div>
