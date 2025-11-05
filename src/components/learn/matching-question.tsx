@@ -35,7 +35,7 @@ function MatchingQuestion(): React.ReactNode {
 			!isSubmitting &&
 			!isInConfirmationStage
 		) {
-			const handleMatch = async (): Promise<void> => {
+			const handleMatch = (): void => {
 				setIsSubmitting(true)
 
 				const lesson = Array.from(learnClass.lessonsById.values()).find((l): boolean =>
@@ -47,7 +47,7 @@ function MatchingQuestion(): React.ReactNode {
 					return
 				}
 
-				await learnClass.submitMatchingPair(
+				learnClass.submitMatchingPair(
 					lesson.lessonId,
 					question.questionId,
 					selectedCodingBlockId,
@@ -57,7 +57,7 @@ function MatchingQuestion(): React.ReactNode {
 				setIsSubmitting(false)
 			}
 
-			void handleMatch()
+			handleMatch()
 		}
 	}, [
 		currentQuestionState?.question.matchingAnswerState?.selectedCodingBlockId,
@@ -67,14 +67,14 @@ function MatchingQuestion(): React.ReactNode {
 		currentQuestionState
 	])
 
-	if (!currentQuestionState?.question.matching) return null
+	const matchingData = currentQuestionState?.question.matching
+	if (!matchingData) return null
 
-	const matchingData = currentQuestionState.question.matching
 	const { questionText, matchingAnswerChoice: matchingPairs } = matchingData
 
 	// Transform pairs into separate arrays for display
 	// Extract coding blocks (left side) - each pair has a codingBlock
-	const codingBlocks = matchingPairs.map((pair): {
+	const sortedCodingBlocks = matchingPairs.map((pair): {
 		codingBlockId: number
 		codingBlockJson: BlocklyJson
 		order: number
@@ -82,10 +82,10 @@ function MatchingQuestion(): React.ReactNode {
 		codingBlockId: pair.codingBlock.codingBlockId,
 		codingBlockJson: pair.codingBlock.codingBlockJson,
 		order: pair.order
-	}))
+	})).sort((a, b): number => a.order - b.order)
 
 	// Extract matching answer choices (right side) - each pair has a matchingAnswerChoiceText
-	const matchingAnswerChoice = matchingPairs.map((pair): {
+	const sortedMatchingChoices = matchingPairs.map((pair): {
 		matchingAnswerChoiceTextId: number
 		order: number
 		text: string
@@ -93,47 +93,20 @@ function MatchingQuestion(): React.ReactNode {
 		matchingAnswerChoiceTextId: pair.matchingAnswerChoiceText.matchingAnswerChoiceTextId,
 		order: pair.order,
 		text: pair.matchingAnswerChoiceText.answerChoiceText
-	}))
+	})).sort((a, b): number => a.order - b.order)
 
-	// Sort by order
-	const sortedCodingBlocks = [...codingBlocks].sort((a, b): number => a.order - b.order)
-	const sortedMatchingChoices = [...matchingAnswerChoice].sort((a, b): number => a.order - b.order)
-
-	const matchingState = currentQuestionState.question.matchingAnswerState || {
-		selectedCodingBlockId: null,
-		selectedMatchingAnswerId: null,
-		matchResults: {},
-		correctlyMatchedBlockIds: [],
-		correctlyMatchedChoiceIds: []
-	}
-
-	const getMatchResult = (codingBlockId: number, matchingAnswerId: number): boolean | undefined => {
-		const matchKey = `${codingBlockId}-${matchingAnswerId}`
-		return matchingState.matchResults[matchKey]
-	}
-
-	const isBlockMatched = (codingBlockId: number): boolean => {
-		return matchingState.correctlyMatchedBlockIds.includes(codingBlockId)
-	}
-
-	const isChoiceMatched = (matchingAnswerId: number): boolean => {
-		return matchingState.correctlyMatchedChoiceIds.includes(matchingAnswerId)
-	}
-
-	const isBlockSelected = (codingBlockId: number): boolean => {
-		return matchingState.selectedCodingBlockId === codingBlockId
-	}
-
-	const isMatchingSelected = (matchingAnswerId: number): boolean => {
-		return matchingState.selectedMatchingAnswerId === matchingAnswerId
-	}
+	const questionId = currentQuestionState.question.questionId
+	const matchingState = learnClass.getMatchingAnswerState(questionId)
 
 	const getBlockButtonClass = (codingBlockId: number): string => {
-		const isSelected = isBlockSelected(codingBlockId)
-		const isMatched = isBlockMatched(codingBlockId)
+		const isSelected = learnClass.isMatchingBlockSelected(questionId, codingBlockId)
+		const isMatched = learnClass.isMatchingBlockMatched(questionId, codingBlockId)
 		const selectedAnswerId = matchingState.selectedMatchingAnswerId
-		const hasResult = selectedAnswerId !== null && getMatchResult(codingBlockId, selectedAnswerId) !== undefined
-		const result = selectedAnswerId !== null ? getMatchResult(codingBlockId, selectedAnswerId) : undefined
+		const hasResult = selectedAnswerId !== null &&
+			learnClass.getMatchingMatchResult(questionId, codingBlockId, selectedAnswerId) !== undefined
+		const result = selectedAnswerId !== null
+			? learnClass.getMatchingMatchResult(questionId, codingBlockId, selectedAnswerId)
+			: undefined
 
 		if (isMatched) {
 			return "border-2 border-question-correct-green-1 cursor-default opacity-60"
@@ -151,11 +124,14 @@ function MatchingQuestion(): React.ReactNode {
 	}
 
 	const getMatchingButtonClass = (matchingAnswerId: number): string => {
-		const isSelected = isMatchingSelected(matchingAnswerId)
-		const isMatched = isChoiceMatched(matchingAnswerId)
+		const isSelected = learnClass.isMatchingAnswerChoiceSelected(questionId, matchingAnswerId)
+		const isMatched = learnClass.isMatchingChoiceMatched(questionId, matchingAnswerId)
 		const selectedBlockId = matchingState.selectedCodingBlockId
-		const hasResult = selectedBlockId !== null && getMatchResult(selectedBlockId, matchingAnswerId) !== undefined
-		const result = selectedBlockId !== null ? getMatchResult(selectedBlockId, matchingAnswerId) : undefined
+		const hasResult = selectedBlockId !== null &&
+			learnClass.getMatchingMatchResult(questionId, selectedBlockId, matchingAnswerId) !== undefined
+		const result = selectedBlockId !== null
+			? learnClass.getMatchingMatchResult(questionId, selectedBlockId, matchingAnswerId)
+			: undefined
 
 		if (isMatched) {
 			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default opacity-60"
@@ -173,24 +149,19 @@ function MatchingQuestion(): React.ReactNode {
 	}
 
 	const getMatchingShadowClass = (matchingAnswerId: number): string => {
-		const isSelected = isMatchingSelected(matchingAnswerId)
-		const isMatched = isChoiceMatched(matchingAnswerId)
+		const isSelected = learnClass.isMatchingAnswerChoiceSelected(questionId, matchingAnswerId)
+		const isMatched = learnClass.isMatchingChoiceMatched(questionId, matchingAnswerId)
 		const selectedBlockId = matchingState.selectedCodingBlockId
-		const hasResult = selectedBlockId !== null && getMatchResult(selectedBlockId, matchingAnswerId) !== undefined
-		const result = selectedBlockId !== null ? getMatchResult(selectedBlockId, matchingAnswerId) : undefined
+		const hasResult = selectedBlockId !== null &&
+			learnClass.getMatchingMatchResult(questionId, selectedBlockId, matchingAnswerId) !== undefined
+		const result = selectedBlockId !== null
+			? learnClass.getMatchingMatchResult(questionId, selectedBlockId, matchingAnswerId)
+			: undefined
 
-		if (isMatched) {
-			return "shadow-question-correct-green-1"
-		}
-		if (hasResult && result === true) {
-			return "shadow-question-correct-green-1"
-		}
-		if (hasResult && result === false) {
-			return "shadow-question-incorrect-red-1"
-		}
-		if (isSelected) {
-			return "shadow-macaw"
-		}
+		if (isMatched) return "shadow-question-correct-green-1"
+		if (hasResult && result === true) return "shadow-question-correct-green-1"
+		if (hasResult && result === false) return "shadow-question-incorrect-red-1"
+		if (isSelected) return "shadow-macaw"
 		return "shadow-swan"
 	}
 
@@ -204,7 +175,7 @@ function MatchingQuestion(): React.ReactNode {
 				{/* Left side: Coding blocks */}
 				<div className="flex flex-col gap-4 w-full lg:w-auto">
 					{sortedCodingBlocks.map((block, index): React.ReactNode => {
-						const isSelected = isBlockSelected(block.codingBlockId)
+						const isSelected = learnClass.isMatchingBlockSelected(questionId, block.codingBlockId)
 						const cardNumber = index + 1
 
 						return (
@@ -216,17 +187,17 @@ function MatchingQuestion(): React.ReactNode {
 									isInConfirmationStage ? "cursor-default" : "cursor-pointer"
 								)}
 								onClick={(): void => {
-									if (!isInConfirmationStage && !isBlockMatched(block.codingBlockId)) {
+									if (!isInConfirmationStage && !learnClass.isMatchingBlockMatched(questionId, block.codingBlockId)) {
 										const lesson = Array.from(learnClass.lessonsById.values())
 											.find((l): boolean =>
 												l.lessonQuestionMap?.some((q): boolean =>
-													q.question.questionId === currentQuestionState.question.questionId
+													q.question.questionId === questionId
 												) ?? false
 											)
 										if (lesson) {
 											learnClass.setMatchingSelectedCodingBlock(
 												lesson.lessonId,
-												currentQuestionState.question.questionId,
+												questionId,
 												block.codingBlockId
 											)
 										}
@@ -254,7 +225,7 @@ function MatchingQuestion(): React.ReactNode {
 				{/* Right side: Matching answer choices */}
 				<div className="flex flex-col gap-3 w-full lg:w-auto">
 					{sortedMatchingChoices.map((choice, index): React.ReactNode => {
-						const isSelected = isMatchingSelected(choice.matchingAnswerChoiceTextId)
+						const isSelected = learnClass.isMatchingAnswerChoiceSelected(questionId, choice.matchingAnswerChoiceTextId)
 						// Number right side 6-9, with last one being 0
 						const choiceNumber = index === sortedMatchingChoices.length - 1 ? 0 : index + 6
 
@@ -262,17 +233,18 @@ function MatchingQuestion(): React.ReactNode {
 							<TactileButton
 								key={choice.matchingAnswerChoiceTextId}
 								onClick={(): void => {
-									if (!isInConfirmationStage && !isChoiceMatched(choice.matchingAnswerChoiceTextId)) {
+									if (!isInConfirmationStage &&
+										!learnClass.isMatchingChoiceMatched(questionId, choice.matchingAnswerChoiceTextId)) {
 										const lesson = Array.from(learnClass.lessonsById.values())
 											.find((l): boolean =>
 												l.lessonQuestionMap?.some((q): boolean =>
-													q.question.questionId === currentQuestionState.question.questionId
+													q.question.questionId === questionId
 												) ?? false
 											)
 										if (lesson) {
 											learnClass.setMatchingSelectedAnswerChoice(
 												lesson.lessonId,
-												currentQuestionState.question.questionId,
+												questionId,
 												choice.matchingAnswerChoiceTextId
 											)
 										}
@@ -286,7 +258,8 @@ function MatchingQuestion(): React.ReactNode {
 								)}
 								shadowClass={getMatchingShadowClass(choice.matchingAnswerChoiceTextId)}
 								shadowHeight={2}
-								disabled={isInConfirmationStage || isChoiceMatched(choice.matchingAnswerChoiceTextId)}
+								disabled={isInConfirmationStage ||
+									learnClass.isMatchingChoiceMatched(questionId, choice.matchingAnswerChoiceTextId)}
 								shouldHoverPushButton={false}
 							>
 								{/* Number badge on the left */}

@@ -1,29 +1,45 @@
 "use client"
 
-import isEqual from "lodash-es/isEqual"
 import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
-import { isErrorResponses } from "../type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
+import learnClass from "../../classes/learn-class"
 
-export default async function submitMatchingAnswer(
+export default function submitMatchingAnswer(
 	questionId: QuestionUUID,
 	codingBlockId: number,
 	matchingAnswerChoiceTextId: number
-): Promise<boolean> {
+): boolean {
 	try {
-		const response = await leverLabsApiClient.learnDataService.submitMatchingAnswer(
+		// Check correctness by searching the client-side lesson question map (instant feedback)
+		const lesson = Array.from(learnClass.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+
+		let isCorrect = false
+
+		if (lesson?.lessonQuestionMap) {
+			const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+			if (questionMap?.question.matching?.matchingAnswerChoice) {
+				// Check if the codingBlockId and matchingAnswerChoiceTextId are in the same MatchingAnswerChoice
+				isCorrect = questionMap.question.matching.matchingAnswerChoice.some((pair): boolean =>
+					pair.codingBlock.codingBlockId === codingBlockId &&
+					pair.matchingAnswerChoiceText.matchingAnswerChoiceTextId === matchingAnswerChoiceTextId
+				)
+			}
+		}
+
+		// Submit the answer to the backend in the background (fire and forget)
+		leverLabsApiClient.learnDataService.submitMatchingAnswer(
 			questionId,
 			codingBlockId,
 			matchingAnswerChoiceTextId
-		)
+		).catch((error): void => {
+			console.error("Failed to submit matching answer to backend:", error)
+		})
 
-		if (!isEqual(response.status, 200) || isErrorResponses(response.data)) {
-			throw Error("Unable to submit matching answer")
-		}
-
-		return response.data.isCorrect
+		return isCorrect
 	} catch (error) {
-		console.error(error)
+		console.error("Error in submitMatchingAnswer:", error)
 		return false
 	}
 }

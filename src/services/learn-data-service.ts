@@ -2,7 +2,7 @@ import { AxiosResponse } from "axios"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 import { BaseDataService } from "./base-data-service"
 import { ErrorResponses, SuccessResponse, LessonsResponse,
-	DetailedLessonResponse, CheckCodeResponse, CheckMCQResponse, CheckMatchingSelectionResponse } from "@lever-labs/common-ts/types/api"
+	DetailedLessonResponse, CheckCodeResponse, CheckMCQResponse } from "@lever-labs/common-ts/types/api"
 import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
 
 export default class LearnDataService extends BaseDataService {
@@ -77,8 +77,8 @@ export default class LearnDataService extends BaseDataService {
 		questionId: QuestionUUID,
 		codingBlockId: number,
 		matchingAnswerChoiceTextId: number
-	): Promise<AxiosResponse<CheckMatchingSelectionResponse | ErrorResponses>> {
-		return await this.httpClient.http.post<CheckMatchingSelectionResponse | ErrorResponses>(
+	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
 			this.buildUrl(`/submit-matching-answer/${questionId}`), { codingBlockId, matchingAnswerChoiceTextId }
 		)
 	}

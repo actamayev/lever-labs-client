@@ -375,13 +375,13 @@ class LearnClass {
 		return isCorrect
 	})
 
-	public submitMatchingPair = action(async (
+	public submitMatchingPair = action((
 		lessonId: LessonUUID,
 		questionId: QuestionUUID,
 		codingBlockId: number,
 		matchingAnswerChoiceTextId: number
 	// eslint-disable-next-line complexity
-	): Promise<boolean> => {
+	): boolean => {
 		if (!this.currentQuestionState) return false
 
 		const lesson = this.lessonsById.get(lessonId)
@@ -403,8 +403,8 @@ class LearnClass {
 			}
 		}
 
-		// Submit the match to the backend
-		const isCorrect = await submitMatchingAnswer(questionId, codingBlockId, matchingAnswerChoiceTextId)
+		// Submit the match to the backend (returns instantly, API call happens in background)
+		const isCorrect = submitMatchingAnswer(questionId, codingBlockId, matchingAnswerChoiceTextId)
 
 		// Store the match result
 		const matchKey = `${codingBlockId}-${matchingAnswerChoiceTextId}`
@@ -523,6 +523,77 @@ class LearnClass {
 
 		question.matchingAnswerState.selectedMatchingAnswerId = matchingAnswerChoiceTextId
 	})
+
+	public getMatchingAnswerState = (questionId: QuestionUUID): {
+		selectedCodingBlockId: number | null
+		selectedMatchingAnswerId: number | null
+		matchResults: Record<string, boolean>
+		correctlyMatchedBlockIds: number[]
+		correctlyMatchedChoiceIds: number[]
+	} => {
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+		if (!lesson?.lessonQuestionMap) {
+			return {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) {
+			return {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		if (!questionMap.question.matchingAnswerState) {
+			// Initialize with default values if it doesn't exist
+			questionMap.question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		return questionMap.question.matchingAnswerState
+	}
+
+	public getMatchingMatchResult = (questionId: QuestionUUID, codingBlockId: number, matchingAnswerId: number): boolean | undefined => {
+		const matchingState = this.getMatchingAnswerState(questionId)
+		const matchKey = `${codingBlockId}-${matchingAnswerId}`
+		return matchingState.matchResults[matchKey]
+	}
+
+	public isMatchingBlockMatched = (questionId: QuestionUUID, codingBlockId: number): boolean => {
+		const matchingState = this.getMatchingAnswerState(questionId)
+		return matchingState.correctlyMatchedBlockIds.includes(codingBlockId)
+	}
+
+	public isMatchingChoiceMatched = (questionId: QuestionUUID, matchingAnswerId: number): boolean => {
+		const matchingState = this.getMatchingAnswerState(questionId)
+		return matchingState.correctlyMatchedChoiceIds.includes(matchingAnswerId)
+	}
+
+	public isMatchingBlockSelected = (questionId: QuestionUUID, codingBlockId: number): boolean => {
+		const matchingState = this.getMatchingAnswerState(questionId)
+		return matchingState.selectedCodingBlockId === codingBlockId
+	}
+
+	public isMatchingAnswerChoiceSelected = (questionId: QuestionUUID, matchingAnswerId: number): boolean => {
+		const matchingState = this.getMatchingAnswerState(questionId)
+		return matchingState.selectedMatchingAnswerId === matchingAnswerId
+	}
 
 	public continueToNextQuestion = action(async (lessonId: LessonUUID): Promise<void> => {
 		if (!this.currentQuestionState) return
