@@ -9,6 +9,7 @@ import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
 import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
 import submitActionToCodeOpenEndedAnswer from "../utils/learn/submit-action-to-code-open-ended-answer"
+import submitMatchingAnswer from "../utils/learn/submit-matching-answer"
 import stopCurrentlyRunningCode from "../utils/sandbox/stop-currently-running-code"
 
 class LearnClass {
@@ -373,6 +374,99 @@ class LearnClass {
 
 		return isCorrect
 	})
+
+	public submitMatchingPair = action(async (
+		lessonId: LessonUUID,
+		questionId: QuestionUUID,
+		codingBlockId: number,
+		matchingAnswerChoiceTextId: number
+	// eslint-disable-next-line complexity
+	): Promise<boolean> => {
+		if (!this.currentQuestionState) return false
+
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson?.lessonQuestionMap) return false
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return false
+
+		const question = questionMap.question
+
+		// Initialize matching answer state if it doesn't exist
+		if (!question.matchingAnswerState) {
+			question.matchingAnswerState = {
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		// Submit the match to the backend
+		const isCorrect = await submitMatchingAnswer(questionId, codingBlockId, matchingAnswerChoiceTextId)
+
+		// Store the match result
+		const matchKey = `${codingBlockId}-${matchingAnswerChoiceTextId}`
+		question.matchingAnswerState.matchResults[matchKey] = isCorrect
+
+		// If correct, add to the correctly matched lists
+		if (isCorrect) {
+			if (!question.matchingAnswerState.correctlyMatchedBlockIds.includes(codingBlockId)) {
+				question.matchingAnswerState.correctlyMatchedBlockIds.push(codingBlockId)
+			}
+			if (!question.matchingAnswerState.correctlyMatchedChoiceIds.includes(matchingAnswerChoiceTextId)) {
+				question.matchingAnswerState.correctlyMatchedChoiceIds.push(matchingAnswerChoiceTextId)
+			}
+		}
+
+		// Check if all matches are complete
+		const allMatchesComplete = this.areAllMatchingPairsComplete(questionId)
+		if (allMatchesComplete) {
+			// Only mark question as complete when all pairs are correctly matched
+			this.setQuestionAnsweredCorrectness(lessonId, questionId, true)
+		}
+
+		// If answer is incorrect and we have current question state, add to retry queue
+		if (!isCorrect && this.currentQuestionState) {
+			const { currentQuestionIndex, questionOrder } = this.currentQuestionState
+			// Only add to retry queue if this question isn't already scheduled for retry later
+			const futureOccurrences = questionOrder.slice(this.currentQuestionState.currentOrderPosition + 1)
+			if (!futureOccurrences.includes(currentQuestionIndex)) {
+				this.currentQuestionState.questionOrder.push(currentQuestionIndex)
+			}
+		}
+
+		// Don't set confirmation stage - allow user to continue matching
+		// Only set confirmation stage when all matches are complete
+		if (allMatchesComplete) {
+			this.setIsInQuestionConfirmationStage(true)
+			this.setLastAnswerWasCorrect(true)
+		}
+
+		return isCorrect
+	})
+
+	public areAllMatchingPairsComplete = (questionId: QuestionUUID): boolean => {
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+		if (!lesson?.lessonQuestionMap) return false
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap?.question.matching) return false
+
+		const matchingData = questionMap.question.matching
+		const matchingPairs = matchingData.matchingAnswerChoice
+		const matchingState = questionMap.question.matchingAnswerState
+
+		// If no state exists, definitely not complete
+		if (!matchingState) return false
+
+		// Check if all pairs have been correctly matched
+		return matchingPairs.every((pair): boolean => {
+			const matchKey = `${pair.codingBlock.codingBlockId}-${pair.matchingAnswerChoiceText.matchingAnswerChoiceTextId}`
+			return matchingState.matchResults[matchKey] === true
+		})
+	}
 
 	public continueToNextQuestion = action(async (lessonId: LessonUUID): Promise<void> => {
 		if (!this.currentQuestionState) return

@@ -21,6 +21,16 @@ declare global {
 		actionToCodeOpenEndedFeedback?: string
 		// Server-provided correct answer choice ID for multiple choice questions
 		correctAnswerChoiceId?: number
+		// Matching question client-side state
+		matchingAnswerState?: {
+			// Map of match results: key format is "codingBlockId-matchingAnswerChoiceTextId"
+			// Value: true = correct, false = incorrect, undefined = not yet matched
+			matchResults: Record<string, boolean>
+			// Track which coding block IDs have been correctly matched (for disabling)
+			correctlyMatchedBlockIds: number[]
+			// Track which matching answer choice text IDs have been correctly matched (for disabling)
+			correctlyMatchedChoiceIds: number[]
+		}
 	}
 
 	interface LocalLessonQuestionMap extends Omit<LessonQuestionMap, "question"> {
