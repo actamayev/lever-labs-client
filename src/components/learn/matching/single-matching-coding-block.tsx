@@ -11,10 +11,8 @@ interface SingleMatchingCodingBlockProps {
 }
 
 // eslint-disable-next-line complexity
-function SingleMatchingCodingBlock({
-	block,
-	index
-}: SingleMatchingCodingBlockProps): React.ReactNode {
+function SingleMatchingCodingBlock(props: SingleMatchingCodingBlockProps): React.ReactNode {
+	const { block, index } = props
 	const questionId = learnClass.currentQuestionState?.question.questionId
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 
@@ -60,13 +58,21 @@ function SingleMatchingCodingBlock({
 		lipClassName = "bg-macaw text-white"
 	}
 
+	// Determine border styles
+	const borderClassName = isMatched ? "border-question-correct-green-1" : "border-swan"
+
 	return (
 		<div
 			className={cn(
-				"relative w-full max-w-sm lg:w-96 duration-0 shrink-0 flex border-2 border-swan",
-				isInConfirmationStage ? "cursor-default" : "cursor-pointer"
+				"relative w-full max-w-sm lg:w-96 duration-0 shrink-0 flex border-2",
+				borderClassName,
+				isInConfirmationStage || isMatched ? "cursor-default" : "cursor-pointer",
+				isMatched && "opacity-50"
 			)}
-			onClick={(): void => learnClass.handleMatchingCodingBlockClick(questionId, codingBlockId)}
+			onClick={(): void => {
+				if (isInConfirmationStage || isMatched) return
+				learnClass.handleMatchingCodingBlockClick(questionId, codingBlockId)
+			}}
 		>
 			{/* Number lip on the left */}
 			<div className={cn(
@@ -75,7 +81,10 @@ function SingleMatchingCodingBlock({
 			)}>
 				{cardNumber}
 			</div>
-			<div className="h-14 flex-1 rounded-r-3xl overflow-hidden">
+			<div className={cn(
+				"h-14 flex-1 rounded-r-3xl overflow-hidden",
+				// isMatched && "opacity-50"
+			)}>
 				<LearnMiniSandbox blocklyJson={codingBlockJson} />
 			</div>
 		</div>

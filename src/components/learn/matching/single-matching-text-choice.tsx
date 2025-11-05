@@ -11,10 +11,8 @@ interface SingleMatchingTextChoiceProps {
 }
 
 // eslint-disable-next-line max-lines-per-function, complexity
-function SingleMatchingTextChoice({
-	choice,
-	choiceNumber
-}: SingleMatchingTextChoiceProps): React.ReactNode {
+function SingleMatchingTextChoice(props: SingleMatchingTextChoiceProps): React.ReactNode {
+	const { choice, choiceNumber } = props
 	const questionId = learnClass.currentQuestionState?.question.questionId
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 

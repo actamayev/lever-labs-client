@@ -73,10 +73,7 @@ function MatchingQuestion(): React.ReactNode {
 						return (
 							<SingleMatchingTextChoice
 								key={choice.matchingAnswerChoiceTextId}
-								choice={{
-									matchingAnswerChoiceTextId: choice.matchingAnswerChoiceTextId,
-									text: choice.text
-								}}
+								choice={choice}
 								choiceNumber={choiceNumber}
 							/>
 						)
