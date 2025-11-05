@@ -9,6 +9,7 @@ import DemoQuestion from "./demo-question"
 import FillInBlankQuestion from "./fill-in-blank-question"
 import ActionToCodeMultipleChoiceQuestion from "./action-to-code-multiple-choice-question"
 import ActionToCodeOpenEndedQuestion from "./action-to-code-open-ended-question"
+import MatchingQuestion from "./matching-question"
 
 // eslint-disable-next-line complexity
 function LessonQuestion(): React.ReactNode {
@@ -48,6 +49,10 @@ function LessonQuestion(): React.ReactNode {
 
 	if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED" && question.actionToCodeOpenEnded) {
 		return <ActionToCodeOpenEndedQuestion />
+	}
+
+	if (question.questionType === "MATCHING" && question.matching) {
+		return <MatchingQuestion />
 	}
 
 	return (
