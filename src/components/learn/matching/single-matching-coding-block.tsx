@@ -1,5 +1,6 @@
 "use client"
 
+import * as React from "react"
 import { observer } from "mobx-react"
 import { cn } from "../../../lib/utils"
 import learnClass from "../../../classes/learn-class"
@@ -48,40 +49,69 @@ function SingleMatchingCodingBlock(props: SingleMatchingCodingBlockProps): React
 		}
 	}
 
-	// Determine lip styles
-	let lipClassName = "bg-swan text-hare"
+	// Determine badge styles (matching text choice pattern)
+	let badgeClassName = "border-swan text-hare"
 	if (isMatched) {
-		lipClassName = "bg-question-correct-green text-question-correct-green-2"
-	} else if (hasIncorrectMatch) {
-		lipClassName = "bg-question-incorrect-red text-white"
+		badgeClassName = "border-question-correct-green-1 text-question-correct-green-2"
 	} else if (isSelected) {
-		lipClassName = "bg-macaw text-white"
+		badgeClassName = "border-macaw text-macaw"
 	}
 
-	// Determine border styles
-	const borderClassName = isMatched ? "border-question-correct-green-1" : "border-swan"
+	// Determine container styles (matching text choice pattern)
+	let containerClassName = "bg-standard-background border-2 border-swan hover:bg-polar cursor-pointer"
+	if (isMatched) {
+		containerClassName = "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default"
+	} else if (hasIncorrectMatch) {
+		containerClassName = "bg-question-incorrect-red border-2 border-question-incorrect-red-1 cursor-default"
+	} else if (isSelected) {
+		containerClassName = "bg-standard-background-hover border-2 border-macaw"
+	}
+
+	// Determine shadow class (matching text choice pattern)
+	let shadowClassName = "shadow-swan"
+	if (isMatched) {
+		shadowClassName = "shadow-question-correct-green-1"
+	} else if (hasIncorrectMatch) {
+		shadowClassName = "shadow-question-incorrect-red-1"
+	} else if (isSelected) {
+		shadowClassName = "shadow-macaw"
+	}
+
+	// Extract color variable from shadow class (e.g., "shadow-swan" -> "swan")
+	const colorVar = shadowClassName.replace("shadow-", "")
+	const isDisabled = isInConfirmationStage || isMatched
 
 	return (
 		<div
 			className={cn(
-				"relative w-full max-w-sm lg:w-96 duration-0 shrink-0 flex border-2 rounded-lg h-12",
-				borderClassName,
-				isInConfirmationStage || isMatched ? "cursor-default" : "cursor-pointer",
+				"relative w-full max-w-sm lg:w-96 duration-0 shrink-0 flex items-center rounded-lg h-12 px-4",
+				containerClassName,
+				// Tactile shadow effect (2px shadow)
+				!isDisabled && "shadow-[0_2px_0_0_var(--shadow-color)]",
+				// Active effect (compress on click)
+				!isDisabled && "active:shadow-[0_0_0_0_var(--shadow-color)] active:translate-y-0.5",
+				isDisabled ? "cursor-default" : "cursor-pointer",
 				isMatched && "opacity-50"
 			)}
+			style={{
+				"--shadow-color": `rgb(var(--${colorVar}))`,
+			} as React.CSSProperties}
 			onClick={(): void => {
-				if (isInConfirmationStage || isMatched) return
+				if (isDisabled) return
 				learnClass.handleMatchingCodingBlockClick(questionId, codingBlockId)
 			}}
 		>
-			{/* Number lip on the left */}
-			<div className={cn(
-				"w-8 flex items-center justify-center text-lg font-bold shrink-0",
-				lipClassName
-			)}>
+			{/* Number badge on the left */}
+			<div
+				className={cn(
+					"absolute left-2 w-8 h-8 rounded-lg border-2",
+					"flex items-center justify-center text-sm font-bold",
+					badgeClassName
+				)}
+			>
 				{cardNumber}
 			</div>
-			<div className="h-10 flex-1 rounded-r-3xl overflow-hidden">
+			<div className="h-10 flex-1 ml-10 rounded-lg overflow-hidden">
 				<LearnMiniSandbox blocklyJson={codingBlockJson} />
 			</div>
 		</div>
