@@ -1,17 +1,17 @@
+import { isNull } from "lodash-es"
 import { action, makeAutoObservable } from "mobx"
 import { Lesson } from "@lever-labs/common-ts/types/learn"
-import { soundManager } from "./utility/sound-manager-class"
 import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
+import { soundManager } from "./utility/sound-manager-class"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import markLessonComplete from "../utils/learn/mark-lesson-complete"
+import submitMatchingAnswer from "../utils/learn/submit-matching-answer"
 import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
+import stopCurrentlyRunningCode from "../utils/sandbox/stop-currently-running-code"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
-import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
 import submitActionToCodeOpenEndedAnswer from "../utils/learn/submit-action-to-code-open-ended-answer"
-import submitMatchingAnswer from "../utils/learn/submit-matching-answer"
-import stopCurrentlyRunningCode from "../utils/sandbox/stop-currently-running-code"
-import { isNull } from "lodash-es"
+import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -836,6 +836,36 @@ class LearnClass {
 
 		const lastSentCode = this.lastSentCppCodeByQuestionId.get(questionId)
 		return lastSentCode === currentCppCode
+	}
+
+	public hasMatchingQuestionPartialProgress = (lessonId: LessonUUID): boolean => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson?.lessonQuestionMap) return false
+
+		// Check if any matching question has at least one correct match
+		return lesson.lessonQuestionMap.some((questionMap): boolean => {
+			const question = questionMap.question
+			if (question.questionType !== "MATCHING" || !question.matchingAnswerState) {
+				return false
+			}
+
+			const matchingState = question.matchingAnswerState
+			// Check if there's at least one correctly matched block
+			return matchingState.correctlyMatchedBlockIds.length > 0 ||
+				// Or check if there's any true value in matchResults
+				Object.values(matchingState.matchResults).some((result): boolean => result === true)
+		})
+	}
+
+	public hasLessonProgress = (lessonId: LessonUUID): boolean => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson) return false
+
+		// Check if there are any correctly answered questions
+		if (lesson.numberQuestionsCorrect > 0) return true
+
+		// Check if there's partial progress in matching questions
+		return this.hasMatchingQuestionPartialProgress(lessonId)
 	}
 
 	public logout(): void {
