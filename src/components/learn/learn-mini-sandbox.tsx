@@ -33,6 +33,7 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		return getWorkspaceConfig(isDarkMode, true, 1, true)
 	}, [isDarkMode])
 
+	// eslint-disable-next-line complexity
 	const calculateOptimalScale = useCallback((): number => {
 		// Prevent multiple simultaneous calculations
 		if (isCalculatingScaleRef.current) {

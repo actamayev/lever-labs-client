@@ -34,6 +34,5 @@ export default function useMatchingQuestionEscapeHandler(): void {
 
 		window.addEventListener("keydown", handleKeyDown)
 		return (): void => window.removeEventListener("keydown", handleKeyDown)
-	}, [currentQuestionState?.question.matching, isInConfirmationStage])
+	}, [currentQuestionState?.question.matching, currentQuestionState?.question.questionId, isInConfirmationStage])
 }
-
