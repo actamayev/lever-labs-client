@@ -1,13 +1,15 @@
+
 "use client"
 
 import { observer } from "mobx-react"
 import { useState, useEffect } from "react"
-import learnClass from "../../classes/learn-class"
-import { TactileButton } from "../buttons/tactile-button"
-import LearnMiniSandbox from "./learn-mini-sandbox"
-import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
-import { cn } from "../../lib/utils"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import { cn } from "../../lib/utils"
+import learnClass from "../../classes/learn-class"
+import LearnMiniSandbox from "./learn-mini-sandbox"
+import { TactileButton } from "../buttons/tactile-button"
+import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
+import useMatchingQuestionKeyboardHandler from "../../hooks/learn/use-matching-question-keyboard-handler"
 
 // eslint-disable-next-line max-lines-per-function
 function MatchingQuestion(): React.ReactNode {
@@ -17,12 +19,15 @@ function MatchingQuestion(): React.ReactNode {
 	// Use the keyboard handler hook
 	useQuestionKeyboardHandler()
 
-	const [selectedCodingBlockId, setSelectedCodingBlockId] = useState<number | null>(null)
-	const [selectedMatchingAnswerId, setSelectedMatchingAnswerId] = useState<number | null>(null)
 	const [isSubmitting, setIsSubmitting] = useState(false)
+
+	// Use the matching question keyboard handler hook
+	useMatchingQuestionKeyboardHandler()
 
 	// Get or initialize matching answer state from learn class
 	const getMatchingState = (): {
+		selectedCodingBlockId: number | null
+		selectedMatchingAnswerId: number | null
 		matchResults: Record<string, boolean>
 		correctlyMatchedBlockIds: number[]
 		correctlyMatchedChoiceIds: number[]
@@ -30,6 +35,8 @@ function MatchingQuestion(): React.ReactNode {
 		const question = currentQuestionState?.question
 		if (!question?.matchingAnswerState) {
 			return {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
 				matchResults: {},
 				correctlyMatchedBlockIds: [],
 				correctlyMatchedChoiceIds: []
@@ -38,26 +45,28 @@ function MatchingQuestion(): React.ReactNode {
 		return question.matchingAnswerState
 	}
 
-	// Reset selections when question changes
-	useEffect((): void => {
-		setSelectedCodingBlockId(null)
-		setSelectedMatchingAnswerId(null)
-	}, [currentQuestionState?.question.questionId])
-
 	// Handle matching submission when both sides are selected
 	useEffect((): void => {
+		if (!currentQuestionState) return
+
+		const question = currentQuestionState.question
+		const matchingState = question?.matchingAnswerState
+		if (!matchingState) return
+
+		const selectedCodingBlockId = matchingState.selectedCodingBlockId
+		const selectedMatchingAnswerId = matchingState.selectedMatchingAnswerId
+
 		if (
 			selectedCodingBlockId !== null &&
 			selectedMatchingAnswerId !== null &&
 			!isSubmitting &&
-			!isInConfirmationStage &&
-			currentQuestionState
+			!isInConfirmationStage
 		) {
 			const handleMatch = async (): Promise<void> => {
 				setIsSubmitting(true)
 
 				const lesson = Array.from(learnClass.lessonsById.values()).find((l): boolean =>
-					l.lessonQuestionMap?.some((q): boolean => q.question.questionId === currentQuestionState.question.questionId) ?? false
+					l.lessonQuestionMap?.some((q): boolean => q.question.questionId === question.questionId) ?? false
 				)
 
 				if (!lesson) {
@@ -67,29 +76,24 @@ function MatchingQuestion(): React.ReactNode {
 
 				await learnClass.submitMatchingPair(
 					lesson.lessonId,
-					currentQuestionState.question.questionId,
+					question.questionId,
 					selectedCodingBlockId,
 					selectedMatchingAnswerId
 				)
-
-				// Clear selections after submission (user can make another match)
-				setSelectedCodingBlockId(null)
-				setSelectedMatchingAnswerId(null)
 
 				setIsSubmitting(false)
 			}
 
 			void handleMatch()
 		}
-	}, [selectedCodingBlockId, selectedMatchingAnswerId, isSubmitting, isInConfirmationStage, currentQuestionState])
+	}, [
+		currentQuestionState?.question.matchingAnswerState?.selectedCodingBlockId,
+		currentQuestionState?.question.matchingAnswerState?.selectedMatchingAnswerId,
+		isSubmitting,
+		isInConfirmationStage,
+		currentQuestionState
+	])
 
-	// Reset selections when exiting confirmation stage (after retry or continue)
-	useEffect((): void => {
-		if (!isInConfirmationStage) {
-			setSelectedCodingBlockId(null)
-			setSelectedMatchingAnswerId(null)
-		}
-	}, [isInConfirmationStage])
 
 	if (!currentQuestionState?.question.matching) {
 		return null
@@ -141,18 +145,19 @@ function MatchingQuestion(): React.ReactNode {
 	}
 
 	const isBlockSelected = (codingBlockId: number): boolean => {
-		return selectedCodingBlockId === codingBlockId
+		return matchingState.selectedCodingBlockId === codingBlockId
 	}
 
 	const isMatchingSelected = (matchingAnswerId: number): boolean => {
-		return selectedMatchingAnswerId === matchingAnswerId
+		return matchingState.selectedMatchingAnswerId === matchingAnswerId
 	}
 
 	const getBlockButtonClass = (codingBlockId: number): string => {
 		const isSelected = isBlockSelected(codingBlockId)
 		const isMatched = isBlockMatched(codingBlockId)
-		const hasResult = selectedMatchingAnswerId !== null && getMatchResult(codingBlockId, selectedMatchingAnswerId) !== undefined
-		const result = selectedMatchingAnswerId !== null ? getMatchResult(codingBlockId, selectedMatchingAnswerId) : undefined
+		const selectedAnswerId = matchingState.selectedMatchingAnswerId
+		const hasResult = selectedAnswerId !== null && getMatchResult(codingBlockId, selectedAnswerId) !== undefined
+		const result = selectedAnswerId !== null ? getMatchResult(codingBlockId, selectedAnswerId) : undefined
 
 		if (isMatched) {
 			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default opacity-60"
@@ -166,14 +171,15 @@ function MatchingQuestion(): React.ReactNode {
 		if (isSelected) {
 			return "bg-standard-background-hover border-2 border-macaw"
 		}
-		return "bg-standard-background border-2 border-swan hover:bg-polar cursor-pointer"
+		return "bg-standard-background border-2 border-swan cursor-pointer"
 	}
 
 	const getMatchingButtonClass = (matchingAnswerId: number): string => {
 		const isSelected = isMatchingSelected(matchingAnswerId)
 		const isMatched = isChoiceMatched(matchingAnswerId)
-		const hasResult = selectedCodingBlockId !== null && getMatchResult(selectedCodingBlockId, matchingAnswerId) !== undefined
-		const result = selectedCodingBlockId !== null ? getMatchResult(selectedCodingBlockId, matchingAnswerId) : undefined
+		const selectedBlockId = matchingState.selectedCodingBlockId
+		const hasResult = selectedBlockId !== null && getMatchResult(selectedBlockId, matchingAnswerId) !== undefined
+		const result = selectedBlockId !== null ? getMatchResult(selectedBlockId, matchingAnswerId) : undefined
 
 		if (isMatched) {
 			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default opacity-60"
@@ -194,8 +200,9 @@ function MatchingQuestion(): React.ReactNode {
 	const getMatchingShadowClass = (matchingAnswerId: number): string => {
 		const isSelected = isMatchingSelected(matchingAnswerId)
 		const isMatched = isChoiceMatched(matchingAnswerId)
-		const hasResult = selectedCodingBlockId !== null && getMatchResult(selectedCodingBlockId, matchingAnswerId) !== undefined
-		const result = selectedCodingBlockId !== null ? getMatchResult(selectedCodingBlockId, matchingAnswerId) : undefined
+		const selectedBlockId = matchingState.selectedCodingBlockId
+		const hasResult = selectedBlockId !== null && getMatchResult(selectedBlockId, matchingAnswerId) !== undefined
+		const result = selectedBlockId !== null ? getMatchResult(selectedBlockId, matchingAnswerId) : undefined
 
 		if (isMatched) {
 			return "shadow-question-correct-green-1"
@@ -234,15 +241,27 @@ function MatchingQuestion(): React.ReactNode {
 									isInConfirmationStage ? "cursor-default" : "cursor-pointer"
 								)}
 								onClick={(): void => {
-									if (!isInConfirmationStage && !isSubmitting && !isBlockMatched(block.codingBlockId)) {
-										setSelectedCodingBlockId(block.codingBlockId)
+									if (!isInConfirmationStage && !isBlockMatched(block.codingBlockId)) {
+										const lesson = Array.from(learnClass.lessonsById.values())
+											.find((l): boolean =>
+												l.lessonQuestionMap?.some((q): boolean =>
+													q.question.questionId === currentQuestionState.question.questionId
+												) ?? false
+											)
+										if (lesson) {
+											learnClass.setMatchingSelectedCodingBlock(
+												lesson.lessonId,
+												currentQuestionState.question.questionId,
+												block.codingBlockId
+											)
+										}
 									}
 								}}
 							>
 								<div className="h-48 rounded-t-3xl overflow-hidden">
 									<LearnMiniSandbox
 										blocklyJson={block.codingBlockJson}
-										className="w-full h-full rounded-t-3xl rounded-b-none"
+										className=""
 									/>
 								</div>
 								{/* Number lip below the sandbox */}
@@ -268,8 +287,20 @@ function MatchingQuestion(): React.ReactNode {
 							<TactileButton
 								key={choice.matchingAnswerChoiceTextId}
 								onClick={(): void => {
-									if (!isInConfirmationStage && !isSubmitting && !isChoiceMatched(choice.matchingAnswerChoiceTextId)) {
-										setSelectedMatchingAnswerId(choice.matchingAnswerChoiceTextId)
+									if (!isInConfirmationStage && !isChoiceMatched(choice.matchingAnswerChoiceTextId)) {
+										const lesson = Array.from(learnClass.lessonsById.values())
+											.find((l): boolean =>
+												l.lessonQuestionMap?.some((q): boolean =>
+													q.question.questionId === currentQuestionState.question.questionId
+												) ?? false
+											)
+										if (lesson) {
+											learnClass.setMatchingSelectedAnswerChoice(
+												lesson.lessonId,
+												currentQuestionState.question.questionId,
+												choice.matchingAnswerChoiceTextId
+											)
+										}
 									}
 								}}
 								className={cn(
@@ -280,7 +311,7 @@ function MatchingQuestion(): React.ReactNode {
 								)}
 								shadowClass={getMatchingShadowClass(choice.matchingAnswerChoiceTextId)}
 								shadowHeight={2}
-								disabled={isInConfirmationStage || isSubmitting || isChoiceMatched(choice.matchingAnswerChoiceTextId)}
+								disabled={isInConfirmationStage || isChoiceMatched(choice.matchingAnswerChoiceTextId)}
 								shouldHoverPushButton={false}
 							>
 								{/* Number badge on the left */}

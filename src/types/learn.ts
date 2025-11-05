@@ -23,6 +23,10 @@ declare global {
 		correctAnswerChoiceId?: number
 		// Matching question client-side state
 		matchingAnswerState?: {
+			// Currently selected coding block ID (left side)
+			selectedCodingBlockId: number | null
+			// Currently selected matching answer choice text ID (right side)
+			selectedMatchingAnswerId: number | null
 			// Map of match results: key format is "codingBlockId-matchingAnswerChoiceTextId"
 			// Value: true = correct, false = incorrect, undefined = not yet matched
 			matchResults: Record<string, boolean>

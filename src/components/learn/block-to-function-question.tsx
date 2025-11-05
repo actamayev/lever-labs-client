@@ -10,7 +10,6 @@ import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-
 import { cn } from "../../lib/utils"
 import isOtpInputFocused from "../../utils/check-otp-input-focused"
 
-
 function BlockToFunctionQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage

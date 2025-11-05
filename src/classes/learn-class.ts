@@ -395,6 +395,8 @@ class LearnClass {
 		// Initialize matching answer state if it doesn't exist
 		if (!question.matchingAnswerState) {
 			question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
 				matchResults: {},
 				correctlyMatchedBlockIds: [],
 				correctlyMatchedChoiceIds: []
@@ -407,6 +409,10 @@ class LearnClass {
 		// Store the match result
 		const matchKey = `${codingBlockId}-${matchingAnswerChoiceTextId}`
 		question.matchingAnswerState.matchResults[matchKey] = isCorrect
+
+		// Clear selections after submission (user can make another match)
+		question.matchingAnswerState.selectedCodingBlockId = null
+		question.matchingAnswerState.selectedMatchingAnswerId = null
 
 		// If correct, add to the correctly matched lists
 		if (isCorrect) {
@@ -468,6 +474,56 @@ class LearnClass {
 		})
 	}
 
+	public setMatchingSelectedCodingBlock = action((lessonId: LessonUUID, questionId: QuestionUUID, codingBlockId: number): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson?.lessonQuestionMap) return
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return
+
+		const question = questionMap.question
+
+		// Initialize matching answer state if it doesn't exist
+		if (!question.matchingAnswerState) {
+			question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		question.matchingAnswerState.selectedCodingBlockId = codingBlockId
+	})
+
+	public setMatchingSelectedAnswerChoice = action((
+		lessonId: LessonUUID,
+		questionId: QuestionUUID,
+		matchingAnswerChoiceTextId: number
+	): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson?.lessonQuestionMap) return
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return
+
+		const question = questionMap.question
+
+		// Initialize matching answer state if it doesn't exist
+		if (!question.matchingAnswerState) {
+			question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		question.matchingAnswerState.selectedMatchingAnswerId = matchingAnswerChoiceTextId
+	})
+
 	public continueToNextQuestion = action(async (lessonId: LessonUUID): Promise<void> => {
 		if (!this.currentQuestionState) return
 		await stopCurrentlyRunningCode(true)
@@ -523,18 +579,21 @@ class LearnClass {
 		// Clear any previous feedback when retrying
 		if (!this.currentQuestionState) return
 		const { question } = this.currentQuestionState
-		if (question.questionType === "FILL_IN_BLANK" || question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
-			const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
-				l.lessonQuestionMap?.some((q): boolean => q.question.questionId === question.questionId) ?? false
-			)
-			if (!lesson?.lessonQuestionMap) return
-			const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
-			if (!questionMap) return
-			if (question.questionType === "FILL_IN_BLANK") {
-				questionMap.question.fillInBlankFeedback = ""
-			} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
-				questionMap.question.actionToCodeOpenEndedFeedback = ""
-			}
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === question.questionId) ?? false
+		)
+		if (!lesson?.lessonQuestionMap) return
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
+		if (!questionMap) return
+
+		if (question.questionType === "FILL_IN_BLANK") {
+			questionMap.question.fillInBlankFeedback = ""
+		} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+			questionMap.question.actionToCodeOpenEndedFeedback = ""
+		} else if (question.questionType === "MATCHING" && questionMap.question.matchingAnswerState) {
+			// Clear selections but keep match results and correctly matched lists
+			questionMap.question.matchingAnswerState.selectedCodingBlockId = null
+			questionMap.question.matchingAnswerState.selectedMatchingAnswerId = null
 		}
 	})
 
@@ -564,6 +623,9 @@ class LearnClass {
 			} else if (mapEntry.question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
 				mapEntry.question.actionToCodeOpenEndedAnswer = undefined
 				mapEntry.question.actionToCodeOpenEndedFeedback = undefined
+			} else if (mapEntry.question.questionType === "MATCHING") {
+				// Clear matching answer state
+				mapEntry.question.matchingAnswerState = undefined
 			}
 		}
 
