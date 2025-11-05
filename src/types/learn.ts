@@ -63,6 +63,16 @@ declare global {
 		isCorrect: boolean
 		correctAnswerChoiceId?: number
 	}
+
+	interface MatchingCodingBlock {
+		codingBlockId: number
+		codingBlockJson: BlocklyJson
+	}
+
+	interface MatchingTextChoice {
+		matchingAnswerChoiceTextId: number
+		text: string
+	}
 }
 
 export {}

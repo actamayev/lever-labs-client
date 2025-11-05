@@ -9,7 +9,7 @@ import DemoQuestion from "./demo-question"
 import FillInBlankQuestion from "./fill-in-blank-question"
 import ActionToCodeMultipleChoiceQuestion from "./action-to-code-multiple-choice-question"
 import ActionToCodeOpenEndedQuestion from "./action-to-code-open-ended-question"
-import MatchingQuestion from "./matching-question"
+import MatchingQuestion from "./matching/matching-question"
 
 // eslint-disable-next-line complexity
 function LessonQuestion(): React.ReactNode {
