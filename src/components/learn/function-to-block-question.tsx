@@ -42,37 +42,6 @@ function FunctionToBlockQuestion(): React.ReactNode {
 		return (): void => window.removeEventListener("keydown", handleKeyDown)
 	}, [currentQuestionState?.question.functionToBlockFlashcard, isInConfirmationStage])
 
-	// const buttonExtraClass = useCallback((isSelected: boolean): string => {
-	// 	if (isSelected) {
-	// 		if (lastAnswerWasCorrect) {
-	// 			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default"
-	// 		}
-	// 		return "bg-standard-background-hover border-2 border-macaw"
-	// 	}
-	// 	if (isInConfirmationStage) return "bg-standard-background border-2 border-swan cursor-default"
-	// 	return "bg-standard-background border-2 border-swan hover:bg-polar"
-	// }, [isInConfirmationStage, lastAnswerWasCorrect])
-
-	// const numberBadgeClass = useCallback((isSelected: boolean): string => {
-	// 	if (isSelected) {
-	// 		if (lastAnswerWasCorrect) {
-	// 			return "border-question-correct-green-1 text-question-correct-green-2"
-	// 		}
-	// 		return "border-macaw text-macaw"
-	// 	}
-	// 	return "border-swan text-hare"
-	// }, [lastAnswerWasCorrect])
-
-	// const shadowClass = useCallback((isSelected: boolean): string => {
-	// 	if (isSelected) {
-	// 		if (lastAnswerWasCorrect) {
-	// 			return "shadow-question-correct-green-1"
-	// 		}
-	// 		return "shadow-macaw"
-	// 	}
-	// 	return "shadow-swan"
-	// }, [lastAnswerWasCorrect])
-
 	if (!currentQuestionState?.question.functionToBlockFlashcard) {
 		return null
 	}

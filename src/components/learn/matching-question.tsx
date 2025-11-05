@@ -1,4 +1,3 @@
-
 "use client"
 
 import { observer } from "mobx-react"
@@ -15,35 +14,9 @@ import useMatchingQuestionKeyboardHandler from "../../hooks/learn/use-matching-q
 function MatchingQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
-
-	// Use the keyboard handler hook
-	useQuestionKeyboardHandler()
-
 	const [isSubmitting, setIsSubmitting] = useState(false)
-
-	// Use the matching question keyboard handler hook
+	useQuestionKeyboardHandler()
 	useMatchingQuestionKeyboardHandler()
-
-	// Get or initialize matching answer state from learn class
-	const getMatchingState = (): {
-		selectedCodingBlockId: number | null
-		selectedMatchingAnswerId: number | null
-		matchResults: Record<string, boolean>
-		correctlyMatchedBlockIds: number[]
-		correctlyMatchedChoiceIds: number[]
-	} => {
-		const question = currentQuestionState?.question
-		if (!question?.matchingAnswerState) {
-			return {
-				selectedCodingBlockId: null,
-				selectedMatchingAnswerId: null,
-				matchResults: {},
-				correctlyMatchedBlockIds: [],
-				correctlyMatchedChoiceIds: []
-			}
-		}
-		return question.matchingAnswerState
-	}
 
 	// Handle matching submission when both sides are selected
 	useEffect((): void => {
@@ -94,10 +67,7 @@ function MatchingQuestion(): React.ReactNode {
 		currentQuestionState
 	])
 
-
-	if (!currentQuestionState?.question.matching) {
-		return null
-	}
+	if (!currentQuestionState?.question.matching) return null
 
 	const matchingData = currentQuestionState.question.matching
 	const { questionText, matchingAnswerChoice: matchingPairs } = matchingData
@@ -129,7 +99,13 @@ function MatchingQuestion(): React.ReactNode {
 	const sortedCodingBlocks = [...codingBlocks].sort((a, b): number => a.order - b.order)
 	const sortedMatchingChoices = [...matchingAnswerChoice].sort((a, b): number => a.order - b.order)
 
-	const matchingState = getMatchingState()
+	const matchingState = currentQuestionState.question.matchingAnswerState || {
+		selectedCodingBlockId: null,
+		selectedMatchingAnswerId: null,
+		matchResults: {},
+		correctlyMatchedBlockIds: [],
+		correctlyMatchedChoiceIds: []
+	}
 
 	const getMatchResult = (codingBlockId: number, matchingAnswerId: number): boolean | undefined => {
 		const matchKey = `${codingBlockId}-${matchingAnswerId}`
@@ -160,10 +136,10 @@ function MatchingQuestion(): React.ReactNode {
 		const result = selectedAnswerId !== null ? getMatchResult(codingBlockId, selectedAnswerId) : undefined
 
 		if (isMatched) {
-			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default opacity-60"
+			return "border-2 border-question-correct-green-1 cursor-default opacity-60"
 		}
 		if (hasResult && result === true) {
-			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default"
+			return "border-2 border-question-correct-green-1 cursor-default"
 		}
 		if (hasResult && result === false) {
 			return "bg-question-incorrect-red border-2 border-question-incorrect-red-1 cursor-default"
@@ -195,7 +171,6 @@ function MatchingQuestion(): React.ReactNode {
 		}
 		return "bg-standard-background border-2 border-swan hover:bg-polar cursor-pointer"
 	}
-
 
 	const getMatchingShadowClass = (matchingAnswerId: number): string => {
 		const isSelected = isMatchingSelected(matchingAnswerId)
