@@ -261,7 +261,8 @@ function MatchingQuestion(): React.ReactNode {
 				<div className="flex flex-col gap-3 w-full lg:w-auto">
 					{sortedMatchingChoices.map((choice, index): React.ReactNode => {
 						const isSelected = isMatchingSelected(choice.matchingAnswerChoiceTextId)
-						const choiceNumber = index + 1
+						// Number right side 6-9, with last one being 0
+						const choiceNumber = index === sortedMatchingChoices.length - 1 ? 0 : index + 6
 
 						return (
 							<TactileButton
