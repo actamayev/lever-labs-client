@@ -15,9 +15,6 @@ function MatchingQuestion(): React.ReactNode {
 	useMatchingQuestionKeyboardHandler()
 	useMatchingQuestionEscapeHandler()
 
-	const questionId = currentQuestionState?.question.questionId
-	if (!questionId) return null
-
 	const matchingData = currentQuestionState?.question.matching
 	if (!matchingData) return null
 
@@ -85,4 +82,3 @@ function MatchingQuestion(): React.ReactNode {
 }
 
 export default observer(MatchingQuestion)
-

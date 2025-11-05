@@ -131,4 +131,3 @@ function SingleMatchingTextChoice(props: SingleMatchingTextChoiceProps): React.R
 }
 
 export default observer(SingleMatchingTextChoice)
-
