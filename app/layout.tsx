@@ -5,6 +5,7 @@ import "../src/styles/globals.css"
 import Providers from "./providers"
 import { lexend } from "../src/utils/fonts"
 import { getAuthState } from "@/lib/auth-server"
+import TailwindIndicator from "../src/components/tailwind-indicator"
 
 export const viewport: Viewport = {
 	width: "device-width",
@@ -32,6 +33,7 @@ export default async function RootLayout({
 				<Providers>
 					{children}
 				</Providers>
+				<TailwindIndicator />
 				{process.env.VERCEL_ENV === "production" && (
 					<>
 						<Analytics />

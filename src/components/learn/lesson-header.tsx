@@ -13,6 +13,7 @@ import ConnectToPipButton from "../connect-pip/connect-to-pip-button"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 import SandboxBatterySection from "../sandbox/sandbox-project/header/sandbox-battery-section"
 
+// eslint-disable-next-line max-lines-per-function
 function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const lesson = learnClass.getLesson(lessonId)
@@ -28,29 +29,43 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		return progressPercent
 	}, [lesson?.lessonQuestionMap, lesson?.numberQuestionsCorrect])
 
-	// Handle beforeunload warning - only show if user is still editing
+	// Track matching question state to ensure MobX reactivity
+	const hasMatchingProgress = useMemo((): boolean => {
+		if (!lesson?.lessonQuestionMap) return false
+		// Access matching state to ensure MobX tracks changes
+		return lesson.lessonQuestionMap.some((questionMap): boolean => {
+			const question = questionMap.question
+			if (question.questionType !== "MATCHING" || !question.matchingAnswerState) {
+				return false
+			}
+			const matchingState = question.matchingAnswerState
+			// Access properties so MobX tracks them
+			return matchingState.correctlyMatchedBlockIds.length > 0 ||
+				Object.values(matchingState.matchResults).some((result): boolean => result === true)
+		})
+	}, [lesson?.lessonQuestionMap])
+
+	// Handle beforeunload warning - only show if user has any progress
+	// Always register the listener so it can check progress at the time of the event
 	useEffect((): () => void => {
 		const handleBeforeUnload = (e: BeforeUnloadEvent): void => {
-			if (!lesson) return
-			if (lesson.numberQuestionsCorrect > 0) {
+			// Re-check progress at the time of the event in case state changed
+			if (learnClass.hasLessonProgress(lessonId)) {
 				e.preventDefault()
 				e.returnValue = "Changes you made may not be saved."
 			}
 		}
 
-		if (lesson?.numberQuestionsCorrect && lesson?.numberQuestionsCorrect > 0) {
-			window.addEventListener("beforeunload", handleBeforeUnload)
-		}
+		window.addEventListener("beforeunload", handleBeforeUnload)
 
 		return (): void => {
 			window.removeEventListener("beforeunload", handleBeforeUnload)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [lesson?.numberQuestionsCorrect])
+	}, [lessonId, lesson?.numberQuestionsCorrect, hasMatchingProgress])
 
 	const handleBack = useCallback((): void => {
-		// Check if user has progress (questions correct > 0)
-		if (lesson && lesson.numberQuestionsCorrect > 0) {
+		// Check if user has progress (questions correct > 0 or partial matching progress)
+		if (learnClass.hasLessonProgress(lessonId)) {
 			learnClass.setIsExitDialogOpen(true)
 			return
 		}
@@ -58,7 +73,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 		navigate("/learn")
 		stopCurrentlyRunningCode(true)
 		learnClass.resetLessonProgress(lessonId)
-	}, [navigate, lesson, lessonId])
+	}, [navigate, lessonId])
 
 	return (
 		<>

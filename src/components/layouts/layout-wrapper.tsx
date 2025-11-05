@@ -10,6 +10,7 @@ import ThemeProvider from "../theme/theme-provider"
 import InternalPagesLayout from "./internal-pages-layout"
 import personalInfoClass from "../../classes/personal-info-class"
 import { PrivatePageNames, OpenPages } from "../../utils/constants/page-constants"
+import careerQuestClass from "@/classes/career-quest-class"
 
 interface LayoutWrapperProps {
 	children: React.ReactNode
@@ -24,6 +25,17 @@ function LayoutWrapper({ children, initialAuthState }: LayoutWrapperProps): Reac
 		personalInfoClass.setDefaultSiteTheme(initialAuthState.theme, false)
 	}, [initialAuthState.theme])
 
+	// Sync server auth state with client even on open pages (covers reloads)
+	useEffect((): void => {
+		if (!authClass.isLoggedIn && initialAuthState.isAuthenticated) {
+			authClass.setAuthState({
+				isAuthenticated: initialAuthState.isAuthenticated,
+				hasCompletedSignup: initialAuthState.hasCompletedSignup
+			})
+			careerQuestClass.reinitialize()
+		}
+	}, [initialAuthState.isAuthenticated, initialAuthState.hasCompletedSignup])
+
 	const isPrivatePage = PrivatePageNames.some((path): boolean => pathname.startsWith(path))
 	const isOpenPage = OpenPages.some((path): boolean => pathname.startsWith(path))
 	const isAuthenticated = authClass.isLoggedIn || initialAuthState.isAuthenticated
@@ -31,17 +43,17 @@ function LayoutWrapper({ children, initialAuthState }: LayoutWrapperProps): Reac
 
 	const currentTheme = personalInfoClass.defaultSiteTheme
 
-	const shouldUseClassicForIncompleteSignup = isIncompleteSignup && isOpenPage
-
-	// Determine if we should show internal layout
-	const shouldShowInternalLayout = isAuthenticated &&
-		!shouldUseClassicForIncompleteSignup &&
-		(isPrivatePage || isOpenPage)
+	// Show internal layout for authenticated users on private pages, or on open pages when signup is complete
+	const shouldShowInternalLayout = isAuthenticated && (
+		isPrivatePage || (isOpenPage && !isIncompleteSignup)
+	)
 
 	return (
 		<ThemeProvider initialTheme={currentTheme}>
 			{shouldShowInternalLayout ? (
-				<InternalPagesLayout>{children}</InternalPagesLayout>
+				<InternalPagesLayout>
+					{children}
+				</InternalPagesLayout>
 			) : (
 				<PublicOnlyPage>
 					{children}

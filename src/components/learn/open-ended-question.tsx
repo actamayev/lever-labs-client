@@ -51,6 +51,7 @@ function OpenEndedQuestion({
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
 	const [blocksInitialized, setBlocksInitialized] = useState(false)
 	const isFirstChangeRef = useRef(true)
+	const [windowWidth, setWindowWidth] = useState<number>(typeof window !== "undefined" ? window.innerWidth : 1024)
 
 	// Initialize blocks before anything else
 	useEffect((): void => {
@@ -69,6 +70,27 @@ function OpenEndedQuestion({
 		return questionData.initialBlocklyJson
 	}, [questionData.initialBlocklyJson])
 
+	// Calculate responsive scale based on window width
+	const getResponsiveScale = useCallback((): number => {
+		// Tailwind breakpoints: sm: 640px, md: 768px, lg: 1024px, xl: 1280px, 2xl: 1536px
+		if (windowWidth < 640) {
+			return 0.5 // Mobile: smaller scale
+		} else if (windowWidth < 768) {
+			return 0.6 // Small screens
+		} else if (windowWidth < 1024) {
+			return 0.7 // Medium screens
+		} else if (windowWidth < 1280) {
+			return 0.8 // Large screens
+		} else if (windowWidth < 1536) {
+			return 1.0 // Extra large screens
+		} else if (windowWidth < 1920) {
+			return 1.1 // Extra large screens
+		} else if (windowWidth < 2560) {
+			return 1.3 // Extra large screens
+		}
+		return 1.4 // Extra extra large screens
+	}, [windowWidth])
+
 	// Create toolbox config from available blocks
 	const toolboxConfig = useMemo((): Blockly.utils.toolbox.ToolboxDefinition => {
 		if (!questionData.availableBlocks) {
@@ -83,8 +105,10 @@ function OpenEndedQuestion({
 		return blockData.toolboxConfig
 	}, [questionData.availableBlocks])
 
+	const responsiveScale = getResponsiveScale()
+
 	const workspaceConfiguration = useMemo((): Blockly.BlocklyOptions => {
-		const config = getWorkspaceConfig(isDarkMode, false)
+		const config = getWorkspaceConfig(isDarkMode, false, responsiveScale)
 		// Override global CSS that disables scrolling/panning
 		return {
 			...config,
@@ -97,15 +121,16 @@ function OpenEndedQuestion({
 				wheel: true,
 			}
 		}
-	}, [isDarkMode])
+	}, [isDarkMode, responsiveScale])
 
 	const centerWorkspace = useCallback((): void => {
 		const workspace = workspaceRef.current
 		if (!workspace) return
 
-		workspace.setScale(workspaceConfiguration.zoom?.startScale || 1)
+		const scale = responsiveScale
+		workspace.setScale(scale)
 		workspace.scrollCenter()
-	}, [workspaceConfiguration.zoom?.startScale])
+	}, [responsiveScale])
 
 	const handleWorkspaceChange = useCallback(async (workspace: Blockly.WorkspaceSvg): Promise<void> => {
 		workspaceRef.current = workspace
@@ -178,6 +203,29 @@ function OpenEndedQuestion({
 		}
 	}, [centerWorkspace, currentQuestionState, parsedInitialJson, onAnswerChange])
 
+	// Track window width for responsive scaling
+	useEffect((): () => void => {
+		const handleResize = (): void => {
+			setWindowWidth(window.innerWidth)
+		}
+
+		window.addEventListener("resize", handleResize)
+		return (): void => {
+			window.removeEventListener("resize", handleResize)
+		}
+	}, [])
+
+	// Update workspace scale when window width changes
+	useEffect((): void => {
+		const workspace = workspaceRef.current
+		if (!workspace) return
+
+		const scale = responsiveScale
+		workspace.setScale(scale)
+		workspace.scrollCenter()
+		Blockly.svgResize(workspace)
+	}, [responsiveScale])
+
 	useEffect((): () => void => {
 		if (!containerRef.current) return (): void => {}
 
@@ -206,27 +254,30 @@ function OpenEndedQuestion({
 	}, [currentQuestionState?.question.questionId])
 
 	// When the question changes, load its initial JSON into the workspace
+	// Only run when question ID changes, not when scale or other things change
 	useEffect((): void => {
 		const workspace = workspaceRef.current
-		if (!workspace) return
+		if (!workspace || !currentQuestionState) return
 
 		try {
 			Blockly.serialization.workspaces.load(parsedInitialJson, workspace)
 			void (async (): Promise<void> => {
 				const cppCode = await getCppGenerator().generateCppFromJson(parsedInitialJson)
-				if (currentQuestionState) {
-					onAnswerChange(currentQuestionState.question.questionId, parsedInitialJson, cppCode)
-				}
+				onAnswerChange(currentQuestionState.question.questionId, parsedInitialJson, cppCode)
 				setTimeout((): void => {
-					centerWorkspace()
+					// Use current responsiveScale directly instead of centerWorkspace callback
+					const scale = getResponsiveScale()
+					workspace.setScale(scale)
+					workspace.scrollCenter()
 					Blockly.svgResize(workspace)
 				}, 50)
 			})()
 		} catch (error) {
 			console.error("Failed to load initial JSON for new question:", error)
 		}
-	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [parsedInitialJson, currentQuestionState?.question.questionId, centerWorkspace, onAnswerChange])
+		// Only depend on question ID - this effect should ONLY run when question changes
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [currentQuestionState?.question.questionId])
 
 	// Get current CPP code for SEND CODE button
 	const getCurrentCppCode = (): string => {
@@ -247,7 +298,7 @@ function OpenEndedQuestion({
 	if (!blocksInitialized) {
 		return (
 			<div className="flex items-center justify-center h-[500px]">
-				<p className="text-gray-500 dark:text-gray-400">
+				<p className="text-wolf">
 					Loading blocks...
 				</p>
 			</div>
@@ -257,7 +308,7 @@ function OpenEndedQuestion({
 	if (!questionData) {
 		return (
 			<div className="text-center">
-				<p className="text-gray-500 dark:text-gray-400">
+				<p className="text-wolf">
 					{errorMessage}
 				</p>
 			</div>
@@ -269,16 +320,19 @@ function OpenEndedQuestion({
 	return (
 		<div className="flex flex-row min-h-0 flex-1 gap-0">
 			{/* Left sidebar with question text and buttons */}
-			<div className="flex flex-col border-swan border-l-2 border-t-2 border-b-2 rounded-l-3xl bg-polar min-w-[300px] max-w-[300px]">
-				{/* Question text at top */}
-				<div className="flex-1 p-6 flex items-start">
-					<h2 className="text-xl font-semibold text-question-text">
+			<div className={cn(
+				"flex flex-col min-h-0 border-swan border-l-2 border-t-2 border-b-2",
+				"rounded-l-3xl bg-polar w-1/4"
+			)}>
+				{/* Question text at top - scrollable */}
+				<div className="flex-1 min-h-0 overflow-y-auto p-6 flex items-start">
+					<h2 className="text-xs sm:text-sm md:text-base lg:text-base xl:text-lg 2xl:text-xl font-semibold text-question-text">
 						{questionText}
 					</h2>
 				</div>
 
-				{/* Buttons at bottom */}
-				<div className="flex flex-col gap-3 pt-3 pb-4 px-4">
+				{/* Buttons at bottom - always visible */}
+				<div className="shrink-0 flex flex-col gap-3 pt-3 pb-4 px-4">
 					{renderLeftButtons && (
 						<div className="w-full">
 							{renderLeftButtons(questionData.referenceSolutionCpp)}
@@ -294,13 +348,20 @@ function OpenEndedQuestion({
 									learnClass.recordCodeSent(currentQuestionState.question.questionId, currentCppCode)
 								}
 							}}
-							className="rounded-2xl text-xl h-14"
-							uploadClasses="size-4!"
+							className="rounded-2xl text-sm sm:text-sm md:text-sm lg:text-lg h-10 sm:h-9 md:h-9 lg:h-12"
+							uploadClasses="size-3! sm:size-3! md:size-3! lg:size-4!"
 						/>
 					</div>
 					<StopCodeButton
-						className="h-14 w-full px-8 py-4 text-xl font-semibold rounded-2xl gap-3"
-						pauseClasses="size-4!"
+						className={cn(
+							"h-10 sm:h-9 md:h-9 lg:h-12 w-full",
+							"px-6 sm:px-5 md:px-5 lg:px-8",
+							"py-3 sm:py-2.5 md:py-2.5 lg:py-4",
+							"text-sm sm:text-sm md:text-sm lg:text-lg",
+							"font-semibold rounded-2xl",
+							"gap-2 sm:gap-2 md:gap-2 lg:gap-3"
+						)}
+						pauseClasses="size-3! sm:size-3! md:size-3! lg:size-4!"
 					/>
 				</div>
 			</div>

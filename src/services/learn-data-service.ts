@@ -72,4 +72,14 @@ export default class LearnDataService extends BaseDataService {
 			this.buildUrl(`/submit-action-to-code-open-ended/${questionId}`), { userCode }
 		)
 	}
+
+	async submitMatchingAnswer(
+		questionId: QuestionUUID,
+		codingBlockId: number,
+		matchingAnswerChoiceTextId: number
+	): Promise<AxiosResponse<SuccessResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<SuccessResponse | ErrorResponses>(
+			this.buildUrl(`/submit-matching-answer/${questionId}`), { codingBlockId, matchingAnswerChoiceTextId }
+		)
+	}
 }
