@@ -8,6 +8,7 @@ import LearnMiniSandbox from "./learn-mini-sandbox"
 import { TactileButton } from "../buttons/tactile-button"
 import usePressEnterQuestionKeyboardHandler from "../../hooks/learn/use-press-enter-question-keyboard-handler"
 import useMatchingQuestionKeyboardHandler from "../../hooks/learn/use-matching-question-keyboard-handler"
+import useMatchingQuestionEscapeHandler from "../../hooks/learn/use-matching-question-escape-handler"
 
 // eslint-disable-next-line max-lines-per-function
 function MatchingQuestion(): React.ReactNode {
@@ -15,6 +16,7 @@ function MatchingQuestion(): React.ReactNode {
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 	usePressEnterQuestionKeyboardHandler()
 	useMatchingQuestionKeyboardHandler()
+	useMatchingQuestionEscapeHandler()
 
 	const questionId = currentQuestionState?.question.questionId
 	if (!questionId) return null
@@ -194,20 +196,20 @@ function MatchingQuestion(): React.ReactNode {
 							<div
 								key={block.codingBlockId}
 								className={cn(
-									"relative w-full max-w-sm lg:w-96 rounded-3xl duration-0 shrink-0",
+									"relative w-full max-w-sm lg:w-96 duration-0 shrink-0 flex  border-2 border-swan",
 									isInConfirmationStage ? "cursor-default" : "cursor-pointer"
 								)}
 								onClick={(): void => learnClass.handleMatchingCodingBlockClick(questionId, block.codingBlockId)}
 							>
-								<div className="h-14 rounded-t-3xl overflow-hidden">
-									<LearnMiniSandbox blocklyJson={block.codingBlockJson} />
-								</div>
-								{/* Number lip below the sandbox */}
+								{/* Number lip on the left */}
 								<div className={cn(
-									"h-8 rounded-b-3xl flex items-center justify-center text-lg font-bold",
+									"w-8 flex items-center justify-center text-lg font-bold shrink-0",
 									getBlockLipClass(block.codingBlockId)
 								)}>
 									{cardNumber}
+								</div>
+								<div className="h-14 flex-1 rounded-r-3xl overflow-hidden">
+									<LearnMiniSandbox blocklyJson={block.codingBlockJson} />
 								</div>
 							</div>
 						)

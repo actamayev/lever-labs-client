@@ -1,50 +1,23 @@
 "use client"
 import { observer } from "mobx-react"
-import { useEffect } from "react"
 import learnClass from "../../classes/learn-class"
 // import { TactileButton } from "../shadcn/ui/tactile-button"
 import LearnMiniSandbox from "./learn-mini-sandbox"
 import usePressEnterQuestionKeyboardHandler from "../../hooks/learn/use-press-enter-question-keyboard-handler"
+import useFunctionToBlockKeyboardHandler from "../../hooks/learn/use-function-to-block-keyboard-handler"
+import useFunctionToBlockEscapeHandler from "../../hooks/learn/use-function-to-block-escape-handler"
 import { cn } from "../../lib/utils"
-import isOtpInputFocused from "../../utils/check-otp-input-focused"
 
 function FunctionToBlockQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
-	// const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
 
-	// Use the keyboard handler hook
+	// Use the keyboard handler hooks
 	usePressEnterQuestionKeyboardHandler()
+	useFunctionToBlockKeyboardHandler()
+	useFunctionToBlockEscapeHandler()
 
-	// Handle number key selection (1, 2, 3)
-	useEffect((): (() => void) => {
-		if (!currentQuestionState?.question.functionToBlockFlashcard || isInConfirmationStage) {
-			return (): void => {}
-		}
-
-		const handleKeyDown = (event: KeyboardEvent): void => {
-			const key = event.key
-			if (key !== "1" && key !== "2" && key !== "3") return
-			// Don't handle keyboard events if OTP input is focused
-			if (isOtpInputFocused()) return
-			const choiceIndex = parseInt(key, 10) - 1 // Convert to 0-based index
-			const flashcard = currentQuestionState.question.functionToBlockFlashcard
-			if (!flashcard) return
-			const sortedChoices = [...flashcard.functionToBlockAnswerChoice]
-				.sort((a, b): number => a.order - b.order)
-			if (choiceIndex >= 0 && choiceIndex < sortedChoices.length) {
-				const selectedChoice = sortedChoices[choiceIndex]
-				learnClass.setSelectedAnswer(selectedChoice.functionToBlockAnswerChoiceId)
-			}
-		}
-
-		window.addEventListener("keydown", handleKeyDown)
-		return (): void => window.removeEventListener("keydown", handleKeyDown)
-	}, [currentQuestionState?.question.functionToBlockFlashcard, isInConfirmationStage])
-
-	if (!currentQuestionState?.question.functionToBlockFlashcard) {
-		return null
-	}
+	if (!currentQuestionState?.question.functionToBlockFlashcard) return null
 
 	const { questionText, functionToBlockAnswerChoice } = currentQuestionState.question.functionToBlockFlashcard
 	const { selectedAnswerId } = currentQuestionState

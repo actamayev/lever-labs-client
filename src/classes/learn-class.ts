@@ -525,6 +525,30 @@ class LearnClass {
 		question.matchingAnswerState.selectedMatchingAnswerId = matchingAnswerChoiceTextId
 	})
 
+	public clearMatchingSelections = action((lessonId: LessonUUID, questionId: QuestionUUID): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson?.lessonQuestionMap) return
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return
+
+		const question = questionMap.question
+
+		// Initialize matching answer state if it doesn't exist
+		if (!question.matchingAnswerState) {
+			question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		question.matchingAnswerState.selectedCodingBlockId = null
+		question.matchingAnswerState.selectedMatchingAnswerId = null
+	})
+
 	public getMatchingAnswerState = (questionId: QuestionUUID): {
 		selectedCodingBlockId: number | null
 		selectedMatchingAnswerId: number | null
