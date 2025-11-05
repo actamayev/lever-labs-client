@@ -56,7 +56,7 @@ function SingleMatchingTextChoice(props: SingleMatchingTextChoiceProps): React.R
 	if (isMatched) {
 		buttonClassName = "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default"
 	} else if (hasIncorrectMatch) {
-		buttonClassName = "bg-question-incorrect-red border-2 border-question-incorrect-red-1 cursor-default"
+		buttonClassName = "bg-question-incorrect-red border-2 border-question-incorrect-red-2 cursor-default"
 	} else if (hasCorrectMatch) {
 		buttonClassName = "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default"
 	} else if (isSelected) {
@@ -79,6 +79,10 @@ function SingleMatchingTextChoice(props: SingleMatchingTextChoiceProps): React.R
 	let badgeClassName = "border-swan text-hare"
 	if (isMatched) {
 		badgeClassName = "border-question-correct-green-1 text-question-correct-green-2"
+	} else if (hasIncorrectMatch) {
+		badgeClassName = "border-question-incorrect-red-2 text-question-incorrect-red-2"
+	} else if (hasCorrectMatch) {
+		badgeClassName = "border-question-correct-green-1 text-question-correct-green-2"
 	} else if (isSelected) {
 		badgeClassName = "border-macaw text-macaw"
 	}
@@ -86,6 +90,10 @@ function SingleMatchingTextChoice(props: SingleMatchingTextChoiceProps): React.R
 	// Determine text styles
 	let textClassName = "text-eel"
 	if (isMatched) {
+		textClassName = "text-question-correct-green-2"
+	} else if (hasIncorrectMatch) {
+		textClassName = "text-question-incorrect-red-2"
+	} else if (hasCorrectMatch) {
 		textClassName = "text-question-correct-green-2"
 	} else if (isSelected) {
 		textClassName = "text-macaw"

@@ -53,6 +53,8 @@ function SingleMatchingCodingBlock(props: SingleMatchingCodingBlockProps): React
 	let badgeClassName = "border-swan text-hare"
 	if (isMatched) {
 		badgeClassName = "border-question-correct-green-1 text-question-correct-green-2"
+	} else if (hasIncorrectMatch) {
+		badgeClassName = "border-question-incorrect-red-2 text-question-incorrect-red-2"
 	} else if (isSelected) {
 		badgeClassName = "border-macaw text-macaw"
 	}
@@ -62,7 +64,7 @@ function SingleMatchingCodingBlock(props: SingleMatchingCodingBlockProps): React
 	if (isMatched) {
 		containerClassName = "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default"
 	} else if (hasIncorrectMatch) {
-		containerClassName = "bg-question-incorrect-red border-2 border-question-incorrect-red-1 cursor-default"
+		containerClassName = "bg-question-incorrect-red border-2 border-question-incorrect-red-2 cursor-default"
 	} else if (isSelected) {
 		containerClassName = "bg-standard-background-hover border-2 border-macaw"
 	}
@@ -72,7 +74,7 @@ function SingleMatchingCodingBlock(props: SingleMatchingCodingBlockProps): React
 	if (isMatched) {
 		shadowClassName = "shadow-question-correct-green-1"
 	} else if (hasIncorrectMatch) {
-		shadowClassName = "shadow-question-incorrect-red-1"
+		shadowClassName = "shadow-question-incorrect-red-2"
 	} else if (isSelected) {
 		shadowClassName = "shadow-macaw"
 	}
