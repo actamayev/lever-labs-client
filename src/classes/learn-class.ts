@@ -595,6 +595,70 @@ class LearnClass {
 		return matchingState.selectedMatchingAnswerId === matchingAnswerId
 	}
 
+	public handleMatchingCodingBlockClick = action((questionId: QuestionUUID, codingBlockId: number): void => {
+		if (this.isInQuestionConfirmationStage || this.isMatchingBlockMatched(questionId, codingBlockId)) {
+			return
+		}
+
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+
+		if (!lesson) return
+
+		const matchingState = this.getMatchingAnswerState(questionId)
+		const selectedMatchingAnswerId = matchingState.selectedMatchingAnswerId
+
+		if (selectedMatchingAnswerId !== null) {
+			// Both sides selected - submit the match
+			this.submitMatchingPair(
+				lesson.lessonId,
+				questionId,
+				codingBlockId,
+				selectedMatchingAnswerId
+			)
+		} else {
+			// Just select the coding block
+			this.setMatchingSelectedCodingBlock(
+				lesson.lessonId,
+				questionId,
+				codingBlockId
+			)
+		}
+	})
+
+	public handleMatchingChoiceClick = action((questionId: QuestionUUID, matchingAnswerChoiceTextId: number): void => {
+		if (this.isInQuestionConfirmationStage || this.isMatchingChoiceMatched(questionId, matchingAnswerChoiceTextId)) {
+			return
+		}
+
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+
+		if (!lesson) return
+
+		const matchingState = this.getMatchingAnswerState(questionId)
+		const selectedCodingBlockId = matchingState.selectedCodingBlockId
+
+		if (selectedCodingBlockId !== null) {
+			// Both sides selected - submit the match
+			this.submitMatchingPair(
+				lesson.lessonId,
+				questionId,
+				selectedCodingBlockId,
+				matchingAnswerChoiceTextId
+			)
+		} else {
+			// Just select the matching answer choice
+			this.setMatchingSelectedAnswerChoice(
+				lesson.lessonId,
+				questionId,
+				matchingAnswerChoiceTextId
+			)
+		}
+	})
+
 	public continueToNextQuestion = action(async (lessonId: LessonUUID): Promise<void> => {
 		if (!this.currentQuestionState) return
 		await stopCurrentlyRunningCode(true)

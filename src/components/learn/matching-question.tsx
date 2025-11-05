@@ -1,7 +1,6 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useState, useEffect } from "react"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { cn } from "../../lib/utils"
 import learnClass from "../../classes/learn-class"
@@ -14,58 +13,13 @@ import useMatchingQuestionKeyboardHandler from "../../hooks/learn/use-matching-q
 function MatchingQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
-	const [isSubmitting, setIsSubmitting] = useState(false)
 	useQuestionKeyboardHandler()
 	useMatchingQuestionKeyboardHandler()
 
-	// Handle matching submission when both sides are selected
-	useEffect((): void => {
-		if (!currentQuestionState) return
+	const questionId = currentQuestionState?.question.questionId
+	if (!questionId) return null
 
-		const question = currentQuestionState.question
-		const matchingState = question?.matchingAnswerState
-		if (!matchingState) return
-
-		const selectedCodingBlockId = matchingState.selectedCodingBlockId
-		const selectedMatchingAnswerId = matchingState.selectedMatchingAnswerId
-
-		if (
-			selectedCodingBlockId !== null &&
-			selectedMatchingAnswerId !== null &&
-			!isSubmitting &&
-			!isInConfirmationStage
-		) {
-			const handleMatch = (): void => {
-				setIsSubmitting(true)
-
-				const lesson = Array.from(learnClass.lessonsById.values()).find((l): boolean =>
-					l.lessonQuestionMap?.some((q): boolean => q.question.questionId === question.questionId) ?? false
-				)
-
-				if (!lesson) {
-					setIsSubmitting(false)
-					return
-				}
-
-				learnClass.submitMatchingPair(
-					lesson.lessonId,
-					question.questionId,
-					selectedCodingBlockId,
-					selectedMatchingAnswerId
-				)
-
-				setIsSubmitting(false)
-			}
-
-			handleMatch()
-		}
-	}, [
-		currentQuestionState?.question.matchingAnswerState?.selectedCodingBlockId,
-		currentQuestionState?.question.matchingAnswerState?.selectedMatchingAnswerId,
-		isSubmitting,
-		isInConfirmationStage,
-		currentQuestionState
-	])
+	const matchingState = learnClass.getMatchingAnswerState(questionId)
 
 	const matchingData = currentQuestionState?.question.matching
 	if (!matchingData) return null
@@ -94,9 +48,6 @@ function MatchingQuestion(): React.ReactNode {
 		order: pair.order,
 		text: pair.matchingAnswerChoiceText.answerChoiceText
 	})).sort((a, b): number => a.order - b.order)
-
-	const questionId = currentQuestionState.question.questionId
-	const matchingState = learnClass.getMatchingAnswerState(questionId)
 
 	const getBlockButtonClass = (codingBlockId: number): string => {
 		const isSelected = learnClass.isMatchingBlockSelected(questionId, codingBlockId)
@@ -186,23 +137,7 @@ function MatchingQuestion(): React.ReactNode {
 									getBlockButtonClass(block.codingBlockId),
 									isInConfirmationStage ? "cursor-default" : "cursor-pointer"
 								)}
-								onClick={(): void => {
-									if (!isInConfirmationStage && !learnClass.isMatchingBlockMatched(questionId, block.codingBlockId)) {
-										const lesson = Array.from(learnClass.lessonsById.values())
-											.find((l): boolean =>
-												l.lessonQuestionMap?.some((q): boolean =>
-													q.question.questionId === questionId
-												) ?? false
-											)
-										if (lesson) {
-											learnClass.setMatchingSelectedCodingBlock(
-												lesson.lessonId,
-												questionId,
-												block.codingBlockId
-											)
-										}
-									}
-								}}
+								onClick={(): void => learnClass.handleMatchingCodingBlockClick(questionId, block.codingBlockId)}
 							>
 								<div className="h-48 rounded-t-3xl overflow-hidden">
 									<LearnMiniSandbox
@@ -232,24 +167,7 @@ function MatchingQuestion(): React.ReactNode {
 						return (
 							<TactileButton
 								key={choice.matchingAnswerChoiceTextId}
-								onClick={(): void => {
-									if (!isInConfirmationStage &&
-										!learnClass.isMatchingChoiceMatched(questionId, choice.matchingAnswerChoiceTextId)) {
-										const lesson = Array.from(learnClass.lessonsById.values())
-											.find((l): boolean =>
-												l.lessonQuestionMap?.some((q): boolean =>
-													q.question.questionId === questionId
-												) ?? false
-											)
-										if (lesson) {
-											learnClass.setMatchingSelectedAnswerChoice(
-												lesson.lessonId,
-												questionId,
-												choice.matchingAnswerChoiceTextId
-											)
-										}
-									}
-								}}
+								onClick={(): void => learnClass.handleMatchingChoiceClick(questionId, choice.matchingAnswerChoiceTextId)}
 								className={cn(
 									"h-12 w-full lg:w-96 flex items-center justify-start px-4",
 									"text-lg font-semibold rounded-lg duration-0 relative",

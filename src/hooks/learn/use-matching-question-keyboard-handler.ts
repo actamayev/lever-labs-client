@@ -52,31 +52,15 @@ export default function useMatchingQuestionKeyboardHandler(): void {
 			}))
 			const sortedMatchingChoices = [...matchingAnswerChoice].sort((a, b): number => a.order - b.order)
 
-			// Get matching state from the question
 			const question = currentQuestionState.question
-			const matchingState = question?.matchingAnswerState || {
-				selectedCodingBlockId: null,
-				selectedMatchingAnswerId: null,
-				matchResults: {},
-				correctlyMatchedBlockIds: [],
-				correctlyMatchedChoiceIds: []
-			}
-
-			// Find the lesson to get lessonId
-			const lesson = Array.from(learnClass.lessonsById.values()).find((l): boolean =>
-				l.lessonQuestionMap?.some((q): boolean => q.question.questionId === question.questionId) ?? false
-			)
-			if (!lesson) return
 
 			// Handle keys 1-5 for coding blocks (left side)
 			if (key >= "1" && key <= "5") {
 				const blockIndex = parseInt(key, 10) - 1 // Convert to 0-based index
 				if (blockIndex >= 0 && blockIndex < sortedCodingBlocks.length) {
 					const block = sortedCodingBlocks[blockIndex]
-					// Only select if not already matched
-					if (!matchingState.correctlyMatchedBlockIds.includes(block.codingBlockId)) {
-						learnClass.setMatchingSelectedCodingBlock(lesson.lessonId, question.questionId, block.codingBlockId)
-					}
+					// Use the same handler as mouse clicks - checks if already matched and submits if both sides selected
+					learnClass.handleMatchingCodingBlockClick(question.questionId, block.codingBlockId)
 				}
 			}
 
@@ -85,10 +69,8 @@ export default function useMatchingQuestionKeyboardHandler(): void {
 				const choiceIndex = parseInt(key, 10) - 6 // Convert to 0-based index (6->0, 7->1, 8->2, 9->3)
 				if (choiceIndex >= 0 && choiceIndex < sortedMatchingChoices.length) {
 					const choice = sortedMatchingChoices[choiceIndex]
-					// Only select if not already matched
-					if (!matchingState.correctlyMatchedChoiceIds.includes(choice.matchingAnswerChoiceTextId)) {
-						learnClass.setMatchingSelectedAnswerChoice(lesson.lessonId, question.questionId, choice.matchingAnswerChoiceTextId)
-					}
+					// Use the same handler as mouse clicks - checks if already matched and submits if both sides selected
+					learnClass.handleMatchingChoiceClick(question.questionId, choice.matchingAnswerChoiceTextId)
 				}
 			}
 
@@ -97,10 +79,8 @@ export default function useMatchingQuestionKeyboardHandler(): void {
 				const lastChoiceIndex = sortedMatchingChoices.length - 1
 				if (lastChoiceIndex >= 0) {
 					const choice = sortedMatchingChoices[lastChoiceIndex]
-					// Only select if not already matched
-					if (!matchingState.correctlyMatchedChoiceIds.includes(choice.matchingAnswerChoiceTextId)) {
-						learnClass.setMatchingSelectedAnswerChoice(lesson.lessonId, question.questionId, choice.matchingAnswerChoiceTextId)
-					}
+					// Use the same handler as mouse clicks - checks if already matched and submits if both sides selected
+					learnClass.handleMatchingChoiceClick(question.questionId, choice.matchingAnswerChoiceTextId)
 				}
 			}
 		}
