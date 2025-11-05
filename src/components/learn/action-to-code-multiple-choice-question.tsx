@@ -1,54 +1,27 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useEffect } from "react"
 import { Play } from "lucide-react"
 import learnClass from "../../classes/learn-class"
 import LearnMiniSandbox from "./learn-mini-sandbox"
-import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
+import usePressEnterQuestionKeyboardHandler from "../../hooks/learn/use-press-enter-question-keyboard-handler"
+import useActionToCodeMultipleChoiceKeyboardHandler from "../../hooks/learn/use-action-to-code-multiple-choice-keyboard-handler"
+import useActionToCodeMultipleChoiceEscapeHandler from "../../hooks/learn/use-action-to-code-multiple-choice-escape-handler"
 import { cn } from "../../lib/utils"
-import isOtpInputFocused from "../../utils/check-otp-input-focused"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import { TactileButton } from "../buttons/tactile-button"
 import StopCodeButton from "../buttons/stop-code-button"
 
-// eslint-disable-next-line max-lines-per-function
 function ActionToCodeMultipleChoiceQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 
-	// Use the keyboard handler hook
-	useQuestionKeyboardHandler()
+	// Use the keyboard handler hooks
+	usePressEnterQuestionKeyboardHandler()
+	useActionToCodeMultipleChoiceKeyboardHandler()
+	useActionToCodeMultipleChoiceEscapeHandler()
 
-	// Handle number key selection (1, 2, 3)
-	useEffect((): (() => void) => {
-		if (!currentQuestionState?.question.actionToCodeMultipleChoice || isInConfirmationStage) {
-			return (): void => {}
-		}
-
-		const handleKeyDown = (event: KeyboardEvent): void => {
-			const key = event.key
-			if (key !== "1" && key !== "2" && key !== "3") return
-			// Don't handle keyboard events if OTP input is focused
-			if (isOtpInputFocused()) return
-			const choiceIndex = parseInt(key, 10) - 1 // Convert to 0-based index
-			const multipleChoice = currentQuestionState.question.actionToCodeMultipleChoice
-			if (!multipleChoice) return
-			const sortedChoices = [...multipleChoice.actionToCodeMultipleChoiceAnswerChoice]
-				.sort((a, b): number => a.order - b.order)
-			if (choiceIndex >= 0 && choiceIndex < sortedChoices.length) {
-				const selectedChoice = sortedChoices[choiceIndex]
-				learnClass.setSelectedAnswer(selectedChoice.actionToCodeMultipleChoiceAnswerChoiceId)
-			}
-		}
-
-		window.addEventListener("keydown", handleKeyDown)
-		return (): void => window.removeEventListener("keydown", handleKeyDown)
-	}, [currentQuestionState?.question.actionToCodeMultipleChoice, isInConfirmationStage])
-
-	if (!currentQuestionState?.question.actionToCodeMultipleChoice) {
-		return null
-	}
+	if (!currentQuestionState?.question.actionToCodeMultipleChoice) return null
 
 	const {
 		questionText,

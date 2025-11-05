@@ -67,6 +67,7 @@ export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 				this.setOutput(true, "Boolean")
 				this.setColour(logicCategoryColour)
 				this.setTooltip("Combine two conditions with AND/OR")
+				this.setInputsInline(false)
 			},
 			keywords: ["and", "or", "combine", "boolean", "logic", "condition"]
 		},

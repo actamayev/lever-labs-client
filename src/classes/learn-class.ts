@@ -1,15 +1,17 @@
+import { isNull } from "lodash-es"
 import { action, makeAutoObservable } from "mobx"
 import { Lesson } from "@lever-labs/common-ts/types/learn"
-import { soundManager } from "./utility/sound-manager-class"
 import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
+import { soundManager } from "./utility/sound-manager-class"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import markLessonComplete from "../utils/learn/mark-lesson-complete"
+import submitMatchingAnswer from "../utils/learn/submit-matching-answer"
 import submitFillInBlankAnswer from "../utils/learn/submit-fill-in-blank-answer"
+import stopCurrentlyRunningCode from "../utils/sandbox/stop-currently-running-code"
 import submitFunctionToBlockAnswer from "../utils/learn/submit-function-to-block-answer"
 import submitBlockToFunctionAnswer from "../utils/learn/submit-block-to-function-answer"
-import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
 import submitActionToCodeOpenEndedAnswer from "../utils/learn/submit-action-to-code-open-ended-answer"
-import stopCurrentlyRunningCode from "../utils/sandbox/stop-currently-running-code"
+import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action-to-code-multiple-choice-answer"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -374,6 +376,314 @@ class LearnClass {
 		return isCorrect
 	})
 
+	private submitMatchingPair = action((
+		lessonId: LessonUUID,
+		questionId: QuestionUUID,
+		codingBlockId: number,
+		matchingAnswerChoiceTextId: number
+	// eslint-disable-next-line complexity
+	): boolean => {
+		if (!this.currentQuestionState) return false
+
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson?.lessonQuestionMap) return false
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return false
+
+		const question = questionMap.question
+
+		// Initialize matching answer state if it doesn't exist
+		if (!question.matchingAnswerState) {
+			question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		// Submit the match to the backend (returns instantly, API call happens in background)
+		const isCorrect = submitMatchingAnswer(questionId, codingBlockId, matchingAnswerChoiceTextId)
+
+		// Store the match result
+		const matchKey = `${codingBlockId}-${matchingAnswerChoiceTextId}`
+		question.matchingAnswerState.matchResults[matchKey] = isCorrect
+
+		// Clear selections after submission (user can make another match)
+		question.matchingAnswerState.selectedCodingBlockId = null
+		question.matchingAnswerState.selectedMatchingAnswerId = null
+
+		// If correct, add to the correctly matched lists
+		if (isCorrect) {
+			if (!question.matchingAnswerState.correctlyMatchedBlockIds.includes(codingBlockId)) {
+				question.matchingAnswerState.correctlyMatchedBlockIds.push(codingBlockId)
+			}
+			if (!question.matchingAnswerState.correctlyMatchedChoiceIds.includes(matchingAnswerChoiceTextId)) {
+				question.matchingAnswerState.correctlyMatchedChoiceIds.push(matchingAnswerChoiceTextId)
+			}
+		}
+
+		// Check if all matches are complete
+		const allMatchesComplete = this.areAllMatchingPairsComplete(questionId)
+		if (allMatchesComplete) {
+			// Only mark question as complete when all pairs are correctly matched
+			this.setQuestionAnsweredCorrectness(lessonId, questionId, true)
+		}
+
+		// If answer is incorrect and we have current question state, add to retry queue
+		if (!isCorrect && this.currentQuestionState) {
+			const { currentQuestionIndex, questionOrder } = this.currentQuestionState
+			// Only add to retry queue if this question isn't already scheduled for retry later
+			const futureOccurrences = questionOrder.slice(this.currentQuestionState.currentOrderPosition + 1)
+			if (!futureOccurrences.includes(currentQuestionIndex)) {
+				this.currentQuestionState.questionOrder.push(currentQuestionIndex)
+			}
+		}
+
+		// Don't set confirmation stage - allow user to continue matching
+		// Only set confirmation stage when all matches are complete
+		if (allMatchesComplete) {
+			this.setIsInQuestionConfirmationStage(true)
+			this.setLastAnswerWasCorrect(true)
+		}
+
+		return isCorrect
+	})
+
+	private areAllMatchingPairsComplete = (questionId: QuestionUUID): boolean => {
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+		if (!lesson?.lessonQuestionMap) return false
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap?.question.matching) return false
+
+		const matchingData = questionMap.question.matching
+		const matchingPairs = matchingData.matchingAnswerChoice
+		const matchingState = questionMap.question.matchingAnswerState
+
+		// If no state exists, definitely not complete
+		if (!matchingState) return false
+
+		// Check if all pairs have been correctly matched
+		return matchingPairs.every((pair): boolean => {
+			const matchKey = `${pair.codingBlock.codingBlockId}-${pair.matchingAnswerChoiceText.matchingAnswerChoiceTextId}`
+			return matchingState.matchResults[matchKey] === true
+		})
+	}
+
+	private setMatchingSelectedCodingBlock = action((lessonId: LessonUUID, questionId: QuestionUUID, codingBlockId: number): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson?.lessonQuestionMap) return
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return
+
+		const question = questionMap.question
+
+		// Initialize matching answer state if it doesn't exist
+		if (!question.matchingAnswerState) {
+			question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		question.matchingAnswerState.selectedCodingBlockId = codingBlockId
+	})
+
+	private setMatchingSelectedAnswerChoice = action((
+		lessonId: LessonUUID,
+		questionId: QuestionUUID,
+		matchingAnswerChoiceTextId: number
+	): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson?.lessonQuestionMap) return
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return
+
+		const question = questionMap.question
+
+		// Initialize matching answer state if it doesn't exist
+		if (!question.matchingAnswerState) {
+			question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		question.matchingAnswerState.selectedMatchingAnswerId = matchingAnswerChoiceTextId
+	})
+
+	public clearMatchingSelections = action((lessonId: LessonUUID, questionId: QuestionUUID): void => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson?.lessonQuestionMap) return
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) return
+
+		const question = questionMap.question
+
+		// Initialize matching answer state if it doesn't exist
+		if (!question.matchingAnswerState) {
+			question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		question.matchingAnswerState.selectedCodingBlockId = null
+		question.matchingAnswerState.selectedMatchingAnswerId = null
+	})
+
+	public getMatchingAnswerState = (questionId: QuestionUUID): {
+		selectedCodingBlockId: number | null
+		selectedMatchingAnswerId: number | null
+		matchResults: Record<string, boolean>
+		correctlyMatchedBlockIds: number[]
+		correctlyMatchedChoiceIds: number[]
+	} => {
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+		if (!lesson?.lessonQuestionMap) {
+			return {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === questionId)
+		if (!questionMap) {
+			return {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		if (!questionMap.question.matchingAnswerState) {
+			// Initialize with default values if it doesn't exist
+			questionMap.question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: []
+			}
+		}
+
+		return questionMap.question.matchingAnswerState
+	}
+
+	public getMatchingMatchResult = (questionId: QuestionUUID, codingBlockId: number, matchingAnswerId: number): boolean | undefined => {
+		const matchingState = this.getMatchingAnswerState(questionId)
+		const matchKey = `${codingBlockId}-${matchingAnswerId}`
+		return matchingState.matchResults[matchKey]
+	}
+
+	public isMatchingBlockMatched = (questionId: QuestionUUID, codingBlockId: number): boolean => {
+		const matchingState = this.getMatchingAnswerState(questionId)
+		return matchingState.correctlyMatchedBlockIds.includes(codingBlockId)
+	}
+
+	public isMatchingChoiceMatched = (questionId: QuestionUUID, matchingAnswerId: number): boolean => {
+		const matchingState = this.getMatchingAnswerState(questionId)
+		return matchingState.correctlyMatchedChoiceIds.includes(matchingAnswerId)
+	}
+
+	public isMatchingBlockSelected = (questionId: QuestionUUID, codingBlockId: number): boolean => {
+		const matchingState = this.getMatchingAnswerState(questionId)
+		return matchingState.selectedCodingBlockId === codingBlockId
+	}
+
+	public isMatchingAnswerChoiceSelected = (questionId: QuestionUUID, matchingAnswerId: number): boolean => {
+		const matchingState = this.getMatchingAnswerState(questionId)
+		return matchingState.selectedMatchingAnswerId === matchingAnswerId
+	}
+
+	public handleMatchingCodingBlockClick = action((questionId: QuestionUUID, codingBlockId: number): void => {
+		if (
+			this.isInQuestionConfirmationStage ||
+			this.isMatchingBlockMatched(questionId, codingBlockId)
+		) return
+
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+
+		if (!lesson) return
+
+		const matchingState = this.getMatchingAnswerState(questionId)
+		const selectedMatchingAnswerId = matchingState.selectedMatchingAnswerId
+
+		if (isNull(selectedMatchingAnswerId)) {
+			// Just select the coding block
+			return this.setMatchingSelectedCodingBlock(
+				lesson.lessonId,
+				questionId,
+				codingBlockId
+			)
+		}
+		// Both sides selected - submit the match
+		this.submitMatchingPair(
+			lesson.lessonId,
+			questionId,
+			codingBlockId,
+			selectedMatchingAnswerId
+		)
+	})
+
+	public handleMatchingChoiceClick = action((questionId: QuestionUUID, matchingAnswerChoiceTextId: number): void => {
+		if (
+			this.isInQuestionConfirmationStage ||
+			this.isMatchingChoiceMatched(questionId, matchingAnswerChoiceTextId)
+		) return
+
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
+		)
+
+		if (!lesson) return
+
+		const matchingState = this.getMatchingAnswerState(questionId)
+		const selectedCodingBlockId = matchingState.selectedCodingBlockId
+
+		if (isNull(selectedCodingBlockId)) {
+			// Just select the matching answer choice
+			return this.setMatchingSelectedAnswerChoice(
+				lesson.lessonId,
+				questionId,
+				matchingAnswerChoiceTextId
+			)
+		}
+		// Both sides selected - submit the match
+		this.submitMatchingPair(
+			lesson.lessonId,
+			questionId,
+			selectedCodingBlockId,
+			matchingAnswerChoiceTextId
+		)
+	})
+
 	public continueToNextQuestion = action(async (lessonId: LessonUUID): Promise<void> => {
 		if (!this.currentQuestionState) return
 		await stopCurrentlyRunningCode(true)
@@ -429,18 +739,21 @@ class LearnClass {
 		// Clear any previous feedback when retrying
 		if (!this.currentQuestionState) return
 		const { question } = this.currentQuestionState
-		if (question.questionType === "FILL_IN_BLANK" || question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
-			const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
-				l.lessonQuestionMap?.some((q): boolean => q.question.questionId === question.questionId) ?? false
-			)
-			if (!lesson?.lessonQuestionMap) return
-			const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
-			if (!questionMap) return
-			if (question.questionType === "FILL_IN_BLANK") {
-				questionMap.question.fillInBlankFeedback = ""
-			} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
-				questionMap.question.actionToCodeOpenEndedFeedback = ""
-			}
+		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
+			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === question.questionId) ?? false
+		)
+		if (!lesson?.lessonQuestionMap) return
+		const questionMap = lesson.lessonQuestionMap.find((q): boolean => q.question.questionId === question.questionId)
+		if (!questionMap) return
+
+		if (question.questionType === "FILL_IN_BLANK") {
+			questionMap.question.fillInBlankFeedback = ""
+		} else if (question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
+			questionMap.question.actionToCodeOpenEndedFeedback = ""
+		} else if (question.questionType === "MATCHING" && questionMap.question.matchingAnswerState) {
+			// Clear selections but keep match results and correctly matched lists
+			questionMap.question.matchingAnswerState.selectedCodingBlockId = null
+			questionMap.question.matchingAnswerState.selectedMatchingAnswerId = null
 		}
 	})
 
@@ -470,6 +783,9 @@ class LearnClass {
 			} else if (mapEntry.question.questionType === "ACTION_TO_CODE_OPEN_ENDED") {
 				mapEntry.question.actionToCodeOpenEndedAnswer = undefined
 				mapEntry.question.actionToCodeOpenEndedFeedback = undefined
+			} else if (mapEntry.question.questionType === "MATCHING") {
+				// Clear matching answer state
+				mapEntry.question.matchingAnswerState = undefined
 			}
 		}
 
@@ -520,6 +836,36 @@ class LearnClass {
 
 		const lastSentCode = this.lastSentCppCodeByQuestionId.get(questionId)
 		return lastSentCode === currentCppCode
+	}
+
+	private hasMatchingQuestionPartialProgress = (lessonId: LessonUUID): boolean => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson?.lessonQuestionMap) return false
+
+		// Check if any matching question has at least one correct match
+		return lesson.lessonQuestionMap.some((questionMap): boolean => {
+			const question = questionMap.question
+			if (question.questionType !== "MATCHING" || !question.matchingAnswerState) {
+				return false
+			}
+
+			const matchingState = question.matchingAnswerState
+			// Check if there's at least one correctly matched block
+			return matchingState.correctlyMatchedBlockIds.length > 0 ||
+				// Or check if there's any true value in matchResults
+				Object.values(matchingState.matchResults).some((result): boolean => result === true)
+		})
+	}
+
+	public hasLessonProgress = (lessonId: LessonUUID): boolean => {
+		const lesson = this.lessonsById.get(lessonId)
+		if (!lesson) return false
+
+		// Check if there are any correctly answered questions
+		if (lesson.numberQuestionsCorrect > 0) return true
+
+		// Check if there's partial progress in matching questions
+		return this.hasMatchingQuestionPartialProgress(lessonId)
 	}
 
 	public logout(): void {
