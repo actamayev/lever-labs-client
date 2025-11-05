@@ -94,4 +94,3 @@ export default function useMatchingQuestionKeyboardHandler(): void {
 		currentQuestionState
 	])
 }
-

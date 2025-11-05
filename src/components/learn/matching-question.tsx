@@ -140,10 +140,7 @@ function MatchingQuestion(): React.ReactNode {
 								onClick={(): void => learnClass.handleMatchingCodingBlockClick(questionId, block.codingBlockId)}
 							>
 								<div className="h-48 rounded-t-3xl overflow-hidden">
-									<LearnMiniSandbox
-										blocklyJson={block.codingBlockJson}
-										className=""
-									/>
+									<LearnMiniSandbox blocklyJson={block.codingBlockJson} />
 								</div>
 								{/* Number lip below the sandbox */}
 								<div className={cn(
