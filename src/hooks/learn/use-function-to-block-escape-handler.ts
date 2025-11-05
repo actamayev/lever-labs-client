@@ -26,4 +26,3 @@ export default function useFunctionToBlockEscapeHandler(): void {
 		return (): void => window.removeEventListener("keydown", handleKeyDown)
 	}, [currentQuestionState?.question.functionToBlockFlashcard, currentQuestionState?.selectedAnswerId, isInConfirmationStage])
 }
-

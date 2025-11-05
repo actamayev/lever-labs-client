@@ -38,4 +38,3 @@ export default function useActionToCodeMultipleChoiceKeyboardHandler(): void {
 		return (): void => window.removeEventListener("keydown", handleKeyDown)
 	}, [currentQuestionState?.question.actionToCodeMultipleChoice, isInConfirmationStage])
 }
-
