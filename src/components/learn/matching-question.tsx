@@ -49,13 +49,54 @@ function MatchingQuestion(): React.ReactNode {
 		text: pair.matchingAnswerChoiceText.answerChoiceText
 	})).sort((a, b): number => a.order - b.order)
 
+
+	const getBlockLipClass = (codingBlockId: number): string => {
+		const isSelected = learnClass.isMatchingBlockSelected(questionId, codingBlockId)
+		const isMatched = learnClass.isMatchingBlockMatched(questionId, codingBlockId)
+
+		if (isMatched) {
+			return "bg-question-correct-green text-question-correct-green-2"
+		}
+
+		// Check all match results for this coding block to see if it has any incorrect matches
+		const matchResults = matchingState.matchResults
+		let hasIncorrectMatch = false
+
+		for (const [matchKey, result] of Object.entries(matchResults)) {
+			const [blockIdStr] = matchKey.split("-")
+			if (parseInt(blockIdStr, 10) === codingBlockId) {
+				if (result === false) {
+					hasIncorrectMatch = true
+					break
+				}
+			}
+		}
+
+		// Check if there's a result with the currently selected answer choice
+		const selectedAnswerId = matchingState.selectedMatchingAnswerId
+		if (selectedAnswerId !== null) {
+			const currentResult = learnClass.getMatchingMatchResult(questionId, codingBlockId, selectedAnswerId)
+			if (currentResult === false) {
+				hasIncorrectMatch = true
+			}
+		}
+
+		if (hasIncorrectMatch) {
+			return "bg-question-incorrect-red text-white"
+		}
+		if (isSelected) {
+			return "bg-macaw text-white"
+		}
+		return "bg-swan text-hare"
+	}
+
 	// eslint-disable-next-line complexity
 	const getMatchingButtonClass = (matchingAnswerId: number): string => {
 		const isSelected = learnClass.isMatchingAnswerChoiceSelected(questionId, matchingAnswerId)
 		const isMatched = learnClass.isMatchingChoiceMatched(questionId, matchingAnswerId)
 
 		if (isMatched) {
-			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default opacity-60"
+			return "bg-question-correct-green border-2 border-question-correct-green-1 cursor-default"
 		}
 
 		// Check all match results for this matching choice to see if it has any incorrect matches
@@ -147,7 +188,6 @@ function MatchingQuestion(): React.ReactNode {
 				{/* Left side: Coding blocks */}
 				<div className="flex flex-col gap-4 w-full lg:w-auto">
 					{sortedCodingBlocks.map((block, index): React.ReactNode => {
-						const isSelected = learnClass.isMatchingBlockSelected(questionId, block.codingBlockId)
 						const cardNumber = index + 1
 
 						return (
@@ -165,7 +205,7 @@ function MatchingQuestion(): React.ReactNode {
 								{/* Number lip below the sandbox */}
 								<div className={cn(
 									"h-8 rounded-b-3xl flex items-center justify-center text-lg font-bold",
-									isSelected ? "bg-macaw text-white" : "bg-swan text-hare"
+									getBlockLipClass(block.codingBlockId)
 								)}>
 									{cardNumber}
 								</div>
@@ -178,8 +218,25 @@ function MatchingQuestion(): React.ReactNode {
 				<div className="flex flex-col gap-3 w-full lg:w-auto">
 					{sortedMatchingChoices.map((choice, index): React.ReactNode => {
 						const isSelected = learnClass.isMatchingAnswerChoiceSelected(questionId, choice.matchingAnswerChoiceTextId)
+						const isMatched = learnClass.isMatchingChoiceMatched(questionId, choice.matchingAnswerChoiceTextId)
 						// Number right side 6-9, with last one being 0
 						const choiceNumber = index === sortedMatchingChoices.length - 1 ? 0 : index + 6
+
+						// Determine badge styles
+						let badgeClassName = "border-swan text-hare"
+						if (isMatched) {
+							badgeClassName = "border-question-correct-green-1 text-question-correct-green-2"
+						} else if (isSelected) {
+							badgeClassName = "border-macaw text-macaw"
+						}
+
+						// Determine text styles
+						let textClassName = "text-eel"
+						if (isMatched) {
+							textClassName = "text-question-correct-green-2"
+						} else if (isSelected) {
+							textClassName = "text-macaw"
+						}
 
 						return (
 							<TactileButton
@@ -202,12 +259,12 @@ function MatchingQuestion(): React.ReactNode {
 									className={cn(
 										"absolute left-2 w-8 h-8 rounded-lg border-2",
 										"flex items-center justify-center text-sm font-bold",
-										isSelected ? "border-macaw text-macaw" : "border-swan text-hare"
+										badgeClassName
 									)}
 								>
 									{choiceNumber}
 								</div>
-								<span className={cn("text-left text-eel ml-10", isSelected ? "text-macaw" : "text-eel")}>
+								<span className={cn("text-left ml-10", textClassName)}>
 									{choice.text}
 								</span>
 							</TactileButton>
