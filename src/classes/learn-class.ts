@@ -376,7 +376,7 @@ class LearnClass {
 		return isCorrect
 	})
 
-	public submitMatchingPair = action((
+	private submitMatchingPair = action((
 		lessonId: LessonUUID,
 		questionId: QuestionUUID,
 		codingBlockId: number,
@@ -452,7 +452,7 @@ class LearnClass {
 		return isCorrect
 	})
 
-	public areAllMatchingPairsComplete = (questionId: QuestionUUID): boolean => {
+	private areAllMatchingPairsComplete = (questionId: QuestionUUID): boolean => {
 		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
 			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
 		)
@@ -475,7 +475,7 @@ class LearnClass {
 		})
 	}
 
-	public setMatchingSelectedCodingBlock = action((lessonId: LessonUUID, questionId: QuestionUUID, codingBlockId: number): void => {
+	private setMatchingSelectedCodingBlock = action((lessonId: LessonUUID, questionId: QuestionUUID, codingBlockId: number): void => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson?.lessonQuestionMap) return
 
@@ -498,7 +498,7 @@ class LearnClass {
 		question.matchingAnswerState.selectedCodingBlockId = codingBlockId
 	})
 
-	public setMatchingSelectedAnswerChoice = action((
+	private setMatchingSelectedAnswerChoice = action((
 		lessonId: LessonUUID,
 		questionId: QuestionUUID,
 		matchingAnswerChoiceTextId: number
@@ -838,7 +838,7 @@ class LearnClass {
 		return lastSentCode === currentCppCode
 	}
 
-	public hasMatchingQuestionPartialProgress = (lessonId: LessonUUID): boolean => {
+	private hasMatchingQuestionPartialProgress = (lessonId: LessonUUID): boolean => {
 		const lesson = this.lessonsById.get(lessonId)
 		if (!lesson?.lessonQuestionMap) return false
 
