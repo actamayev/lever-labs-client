@@ -6,14 +6,14 @@ import { cn } from "../../lib/utils"
 import learnClass from "../../classes/learn-class"
 import LearnMiniSandbox from "./learn-mini-sandbox"
 import { TactileButton } from "../buttons/tactile-button"
-import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
+import usePressEnterQuestionKeyboardHandler from "../../hooks/learn/use-press-enter-question-keyboard-handler"
 import useMatchingQuestionKeyboardHandler from "../../hooks/learn/use-matching-question-keyboard-handler"
 
 // eslint-disable-next-line max-lines-per-function
 function MatchingQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
-	useQuestionKeyboardHandler()
+	usePressEnterQuestionKeyboardHandler()
 	useMatchingQuestionKeyboardHandler()
 
 	const questionId = currentQuestionState?.question.questionId

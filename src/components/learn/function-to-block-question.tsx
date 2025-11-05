@@ -4,7 +4,7 @@ import { useEffect } from "react"
 import learnClass from "../../classes/learn-class"
 // import { TactileButton } from "../shadcn/ui/tactile-button"
 import LearnMiniSandbox from "./learn-mini-sandbox"
-import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
+import usePressEnterQuestionKeyboardHandler from "../../hooks/learn/use-press-enter-question-keyboard-handler"
 import { cn } from "../../lib/utils"
 import isOtpInputFocused from "../../utils/check-otp-input-focused"
 
@@ -14,7 +14,7 @@ function FunctionToBlockQuestion(): React.ReactNode {
 	// const lastAnswerWasCorrect = learnClass.lastAnswerWasCorrect
 
 	// Use the keyboard handler hook
-	useQuestionKeyboardHandler()
+	usePressEnterQuestionKeyboardHandler()
 
 	// Handle number key selection (1, 2, 3)
 	useEffect((): (() => void) => {

@@ -11,6 +11,7 @@ import submitActionToCodeMultipleChoiceAnswer from "../utils/learn/submit-action
 import submitActionToCodeOpenEndedAnswer from "../utils/learn/submit-action-to-code-open-ended-answer"
 import submitMatchingAnswer from "../utils/learn/submit-matching-answer"
 import stopCurrentlyRunningCode from "../utils/sandbox/stop-currently-running-code"
+import { isNull } from "lodash-es"
 
 class LearnClass {
 	public isRetrievingAllLessons = false
@@ -596,9 +597,10 @@ class LearnClass {
 	}
 
 	public handleMatchingCodingBlockClick = action((questionId: QuestionUUID, codingBlockId: number): void => {
-		if (this.isInQuestionConfirmationStage || this.isMatchingBlockMatched(questionId, codingBlockId)) {
-			return
-		}
+		if (
+			this.isInQuestionConfirmationStage ||
+			this.isMatchingBlockMatched(questionId, codingBlockId)
+		) return
 
 		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
 			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
@@ -609,28 +611,28 @@ class LearnClass {
 		const matchingState = this.getMatchingAnswerState(questionId)
 		const selectedMatchingAnswerId = matchingState.selectedMatchingAnswerId
 
-		if (selectedMatchingAnswerId !== null) {
-			// Both sides selected - submit the match
-			this.submitMatchingPair(
-				lesson.lessonId,
-				questionId,
-				codingBlockId,
-				selectedMatchingAnswerId
-			)
-		} else {
+		if (isNull(selectedMatchingAnswerId)) {
 			// Just select the coding block
-			this.setMatchingSelectedCodingBlock(
+			return this.setMatchingSelectedCodingBlock(
 				lesson.lessonId,
 				questionId,
 				codingBlockId
 			)
 		}
+		// Both sides selected - submit the match
+		this.submitMatchingPair(
+			lesson.lessonId,
+			questionId,
+			codingBlockId,
+			selectedMatchingAnswerId
+		)
 	})
 
 	public handleMatchingChoiceClick = action((questionId: QuestionUUID, matchingAnswerChoiceTextId: number): void => {
-		if (this.isInQuestionConfirmationStage || this.isMatchingChoiceMatched(questionId, matchingAnswerChoiceTextId)) {
-			return
-		}
+		if (
+			this.isInQuestionConfirmationStage ||
+			this.isMatchingChoiceMatched(questionId, matchingAnswerChoiceTextId)
+		) return
 
 		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
 			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
@@ -641,22 +643,21 @@ class LearnClass {
 		const matchingState = this.getMatchingAnswerState(questionId)
 		const selectedCodingBlockId = matchingState.selectedCodingBlockId
 
-		if (selectedCodingBlockId !== null) {
-			// Both sides selected - submit the match
-			this.submitMatchingPair(
-				lesson.lessonId,
-				questionId,
-				selectedCodingBlockId,
-				matchingAnswerChoiceTextId
-			)
-		} else {
+		if (isNull(selectedCodingBlockId)) {
 			// Just select the matching answer choice
-			this.setMatchingSelectedAnswerChoice(
+			return this.setMatchingSelectedAnswerChoice(
 				lesson.lessonId,
 				questionId,
 				matchingAnswerChoiceTextId
 			)
 		}
+		// Both sides selected - submit the match
+		this.submitMatchingPair(
+			lesson.lessonId,
+			questionId,
+			selectedCodingBlockId,
+			matchingAnswerChoiceTextId
+		)
 	})
 
 	public continueToNextQuestion = action(async (lessonId: LessonUUID): Promise<void> => {

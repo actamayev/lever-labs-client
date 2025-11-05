@@ -5,7 +5,7 @@ import { useEffect } from "react"
 import { Play } from "lucide-react"
 import learnClass from "../../classes/learn-class"
 import LearnMiniSandbox from "./learn-mini-sandbox"
-import useQuestionKeyboardHandler from "../../hooks/learn/use-question-keyboard-handler"
+import usePressEnterQuestionKeyboardHandler from "../../hooks/learn/use-press-enter-question-keyboard-handler"
 import { cn } from "../../lib/utils"
 import isOtpInputFocused from "../../utils/check-otp-input-focused"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
@@ -18,7 +18,7 @@ function ActionToCodeMultipleChoiceQuestion(): React.ReactNode {
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 
 	// Use the keyboard handler hook
-	useQuestionKeyboardHandler()
+	usePressEnterQuestionKeyboardHandler()
 
 	// Handle number key selection (1, 2, 3)
 	useEffect((): (() => void) => {

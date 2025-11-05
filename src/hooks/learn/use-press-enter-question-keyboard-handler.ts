@@ -7,7 +7,7 @@ import isOtpInputFocused from "../../utils/check-otp-input-focused"
  * - If answer is selected and not in confirmation stage: triggers check answer
  * - If in confirmation stage: triggers continue to next question
  */
-export default function useQuestionKeyboardHandler(): void {
+export default function usePressEnterQuestionKeyboardHandler(): void {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 
