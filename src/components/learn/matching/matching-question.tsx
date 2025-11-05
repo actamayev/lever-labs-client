@@ -25,23 +25,19 @@ function MatchingQuestion(): React.ReactNode {
 	const sortedCodingBlocks = matchingPairs.map((pair): {
 		codingBlockId: number
 		codingBlockJson: BlocklyJson
-		order: number
 	} => ({
 		codingBlockId: pair.codingBlock.codingBlockId,
 		codingBlockJson: pair.codingBlock.codingBlockJson,
-		order: pair.order
-	})).sort((a, b): number => a.order - b.order)
+	}))
 
 	// Extract matching answer choices (right side) - each pair has a matchingAnswerChoiceText
 	const sortedMatchingChoices = matchingPairs.map((pair): {
 		matchingAnswerChoiceTextId: number
-		order: number
 		text: string
 	} => ({
 		matchingAnswerChoiceTextId: pair.matchingAnswerChoiceText.matchingAnswerChoiceTextId,
-		order: pair.order,
 		text: pair.matchingAnswerChoiceText.answerChoiceText
-	})).sort((a, b): number => a.order - b.order)
+	}))
 
 	return (
 		<div>

@@ -32,25 +32,21 @@ export default function useMatchingQuestionKeyboardHandler(): void {
 			const codingBlocks = matchingPairs.map((pair): {
 				codingBlockId: number
 				codingBlockJson: BlocklyJson
-				order: number
 			} => ({
 				codingBlockId: pair.codingBlock.codingBlockId,
 				codingBlockJson: pair.codingBlock.codingBlockJson,
-				order: pair.order
 			}))
-			const sortedCodingBlocks = [...codingBlocks].sort((a, b): number => a.order - b.order)
+			const sortedCodingBlocks = [...codingBlocks]
 
 			// Extract matching answer choices and sort by order
-			const matchingAnswerChoice = matchingPairs.map((pair): {
+			const matchingAnswerChoices = matchingPairs.map((pair): {
 				matchingAnswerChoiceTextId: number
-				order: number
 				text: string
 			} => ({
 				matchingAnswerChoiceTextId: pair.matchingAnswerChoiceText.matchingAnswerChoiceTextId,
-				order: pair.order,
 				text: pair.matchingAnswerChoiceText.answerChoiceText
 			}))
-			const sortedMatchingChoices = [...matchingAnswerChoice].sort((a, b): number => a.order - b.order)
+			const sortedMatchingChoices = [...matchingAnswerChoices]
 
 			const question = currentQuestionState.question
 
