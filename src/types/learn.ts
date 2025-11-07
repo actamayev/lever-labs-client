@@ -34,6 +34,10 @@ declare global {
 			correctlyMatchedBlockIds: number[]
 			// Track which matching answer choice text IDs have been correctly matched (for disabling)
 			correctlyMatchedChoiceIds: number[]
+			// Shuffled order of coding blocks (left side) - stored to ensure consistency between component and keyboard handler
+			shuffledCodingBlocks?: MatchingCodingBlock[]
+			// Shuffled order of matching answer choices (right side) - stored to ensure consistency between component and keyboard handler
+			shuffledMatchingChoices?: MatchingTextChoice[]
 		}
 	}
 

@@ -103,9 +103,11 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 				<div className="flex-1 mx-10">
 					<div className="w-full bg-swan rounded-full h-4">
 						<div
-							className="bg-charging-green h-4 rounded-full transition-all duration-300"
+							className="bg-charging-green h-4 rounded-full transition-all duration-300 relative overflow-hidden"
 							style={{ width: `${progress}%` }}
-						/>
+						>
+							<div className="absolute top-1 left-1.5 right-1.5 h-[3px] bg-charging-green-1 rounded-full" />
+						</div>
 					</div>
 				</div>
 				{pipClass.selectedPip ? (

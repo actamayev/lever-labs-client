@@ -1,5 +1,5 @@
 import { isNull } from "lodash-es"
-import { action, makeAutoObservable } from "mobx"
+import { action, makeAutoObservable, runInAction } from "mobx"
 import { Lesson } from "@lever-labs/common-ts/types/learn"
 import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
 import { soundManager } from "./utility/sound-manager-class"
@@ -555,6 +555,8 @@ class LearnClass {
 		matchResults: Record<string, boolean>
 		correctlyMatchedBlockIds: number[]
 		correctlyMatchedChoiceIds: number[]
+		shuffledCodingBlocks?: MatchingCodingBlock[]
+		shuffledMatchingChoices?: MatchingTextChoice[]
 	} => {
 		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
 			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
@@ -688,47 +690,49 @@ class LearnClass {
 		if (!this.currentQuestionState) return
 		await stopCurrentlyRunningCode(true)
 
-		const { currentQuestionIndex, question, questionOrder, currentOrderPosition } = this.currentQuestionState
+		runInAction((): void => {
+			if (!this.currentQuestionState) return
+			const { currentQuestionIndex, question, questionOrder, currentOrderPosition } = this.currentQuestionState
 
-
-		// If this is a demo question, mark it as correct and increment progress
-		if (question.questionType === "DEMO") {
-			const lesson = this.lessonsById.get(lessonId)
-			if (lesson && question.userHasAnsweredCorrectly !== true) {
-				question.userHasAnsweredCorrectly = true
-				lesson.numberQuestionsCorrect += 1
-			}
-		}
-
-		// If question was answered correctly, remove any future occurrences from the order
-		if (question.userHasAnsweredCorrectly === true) {
-			const newQuestionOrder = [...questionOrder]
-			// Remove all future occurrences of this question index (keep current one for now)
-			for (let i = currentOrderPosition + 1; i < newQuestionOrder.length; i++) {
-				if (newQuestionOrder[i] === currentQuestionIndex) {
-					newQuestionOrder.splice(i, 1)
-					i-- // Adjust index after removal
+			// If this is a demo question, mark it as correct and increment progress
+			if (question.questionType === "DEMO") {
+				const lesson = this.lessonsById.get(lessonId)
+				if (lesson && question.userHasAnsweredCorrectly !== true) {
+					question.userHasAnsweredCorrectly = true
+					lesson.numberQuestionsCorrect += 1
 				}
 			}
-			this.currentQuestionState.questionOrder = newQuestionOrder
-		}
 
-		// Move to next position in the order
-		const nextOrderPosition = currentOrderPosition + 1
-		if (nextOrderPosition < this.currentQuestionState.questionOrder.length) {
-			this.currentQuestionState.currentOrderPosition = nextOrderPosition
-			const nextQuestionIndex = this.currentQuestionState.questionOrder[nextOrderPosition]
-			this.setCurrentQuestion(lessonId, nextQuestionIndex)
-		} else {
-			// Lesson is complete - all questions have been answered
-			this.isLessonCompleted = true
-			this.currentQuestionState = null
-			void markLessonComplete(lessonId)
-		}
+			// If question was answered correctly, remove any future occurrences from the order
+			if (question.userHasAnsweredCorrectly === true) {
+				const newQuestionOrder = [...questionOrder]
+				// Remove all future occurrences of this question index (keep current one for now)
+				for (let i = currentOrderPosition + 1; i < newQuestionOrder.length; i++) {
+					if (newQuestionOrder[i] === currentQuestionIndex) {
+						newQuestionOrder.splice(i, 1)
+						i-- // Adjust index after removal
+					}
+				}
+				this.currentQuestionState.questionOrder = newQuestionOrder
+			}
 
-		// Exit confirmation stage
-		this.isInQuestionConfirmationStage = false
-		this.lastAnswerWasCorrect = false
+			// Move to next position in the order
+			const nextOrderPosition = currentOrderPosition + 1
+			if (nextOrderPosition < this.currentQuestionState.questionOrder.length) {
+				this.currentQuestionState.currentOrderPosition = nextOrderPosition
+				const nextQuestionIndex = this.currentQuestionState.questionOrder[nextOrderPosition]
+				this.setCurrentQuestion(lessonId, nextQuestionIndex)
+			} else {
+				// Lesson is complete - all questions have been answered
+				this.isLessonCompleted = true
+				this.currentQuestionState = null
+				void markLessonComplete(lessonId)
+			}
+
+			// Exit confirmation stage
+			this.isInQuestionConfirmationStage = false
+			this.lastAnswerWasCorrect = false
+		})
 	})
 
 	public retryCurrentQuestion = action((): void => {
