@@ -26,12 +26,12 @@ function MatchingQuestion(): React.ReactNode {
 	const { questionText } = matchingData
 
 	return (
-		<div>
-			<h2 className="text-3xl font-semibold text-question-text mb-8">
+		<div className="flex flex-col">
+			<h2 className="text-3xl font-semibold text-question-text mb-8 text-center">
 				{questionText}
 			</h2>
 
-			<div className="flex flex-col lg:flex-row gap-8 justify-center items-start" style={{ transform: "translateY(2rem)" }}>
+			<div className="flex flex-col lg:flex-row gap-8 justify-center items-center" style={{ transform: "translateY(2rem)" }}>
 				{/* Left side: Coding blocks */}
 				<div className="flex flex-col gap-3 w-full lg:w-auto">
 					{sortedCodingBlocks.map((block, index): React.ReactNode => (
