@@ -45,11 +45,7 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 			await learnClass.continueToNextQuestion(lessonId)
 			return
 		}
-		// For demo questions, skip confirmation and go directly to next question
-		if (currentQuestion?.questionType === "DEMO") {
-			await learnClass.continueToNextQuestion(lessonId)
-			return
-		}
+
 		if (currentQuestion?.questionType !== "FILL_IN_BLANK" && currentQuestion?.questionType !== "ACTION_TO_CODE_OPEN_ENDED") {
 			await learnClass.checkCurrentAnswer(lessonId)
 			return
@@ -105,7 +101,7 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 			}
 		}
 
-		if (!isInConfirmationStage && currentQuestion?.questionType !== "DEMO" && !isOpenEndedQuestion && !hasSelectedAnswer) {
+		if (!isInConfirmationStage && !isOpenEndedQuestion && !hasSelectedAnswer) {
 			return true
 		}
 
@@ -161,7 +157,6 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 			if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && !lastAnswerWasCorrect) return "TRY AGAIN"
 			return "CONTINUE"
 		}
-		if (currentQuestion?.questionType === "DEMO") return "CONTINUE"
 		if ((currentQuestion?.questionType === "FILL_IN_BLANK" || currentQuestion?.questionType === "ACTION_TO_CODE_OPEN_ENDED") && isSubmitting) {
 			return (
 				<span className="flex items-center gap-2">

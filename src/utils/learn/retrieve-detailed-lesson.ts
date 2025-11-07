@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import learnClass from "../../classes/learn-class"
