@@ -1,11 +1,12 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
+import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import learnClass from "../../classes/learn-class"
+import { initializeMatchingQuestionShuffles } from "./shuffle"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
-import authClass from "../../classes/auth-class"
 
 export default async function retrieveDetailedLesson(lessonId: LessonUUID): Promise<void> {
 	try {
@@ -23,12 +24,15 @@ export default async function retrieveDetailedLesson(lessonId: LessonUUID): Prom
 		}
 
 		// Get existing questions
-		const existingQuestions = response.data.lesson.lessonQuestionMap || []
+		const existingQuestions = response.data.lesson.lessonQuestionMap
+
+		// Initialize shuffled arrays for matching questions
+		initializeMatchingQuestionShuffles(existingQuestions)
 
 		// Filter to only ACTION_TO_CODE_MULTIPLE_CHOICE questions and take first two
 		// const filteredQuestions = existingQuestions
 		// .filter(q => q.question.questionType === "FILL_IN_BLANK")
-		// .filter(q => q.question.questionId === "09c540bd-8069-4765-99d8-a56f5cb51a83" as QuestionUUID)
+		// .filter(q => q.question.questionId === "26a7b901-784a-4ab6-9641-aa9141233677" as QuestionUUID)
 		// .slice(0, 2)
 
 		// Set the complete lesson data (basic + detailed) from the response

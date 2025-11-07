@@ -1,7 +1,6 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import learnClass from "../../../classes/learn-class"
 import usePressEnterQuestionKeyboardHandler from "../../../hooks/learn/use-press-enter-question-keyboard-handler"
 import useMatchingQuestionKeyboardHandler from "../../../hooks/learn/use-matching-question-keyboard-handler"
@@ -16,36 +15,23 @@ function MatchingQuestion(): React.ReactNode {
 	useMatchingQuestionEscapeHandler()
 
 	const matchingData = currentQuestionState?.question.matching
+	const questionId = currentQuestionState?.question.questionId
+
+	const matchingState = questionId ? learnClass.getMatchingAnswerState(questionId) : null
+	const sortedCodingBlocks = matchingState?.shuffledCodingBlocks ?? []
+	const sortedMatchingChoices = matchingState?.shuffledMatchingChoices ?? []
+
 	if (!matchingData) return null
 
-	const { questionText, matchingAnswerChoice: matchingPairs } = matchingData
-
-	// Transform pairs into separate arrays for display
-	// Extract coding blocks (left side) - each pair has a codingBlock
-	const sortedCodingBlocks = matchingPairs.map((pair): {
-		codingBlockId: number
-		codingBlockJson: BlocklyJson
-	} => ({
-		codingBlockId: pair.codingBlock.codingBlockId,
-		codingBlockJson: pair.codingBlock.codingBlockJson,
-	}))
-
-	// Extract matching answer choices (right side) - each pair has a matchingAnswerChoiceText
-	const sortedMatchingChoices = matchingPairs.map((pair): {
-		matchingAnswerChoiceTextId: number
-		text: string
-	} => ({
-		matchingAnswerChoiceTextId: pair.matchingAnswerChoiceText.matchingAnswerChoiceTextId,
-		text: pair.matchingAnswerChoiceText.answerChoiceText
-	}))
+	const { questionText } = matchingData
 
 	return (
-		<div>
-			<h2 className="text-3xl font-semibold text-question-text mb-8">
+		<div className="flex flex-col">
+			<h2 className="text-3xl font-semibold text-question-text mb-8 text-center">
 				{questionText}
 			</h2>
 
-			<div className="flex flex-col lg:flex-row gap-8 justify-center items-start" style={{ transform: "translateY(2rem)" }}>
+			<div className="flex flex-col lg:flex-row gap-8 justify-center items-center" style={{ transform: "translateY(2rem)" }}>
 				{/* Left side: Coding blocks */}
 				<div className="flex flex-col gap-3 w-full lg:w-auto">
 					{sortedCodingBlocks.map((block, index): React.ReactNode => (

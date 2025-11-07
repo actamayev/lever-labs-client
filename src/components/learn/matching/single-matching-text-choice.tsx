@@ -103,7 +103,7 @@ function SingleMatchingTextChoice(props: SingleMatchingTextChoiceProps): React.R
 		<TactileButton
 			onClick={(): void => learnClass.handleMatchingChoiceClick(questionId, matchingAnswerChoiceTextId)}
 			className={cn(
-				"h-12 w-full lg:w-96 flex items-center justify-start px-4",
+				"h-12 w-full lg:max-w-none lg:w-[550px] flex items-center justify-start px-4",
 				"text-lg font-semibold rounded-lg duration-0 relative",
 				buttonClassName,
 				isInConfirmationStage ? "cursor-default" : "cursor-pointer"
