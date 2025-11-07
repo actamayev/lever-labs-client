@@ -86,7 +86,7 @@ function SingleMatchingCodingBlock(props: SingleMatchingCodingBlockProps): React
 	return (
 		<div
 			className={cn(
-				"relative w-full max-w-sm lg:w-96 duration-0 shrink-0 flex items-center rounded-lg h-12 px-4",
+				"relative w-full max-w-sm lg:max-w-none lg:w-[350px] duration-0 shrink-0 flex items-center rounded-lg h-12 px-4",
 				containerClassName,
 				// Tactile shadow effect (2px shadow)
 				!isDisabled && "shadow-[0_2px_0_0_var(--shadow-color)]",
