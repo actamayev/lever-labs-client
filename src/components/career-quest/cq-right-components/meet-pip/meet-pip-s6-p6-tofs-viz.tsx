@@ -72,7 +72,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 									tick={false}
 								/>
 								<YAxis
-									domain={[0, 4000]}
+									domain={[0, 2000]}
 									className="text-xs"
 									tick={false}
 									mirror={true}
