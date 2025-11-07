@@ -1,6 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
 import { observer } from "mobx-react"
 import learnClass from "../../../classes/learn-class"
 import usePressEnterQuestionKeyboardHandler from "../../../hooks/learn/use-press-enter-question-keyboard-handler"
@@ -8,7 +7,6 @@ import useMatchingQuestionKeyboardHandler from "../../../hooks/learn/use-matchin
 import useMatchingQuestionEscapeHandler from "../../../hooks/learn/use-matching-question-escape-handler"
 import SingleMatchingCodingBlock from "./single-matching-coding-block"
 import SingleMatchingTextChoice from "./single-matching-text-choice"
-import shuffle from "../../../utils/learn/shuffle"
 
 function MatchingQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
@@ -18,34 +16,6 @@ function MatchingQuestion(): React.ReactNode {
 
 	const matchingData = currentQuestionState?.question.matching
 	const questionId = currentQuestionState?.question.questionId
-
-	// Initialize shuffled arrays if they don't exist (randomize on first load)
-	useEffect((): void => {
-		if (!questionId || !matchingData?.matchingAnswerChoice) return
-
-		const matchingState = learnClass.getMatchingAnswerState(questionId)
-
-		// Only initialize if shuffled arrays don't exist
-		if (!matchingState.shuffledCodingBlocks || !matchingState.shuffledMatchingChoices) {
-			const matchingPairs = matchingData.matchingAnswerChoice
-
-			// Extract coding blocks and shuffle
-			const codingBlocks = matchingPairs.map((pair): MatchingCodingBlock => ({
-				codingBlockId: pair.codingBlock.codingBlockId,
-				codingBlockJson: pair.codingBlock.codingBlockJson,
-			}))
-
-			// Extract matching answer choices and shuffle
-			const matchingAnswerChoices = matchingPairs.map((pair): MatchingTextChoice => ({
-				matchingAnswerChoiceTextId: pair.matchingAnswerChoiceText.matchingAnswerChoiceTextId,
-				text: pair.matchingAnswerChoiceText.answerChoiceText
-			}))
-
-			// Store shuffled arrays in state (MobX will track these changes)
-			matchingState.shuffledCodingBlocks = shuffle(codingBlocks)
-			matchingState.shuffledMatchingChoices = shuffle(matchingAnswerChoices)
-		}
-	}, [questionId, matchingData?.matchingAnswerChoice])
 
 	const matchingState = questionId ? learnClass.getMatchingAnswerState(questionId) : null
 	const sortedCodingBlocks = matchingState?.shuffledCodingBlocks ?? []

@@ -11,3 +11,38 @@ export default function shuffle<T>(array: T[]): T[] {
 	return result
 }
 
+/**
+ * Initialize shuffled arrays for matching questions
+ * Extracts coding blocks and matching answer choices, shuffles them, and stores in matchingAnswerState
+ */
+export function initializeMatchingQuestionShuffles(questions: LocalLessonQuestionMap[]): void {
+	for (const questionMap of questions) {
+		if (questionMap.question.questionType === "MATCHING" && questionMap.question.matching?.matchingAnswerChoice) {
+			const matchingPairs = questionMap.question.matching.matchingAnswerChoice
+
+			// Extract coding blocks and shuffle
+			const codingBlocks = matchingPairs.map((pair): MatchingCodingBlock => ({
+				codingBlockId: pair.codingBlock.codingBlockId,
+				codingBlockJson: pair.codingBlock.codingBlockJson,
+			}))
+
+			// Extract matching answer choices and shuffle
+			const matchingAnswerChoices = matchingPairs.map((pair): MatchingTextChoice => ({
+				matchingAnswerChoiceTextId: pair.matchingAnswerChoiceText.matchingAnswerChoiceTextId,
+				text: pair.matchingAnswerChoiceText.answerChoiceText
+			}))
+
+			// Initialize matchingAnswerState with shuffled arrays
+			questionMap.question.matchingAnswerState = {
+				selectedCodingBlockId: null,
+				selectedMatchingAnswerId: null,
+				matchResults: {},
+				correctlyMatchedBlockIds: [],
+				correctlyMatchedChoiceIds: [],
+				shuffledCodingBlocks: shuffle(codingBlocks),
+				shuffledMatchingChoices: shuffle(matchingAnswerChoices)
+			}
+		}
+	}
+}
+
