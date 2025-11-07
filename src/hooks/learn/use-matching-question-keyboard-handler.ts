@@ -1,5 +1,4 @@
 import { useEffect } from "react"
-import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import learnClass from "../../classes/learn-class"
 import isOtpInputFocused from "../../utils/check-otp-input-focused"
 
@@ -23,32 +22,12 @@ export default function useMatchingQuestionKeyboardHandler(): void {
 			// Don't handle keyboard events if OTP input is focused
 			if (isOtpInputFocused()) return
 
-			const matchingData = currentQuestionState.question.matching
-			if (!matchingData) return
+			const questionId = currentQuestionState.question.questionId
+			const matchingState = learnClass.getMatchingAnswerState(questionId)
 
-			const matchingPairs = matchingData.matchingAnswerChoice
-
-			// Extract coding blocks and sort by order
-			const codingBlocks = matchingPairs.map((pair): {
-				codingBlockId: number
-				codingBlockJson: BlocklyJson
-			} => ({
-				codingBlockId: pair.codingBlock.codingBlockId,
-				codingBlockJson: pair.codingBlock.codingBlockJson,
-			}))
-			const sortedCodingBlocks = [...codingBlocks]
-
-			// Extract matching answer choices and sort by order
-			const matchingAnswerChoices = matchingPairs.map((pair): {
-				matchingAnswerChoiceTextId: number
-				text: string
-			} => ({
-				matchingAnswerChoiceTextId: pair.matchingAnswerChoiceText.matchingAnswerChoiceTextId,
-				text: pair.matchingAnswerChoiceText.answerChoiceText
-			}))
-			const sortedMatchingChoices = [...matchingAnswerChoices]
-
-			const question = currentQuestionState.question
+			// Use the stored shuffled arrays (same as component)
+			const sortedCodingBlocks = matchingState.shuffledCodingBlocks ?? []
+			const sortedMatchingChoices = matchingState.shuffledMatchingChoices ?? []
 
 			// Handle keys 1-5 for coding blocks (left side)
 			if (key >= "1" && key <= "5") {
@@ -56,7 +35,7 @@ export default function useMatchingQuestionKeyboardHandler(): void {
 				if (blockIndex >= 0 && blockIndex < sortedCodingBlocks.length) {
 					const block = sortedCodingBlocks[blockIndex]
 					// Use the same handler as mouse clicks - checks if already matched and submits if both sides selected
-					learnClass.handleMatchingCodingBlockClick(question.questionId, block.codingBlockId)
+					learnClass.handleMatchingCodingBlockClick(questionId, block.codingBlockId)
 				}
 			}
 
@@ -66,7 +45,7 @@ export default function useMatchingQuestionKeyboardHandler(): void {
 				if (choiceIndex >= 0 && choiceIndex < sortedMatchingChoices.length) {
 					const choice = sortedMatchingChoices[choiceIndex]
 					// Use the same handler as mouse clicks - checks if already matched and submits if both sides selected
-					learnClass.handleMatchingChoiceClick(question.questionId, choice.matchingAnswerChoiceTextId)
+					learnClass.handleMatchingChoiceClick(questionId, choice.matchingAnswerChoiceTextId)
 				}
 			}
 
@@ -76,7 +55,7 @@ export default function useMatchingQuestionKeyboardHandler(): void {
 				if (lastChoiceIndex >= 0) {
 					const choice = sortedMatchingChoices[lastChoiceIndex]
 					// Use the same handler as mouse clicks - checks if already matched and submits if both sides selected
-					learnClass.handleMatchingChoiceClick(question.questionId, choice.matchingAnswerChoiceTextId)
+					learnClass.handleMatchingChoiceClick(questionId, choice.matchingAnswerChoiceTextId)
 				}
 			}
 		}
@@ -86,6 +65,7 @@ export default function useMatchingQuestionKeyboardHandler(): void {
 	}, [
 		currentQuestionState?.question.matching,
 		currentQuestionState?.question.matchingAnswerState,
+		currentQuestionState?.question.questionId,
 		isInConfirmationStage,
 		currentQuestionState
 	])

@@ -555,6 +555,8 @@ class LearnClass {
 		matchResults: Record<string, boolean>
 		correctlyMatchedBlockIds: number[]
 		correctlyMatchedChoiceIds: number[]
+		shuffledCodingBlocks?: MatchingCodingBlock[]
+		shuffledMatchingChoices?: MatchingTextChoice[]
 	} => {
 		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>
 			l.lessonQuestionMap?.some((q): boolean => q.question.questionId === questionId) ?? false
