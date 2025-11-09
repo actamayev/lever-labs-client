@@ -2,50 +2,53 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { CppParser } from "@lever-labs/common-ts/parsers"
-import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import fireConfetti from "../../utils/fire-confetti"
 import { isNonSuccessResponse } from "../../utils/type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
-import { checkForMotorCommands, checkForStartButton } from "./sandbox-safety-measures"
 
 // eslint-disable-next-line complexity
-export default async function sendCppToPip(
-	cppCode: string,
-	rect?: DOMRect
-) : Promise<void> {
+export default async function sendCppToPip(cppCode: string, rect?: DOMRect) : Promise<void> {
 	try {
+		const selectedPip = pipClass.selectedPip
+
+		if (!serialConnectionManagerClass.pipTurnedOn && isNull(selectedPip)) {
+			return toastClass.negative({
+				title: "Pip not connected",
+				description: "Please connect your Pip to the Wi-Fi or via USB to upload code"
+			})
+		}
 		if (serialConnectionManagerClass.pipTurnedOn) {
-			const bytecode = CppParser.cppToByte(cppCode)
+			pipClass.setIsSendingCppToPip(true)
 
-			// Check if the program has motor commands but no start button
-			const hasMotorCommands = checkForMotorCommands(bytecode)
-			const hasStartButton = checkForStartButton(bytecode)
+			const sendSandboxCodeToPipResponse = await leverLabsApiClient.sandboxDataService.sendSandboxCodeToPipUsb(cppCode)
 
-			if (hasMotorCommands && !hasStartButton) {
+			if (!isEqual(sendSandboxCodeToPipResponse.status, 200) || isNonSuccessResponse(sendSandboxCodeToPipResponse.data)) {
+				throw new Error("Connect to Pip failed")
+			}
+
+			const isAbleToRunViaUsb = sendSandboxCodeToPipResponse.data.isAbleToRunViaUsb
+			if (!isAbleToRunViaUsb) {
 				return toastClass.negative({
 					title: "Start button required for USB connection",
 					// eslint-disable-next-line max-len
 					description: "When connected via USB, programs with motor commands must begin with the \"Start program when button is pressed\" block"
 				})
 			}
-
-			const buffer = MessageBuilder.createBytecodeMessage(bytecode)
+			const buffer = Uint8Array.from(
+				atob(sendSandboxCodeToPipResponse.data.bytecode),
+				c => c.charCodeAt(0)
+			).buffer
 
 			const success = await serialConnectionManagerClass.sendBinaryMessage(buffer)
 			if (success) {
-				fireConfetti(
-					rect,
-					({ particleCount: 300, startVelocity: 30 })
-				)
+				pipClass.setIsSendingCppToPip(false)
+				fireConfetti(rect, ({ particleCount: 300, startVelocity: 30 }))
 			}
 			return
 		}
-
-		const selectedPip = pipClass.selectedPip
 
 		if (isNull(selectedPip)) {
 			return toastClass.neutral({
@@ -76,17 +79,14 @@ export default async function sendCppToPip(
 		}
 		pipClass.setIsSendingCppToPip(true)
 
-		const connectToPipResponse = await leverLabsApiClient.sandboxDataService.sendSandboxCodeToPip(
+		const sendSandboxCodeToPipResponse = await leverLabsApiClient.sandboxDataService.sendSandboxCodeToPipWifi(
 			selectedPip.pipUUID, cppCode
 		)
 
-		if (!isEqual(connectToPipResponse.status, 200) || isNonSuccessResponse(connectToPipResponse.data)) {
+		if (!isEqual(sendSandboxCodeToPipResponse.status, 200) || isNonSuccessResponse(sendSandboxCodeToPipResponse.data)) {
 			throw new Error("Connect to Pip failed")
 		}
-		return fireConfetti(
-			rect,
-			({ particleCount: 300, startVelocity: 30 })
-		)
+		return fireConfetti(rect, ({ particleCount: 300, startVelocity: 30 }))
 	} catch (error) {
 		console.error(error)
 		return toastClass.negative({

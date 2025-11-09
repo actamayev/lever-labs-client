@@ -1,6 +1,7 @@
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, CreateSandboxProjectResponse, ErrorResponse,
-	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse } from "@lever-labs/common-ts/types/api"
+	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse,
+	UsbBytecodeResponse, NonSuccessResponse, ErrorResponses, SuccessResponse } from "@lever-labs/common-ts/types/api"
 import { SandboxProjectUUID, PipUUID } from "@lever-labs/common-ts/types/utils"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { BaseDataService } from "./base-data-service"
@@ -65,10 +66,17 @@ export default class SandboxDataService extends BaseDataService {
 		)
 	}
 
-	async sendSandboxCodeToPip(pipUUID: PipUUID, cppCode: string): Promise<AxiosResponse<AllCommonResponses>> {
-		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl("/send-sandbox-code-to-pip"),
+	async sendSandboxCodeToPipWifi(pipUUID: PipUUID, cppCode: string): Promise<AxiosResponse<SuccessResponse | NonSuccessResponse>> {
+		return await this.httpClient.http.post<SuccessResponse | NonSuccessResponse>(
+			this.buildUrl("/send-sandbox-code-to-pip-wifi"),
 			{ pipUUID, cppCode }
+		)
+	}
+
+	async sendSandboxCodeToPipUsb(cppCode: string): Promise<AxiosResponse<UsbBytecodeResponse | ErrorResponses>> {
+		return await this.httpClient.http.post<UsbBytecodeResponse | ErrorResponse>(
+			this.buildUrl("/send-sandbox-code-to-pip-usb"),
+			{ cppCode }
 		)
 	}
 
