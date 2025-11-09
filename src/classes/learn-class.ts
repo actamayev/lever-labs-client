@@ -294,10 +294,7 @@ class LearnClass {
 		const { question, selectedAnswerId } = this.currentQuestionState
 		let isCorrect = false
 
-		if (question.questionType === "DEMO") {
-			// Demo questions are always considered correct and don't need submission
-			isCorrect = true
-		} else if (question.questionType === "FILL_IN_BLANK" && question.fillInBlankAnswer) {
+		if (question.questionType === "FILL_IN_BLANK" && question.fillInBlankAnswer) {
 			// For fill-in-blank, submit the CPP code and capture feedback
 			const result = await submitFillInBlankAnswer(
 				question.questionId,
@@ -693,15 +690,6 @@ class LearnClass {
 		runInAction((): void => {
 			if (!this.currentQuestionState) return
 			const { currentQuestionIndex, question, questionOrder, currentOrderPosition } = this.currentQuestionState
-
-			// If this is a demo question, mark it as correct and increment progress
-			if (question.questionType === "DEMO") {
-				const lesson = this.lessonsById.get(lessonId)
-				if (lesson && question.userHasAnsweredCorrectly !== true) {
-					question.userHasAnsweredCorrectly = true
-					lesson.numberQuestionsCorrect += 1
-				}
-			}
 
 			// If question was answered correctly, remove any future occurrences from the order
 			if (question.userHasAnsweredCorrectly === true) {
