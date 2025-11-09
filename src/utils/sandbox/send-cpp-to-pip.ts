@@ -39,7 +39,7 @@ export default async function sendCppToPip(cppCode: string, rect?: DOMRect) : Pr
 			}
 			const buffer = Uint8Array.from(
 				atob(sendSandboxCodeToPipResponse.data.bytecode),
-				c => c.charCodeAt(0)
+				(c: string): number => c.charCodeAt(0)
 			).buffer
 
 			const success = await serialConnectionManagerClass.sendBinaryMessage(buffer)
