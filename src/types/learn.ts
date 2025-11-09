@@ -4,7 +4,7 @@ import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 declare global {
 	interface LocalQuestion extends Omit<Question, "questionType"> {
 		userHasAnsweredCorrectly?: boolean
-		questionType: QuestionType | "DEMO"
+		questionType: QuestionType
 		fillInBlankAnswer?: {
 			initialJson: BlocklyJson
 			blocklyJson: BlocklyJson
