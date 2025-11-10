@@ -23,7 +23,6 @@ export default function useGarageTonesUseEffect(isInGarage: boolean): void {
 		if (!(key in toneMappings)) return
 
 		const tone = toneMappings[key]
-		garageClass.setTonePlaying(tone)
 		playFunTone(tone)
 	}, [isInGarage])
 
@@ -40,7 +39,7 @@ export default function useGarageTonesUseEffect(isInGarage: boolean): void {
 
 		const key = event.key.toLowerCase()
 		if (!(key in toneMappings)) return
-		garageClass.setTonePlaying(null)
+		playFunTone(null)
 	}, [isInGarage])
 
 	// Set up key event listeners
