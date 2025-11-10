@@ -41,7 +41,7 @@ const getButtonTooltipContent = (isSoundsDisabled: boolean, isMuted: boolean): s
 	if (isMuted) {
 		return "Sounds are muted"
 	}
-	return "Play a tune"
+	return "Play a tone"
 }
 
 // Helper function to get dropdown tooltip content
@@ -60,6 +60,7 @@ interface Props {
 	setIsDropdownOpen: Dispatch<SetStateAction<boolean>>
 }
 
+// eslint-disable-next-line max-lines-per-function
 function TestSounds(props: Props): React.ReactNode {
 	const { isDropdownOpen, setIsDropdownOpen } = props
 	const testTones: ToneType[] = [ToneType.A, ToneType.B, ToneType.C, ToneType.D, ToneType.E, ToneType.F, ToneType.G]
@@ -80,9 +81,33 @@ function TestSounds(props: Props): React.ReactNode {
 									"rounded-xl bg-eel flex-1 w-full",
 									isSoundsDisabled && "opacity-50 cursor-not-allowed"
 								)}
-								onClick={async (): Promise<void> => await playTone(workbenchClass.selectedTone)}
+								onMouseDown={async (): Promise<void> => {
+									if (!workbenchClass.isMuted && !isSoundsDisabled) {
+										await playTone(workbenchClass.selectedTone)
+									}
+								}}
+								onMouseUp={async (): Promise<void> => {
+									if (!workbenchClass.isMuted && !isSoundsDisabled) {
+										await playTone(null)
+									}
+								}}
+								onMouseLeave={async (): Promise<void> => {
+									if (!workbenchClass.isMuted && !isSoundsDisabled) {
+										await playTone(null)
+									}
+								}}
+								onTouchStart={async (): Promise<void> => {
+									if (!workbenchClass.isMuted && !isSoundsDisabled) {
+										await playTone(workbenchClass.selectedTone)
+									}
+								}}
+								onTouchEnd={async (): Promise<void> => {
+									if (!workbenchClass.isMuted && !isSoundsDisabled) {
+										await playTone(null)
+									}
+								}}
 							>
-								PLAY A TUNE
+								PLAY TONE
 							</Button>
 							{/* Invisible overlay for tooltip when disabled */}
 							{isSoundsDisabled && (

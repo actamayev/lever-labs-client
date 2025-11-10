@@ -9,7 +9,7 @@ import pipClass from "../../classes/pip-class"
 import socketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 
-export default async function playFunSound(tone: ToneType | null): Promise<void> {
+export default async function playFunTone(tone: ToneType | null): Promise<void> {
 	try {
 		garageClass.setTonePlaying(tone)
 		if (serialConnectionManagerClass.pipTurnedOn) {
