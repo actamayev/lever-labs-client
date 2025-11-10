@@ -77,7 +77,7 @@ class TeacherClass {
 			studentId: studentJoinedClassroom.studentId,
 			username: studentJoinedClassroom.studentUsername,
 			garageDrivingAllowed: true,
-			garageSoundsAllowed: true,
+			garageTonesAllowed: true,
 			garageLightsAllowed: true,
 			garageDisplayAllowed: true
 		})
@@ -121,11 +121,11 @@ class TeacherClass {
 		})
 	}
 
-	public updateSoundsStatusForAllStudents(classCode: ClassCode, garageSoundsStatus: boolean): void {
+	public updateTonesStatusForAllStudents(classCode: ClassCode, garageTonesStatus: boolean): void {
 		const classroom = this.detailedClassroomData.get(classCode)
 		if (!classroom) return
 		classroom.students.forEach((student): void => {
-			student.garageSoundsAllowed = garageSoundsStatus
+			student.garageTonesAllowed = garageTonesStatus
 		})
 	}
 
@@ -153,12 +153,12 @@ class TeacherClass {
 		student.garageDrivingAllowed = garageDrivingStatus
 	}
 
-	public updateIndividualStudentSoundsStatus(classCode: ClassCode, studentId: number, garageSoundsStatus: boolean): void {
+	public updateIndividualStudentTonesStatus(classCode: ClassCode, studentId: number, garageTonesStatus: boolean): void {
 		const classroom = this.detailedClassroomData.get(classCode)
 		if (!classroom) return
 		const student = classroom.students.find((foundStudent): boolean => foundStudent.studentId === studentId)
 		if (!student) return
-		student.garageSoundsAllowed = garageSoundsStatus
+		student.garageTonesAllowed = garageTonesStatus
 	}
 
 	public updateIndividualStudentLightsStatus(classCode: ClassCode, studentId: number, garageLightsStatus: boolean): void {

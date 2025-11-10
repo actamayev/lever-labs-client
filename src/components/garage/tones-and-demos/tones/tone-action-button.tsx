@@ -3,23 +3,22 @@
 import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
 import { useRef, useEffect } from "react"
-import { FunSounds } from "@lever-labs/common-ts/types/garage"
+import { ToneType } from "@lever-labs/common-ts/protocol"
 import { cn } from "../../../../lib/utils"
 import CustomTooltip from "../../../custom-tooltip"
 import { CustomUfo } from "../../../../icons/custom-ufo"
 import { CustomFart } from "../../../../icons/custom-fart"
 import garageClass from "../../../../classes/garage-class"
-import { CustomEngine } from "../../../../icons/custom-engine"
 import { CustomElephant } from "../../../../icons/custom-elephant"
 import { TactileButton } from "../../../buttons/tactile-button"
 import { CustomCountdown } from "../../../../icons/custom-countdown"
-import playFunSound from "../../../../utils/garage/play-fun-sound"
+import playFunTone from "../../../../utils/garage/play-fun-tone"
 import { CustomPartyPopper } from "../../../../icons/custom-party-popper"
 import { CustomHearNoEvilMonkey } from "../../../../icons/custom-hear-no-evil-monkey"
 import { CustomSpeakNoEvilMonkey } from "../../../../icons/custom-speak-no-evil-monkey"
 
-interface SoundActionButtonProps {
-	sound: FunSounds
+interface ToneActionButtonProps {
+	tone: ToneType
 	index: number
 	extraClasses?: {
 		buttonClasses: string
@@ -30,27 +29,25 @@ interface SoundActionButtonProps {
 }
 
 // Helper function to get sound icon
-const getSoundIcon = (sound: FunSounds, iconSize: string): React.ReactNode => {
-	switch (sound) {
-		case "Fart":
+const getToneIcon = (tone: ToneType, iconSize: string): React.ReactNode => {
+	switch (tone) {
+		case ToneType.A:
 			return <CustomFart className={iconSize} />
-		case "Monkey":
-			if (garageClass.soundPlaying === "Monkey") {
+		case ToneType.B:
+			if (garageClass.tonePlaying === ToneType.B) {
 				return <CustomHearNoEvilMonkey className={iconSize} />
 			}
 			return <CustomSpeakNoEvilMonkey className={iconSize} />
-		case "Elephant":
+		case ToneType.C:
 			return <CustomElephant className={iconSize} />
-		case "Party":
+		case ToneType.D:
 			return <CustomPartyPopper className={iconSize} />
-		case "UFO":
+		case ToneType.E:
 			return <CustomUfo className={iconSize} />
-		case "Countdown":
+		case ToneType.F:
 			return <CustomCountdown className={iconSize} />
-		case "Robot":
+		case ToneType.G:
 			return <Bot className={iconSize} />
-		case "Engine":
-			return <CustomEngine className={iconSize} />
 	}
 }
 
@@ -80,14 +77,14 @@ const getBorderClasses = (isDisabled: boolean, extraClasses?: string): string =>
 const renderTooltipTrigger = (params: {
 	buttonRef: React.RefObject<HTMLButtonElement | null>
 	isDisabled: boolean
-	extraClasses: SoundActionButtonProps["extraClasses"]
+	extraClasses: ToneActionButtonProps["extraClasses"]
 	handleButtonDown: () => void
 	handleButtonUp: () => void
 	index: number
-	sound: FunSounds
+	tone: ToneType
 	iconSize: string
 }): React.ReactNode => {
-	const { buttonRef, isDisabled, extraClasses, handleButtonDown, handleButtonUp, index, sound, iconSize } = params
+	const { buttonRef, isDisabled, extraClasses, handleButtonDown, handleButtonUp, index, tone, iconSize } = params
 
 	return (
 		<div className="relative">
@@ -106,7 +103,7 @@ const renderTooltipTrigger = (params: {
 					{index}
 				</span>
 				<div className={cn(isDisabled && "opacity-50")}>
-					{getSoundIcon(sound, iconSize)}
+					{getToneIcon(tone, iconSize)}
 				</div>
 			</TactileButton>
 			{/* Invisible overlay for tooltip when disabled */}
@@ -117,8 +114,8 @@ const renderTooltipTrigger = (params: {
 	)
 }
 
-function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
-	const { sound, index, extraClasses } = props
+function ToneActionButton(props: ToneActionButtonProps): React.ReactNode {
+	const { tone, index, extraClasses } = props
 	const buttonRef = useRef<HTMLButtonElement>(null)
 	const iconSize = extraClasses?.iconSize || "size-10!"
 
@@ -128,7 +125,7 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 
 		const buttonElement = buttonRef.current
 
-		if (garageClass.soundPlaying === sound) {
+		if (garageClass.tonePlaying === tone) {
 			// Force the button to look pressed regardless of hover state
 			buttonElement.style.transform = "translateY(0.25rem)"
 			buttonElement.style.boxShadow = "none"
@@ -138,32 +135,32 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 			buttonElement.style.boxShadow = ""
 		}
 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [garageClass.soundPlaying, sound])
+	}, [garageClass.tonePlaying, tone])
 
 	// Release button when sounds are disabled
 	useEffect((): void => {
-		if (!garageClass.garageSoundsStatus && garageClass.soundPlaying === sound) {
-			garageClass.setSoundPlaying(null)
+		if (!garageClass.garageTonesStatus && garageClass.tonePlaying === tone) {
+			garageClass.setTonePlaying(null)
 		}
-	}, [sound])
+	}, [tone])
 
 	// Handle button click for action buttons
 	const handleButtonDown = (): void => {
 		// Only play sound if garage sounds are enabled
-		if (garageClass.garageSoundsStatus) {
-			playFunSound(sound)
+		if (garageClass.garageTonesStatus) {
+			playFunTone(tone)
 		}
 	}
 
 	// Handle button release for action buttons
 	const handleButtonUp = (): void => {
 		// Reset the sound playing state when button is released
-		if (garageClass.soundPlaying === sound) {
-			garageClass.setSoundPlaying(null)
+		if (garageClass.tonePlaying === tone) {
+			garageClass.setTonePlaying(null)
 		}
 	}
 
-	const isDisabled = !garageClass.garageSoundsStatus
+	const isDisabled = !garageClass.garageTonesStatus
 
 	return (
 		<CustomTooltip
@@ -174,16 +171,16 @@ function SoundActionButton(props: SoundActionButtonProps): React.ReactNode {
 				handleButtonDown,
 				handleButtonUp,
 				index,
-				sound,
+				tone,
 				iconSize
 			})}
 			tooltipContent={
 				isDisabled
 					? "Sounds disabled by teacher"
-					: `Play ${sound} sound`
+					: `Play ${tone} tone`
 			}
 		/>
 	)
 }
 
-export default observer(SoundActionButton)
+export default observer(ToneActionButton)

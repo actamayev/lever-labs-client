@@ -13,7 +13,7 @@ import StudentGarageControls from "./student-garage-controls"
 import CustomTooltip from "../custom-tooltip"
 import updateDrivingStatusForAllStudents from "../../utils/teacher/update-driving-status-all-students"
 import updateLightsStatusForAllStudents from "../../utils/teacher/update-lights-status-all-students"
-import updateSoundsStatusForAllStudents from "../../utils/teacher/update-sounds-status-all-students"
+import updateTonesStatusForAllStudents from "../../utils/teacher/update-tones-status-all-students"
 import updateDisplayStatusForAllStudents from "../../utils/teacher/update-display-status-all-students"
 import teacherClass from "../../classes/teacher-class"
 
@@ -29,7 +29,7 @@ function StudentsTable({ classCode }: { classCode: ClassCode }): React.ReactNode
 			switch (statusType) {
 				case "driving": return student.garageDrivingAllowed
 				case "lights": return student.garageLightsAllowed
-				case "sounds": return student.garageSoundsAllowed
+				case "tones": return student.garageTonesAllowed
 				case "display": return student.garageDisplayAllowed
 				default: return false
 			}
@@ -39,7 +39,7 @@ function StudentsTable({ classCode }: { classCode: ClassCode }): React.ReactNode
 			switch (statusType) {
 				case "driving": return !student.garageDrivingAllowed
 				case "lights": return !student.garageLightsAllowed
-				case "sounds": return !student.garageSoundsAllowed
+				case "tones": return !student.garageTonesAllowed
 				case "display": return !student.garageDisplayAllowed
 				default: return false
 			}
@@ -62,8 +62,8 @@ function StudentsTable({ classCode }: { classCode: ClassCode }): React.ReactNode
 			case "lights":
 				updateLightsStatusForAllStudents(classCode, newStatus)
 				break
-			case "sounds":
-				updateSoundsStatusForAllStudents(classCode, newStatus)
+			case "tones":
+				updateTonesStatusForAllStudents(classCode, newStatus)
 				break
 			case "display":
 				updateDisplayStatusForAllStudents(classCode, newStatus)
@@ -130,20 +130,20 @@ function StudentsTable({ classCode }: { classCode: ClassCode }): React.ReactNode
 						<CustomTooltip
 							tooltipTrigger={
 								<TactileButton
-									onClick={(): void => handleGarageControlClick("sounds")}
-									className={getGarageStatusClasses(getGarageStatus("sounds")).className}
+									onClick={(): void => handleGarageControlClick("tones")}
+									className={getGarageStatusClasses(getGarageStatus("tones")).className}
 									shadowHeight={4}
-									shadowClass={getGarageStatusClasses(getGarageStatus("sounds")).shadowClass}
+									shadowClass={getGarageStatusClasses(getGarageStatus("tones")).shadowClass}
 								>
 									<Volume2 className="h-4 w-4" />
 								</TactileButton>
 							}
 							tooltipContent={
-								getGarageStatus("sounds") === "all-on"
-									? "Disable sounds for all students"
-									: getGarageStatus("sounds") === "all-off"
-										? "Enable sounds for all students"
-										: "Disable sounds for all students"
+								getGarageStatus("tones") === "all-on"
+									? "Disable tones for all students"
+									: getGarageStatus("tones") === "all-off"
+										? "Enable tones for all students"
+										: "Disable tones for all students"
 							}
 						/>
 						<CustomTooltip

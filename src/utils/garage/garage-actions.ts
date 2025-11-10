@@ -46,12 +46,12 @@ export default function garageActions(): {
 
 			case "horn":
 				// Skip if garage sounds are disabled by teacher
-				if (!garageClass.garageSoundsStatus) return
+				if (!garageClass.garageTonesStatus) return
 
 				garageClass.setIsHornPressed(true)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
-					const buffer = MessageBuilder.createHornSoundMessage(true)
+					const buffer = MessageBuilder.createUpdateHornToneMessage(true)
 					await serialConnectionManagerClass.sendBinaryMessage(buffer)
 					return
 				}
@@ -65,7 +65,7 @@ export default function garageActions(): {
 						description: "Please connect your Pip to the Wi-Fi or via USB to honk the horn"
 					})
 				}
-				socketClass.emitToServer("horn-sound-update", {
+				socketClass.emitToServer("horn-tone-update", {
 					pipUUID: selectedPip.pipUUID,
 					hornStatus: true
 				})
@@ -104,12 +104,12 @@ export default function garageActions(): {
 
 			case "horn":
 				// Skip if garage sounds are disabled by teacher
-				if (!garageClass.garageSoundsStatus) return
+				if (!garageClass.garageTonesStatus) return
 
 				garageClass.setIsHornPressed(false)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
-					const buffer = MessageBuilder.createHornSoundMessage(false)
+					const buffer = MessageBuilder.createUpdateHornToneMessage(false)
 					await serialConnectionManagerClass.sendBinaryMessage(buffer)
 					return
 				}
@@ -117,7 +117,7 @@ export default function garageActions(): {
 					!selectedPip ||
 				selectedPip.pipConnectionStatus === "offline"
 				) return
-				socketClass.emitToServer("horn-sound-update", {
+				socketClass.emitToServer("horn-tone-update", {
 					pipUUID: selectedPip.pipUUID,
 					hornStatus: false
 				})

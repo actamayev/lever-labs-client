@@ -4,7 +4,6 @@
 import { Dispatch, SetStateAction } from "react"
 import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
-import { TuneToPlay } from "@lever-labs/common-ts/types/workbench"
 import { ChevronDown } from "lucide-react"
 import {
 	DropdownMenu,
@@ -13,11 +12,12 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { cn } from "../../../lib/utils"
-import playTune from "../../../utils/workbench/play-tune"
+import playTone from "../../../utils/garage/play-fun-tone"
 import workbenchClass from "../../../classes/workbench-class"
 import garageClass from "../../../classes/garage-class"
 import { Button, buttonVariants } from "../../ui/button"
 import CustomTooltip from "../../custom-tooltip"
+import { ToneType } from "@lever-labs/common-ts/protocol"
 
 // Helper function to get button tooltip content
 const getButtonTooltipContent = (isSoundsDisabled: boolean, isMuted: boolean): string => {
@@ -48,10 +48,10 @@ interface Props {
 
 function TestSounds(props: Props): React.ReactNode {
 	const { isDropdownOpen, setIsDropdownOpen } = props
-	const testSounds: TuneToPlay[] = ["Chime", "Chirp", "Drop", "Pop"]
+	const testTones: ToneType[] = [ToneType.A, ToneType.B, ToneType.C, ToneType.D, ToneType.E, ToneType.F, ToneType.G]
 
 	// Check if sounds are disabled by teacher
-	const isSoundsDisabled = !garageClass.garageSoundsStatus
+	const isSoundsDisabled = !garageClass.garageTonesStatus
 
 	return (
 		<div className="space-y-3">
@@ -66,7 +66,7 @@ function TestSounds(props: Props): React.ReactNode {
 									"rounded-xl bg-eel flex-1 w-full",
 									isSoundsDisabled && "opacity-50 cursor-not-allowed"
 								)}
-								onClick={playTune}
+								onClick={async (): Promise<void> => await playTone(workbenchClass.selectedTone)}
 							>
 								PLAY A TUNE
 							</Button>
@@ -93,7 +93,7 @@ function TestSounds(props: Props): React.ReactNode {
 										)}
 									>
 										<span className="text-xs font-medium">
-											{toUpper(workbenchClass.selectedSound)}
+											{toUpper(workbenchClass.selectedTone.toString())}
 										</span>
 										<ChevronDown className="h-3 w-3" />
 									</div>
@@ -102,17 +102,17 @@ function TestSounds(props: Props): React.ReactNode {
 									className="rounded-xl bg-standard-background border-swan shadow-none"
 									align="end"
 								>
-									{testSounds.map((sound): React.ReactNode => (
+									{testTones.map((tone): React.ReactNode => (
 										<DropdownMenuItem
-											key={sound}
+											key={tone}
 											onClick={(): void => {
-												workbenchClass.setSelectedSound(sound)
+												workbenchClass.setSelectedTone(tone)
 												setIsDropdownOpen(false)
 											}}
 											className="cursor-pointer transition-none hover:bg-polar! rounded-lg"
 										>
 											<span className="text-sm font-medium">
-												{toUpper(sound)}
+												{toUpper(tone.toString())}
 											</span>
 										</DropdownMenuItem>
 									))}

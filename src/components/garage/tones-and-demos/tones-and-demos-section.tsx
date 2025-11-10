@@ -2,7 +2,7 @@
 
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import DemosSection from "./demos-section"
-import SoundsSection from "./sounds/sounds-section"
+import TonesSection from "./tones/tones-section"
 
 export default function SoundsAndDemosSection(): React.ReactNode {
 	return (
@@ -11,7 +11,7 @@ export default function SoundsAndDemosSection(): React.ReactNode {
 				className="w-3/5 flex flex-col items-center justify-center border-t border-r border-swan p-10"
 				style={{ borderTopRightRadius: WORKBENCH_ROUNDING_RADIUS }}
 			>
-				<SoundsSection />
+				<TonesSection />
 			</div>
 			<div
 				className="w-2/5 flex flex-col items-start justify-center border-t border-r border-l border-swan"

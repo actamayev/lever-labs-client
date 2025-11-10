@@ -8,10 +8,10 @@ import { cn } from "../../lib/utils"
 import teacherClass from "../../classes/teacher-class"
 import updateIndividualStudentDrivingStatus from "../../utils/teacher/update-individual-student-driving-status"
 import updateIndividualStudentLightsStatus from "../../utils/teacher/update-individual-student-lights-status"
-import updateIndividualStudentSoundsStatus from "../../utils/teacher/update-individual-student-sounds-status"
 import updateIndividualStudentDisplayStatus from "../../utils/teacher/update-individual-student-display-status"
 import { observer } from "mobx-react"
 import CustomTooltip from "../custom-tooltip"
+import updateIndividualStudentTonesStatus from "../../utils/teacher/update-individual-student-tones-status"
 
 interface StudentGarageControlsProps {
 	studentId: number
@@ -29,7 +29,7 @@ function StudentGarageControls({
 
 	if (!student) return null
 
-	const { username, garageDrivingAllowed, garageLightsAllowed, garageSoundsAllowed, garageDisplayAllowed } = student
+	const { username, garageDrivingAllowed, garageLightsAllowed, garageTonesAllowed, garageDisplayAllowed } = student
 
 	const handleDrivingToggle = (): void => {
 		updateIndividualStudentDrivingStatus(classCode, studentId, !garageDrivingAllowed)
@@ -39,8 +39,8 @@ function StudentGarageControls({
 		updateIndividualStudentLightsStatus(classCode, studentId, !garageLightsAllowed)
 	}
 
-	const handleSoundsToggle = (): void => {
-		updateIndividualStudentSoundsStatus(classCode, studentId, !garageSoundsAllowed)
+	const handleTonesToggle = (): void => {
+		updateIndividualStudentTonesStatus(classCode, studentId, !garageTonesAllowed)
 	}
 
 	const handleDisplayToggle = (): void => {
@@ -103,16 +103,16 @@ function StudentGarageControls({
 			<CustomTooltip
 				tooltipTrigger={
 					<TactileButton
-						onClick={handleSoundsToggle}
+						onClick={handleTonesToggle}
 						className={cn(
 							"h-6 w-6 rounded flex items-center justify-center",
-							garageSoundsAllowed
+							garageTonesAllowed
 								? "bg-charging-green text-standard-background border border-charging-green"
 								: "bg-cardinal text-standard-background border border-cardinal"
 						)}
 						shadowHeight={4}
 						shadowClass={
-							garageSoundsAllowed
+							garageTonesAllowed
 								? "shadow-charging-green-2"
 								: "shadow-cardinal-2"
 						}
@@ -121,9 +121,9 @@ function StudentGarageControls({
 					</TactileButton>
 				}
 				tooltipContent={
-					garageSoundsAllowed
-						? `Disable sounds for ${username}`
-						: `Enable sounds for ${username}`
+					garageTonesAllowed
+						? `Disable tones for ${username}`
+						: `Enable tones for ${username}`
 				}
 			/>
 			<CustomTooltip
