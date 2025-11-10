@@ -24,21 +24,21 @@ export default async function changeAudibleStatus(newMutedState: boolean): Promi
 		if (isNull(selectedPip) || selectedPip.pipConnectionStatus === "offline") {
 			return toastClass.negative({
 				title: "Pip not connected",
-				description: "Please connect your Pip to the Wi-Fi or via USB to play a tune"
+				description: "Please connect your Pip to the Wi-Fi or via USB to change the audible status"
 			})
 		}
-		const playTuneResponse = await leverLabsApiClient.workbenchDataService.changeAudibleStatus(
+		const changeAudibleStatusResponse = await leverLabsApiClient.workbenchDataService.changeAudibleStatus(
 			newMutedState,
 			selectedPip.pipUUID
 		)
-		if (!isEqual(playTuneResponse.status, 200) || isErrorResponse(playTuneResponse.data)) {
-			throw Error("Unable to change mute status")
+		if (!isEqual(changeAudibleStatusResponse.status, 200) || isErrorResponse(changeAudibleStatusResponse.data)) {
+			throw Error("Unable to change audible status")
 		}
 		workbenchClass.setIsMuted(newMutedState)
 	} catch (error) {
 		console.error(error)
 		return toastClass.negative({
-			title: "Unable to change mute status",
+			title: "Unable to change audible status",
 			description: "Please reload the page and try again"
 		})
 	}

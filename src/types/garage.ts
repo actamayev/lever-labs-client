@@ -16,7 +16,7 @@ declare global {
 	}
 	type PixelBuffer = boolean[][]
 
-	type GarageStatusType = "driving" | "lights" | "sounds" | "display"
+	type GarageStatusType = "driving" | "lights" | "tones" | "display"
 
 	type GarageStatusValue = "none" | "all-on" | "all-off" | "mixed"
 }

@@ -61,7 +61,7 @@ function DrivingActionButton({
 	const { activateAction, deactivateAction } = garageActions()
 
 	// Check if the action should be disabled
-	const isDisabled = (action === "horn" && !garageClass.garageSoundsStatus) ||
+	const isDisabled = (action === "horn" && !garageClass.garageTonesStatus) ||
 		(action === "headlights" && !garageClass.garageLightsStatus)
 
 	// Map direction to the correct icon

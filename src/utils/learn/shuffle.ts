@@ -2,7 +2,7 @@
  * Random shuffle function using Fisher-Yates algorithm
  * Shuffles the array in place and returns it
  */
-export default function shuffle<T>(array: T[]): T[] {
+export function shuffle<T>(array: T[]): T[] {
 	const result = array.slice()
 	for (let i = result.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1))
@@ -15,7 +15,7 @@ export default function shuffle<T>(array: T[]): T[] {
  * Initialize shuffled arrays for matching questions
  * Extracts coding blocks and matching answer choices, shuffles them, and stores in matchingAnswerState
  */
-export function initializeMatchingQuestionShuffles(questions: LocalLessonQuestionMap[]): void {
+export default function initializeMatchingQuestionShuffles(questions: LocalLessonQuestionMap[]): void {
 	for (const questionMap of questions) {
 		if (questionMap.question.questionType === "MATCHING" && questionMap.question.matching?.matchingAnswerChoice) {
 			const matchingPairs = questionMap.question.matching.matchingAnswerChoice

@@ -2,7 +2,7 @@
 import LightSection from "./light/light-section"
 import DisplaySection from "./display/display-section"
 import WorkbenchLayout from "../layouts/workbench-layout"
-import SoundsAndDemosSection from "./sounds-and-demos/sounds-and-demos-section"
+import TonesAndDemosSection from "./tones-and-demos/tones-and-demos-section"
 
 export default function TheGaragePage(): React.ReactNode {
 	return (
@@ -12,7 +12,7 @@ export default function TheGaragePage(): React.ReactNode {
 		>
 			<LightSection />
 			<DisplaySection />
-			<SoundsAndDemosSection />
+			<TonesAndDemosSection />
 		</WorkbenchLayout>
 	)
 }

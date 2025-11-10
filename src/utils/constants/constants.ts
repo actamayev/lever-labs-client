@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
-import { FunSounds } from "@lever-labs/common-ts/types/garage"
 import rgbToBlocklyColor from "../blockly/rgb-to-hex"
+import { ToneType } from "@lever-labs/common-ts/protocol"
 
 export const logicCategoryColour = rgbToBlocklyColor(28, 176, 246) // macaw
 export const sensorsCategoryColour = rgbToBlocklyColor(255, 75, 75) //cardinal
@@ -30,27 +30,25 @@ export const actionMappings: ActionMapping = {
 	"e": "horn"
 }
 
-interface SoundMapping {
-	[key: string]: FunSounds
+interface ToneMapping {
+	[key: string]: ToneType
 }
 
-export const soundMappings: SoundMapping = {
-	"numpad1": "Fart",
-	"1": "Fart",
-	"numpad2": "Monkey",
-	"2": "Monkey",
-	"numpad3": "Elephant",
-	"3": "Elephant",
-	"numpad4": "Party",
-	"4": "Party",
-	"numpad5": "UFO",
-	"5": "UFO",
-	"numpad6": "Countdown",
-	"6": "Countdown",
-	"numpad7": "Engine",
-	"7": "Engine",
-	"numpad8": "Robot",
-	"8": "Robot"
+export const toneMappings: ToneMapping = {
+	"numpad1": ToneType.A,
+	"1": ToneType.A,
+	"numpad2": ToneType.B,
+	"2": ToneType.B,
+	"numpad3": ToneType.C,
+	"3": ToneType.C,
+	"numpad4": ToneType.D,
+	"4": ToneType.D,
+	"numpad5": ToneType.E,
+	"5": ToneType.E,
+	"numpad6": ToneType.F,
+	"6": ToneType.F,
+	"numpad7": ToneType.G,
+	"7": ToneType.G,
 }
 
 export const WORKBENCH_ROUNDING_RADIUS = "48px"

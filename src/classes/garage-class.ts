@@ -2,11 +2,12 @@
 
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
-import { LightAnimation, MotorControlInput, FunSounds } from "@lever-labs/common-ts/types/garage"
+import { LightAnimation, MotorControlInput } from "@lever-labs/common-ts/types/garage"
 import { applyTextToBuffer } from "../utils/display/export-display"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH,
 	PRE_DEFINED_DESIGNS, Point, PreDefinedDesignName } from "../utils/constants/display-constants"
 import createDisplayMessage from "../utils/garage/create-display-message"
+import { ToneType } from "@lever-labs/common-ts/protocol"
 
 class GarageClass {
 	public selectedColorRgba: RgbaColor = { r: 255, g: 255, b: 255, a: 1 }
@@ -35,7 +36,7 @@ class GarageClass {
 	public pressedDirections: Set<DriveDirection> = new Set()
 	public motorState: MotorControlInput = { vertical: 0, horizontal: 0 }
 	public lastThrottlePercent: number = 50
-	public soundPlaying: FunSounds | null = null
+	public tonePlaying: ToneType | null = null
 
 	public pixelBuffer: PixelBuffer = Array(DISPLAY_HEIGHT).fill(null).map((): boolean[] => Array(DISPLAY_WIDTH).fill(false))
 	public textInput: string = ""
@@ -44,7 +45,7 @@ class GarageClass {
 	public designOnBuffer: PreDefinedDesignName = "No design"
 
 	public garageDrivingStatus: boolean = true
-	public garageSoundsStatus: boolean = true
+	public garageTonesStatus: boolean = true
 	public garageLightsStatus: boolean = true
 	public garageDisplayStatus: boolean = true
 
@@ -174,8 +175,8 @@ class GarageClass {
 		this.pressedDirections = directions
 	})
 
-	public setSoundPlaying = action((newSoundPlaying: FunSounds | null): void => {
-		this.soundPlaying = newSoundPlaying
+	public setTonePlaying = action((newTonePlaying: ToneType | null): void => {
+		this.tonePlaying = newTonePlaying
 	})
 
 	public setColorShade = action((newShade: number): void => {
@@ -186,8 +187,8 @@ class GarageClass {
 		if (garageData.some((classroom): boolean => classroom.garageDrivingAllowed === false)) {
 			this.setGarageDrivingStatus(false)
 		}
-		if (garageData.some((classroom): boolean => classroom.garageSoundsAllowed === false)) {
-			this.setGarageSoundsStatus(false)
+		if (garageData.some((classroom): boolean => classroom.garageTonesAllowed === false)) {
+			this.setGarageTonesStatus(false)
 		}
 		if (garageData.some((classroom): boolean => classroom.garageLightsAllowed === false)) {
 			this.setGarageLightsStatus(false)
@@ -201,8 +202,8 @@ class GarageClass {
 		this.garageDrivingStatus = newGarageDrivingStatus
 	})
 
-	public setGarageSoundsStatus = action((newGarageSoundsStatus: boolean): void => {
-		this.garageSoundsStatus = newGarageSoundsStatus
+	public setGarageTonesStatus = action((newGarageTonesStatus: boolean): void => {
+		this.garageTonesStatus = newGarageTonesStatus
 	})
 
 	public setGarageLightsStatus = action((newGarageLightsStatus: boolean): void => {
@@ -214,8 +215,8 @@ class GarageClass {
 	})
 
 	public releaseAllPressedButtons = action((): void => {
-		// Stop any playing sounds
-		this.setSoundPlaying(null)
+		// Stop any playing tones
+		this.setTonePlaying(null)
 
 		// Clear all pressed motor keys
 		this.pressedMotorKeys.clear()
@@ -255,14 +256,14 @@ class GarageClass {
 		this.lastThrottlePercent = 50
 		this.setIsHornPressed(false)
 		this.setAreHeadlightsOn(false)
-		this.setSoundPlaying(null)
+		this.setTonePlaying(null)
 		this.clearBuffer()
 		this.setTextInput("")
 		this.setSelectedDesign("No design" as PreDefinedDesignName)
 		this.textOnBuffer = ""
 		this.designOnBuffer = "No design"
 		this.setGarageDrivingStatus(true)
-		this.setGarageSoundsStatus(true)
+		this.setGarageTonesStatus(true)
 		this.setGarageLightsStatus(true)
 		this.setGarageDisplayStatus(true)
 	}

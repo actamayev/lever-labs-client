@@ -39,7 +39,7 @@ export const listenersMap: {
 	"student-left-hub": (payload): void => teacherClass.removeStudentFromHub(payload),
 	"dino-score-update-all-peers": (payload): void => gamesClass.addDinoScore(payload.score, payload.username),
 	"garage-driving-status-update": (payload): void => garageClass.setGarageDrivingStatus(payload.garageDrivingStatus),
-	"garage-sounds-status-update": (payload): void => garageClass.setGarageSoundsStatus(payload.garageSoundsStatus),
+	"garage-tones-status-update": (payload): void => garageClass.setGarageTonesStatus(payload.garageTonesStatus),
 	"garage-lights-status-update": (payload): void => garageClass.setGarageLightsStatus(payload.garageLightsStatus),
 	"garage-display-status-update": (payload): void => garageClass.setGarageDisplayStatus(payload.garageDisplayStatus)
 } as const

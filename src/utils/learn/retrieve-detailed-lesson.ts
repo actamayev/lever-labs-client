@@ -5,7 +5,7 @@ import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import learnClass from "../../classes/learn-class"
-import { initializeMatchingQuestionShuffles } from "./shuffle"
+import initializeMatchingQuestionShuffles from "./shuffle"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
 export default async function retrieveDetailedLesson(lessonId: LessonUUID): Promise<void> {

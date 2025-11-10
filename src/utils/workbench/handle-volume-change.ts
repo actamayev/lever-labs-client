@@ -28,21 +28,21 @@ export default async function handleVolumeChange(value: number[]): Promise<void>
 		if (isNull(selectedPip) || selectedPip.pipConnectionStatus === "offline") {
 			return toastClass.negative({
 				title: "Pip not connected",
-				description: "Please connect your Pip to the Wi-Fi or via USB to play a tune"
+				description: "Please connect your Pip to the Wi-Fi or via USB to change the volume"
 			})
 		}
-		const playTuneResponse = await leverLabsApiClient.workbenchDataService.changeVolume(
+		const changeVolumeResponse = await leverLabsApiClient.workbenchDataService.changeVolume(
 			volume,
 			selectedPip.pipUUID
 		)
-		if (!isEqual(playTuneResponse.status, 200) || isErrorResponse(playTuneResponse.data)) {
-			throw Error("Unable to change volume")
+		if (!isEqual(changeVolumeResponse.status, 200) || isErrorResponse(changeVolumeResponse.data)) {
+			throw Error("Unable to change volume on Pip")
 		}
 		workbenchClass.setVolume(volume)
 	} catch (error) {
 		console.error(error)
 		return toastClass.negative({
-			title: "Unable to change volume",
+			title: "Unable to change volume on Pip",
 			description: "Please reload the page and try again"
 		})
 	}

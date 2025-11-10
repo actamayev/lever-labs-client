@@ -7,6 +7,7 @@ import socketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import toastClass from "../../classes/toast-class"
 import { isNull } from "lodash-es"
+import { ToneType } from "@lever-labs/common-ts/protocol"
 
 // eslint-disable-next-line max-lines-per-function
 export default function garageActions(): {
@@ -46,12 +47,12 @@ export default function garageActions(): {
 
 			case "horn":
 				// Skip if garage sounds are disabled by teacher
-				if (!garageClass.garageSoundsStatus) return
+				if (!garageClass.garageTonesStatus) return
 
 				garageClass.setIsHornPressed(true)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
-					const buffer = MessageBuilder.createHornSoundMessage(true)
+					const buffer = MessageBuilder.createToneCommandMessage(ToneType.A)
 					await serialConnectionManagerClass.sendBinaryMessage(buffer)
 					return
 				}
@@ -65,9 +66,9 @@ export default function garageActions(): {
 						description: "Please connect your Pip to the Wi-Fi or via USB to honk the horn"
 					})
 				}
-				socketClass.emitToServer("horn-sound-update", {
+				socketClass.emitToServer("play-tone", {
 					pipUUID: selectedPip.pipUUID,
-					hornStatus: true
+					toneType: ToneType.A
 				})
 				return
 		}
@@ -104,23 +105,20 @@ export default function garageActions(): {
 
 			case "horn":
 				// Skip if garage sounds are disabled by teacher
-				if (!garageClass.garageSoundsStatus) return
+				if (!garageClass.garageTonesStatus) return
 
 				garageClass.setIsHornPressed(false)
 
 				if (serialConnectionManagerClass.pipTurnedOn) {
-					const buffer = MessageBuilder.createHornSoundMessage(false)
+					const buffer = MessageBuilder.createStopToneCommandMessage()
 					await serialConnectionManagerClass.sendBinaryMessage(buffer)
 					return
 				}
 				if (
 					!selectedPip ||
-				selectedPip.pipConnectionStatus === "offline"
+					selectedPip.pipConnectionStatus === "offline"
 				) return
-				socketClass.emitToServer("horn-sound-update", {
-					pipUUID: selectedPip.pipUUID,
-					hornStatus: false
-				})
+				socketClass.emitToServer("stop-tone", { pipUUID: selectedPip.pipUUID })
 				return
 		}
 	}
