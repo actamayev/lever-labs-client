@@ -8,27 +8,29 @@ import { isNonSuccessResponse } from "../type-checks"
 import teacherClass from "../../classes/teacher-class"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 
-export default async function updateSoundsStatusForAllStudents(
+export default async function updateIndividualStudentTonesStatus(
 	classCode: ClassCode,
-	garageSoundsStatus: boolean
+	studentId: number,
+	garageTonesStatus: boolean
 ): Promise<void> {
 	try {
 		if (authClass.isFinishedWithSignup === false) return
 
-		const updateSoundsStatusResponse = await leverLabsApiClient.teacherDataService.updateSoundsStatusForAllStudents(
+		const updateTonesStatusResponse = await leverLabsApiClient.teacherDataService.updateIndividualStudentTonesStatus(
 			classCode,
-			garageSoundsStatus
+			studentId,
+			garageTonesStatus
 		)
 
-		if (!isEqual(updateSoundsStatusResponse.status, 200) || isNonSuccessResponse(updateSoundsStatusResponse.data)) {
-			throw Error("Unable to update sounds status for all students")
+		if (!isEqual(updateTonesStatusResponse.status, 200) || isNonSuccessResponse(updateTonesStatusResponse.data)) {
+			throw Error("Unable to update individual student tones status")
 		}
 
-		teacherClass.updateSoundsStatusForAllStudents(classCode, garageSoundsStatus)
+		teacherClass.updateIndividualStudentTonesStatus(classCode, studentId, garageTonesStatus)
 	} catch (error) {
 		console.error(error)
 		toastClass.negative({
-			title: "Unable to update sounds status",
+			title: "Unable to update student tones status",
 			description: "Please try again"
 		})
 	}

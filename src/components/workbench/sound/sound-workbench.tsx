@@ -4,7 +4,7 @@
 import { useState } from "react"
 import { observer } from "mobx-react"
 import { Volume, Volume1, Volume2, VolumeOff } from "lucide-react"
-import TestSounds from "./test-sounds"
+import TestSounds from "./test-tones"
 import { cn } from "../../../lib/utils"
 import { Slider } from "../../ui/slider"
 import { Checkbox } from "../../ui/checkbox"
@@ -22,7 +22,7 @@ function SoundWorkbench(): React.ReactNode {
 	const [isOpen, setIsOpen] = useState(false)
 	const [isDropdownOpen, setIsDropdownOpen] = useState(false)
 
-	const isSoundsDisabled = !garageClass.garageSoundsStatus
+	const isSoundsDisabled = !garageClass.garageTonesStatus
 
 	const SpeakerIconToShow = (): React.ReactNode => {
 		const baseClasses = "h-16! w-16!"

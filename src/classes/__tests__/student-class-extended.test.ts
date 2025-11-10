@@ -34,7 +34,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }]
@@ -59,7 +59,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }
@@ -71,7 +71,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }
@@ -93,7 +93,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }
@@ -103,7 +103,7 @@ describe('StudentClass Extended Tests', () => {
         classroomName: 'Updated Name',
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }
@@ -125,7 +125,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }
@@ -137,7 +137,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
         }
@@ -181,7 +181,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       } as StudentClassroomDataWithHubs 
@@ -316,7 +316,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }
@@ -360,7 +360,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }
@@ -431,7 +431,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }
@@ -488,7 +488,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }
@@ -516,7 +516,7 @@ describe('StudentClass Extended Tests', () => {
         joinedClassroomAt: new Date(),
         studentId: 123,
         garageDrivingAllowed: true,
-        garageSoundsAllowed: true,
+        garageTonesAllowed: true,
         garageLightsAllowed: true,
         garageDisplayAllowed: true,
       }

@@ -2,14 +2,14 @@
 
 import { action, makeAutoObservable } from "mobx"
 import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, BatteryMonitorKey } from "@lever-labs/common-ts/types/pip"
-import { TuneToPlay } from "@lever-labs/common-ts/types/workbench"
+import { ToneType } from "@lever-labs/common-ts/protocol"
 
 class WorkbenchClass {
 	public batteryData: BatteryMonitorData | null = null
 	public batteryDataLastUpdated: Date | null = null
 	public volume = 100
 	public isMuted = false
-	public selectedSound: TuneToPlay = "Chime"
+	public selectedTone: ToneType = ToneType.A
 	public isWiFiDialogOpen: boolean = false
 	public fixedWidth = 0
 	public windowHeight = 0
@@ -26,8 +26,8 @@ class WorkbenchClass {
 		this.isMuted = newIsMuted
 	})
 
-	public setSelectedSound = action((newSelectedSound: TuneToPlay): void => {
-		this.selectedSound = newSelectedSound
+	public setSelectedTone = action((newSelectedTone: ToneType): void => {
+		this.selectedTone = newSelectedTone
 	})
 
 	public setIsWiFiDialogOpen = action((newIsWiFiDialogOpen: boolean): void => {
@@ -97,7 +97,7 @@ class WorkbenchClass {
 	public logout(): void {
 		this.setVolume(100)
 		this.setIsMuted(false)
-		this.setSelectedSound("Chime")
+		this.setSelectedTone(ToneType.A)
 		this.setIsWiFiDialogOpen(false)
 		this.setFixedWidth(0)
 		this.setWindowHeight(0)

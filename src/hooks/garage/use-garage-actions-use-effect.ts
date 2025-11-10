@@ -30,8 +30,8 @@ export default function useGarageActionsUseEffect(): void {
 
 		const action = actionMappings[key]
 
-		// Skip if horn action and garage sounds are disabled by teacher
-		if (action === "horn" && !garageClass.garageSoundsStatus) return
+		// Skip if horn action and garage tones are disabled by teacher
+		if (action === "horn" && !garageClass.garageTonesStatus) return
 
 		// Skip if headlights action and garage lights are disabled by teacher
 		if (action === "headlights" && !garageClass.garageLightsStatus) return
@@ -59,8 +59,8 @@ export default function useGarageActionsUseEffect(): void {
 
 		const action = actionMappings[key]
 
-		// Skip if horn action and garage sounds are disabled by teacher
-		if (action === "horn" && !garageClass.garageSoundsStatus) return
+		// Skip if horn action and garage tones are disabled by teacher
+		if (action === "horn" && !garageClass.garageTonesStatus) return
 
 		// Skip if headlights action and garage lights are disabled by teacher
 		if (action === "headlights" && !garageClass.garageLightsStatus) return

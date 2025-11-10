@@ -80,9 +80,9 @@ export default class TeacherDataService extends BaseDataService {
 		)
 	}
 
-	async updateSoundsStatusForAllStudents(classCode: ClassCode, garageSoundsStatus: boolean): Promise<AxiosResponse<AllCommonResponses>> {
+	async updateTonesStatusForAllStudents(classCode: ClassCode, garageTonesStatus: boolean): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl(`/update-garage-sounds-all-students/${classCode}`), { garageSoundsStatus }
+			this.buildUrl(`/update-garage-tones-all-students/${classCode}`), { garageTonesStatus }
 		)
 	}
 
@@ -102,13 +102,13 @@ export default class TeacherDataService extends BaseDataService {
 		)
 	}
 
-	async updateIndividualStudentSoundsStatus(
+	async updateIndividualStudentTonesStatus(
 		classCode: ClassCode,
 		studentId: number,
-		garageSoundsStatus: boolean
+		garageTonesStatus: boolean
 	): Promise<AxiosResponse<AllCommonResponses>> {
 		return await this.httpClient.http.post<AllCommonResponses>(
-			this.buildUrl(`/update-individual-student-garage-sounds/${classCode}`), { studentId, garageSoundsStatus }
+			this.buildUrl(`/update-individual-student-garage-tones/${classCode}`), { studentId, garageTonesStatus }
 		)
 	}
 

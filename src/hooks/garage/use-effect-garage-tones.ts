@@ -1,46 +1,45 @@
 "use client"
 
 import { useEffect, useCallback } from "react"
-import { soundMappings } from "../../utils/constants/constants"
+import { toneMappings } from "../../utils/constants/constants"
 import garageClass from "../../classes/garage-class"
 import pipClass from "../../classes/pip-class"
-import playFunSound from "../../utils/garage/play-fun-sound"
+import playFunTone from "../../utils/garage/play-fun-tone"
 
-export default function useGarageSoundsUseEffect(isInGarage: boolean): void {
+export default function useGarageTonesUseEffect(isInGarage: boolean): void {
 	// Key event handlers
 	const handleKeyDown = useCallback((event: KeyboardEvent): void => {
 		// Skip if Connect to Pip dialog is open
 		if (pipClass.isConnectPipDialogOpen) return
 
-		// Skip if in garage and sounds are disabled by teacher
-		if (isInGarage && !garageClass.garageSoundsStatus) return
+		// Skip if in garage and tones are disabled by teacher
+		if (isInGarage && !garageClass.garageTonesStatus) return
 
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
 		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields
 
 		const key = event.key.toLowerCase()
-		if (!(key in soundMappings)) return
+		if (!(key in toneMappings)) return
 
-		const sound = soundMappings[key]
-		garageClass.setSoundPlaying(sound)
-		playFunSound(sound)
+		const tone = toneMappings[key]
+		playFunTone(tone)
 	}, [isInGarage])
 
 	const handleKeyUp = useCallback((event: KeyboardEvent): void => {
 		// Skip if Connect to Pip dialog is open
 		if (pipClass.isConnectPipDialogOpen) return
 
-		// Skip if in garage and sounds are disabled by teacher
-		if (isInGarage && !garageClass.garageSoundsStatus) return
+		// Skip if in garage and tones are disabled by teacher
+		if (isInGarage && !garageClass.garageTonesStatus) return
 
 		const target = event.target as HTMLElement
 		if (target.tagName === "INPUT" || target.tagName === "TEXTAREA" ||
 		target.isContentEditable) return // Skip processing keyboard shortcuts when typing in fields
 
 		const key = event.key.toLowerCase()
-		if (!(key in soundMappings)) return
-		garageClass.setSoundPlaying(null)
+		if (!(key in toneMappings)) return
+		playFunTone(null)
 	}, [isInGarage])
 
 	// Set up key event listeners
