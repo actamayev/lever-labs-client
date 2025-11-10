@@ -19,6 +19,20 @@ import { Button, buttonVariants } from "../../ui/button"
 import CustomTooltip from "../../custom-tooltip"
 import { ToneType } from "@lever-labs/common-ts/protocol"
 
+// Helper function to convert ToneType enum value to letter
+const getToneLetter = (tone: ToneType): string => {
+	const toneToLetter: Record<ToneType, string> = {
+		[ToneType.A]: "A",
+		[ToneType.B]: "B",
+		[ToneType.C]: "C",
+		[ToneType.D]: "D",
+		[ToneType.E]: "E",
+		[ToneType.F]: "F",
+		[ToneType.G]: "G",
+	}
+	return toneToLetter[tone] || tone.toString()
+}
+
 // Helper function to get button tooltip content
 const getButtonTooltipContent = (isSoundsDisabled: boolean, isMuted: boolean): string => {
 	if (isSoundsDisabled) {
@@ -93,7 +107,7 @@ function TestSounds(props: Props): React.ReactNode {
 										)}
 									>
 										<span className="text-xs font-medium">
-											{toUpper(workbenchClass.selectedTone.toString())}
+											{toUpper(getToneLetter(workbenchClass.selectedTone))}
 										</span>
 										<ChevronDown className="h-3 w-3" />
 									</div>
@@ -112,7 +126,7 @@ function TestSounds(props: Props): React.ReactNode {
 											className="cursor-pointer transition-none hover:bg-polar! rounded-lg"
 										>
 											<span className="text-sm font-medium">
-												{toUpper(tone.toString())}
+												{toUpper(getToneLetter(tone))}
 											</span>
 										</DropdownMenuItem>
 									))}
