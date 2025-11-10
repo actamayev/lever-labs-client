@@ -1,21 +1,13 @@
 "use client"
 
-import { Bot } from "lucide-react"
 import { observer } from "mobx-react"
 import { useRef, useEffect } from "react"
 import { ToneType } from "@lever-labs/common-ts/protocol"
 import { cn } from "../../../../lib/utils"
 import CustomTooltip from "../../../custom-tooltip"
-import { CustomUfo } from "../../../../icons/custom-ufo"
-import { CustomFart } from "../../../../icons/custom-fart"
 import garageClass from "../../../../classes/garage-class"
-import { CustomElephant } from "../../../../icons/custom-elephant"
 import { TactileButton } from "../../../buttons/tactile-button"
-import { CustomCountdown } from "../../../../icons/custom-countdown"
 import playFunTone from "../../../../utils/garage/play-fun-tone"
-import { CustomPartyPopper } from "../../../../icons/custom-party-popper"
-import { CustomHearNoEvilMonkey } from "../../../../icons/custom-hear-no-evil-monkey"
-import { CustomSpeakNoEvilMonkey } from "../../../../icons/custom-speak-no-evil-monkey"
 
 interface ToneActionButtonProps {
 	tone: ToneType
@@ -28,27 +20,18 @@ interface ToneActionButtonProps {
 	}
 }
 
-// Helper function to get sound icon
-const getToneIcon = (tone: ToneType, iconSize: string): React.ReactNode => {
-	switch (tone) {
-		case ToneType.A:
-			return <CustomFart className={iconSize} />
-		case ToneType.B:
-			if (garageClass.tonePlaying === ToneType.B) {
-				return <CustomHearNoEvilMonkey className={iconSize} />
-			}
-			return <CustomSpeakNoEvilMonkey className={iconSize} />
-		case ToneType.C:
-			return <CustomElephant className={iconSize} />
-		case ToneType.D:
-			return <CustomPartyPopper className={iconSize} />
-		case ToneType.E:
-			return <CustomUfo className={iconSize} />
-		case ToneType.F:
-			return <CustomCountdown className={iconSize} />
-		case ToneType.G:
-			return <Bot className={iconSize} />
+// Helper function to convert ToneType enum value to letter
+const getToneLetter = (tone: ToneType): string => {
+	const toneToLetter: Record<ToneType, string> = {
+		[ToneType.A]: "A",
+		[ToneType.B]: "B",
+		[ToneType.C]: "C",
+		[ToneType.D]: "D",
+		[ToneType.E]: "E",
+		[ToneType.F]: "F",
+		[ToneType.G]: "G",
 	}
+	return toneToLetter[tone] || tone.toString()
 }
 
 // Helper function to get button classes based on disabled state
@@ -82,9 +65,8 @@ const renderTooltipTrigger = (params: {
 	handleButtonUp: () => void
 	index: number
 	tone: ToneType
-	iconSize: string
 }): React.ReactNode => {
-	const { buttonRef, isDisabled, extraClasses, handleButtonDown, handleButtonUp, index, tone, iconSize } = params
+	const { buttonRef, isDisabled, extraClasses, handleButtonDown, handleButtonUp, index, tone } = params
 
 	return (
 		<div className="relative">
@@ -102,8 +84,11 @@ const renderTooltipTrigger = (params: {
 				<span className={getBorderClasses(isDisabled, extraClasses?.iconClasses)}>
 					{index}
 				</span>
-				<div className={cn(isDisabled && "opacity-50")}>
-					{getToneIcon(tone, iconSize)}
+				<div className={cn(
+					"text-2xl font-bold",
+					isDisabled && "opacity-50"
+				)}>
+					{getToneLetter(tone)}
 				</div>
 			</TactileButton>
 			{/* Invisible overlay for tooltip when disabled */}
@@ -117,7 +102,6 @@ const renderTooltipTrigger = (params: {
 function ToneActionButton(props: ToneActionButtonProps): React.ReactNode {
 	const { tone, index, extraClasses } = props
 	const buttonRef = useRef<HTMLButtonElement>(null)
-	const iconSize = extraClasses?.iconSize || "size-10!"
 
 	// Update button styling directly when isPressed changes
 	useEffect((): void => {
@@ -171,13 +155,12 @@ function ToneActionButton(props: ToneActionButtonProps): React.ReactNode {
 				handleButtonDown,
 				handleButtonUp,
 				index,
-				tone,
-				iconSize
+				tone
 			})}
 			tooltipContent={
 				isDisabled
 					? "Sounds disabled by teacher"
-					: `Play ${tone} tone`
+					: `Play ${getToneLetter(tone)} tone`
 			}
 		/>
 	)
