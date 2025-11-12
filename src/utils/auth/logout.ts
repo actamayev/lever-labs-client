@@ -18,6 +18,8 @@ import sensorDataClass from "../../classes/sensor-data-class"
 import chatManagerClass from "../../classes/chat-manager-class"
 import navigationManagerClass from "../../classes/navigation-manager-class"
 import { soundManager } from "../../classes/utility/sound-manager-class"
+import learnClass from "../../classes/learn-class"
+import gamesClass from "../../classes/games-class"
 
 export default async function logout(): Promise<void> {
 	authClass.setLoggingOut(true)
@@ -29,6 +31,8 @@ export default async function logout(): Promise<void> {
 		authClass.logout()
 		soundManager.cleanup()
 
+		learnClass.logout()
+		gamesClass.logout()
 		// Clear all client state
 		personalInfoClass.logout()
 		pipClass.logout()
@@ -49,6 +53,8 @@ export default async function logout(): Promise<void> {
 		authClass.logout()
 		soundManager.cleanup()
 
+		learnClass.logout()
+		gamesClass.logout()
 		// Even if API fails, clear local state and redirect
 		personalInfoClass.logout()
 		pipClass.logout()
