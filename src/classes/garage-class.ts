@@ -48,6 +48,7 @@ class GarageClass {
 	public garageTonesStatus: boolean = true
 	public garageLightsStatus: boolean = true
 	public garageDisplayStatus: boolean = true
+	public isSensorDataOpen: boolean = false
 
 	constructor() {
 		makeAutoObservable(this)
@@ -214,6 +215,10 @@ class GarageClass {
 		this.garageDisplayStatus = newGarageDisplayStatus
 	})
 
+	public setIsSensorDataOpen = action((newIsSensorDataOpen: boolean): void => {
+		this.isSensorDataOpen = newIsSensorDataOpen
+	})
+
 	public releaseAllPressedButtons = action((): void => {
 		// Stop any playing tones
 		this.setTonePlaying(null)
@@ -266,6 +271,7 @@ class GarageClass {
 		this.setGarageTonesStatus(true)
 		this.setGarageLightsStatus(true)
 		this.setGarageDisplayStatus(true)
+		this.setIsSensorDataOpen(false)
 	}
 }
 
