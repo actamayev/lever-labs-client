@@ -55,7 +55,7 @@ function FunctionToBlockQuestion(): React.ReactNode {
 						>
 							<div className="h-48 rounded-t-3xl overflow-hidden">
 								<LearnMiniSandbox
-									blocklyJson={choice.codingBlock.codingBlockJson}
+									codingBlock={choice.codingBlock}
 									className="w-full h-full rounded-t-3xl rounded-b-none"
 								/>
 							</div>

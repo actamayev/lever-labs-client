@@ -1,3 +1,5 @@
+import { CodingBlock } from "@lever-labs/common-ts/types/learn"
+
 /**
  * Random shuffle function using Fisher-Yates algorithm
  * Shuffles the array in place and returns it
@@ -21,9 +23,12 @@ export default function initializeMatchingQuestionShuffles(questions: LocalLesso
 			const matchingPairs = questionMap.question.matching.matchingAnswerChoice
 
 			// Extract coding blocks and shuffle
-			const codingBlocks = matchingPairs.map((pair): MatchingCodingBlock => ({
+			const codingBlocks = matchingPairs.map((pair): CodingBlock => ({
 				codingBlockId: pair.codingBlock.codingBlockId,
 				codingBlockJson: pair.codingBlock.codingBlockJson,
+				onClickCppToRun: pair.codingBlock.onClickCppToRun,
+				onReleaseCppToRun: pair.codingBlock.onReleaseCppToRun,
+				needsManualSendButton: pair.codingBlock.needsManualSendButton
 			}))
 
 			// Extract matching answer choices and shuffle

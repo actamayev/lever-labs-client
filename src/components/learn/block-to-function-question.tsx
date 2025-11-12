@@ -39,7 +39,7 @@ function BlockToFunctionQuestion(): React.ReactNode {
 			{/* Question: Show the block */}
 			<div className="flex justify-center">
 				<div className="relative h-48 w-96">
-					<LearnMiniSandbox blocklyJson={codingBlock.codingBlockJson} className="w-full h-full" />
+					<LearnMiniSandbox codingBlock={codingBlock} className="w-full h-full" />
 				</div>
 			</div>
 

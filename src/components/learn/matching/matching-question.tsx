@@ -34,10 +34,10 @@ function MatchingQuestion(): React.ReactNode {
 			<div className="flex flex-col lg:flex-row gap-8 justify-center items-center" style={{ transform: "translateY(2rem)" }}>
 				{/* Left side: Coding blocks */}
 				<div className="flex flex-col gap-3 w-full lg:w-auto">
-					{sortedCodingBlocks.map((block, index): React.ReactNode => (
+					{sortedCodingBlocks.map((codingBlock, index): React.ReactNode => (
 						<SingleMatchingCodingBlock
-							key={block.codingBlockId}
-							block={block}
+							key={codingBlock.codingBlockId}
+							codingBlock={codingBlock}
 							index={index}
 						/>
 					))}

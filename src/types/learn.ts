@@ -1,4 +1,4 @@
-import { LessonQuestionMap, Question, Lesson, QuestionType } from "@lever-labs/common-ts/types/learn"
+import { LessonQuestionMap, Question, Lesson, QuestionType, CodingBlock } from "@lever-labs/common-ts/types/learn"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 
 declare global {
@@ -35,7 +35,7 @@ declare global {
 			// Track which matching answer choice text IDs have been correctly matched (for disabling)
 			correctlyMatchedChoiceIds: number[]
 			// Shuffled order of coding blocks (left side) - stored to ensure consistency between component and keyboard handler
-			shuffledCodingBlocks?: MatchingCodingBlock[]
+			shuffledCodingBlocks?: CodingBlock[]
 			// Shuffled order of matching answer choices (right side) - stored to ensure consistency between component and keyboard handler
 			shuffledMatchingChoices?: MatchingTextChoice[]
 		}
@@ -66,11 +66,6 @@ declare global {
 	interface SubmitMCQResponse {
 		isCorrect: boolean
 		correctAnswerChoiceId?: number
-	}
-
-	interface MatchingCodingBlock {
-		codingBlockId: number
-		codingBlockJson: BlocklyJson
 	}
 
 	interface MatchingTextChoice {
