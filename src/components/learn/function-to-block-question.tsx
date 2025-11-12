@@ -1,5 +1,7 @@
 "use client"
 import { observer } from "mobx-react"
+import { useCallback, useRef } from "react"
+import { CodingBlock } from "@lever-labs/common-ts/types/learn"
 import learnClass from "../../classes/learn-class"
 // import { TactileButton } from "../shadcn/ui/tactile-button"
 import LearnMiniSandbox from "./learn-mini-sandbox"
@@ -7,15 +9,44 @@ import usePressEnterQuestionKeyboardHandler from "../../hooks/learn/use-press-en
 import useFunctionToBlockKeyboardHandler from "../../hooks/learn/use-function-to-block-keyboard-handler"
 import useFunctionToBlockEscapeHandler from "../../hooks/learn/use-function-to-block-escape-handler"
 import { cn } from "../../lib/utils"
+import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
+
 
 function FunctionToBlockQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
+	const timeoutRef = useRef<Record<number, NodeJS.Timeout | undefined>>({})
 
 	// Use the keyboard handler hooks
 	usePressEnterQuestionKeyboardHandler()
 	useFunctionToBlockKeyboardHandler()
 	useFunctionToBlockEscapeHandler()
+
+	const handleMouseDown = useCallback(async (
+		choiceId: number,
+		codingBlock: CodingBlock
+	): Promise<void> => {
+		// Send click code immediately
+		if (codingBlock.onClickCppToRun) {
+			await sendCppToPip(codingBlock.onClickCppToRun)
+		}
+
+		// Clear any existing timeout for this choice
+		if (timeoutRef.current[choiceId]) {
+			clearTimeout(timeoutRef.current[choiceId])
+		}
+
+		// Set a 2-second timeout to send release code
+		if (codingBlock.onReleaseCppToRun) {
+			const releaseCpp = codingBlock.onReleaseCppToRun
+			timeoutRef.current[choiceId] = setTimeout(async (): Promise<void> => {
+				if (releaseCpp) {
+					await sendCppToPip(releaseCpp)
+					timeoutRef.current[choiceId] = undefined
+				}
+			}, 2000)
+		}
+	}, [])
 
 	if (!currentQuestionState?.question.functionToBlockFlashcard) return null
 
@@ -39,6 +70,9 @@ function FunctionToBlockQuestion(): React.ReactNode {
 					const isSelected = selectedAnswerId === choice.functionToBlockAnswerChoiceId
 					const cardNumber = index + 1
 
+					const hasClickOrReleaseHandlers = choice.codingBlock.onClickCppToRun !== null ||
+						choice.codingBlock.onReleaseCppToRun !== null
+
 					return (
 						<div
 							className={cn(
@@ -51,9 +85,20 @@ function FunctionToBlockQuestion(): React.ReactNode {
 									learnClass.setSelectedAnswer(choice.functionToBlockAnswerChoiceId)
 								}
 							}}
+							onMouseDown={hasClickOrReleaseHandlers ?
+								(): void => {
+									void handleMouseDown(choice.functionToBlockAnswerChoiceId, choice.codingBlock)
+								} :
+								undefined}
+							data-choice-id={choice.functionToBlockAnswerChoiceId}
 							key={choice.functionToBlockAnswerChoiceId}
 						>
-							<div className="h-48 rounded-t-3xl overflow-hidden">
+							<div
+								className={cn(
+									"h-48 rounded-t-3xl overflow-hidden",
+									hasClickOrReleaseHandlers && "pointer-events-none"
+								)}
+							>
 								<LearnMiniSandbox
 									codingBlock={choice.codingBlock}
 									className="w-full h-full rounded-t-3xl rounded-b-none"
