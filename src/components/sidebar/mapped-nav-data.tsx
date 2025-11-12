@@ -83,8 +83,12 @@ function MappedNavData(): React.ReactNode {
 	// Build navData conditionally
 	const navData = [...baseNavData]
 
-	// Add student nav if user has active classes
+	// Remove arcade nav if user is a student (has active classes)
 	if (hasActiveClasses) {
+		const arcadeIndex = navData.findIndex((item): boolean => item.title === "Arcade")
+		if (arcadeIndex !== -1) {
+			navData.splice(arcadeIndex, 1)
+		}
 		navData.push(studentNavData)
 	}
 
