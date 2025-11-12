@@ -178,17 +178,22 @@ function MeetPipS6P4MzViz({ canvasSize = 450 }: MeetPipS6P4MzVizProps): React.Re
 					/>
 
 					{/* Tooltip */}
-					{hoveredCell && (
-						<div className="absolute bg-black bg-opacity-75 text-white px-3 py-2 rounded text-sm pointer-events-none z-10"
-							style={{
-								left: `${hoveredCell.col * cellSize + padding + cellSize / 2}px`,
-								top: `${hoveredCell.row * cellSize + padding - 30}px`,
-								transform: "translateX(-50%)"
-							}}
-						>
-							Cell ({hoveredCell.row + 1}, {hoveredCell.col + 1}): {hoveredCell.value}mm
-						</div>
-					)}
+					{hoveredCell && ((): React.ReactNode => {
+						// Read the current value directly from sensor data to ensure it updates in real-time
+						const rowData = sensorDataClass.distanceGrid[hoveredCell.row]
+						const currentValue = (rowData && rowData.length === 8) ? (rowData[hoveredCell.col] || 0) : 0
+						return (
+							<div className="absolute bg-black bg-opacity-75 text-white px-3 py-2 rounded text-sm pointer-events-none z-10"
+								style={{
+									left: `${hoveredCell.col * cellSize + padding + cellSize / 2}px`,
+									top: `${hoveredCell.row * cellSize + padding - 30}px`,
+									transform: "translateX(-50%)"
+								}}
+							>
+								Cell ({hoveredCell.row + 1}, {hoveredCell.col + 1}): {currentValue}mm
+							</div>
+						)
+					})()}
 				</div>
 			</div>
 

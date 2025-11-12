@@ -55,7 +55,7 @@ function SensorDataSection(): React.ReactNode {
 					<div className="flex-1 overflow-auto">
 						{garageClass.currentSensorDataTab === "imu" && (
 							<div className="w-full h-full">
-								<MeetPipS5P4ImuViz chartHeight={190} yAxisWidth={25} />
+								<MeetPipS5P4ImuViz chartHeight={190} yAxisWidth={50} />
 							</div>
 						)}
 
