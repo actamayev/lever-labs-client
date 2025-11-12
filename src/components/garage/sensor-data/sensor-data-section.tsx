@@ -24,7 +24,7 @@ function SensorDataSection(): React.ReactNode {
 		<div
 			className="h-2/3 overflow-hidden border-b border-r border-t border-swan"
 			style={{
-				borderTopRightRadius: WORKBENCH_ROUNDING_RADIUS,
+				borderTopRightRadius: 0,
 				borderBottomRightRadius: WORKBENCH_ROUNDING_RADIUS
 			}}
 		>
