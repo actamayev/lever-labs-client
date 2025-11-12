@@ -35,23 +35,21 @@ function LessonList(): React.ReactNode {
 	}
 
 	return (
-		<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-6">
+		<div className="flex flex-col gap-2 py-6">
 			{lessons.map((lesson): React.ReactNode => (
 				<div
 					key={lesson.lessonId}
 					onClick={(): void => goToLearnPage(lesson.lessonId)}
-					className="bg-standard-background rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer p-6 border border-swan"
+					className="bg-standard-background rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer p-4 border border-swan flex items-center justify-between"
 				>
-					<div className="flex items-center justify-between mb-4">
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-							{lesson.lessonName}
-						</h3>
-						{lesson.isCompleted && (
-							<div className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-sm font-medium">
-								Completed
-							</div>
-						)}
-					</div>
+					<h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+						{lesson.lessonName}
+					</h3>
+					{lesson.isCompleted && (
+						<div className="bg-green-100 dark:bg-green-900 text-green-800 dark:text-green-200 px-2 py-1 rounded-full text-sm font-medium">
+							Completed
+						</div>
+					)}
 				</div>
 			))}
 		</div>
