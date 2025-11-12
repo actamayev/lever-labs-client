@@ -4,12 +4,15 @@
 import { observer } from "mobx-react"
 import { isEmpty } from "lodash-es"
 import learnClass from "../../classes/learn-class"
+import studentClass from "../../classes/student-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { useCallback } from "react"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 
 function LessonList(): React.ReactNode {
-	const lessons = Array.from(learnClass.lessonsById.values()).sort((a, b): number => a.lessonOrder - b.lessonOrder)
+	const allLessons = Array.from(learnClass.lessonsById.values()).sort((a, b): number => a.lessonOrder - b.lessonOrder)
+	const isStudent = !isEmpty(studentClass.classroomData)
+	const lessons = isStudent ? allLessons : allLessons.filter((lesson): boolean => lesson.lessonOrder >= 5)
 	const navigate = useTypedNavigate()
 	// currentQuestionIndex no longer needed for triggering enter here
 
