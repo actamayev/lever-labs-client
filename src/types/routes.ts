@@ -6,9 +6,9 @@ declare global {
 	| "/sandbox"
 	| `/sandbox/${SandboxProjectUUID}`
 
-	type LearnPages =
-	| "/learn"
-	| `/learn/${LessonUUID}`
+	type QuestPages =
+	| "/quest"
+	| `/quest/${LessonUUID}`
 
 	type TeacherPages =
 	| "/scoreboard"
@@ -27,7 +27,7 @@ declare global {
 
 	type StaticPageNames = (typeof staticPages)[number];
 
-	type PageNames = (typeof allPages)[number] | SandboxPages | TeacherPages | WhiteboardPages | LearnPages;
+	type PageNames = (typeof allPages)[number] | SandboxPages | TeacherPages | WhiteboardPages | QuestPages;
 }
 
 export {}

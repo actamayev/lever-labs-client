@@ -26,7 +26,7 @@ function CheckContinueButton({ lessonId }: { lessonId: LessonUUID }): React.Reac
 		// Handle lesson completion screen - navigate back to learn
 		if (isLessonCompleted) {
 			learnClass.setIsNavigatingAway(true)
-			navigate("/learn")
+			navigate("/quest")
 			// Reset states after navigation has started
 			setTimeout((): void => {
 				learnClass.resetLessonProgress(lessonId)

@@ -4,7 +4,7 @@ import { CodingBlock } from "@lever-labs/common-ts/types/learn"
  * Random shuffle function using Fisher-Yates algorithm
  * Shuffles the array in place and returns it
  */
-export function shuffle<T>(array: T[]): T[] {
+function shuffle<T>(array: T[]): T[] {
 	const result = array.slice()
 	for (let i = result.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1))

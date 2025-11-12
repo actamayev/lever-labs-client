@@ -70,7 +70,7 @@ function LessonHeader({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
 			return
 		}
 
-		navigate("/learn")
+		navigate("/quest")
 		stopCurrentlyRunningCode(true)
 		learnClass.resetLessonProgress(lessonId)
 	}, [navigate, lessonId])

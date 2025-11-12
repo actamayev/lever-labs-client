@@ -1,6 +1,6 @@
 "use client"
 
-import { Book, School } from "lucide-react"
+import { Map, School } from "lucide-react"
 import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
 import { useCallback, useMemo } from "react"
@@ -20,10 +20,10 @@ import teacherClass from "../../classes/teacher-class"
 
 const baseNavData: SidebarNavData[] = [
 	{
-		title: "Learn",
-		url: "/learn",
-		icon: Book,
-		textColor: "text-fox"
+		title: "Quest",
+		url: "/quest",
+		icon: Map,
+		textColor: "text-charging-green-2"
 	},
 	// {
 	// 	title: "Career Quest",
