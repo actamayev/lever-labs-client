@@ -6,6 +6,11 @@ import { Gauge, Radar, ScanLine, Palette, GaugeCircle } from "lucide-react"
 import { Tabs, TabsList, TabsTrigger, TabsContent, TabsContents } from "../../ui/shadcn-io/tabs"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import garageClass from "../../../classes/garage-class"
+import MeetPipS5P4ImuViz from "../../career-quest/cq-right-components/meet-pip/meet-pip-s5-p4-imu-viz"
+import MeetPipS6P4MzViz from "../../career-quest/cq-right-components/meet-pip/meet-pip-s6-p4-mz-viz"
+import MeetPipS6P6TofsViz from "../../career-quest/cq-right-components/meet-pip/meet-pip-s6-p6-tofs-viz"
+import MeetPipS8P3ColorViz from "../../career-quest/cq-right-components/meet-pip/meet-pip-s8-p3-color-viz"
+import MeetPipS9P6EncoderViz from "../../career-quest/cq-right-components/meet-pip/meet-pip-s9-p6-encoder-viz"
 
 function SensorDataSection(): React.ReactNode {
 	const isInitialMount = useRef(true)
@@ -59,33 +64,23 @@ function SensorDataSection(): React.ReactNode {
 						transition={isInitialMount.current ? { duration: 0 } : undefined}
 					>
 						<TabsContent value="imu" className="w-full h-full">
-							<div className="h-full flex items-center justify-center">
-								<div className="text-lg">IMU Sensor Data</div>
-							</div>
+							<MeetPipS5P4ImuViz chartHeight={190} yAxisWidth={25} />
 						</TabsContent>
 
 						<TabsContent value="side-distance" className="w-full h-full">
-							<div className="h-full flex items-center justify-center">
-								<div className="text-lg">Side Distance Sensors Data</div>
-							</div>
+							<MeetPipS6P6TofsViz />
 						</TabsContent>
 
 						<TabsContent value="front-distance" className="w-full h-full">
-							<div className="h-full flex items-center justify-center">
-								<div className="text-lg">Front Distance Sensor Data</div>
-							</div>
+							<MeetPipS6P4MzViz canvasSize={300} />
 						</TabsContent>
 
 						<TabsContent value="color" className="w-full h-full">
-							<div className="h-full flex items-center justify-center">
-								<div className="text-lg">Color Sensor Data</div>
-							</div>
+							<MeetPipS8P3ColorViz />
 						</TabsContent>
 
 						<TabsContent value="motors" className="w-full h-full">
-							<div className="h-full flex items-center justify-center">
-								<div className="text-lg">Motors Data</div>
-							</div>
+							<MeetPipS9P6EncoderViz />
 						</TabsContent>
 					</TabsContents>
 				</Tabs>

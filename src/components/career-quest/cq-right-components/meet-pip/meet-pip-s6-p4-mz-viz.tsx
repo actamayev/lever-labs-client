@@ -6,8 +6,12 @@ import sensorDataClass from "../../../../classes/sensor-data-class"
 import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
+interface MeetPipS6P4MzVizProps {
+	canvasSize?: number
+}
+
 // eslint-disable-next-line max-lines-per-function
-function MeetPipS6P4MzViz(): React.ReactNode {
+function MeetPipS6P4MzViz({ canvasSize = 450 }: MeetPipS6P4MzVizProps): React.ReactNode {
 	useCareerQuestTrigger(
 		CareerType.MEET_PIP,
 		MeetPipTriggerType.S6_P4_ENTER,
@@ -19,7 +23,6 @@ function MeetPipS6P4MzViz(): React.ReactNode {
 	const [hoveredCell, setHoveredCell] = useState<{ row: number; col: number; value: number } | null>(null)
 
 	// Canvas configuration
-	const canvasSize = 450
 	const gridSize = 8
 	const cellSize = canvasSize / gridSize
 	const padding = 0
