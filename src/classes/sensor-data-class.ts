@@ -1,13 +1,11 @@
 "use client"
 
-import { isNil } from "lodash-es"
 import { action, makeAutoObservable } from "mobx"
 import { SensorPayload, SensorPayloadMZ } from "@lever-labs/common-ts/types/pip"
 
 class SensorDataClass {
 	public leftWheelRPM: number[] = []
 	public rightWheelRPM: number[] = []
-	public irSensorData: (number[] & { length: 5 })[] = [] // This is an array of arrays of 5 numbers
 	public redValue: number[] = []
 	public greenValue: number[] = []
 	public blueValue: number[] = []
@@ -41,10 +39,8 @@ class SensorDataClass {
 				)
 			}
 		})
-		// Handle IR sensor data separately if it exists
-		if (!isNil(sensorData.irSensorData)) {
-			this.addIrSensorData(sensorData.irSensorData)
-		}
+		// Increment version once per sensor data update for reactivity
+		this.dataVersion++
 	})
 
 	// Add a method that takes in a key and automatiaclly adds the value to the array, ommiting the key if it is irSensorData
@@ -53,15 +49,6 @@ class SensorDataClass {
 		// limit to 100 (first in, first out)
 		if (this[key].length >= 100) {
 			this[key].shift()
-		}
-		this.dataVersion++ // Increment version for reactivity
-	})
-
-	private addIrSensorData = action((value: number[] & { length: 5 }): void => {
-		this.irSensorData.push(value)
-		// limit to 100 (first in, first out)
-		if (this.irSensorData.length >= 100) {
-			this.irSensorData.shift()
 		}
 	})
 
@@ -79,7 +66,6 @@ class SensorDataClass {
 	public deleteSensorData = action((): void => {
 		this.leftWheelRPM = []
 		this.rightWheelRPM = []
-		this.irSensorData = []
 		this.redValue = []
 		this.greenValue = []
 		this.blueValue = []
@@ -104,6 +90,7 @@ class SensorDataClass {
 		this.leftSideTofCounts = []
 		this.rightSideTofCounts = []
 		this.distanceGrid = Array.from({ length: 8 }, (): number[] => Array(8).fill(0))
+		this.dataVersion = 0
 	})
 
 	public logout(): void {

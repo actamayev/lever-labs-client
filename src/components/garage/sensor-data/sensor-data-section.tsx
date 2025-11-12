@@ -1,9 +1,8 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { useEffect, useRef } from "react"
 import { Gauge, Radar, ScanLine, Palette, GaugeCircle } from "lucide-react"
-import { Tabs, TabsList, TabsTrigger, TabsContent, TabsContents } from "../../ui/shadcn-io/tabs"
+import { Tabs, TabsList, TabsTrigger } from "../../ui/shadcn-io/tabs"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import garageClass from "../../../classes/garage-class"
 import MeetPipS5P4ImuViz from "../../career-quest/cq-right-components/meet-pip/meet-pip-s5-p4-imu-viz"
@@ -13,12 +12,6 @@ import MeetPipS8P3ColorViz from "../../career-quest/cq-right-components/meet-pip
 import MeetPipS9P6EncoderViz from "../../career-quest/cq-right-components/meet-pip/meet-pip-s9-p6-encoder-viz"
 
 function SensorDataSection(): React.ReactNode {
-	const isInitialMount = useRef(true)
-
-	useEffect((): void => {
-		// After the first render, allow animations
-		isInitialMount.current = false
-	}, [])
 
 	return (
 		<div
@@ -59,30 +52,37 @@ function SensorDataSection(): React.ReactNode {
 						</TabsTrigger>
 					</TabsList>
 
-					<TabsContents
-						className="flex-1 overflow-auto"
-						transition={isInitialMount.current ? { duration: 0 } : undefined}
-					>
-						<TabsContent value="imu" className="w-full h-full">
-							<MeetPipS5P4ImuViz chartHeight={190} yAxisWidth={25} />
-						</TabsContent>
+					<div className="flex-1 overflow-auto">
+						{garageClass.currentSensorDataTab === "imu" && (
+							<div className="w-full h-full">
+								<MeetPipS5P4ImuViz chartHeight={190} yAxisWidth={25} />
+							</div>
+						)}
 
-						<TabsContent value="side-distance" className="w-full h-full">
-							<MeetPipS6P6TofsViz />
-						</TabsContent>
+						{garageClass.currentSensorDataTab === "side-distance" && (
+							<div className="w-full h-full">
+								<MeetPipS6P6TofsViz />
+							</div>
+						)}
 
-						<TabsContent value="front-distance" className="w-full h-full">
-							<MeetPipS6P4MzViz canvasSize={300} />
-						</TabsContent>
+						{garageClass.currentSensorDataTab === "front-distance" && (
+							<div className="w-full h-full">
+								<MeetPipS6P4MzViz canvasSize={300} />
+							</div>
+						)}
 
-						<TabsContent value="color" className="w-full h-full">
-							<MeetPipS8P3ColorViz />
-						</TabsContent>
+						{garageClass.currentSensorDataTab === "color" && (
+							<div className="w-full h-full">
+								<MeetPipS8P3ColorViz />
+							</div>
+						)}
 
-						<TabsContent value="motors" className="w-full h-full">
-							<MeetPipS9P6EncoderViz />
-						</TabsContent>
-					</TabsContents>
+						{garageClass.currentSensorDataTab === "motors" && (
+							<div className="w-full h-full">
+								<MeetPipS9P6EncoderViz />
+							</div>
+						)}
+					</div>
 				</Tabs>
 			</div>
 		</div>
