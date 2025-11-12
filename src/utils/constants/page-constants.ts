@@ -8,7 +8,8 @@ export const PrivatePageNames: PageNames[] = [
 	"/class-manager",
 	"/whiteboard",
 	"/scoreboard",
-	"/quest"
+	"/quest",
+	"/arcade"
 ]
 
 // These are pages that you can view if you're logged in or not.
@@ -35,6 +36,7 @@ export const staticPages = [
 	"/settings/schools",
 	"/scoreboard",
 	"/quest",
+	"/arcade",
 
 	"/career-quest",
 	"/career-quest/meet-pip",

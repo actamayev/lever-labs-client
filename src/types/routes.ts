@@ -23,11 +23,14 @@ declare global {
 	| "/whiteboard"
 	| `/whiteboard/${ClassCode}`
 
+	type ArcadePages =
+	| "/arcade"
+
 	type CareerQuestPages = (typeof careerQuestPages)[number];
 
 	type StaticPageNames = (typeof staticPages)[number];
 
-	type PageNames = (typeof allPages)[number] | SandboxPages | TeacherPages | WhiteboardPages | QuestPages;
+	type PageNames = (typeof allPages)[number] | SandboxPages | TeacherPages | WhiteboardPages | QuestPages | ArcadePages;
 }
 
 export {}

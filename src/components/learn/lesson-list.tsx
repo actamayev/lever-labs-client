@@ -18,7 +18,7 @@ function LessonList(): React.ReactNode {
 
 	const goToLearnPage = useCallback((lessonId: LessonUUID): void => {
 		// S8_P3_ENTER is now triggered within the MeetPipS8P3ColorViz component on mount
-		navigate(`/learn/${lessonId}`)
+		navigate(`/quest/${lessonId}`)
 	}, [navigate])
 
 	if (learnClass.isRetrievingAllLessons) {

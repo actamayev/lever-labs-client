@@ -1,6 +1,6 @@
 "use client"
 
-import { Map, School } from "lucide-react"
+import { Gamepad, Map, School } from "lucide-react"
 import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
 import { useCallback, useMemo } from "react"
@@ -42,6 +42,12 @@ const baseNavData: SidebarNavData[] = [
 		url: "/garage",
 		icon: CustomGarage,
 		textColor: "text-humpback"
+	},
+	{
+		title: "Arcade",
+		url: "/arcade",
+		icon: Gamepad,
+		textColor: "text-fox"
 	}
 ]
 

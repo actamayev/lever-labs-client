@@ -23,6 +23,7 @@ export default function robots(): MetadataRoute.Robots {
 					"/whiteboard/",
 					"/scoreboard/",
 					"/quest/",
+					"/arcade/",
 					"/login",             // Utility pages
 					"/register",
 					"/register-google"
