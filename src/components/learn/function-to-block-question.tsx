@@ -11,7 +11,6 @@ import useFunctionToBlockEscapeHandler from "../../hooks/learn/use-function-to-b
 import { cn } from "../../lib/utils"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 
-
 function FunctionToBlockQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
