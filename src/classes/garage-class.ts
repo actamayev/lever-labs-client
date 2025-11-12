@@ -49,6 +49,7 @@ class GarageClass {
 	public garageLightsStatus: boolean = true
 	public garageDisplayStatus: boolean = true
 	public isSensorDataOpen: boolean = false
+	public currentSensorDataTab: SensorDataTab = "imu"
 
 	constructor() {
 		makeAutoObservable(this)
@@ -219,6 +220,10 @@ class GarageClass {
 		this.isSensorDataOpen = newIsSensorDataOpen
 	})
 
+	public setCurrentSensorDataTab = action((tab: SensorDataTab): void => {
+		this.currentSensorDataTab = tab
+	})
+
 	public releaseAllPressedButtons = action((): void => {
 		// Stop any playing tones
 		this.setTonePlaying(null)
@@ -272,6 +277,7 @@ class GarageClass {
 		this.setGarageLightsStatus(true)
 		this.setGarageDisplayStatus(true)
 		this.setIsSensorDataOpen(false)
+		this.setCurrentSensorDataTab("imu")
 	}
 }
 

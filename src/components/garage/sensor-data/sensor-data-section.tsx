@@ -1,11 +1,20 @@
 "use client"
 
 import { observer } from "mobx-react"
+import { useEffect, useRef } from "react"
 import { Gauge, Radar, ScanLine, Palette, GaugeCircle } from "lucide-react"
 import { Tabs, TabsList, TabsTrigger, TabsContent, TabsContents } from "../../ui/shadcn-io/tabs"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
+import garageClass from "../../../classes/garage-class"
 
 function SensorDataSection(): React.ReactNode {
+	const isInitialMount = useRef(true)
+
+	useEffect((): void => {
+		// After the first render, allow animations
+		isInitialMount.current = false
+	}, [])
+
 	return (
 		<div
 			className="h-2/3 overflow-hidden border-b border-r border-t border-swan"
@@ -15,7 +24,13 @@ function SensorDataSection(): React.ReactNode {
 			}}
 		>
 			<div className="h-full flex flex-col p-4">
-				<Tabs defaultValue="imu" className="w-full h-full flex flex-col">
+				<Tabs
+					value={garageClass.currentSensorDataTab}
+					onValueChange={(value): void => {
+						garageClass.setCurrentSensorDataTab(value as SensorDataTab)
+					}}
+					className="w-full h-full flex flex-col"
+				>
 					<TabsList className="mb-4 bg-polar w-full grid grid-cols-5">
 						<TabsTrigger value="imu" className="flex items-center justify-center gap-2 text-xs">
 							<Gauge className="h-4 w-4" />
@@ -39,7 +54,10 @@ function SensorDataSection(): React.ReactNode {
 						</TabsTrigger>
 					</TabsList>
 
-					<TabsContents className="flex-1 overflow-auto">
+					<TabsContents
+						className="flex-1 overflow-auto"
+						transition={isInitialMount.current ? { duration: 0 } : undefined}
+					>
 						<TabsContent value="imu" className="w-full h-full">
 							<div className="h-full flex items-center justify-center">
 								<div className="text-lg">IMU Sensor Data</div>
