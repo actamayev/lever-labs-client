@@ -1,4 +1,4 @@
-import Quest from "../../src/components/learn/learn"
+import Quest from "../../src/components/quest/quest"
 import AuthenticatedLayout from "../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../src/utils/seo/create-metadata"
 
