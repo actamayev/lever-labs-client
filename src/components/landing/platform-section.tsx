@@ -6,17 +6,15 @@ import { cn } from "@/lib/utils"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/shadcn-io/tabs"
 import { platformTabs } from "./tab-content"
 import LandingContainer from "./landing-container"
-import { CustomGarage } from "../../icons/custom-garage"
-import { CustomSandbox } from "../../icons/custom-sandbox"
 import LandingSectionHeaderText from "./landing-section-header-text"
 
 // Helper function to get background color class
-const getBackgroundColorClass = (themeColor: "lever-red" | "lever-yellow" | "lever-blue"): string => {
+const getBackgroundColorClass = (themeColor: "lever-red" | "charging-green-2" | "lever-blue"): string => {
 	switch (themeColor) {
 		case "lever-red":
 			return "bg-lever-red/8"
-		case "lever-yellow":
-			return "bg-lever-yellow/8"
+		case "charging-green-2":
+			return "bg-charging-green-2/8"
 		case "lever-blue":
 			return "bg-lever-blue/8"
 		default:
@@ -25,12 +23,12 @@ const getBackgroundColorClass = (themeColor: "lever-red" | "lever-yellow" | "lev
 }
 
 // Helper function to get icon color class
-const getIconColorClass = (themeColor: "lever-red" | "lever-yellow" | "lever-blue"): string => {
+const getIconColorClass = (themeColor: "lever-red" | "charging-green-2" | "lever-blue"): string => {
 	switch (themeColor) {
 		case "lever-red":
 			return "text-lever-red"
-		case "lever-yellow":
-			return "text-lever-yellow"
+		case "charging-green-2":
+			return "text-charging-green-2"
 		case "lever-blue":
 			return "text-lever-blue"
 		default:
@@ -40,7 +38,7 @@ const getIconColorClass = (themeColor: "lever-red" | "lever-yellow" | "lever-blu
 
 // eslint-disable-next-line max-lines-per-function
 export default function PlatformSection(): React.ReactNode {
-	const [activeTab, setActiveTab] = useState<"learn" | "sandbox" | "garage">("learn")
+	const [activeTab, setActiveTab] = useState<"quest" | "sandbox" | "garage">("quest")
 
 	return (
 		<section className="bg-polar py-8 md:py-16">
@@ -56,7 +54,7 @@ export default function PlatformSection(): React.ReactNode {
 				{/* Tabs */}
 				<Tabs
 					value={activeTab}
-					onValueChange={(value): void => setActiveTab(value as "learn" | "sandbox" | "garage")}
+					onValueChange={(value): void => setActiveTab(value as "quest" | "sandbox" | "garage")}
 					className="w-full"
 				>
 					{/* Mobile: Scrollable tabs */}
@@ -64,11 +62,6 @@ export default function PlatformSection(): React.ReactNode {
 						<div className="overflow-x-auto scrollbar-hide px-1">
 							<TabsList className="inline-flex w-max min-w-full h-auto p-2 gap-3">
 								{platformTabs.map((tab): React.ReactNode => {
-									// eslint-disable-next-line no-nested-ternary
-									const IconComponent = tab.useCustomIcon
-										? (tab.id === "sandbox" ? CustomSandbox : CustomGarage)
-										: tab.icon
-
 									return (
 										<TabsTrigger
 											key={tab.id}
@@ -76,7 +69,7 @@ export default function PlatformSection(): React.ReactNode {
 											aria-label={tab.label}
 											className="gap-2 text-base font-semibold h-auto whitespace-nowrap shrink-0 px-4 py-3 min-w-fit"
 										>
-											<IconComponent className={cn("size-5", getIconColorClass(tab.themeColor))} />
+											<tab.icon className={cn("size-5", getIconColorClass(tab.themeColor))} />
 											{tab.label}
 										</TabsTrigger>
 									)
@@ -88,11 +81,6 @@ export default function PlatformSection(): React.ReactNode {
 					{/* Desktop: Grid tabs */}
 					<TabsList className="hidden md:grid w-full grid-cols-3 mb-8 h-auto p-2">
 						{platformTabs.map((tab): React.ReactNode => {
-							// eslint-disable-next-line no-nested-ternary
-							const IconComponent = tab.useCustomIcon
-								? (tab.id === "sandbox" ? CustomSandbox : CustomGarage)
-								: tab.icon
-
 							return (
 								<TabsTrigger
 									key={tab.id}
@@ -100,7 +88,7 @@ export default function PlatformSection(): React.ReactNode {
 									aria-label={tab.label}
 									className="gap-2 text-2xl sm:text-3xl font-semibold h-auto data-[state=active]:bg"
 								>
-									<IconComponent className={cn("size-6 sm:size-8", getIconColorClass(tab.themeColor))} />
+									<tab.icon className={cn("size-6 sm:size-8", getIconColorClass(tab.themeColor))} />
 									{tab.label}
 								</TabsTrigger>
 							)

@@ -6,9 +6,9 @@ declare global {
 	| "/sandbox"
 	| `/sandbox/${SandboxProjectUUID}`
 
-	type LearnPages =
-	| "/learn"
-	| `/learn/${LessonUUID}`
+	type QuestPages =
+	| "/quest"
+	| `/quest/${LessonUUID}`
 
 	type TeacherPages =
 	| "/scoreboard"
@@ -23,11 +23,14 @@ declare global {
 	| "/whiteboard"
 	| `/whiteboard/${ClassCode}`
 
+	type ArcadePages =
+	| "/arcade"
+
 	type CareerQuestPages = (typeof careerQuestPages)[number];
 
 	type StaticPageNames = (typeof staticPages)[number];
 
-	type PageNames = (typeof allPages)[number] | SandboxPages | TeacherPages | WhiteboardPages | LearnPages;
+	type PageNames = (typeof allPages)[number] | SandboxPages | TeacherPages | WhiteboardPages | QuestPages | ArcadePages;
 }
 
 export {}

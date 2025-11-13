@@ -15,8 +15,13 @@ import sensorDataClass from "../../../../classes/sensor-data-class"
 import { MeetPipTriggerType, CareerType } from "@lever-labs/common-ts/protocol"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
+interface MeetPipS5P4ImuVizProps {
+	chartHeight?: number
+	yAxisWidth?: number
+}
+
 // eslint-disable-next-line max-lines-per-function
-function MeetPipS5P4ImuViz(): React.ReactNode {
+function MeetPipS5P4ImuViz({ chartHeight = 224, yAxisWidth = 36 }: MeetPipS5P4ImuVizProps): React.ReactNode {
 	useCareerQuestTrigger(
 		CareerType.MEET_PIP,
 		MeetPipTriggerType.S5_P4_ENTER,
@@ -73,7 +78,10 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 		<div className="space-y-6">
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
 				{/* Yaw Chart */}
-				<div className="h-56 bg-standard-background text-card-foreground rounded-3xl border-2 border-swan">
+				<div
+					className="bg-standard-background text-card-foreground rounded-3xl border-2 border-swan"
+					style={{ height: chartHeight }}
+				>
 					<div className="p-6 pb-2">
 						<h3 className="text-lg font-semibold leading-none">Yaw (Heading)</h3>
 					</div>
@@ -92,7 +100,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								/>
 								<YAxis
 									className="text-xs"
-									width={36}
+									width={yAxisWidth}
 									label={{
 										value: "Degrees",
 										angle: -90,
@@ -120,7 +128,10 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 				</div>
 
 				{/* Pitch Chart */}
-				<div className="h-56 bg-standard-background text-card-foreground rounded-3xl border-2 border-swan">
+				<div
+					className="bg-standard-background text-card-foreground rounded-3xl border-2 border-swan"
+					style={{ height: chartHeight }}
+				>
 					<div className="p-6 pb-2">
 						<h3 className="text-lg font-semibold leading-none">Pitch (Forward/Backward)</h3>
 					</div>
@@ -140,7 +151,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								<YAxis
 									className="text-xs"
 									// reduce the reserved axis width (default can be large)
-									width={36}
+									width={yAxisWidth}
 									// place the label inside the plot area and nudge it toward the axis
 									label={{
 										value: "Degrees",
@@ -169,7 +180,10 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 				</div>
 
 				{/* Roll Chart */}
-				<div className="h-56 bg-standard-background text-card-foreground rounded-3xl border-2 border-swan">
+				<div
+					className="bg-standard-background text-card-foreground rounded-3xl border-2 border-swan"
+					style={{ height: chartHeight }}
+				>
 					<div className="p-6 pb-2">
 						<h3 className="text-lg font-semibold leading-none">Roll (Left/Right)</h3>
 					</div>
@@ -189,7 +203,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								<YAxis
 									className="text-xs"
 									// reduce the reserved axis width (default can be large)
-									width={36}
+									width={yAxisWidth}
 									// place the label inside the plot area and nudge it toward the axis
 									label={{
 										value: "Degrees",
@@ -218,7 +232,10 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 				</div>
 
 				{/* Linear Acceleration Chart */}
-				<div className="h-56 bg-standard-background text-card-foreground rounded-3xl border-2 border-swan p-6">
+				<div
+					className="bg-standard-background text-card-foreground rounded-3xl border-2 border-swan"
+					style={{ height: chartHeight }}
+				>
 					<div className="p-6 pb-2">
 						<h3 className="text-lg font-semibold leading-none">Shake</h3>
 					</div>
@@ -238,7 +255,7 @@ function MeetPipS5P4ImuViz(): React.ReactNode {
 								<YAxis
 									className="text-xs"
 									// reduce the reserved axis width (default can be large)
-									width={36}
+									width={yAxisWidth}
 									// place the label inside the plot area and nudge it toward the axis
 									label={{
 										value: "m/s²",

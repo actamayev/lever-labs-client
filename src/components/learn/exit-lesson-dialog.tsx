@@ -26,7 +26,7 @@ function ExitLessonDialog({ lessonId }: { lessonId: LessonUUID }): React.ReactNo
 	const handleEndSession = useCallback((): void => {
 		// Reset lesson progress before navigating away
 		if (lesson) learnClass.resetLessonProgress(lessonId)
-		navigate("/learn")
+		navigate("/quest")
 		stopCurrentlyRunningCode(true)
 		learnClass.setIsExitDialogOpen(false)
 	}, [lesson, lessonId, navigate])

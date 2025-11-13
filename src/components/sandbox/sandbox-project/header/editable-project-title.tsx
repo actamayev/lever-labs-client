@@ -5,7 +5,13 @@ import { Input } from "../../../ui/input"
 import editSandboxProjectName from "../../../../utils/sandbox/edit-sandbox-project-name"
 
 // eslint-disable-next-line max-lines-per-function
-export default function EditableProjectTitle({ project }: { project: SandboxProject }): React.ReactNode {
+export default function EditableProjectTitle({
+	project,
+	isEditable = true
+}: {
+	project: SandboxProject
+	isEditable?: boolean
+}): React.ReactNode {
 	const [isEditing, setIsEditing] = useState(false)
 	const [isHovering, setIsHovering] = useState(false)
 	const [projectName, setProjectName] = useState(project.projectName || "Untitled Project")
@@ -110,6 +116,17 @@ export default function EditableProjectTitle({ project }: { project: SandboxProj
 
 	// Common styles for both viewing and editing states
 	const commonStyles = "text-xl! font-medium leading-10 h-10 px-2 border-2 rounded"
+
+	// If not editable, just show plain text
+	if (!isEditable) {
+		return (
+			<div className="relative inline-flex items-center mr-2">
+				<div className={`${commonStyles} flex items-center border-transparent`}>
+					{projectName}
+				</div>
+			</div>
+		)
+	}
 
 	return (
 		<div

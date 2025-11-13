@@ -100,7 +100,7 @@ export async function proxy(request: NextRequest): Promise<NextResponse> {
 		if (userId && username) {
 			const authPages = ["/", "/login", "/register", "/register-google"]
 			if (authPages.includes(pathname)) {
-				return createRedirect(request, "/learn")
+				return createRedirect(request, "/quest")
 			}
 			// User is authenticated on other pages, continue normally
 			return handleAuthenticated({ userId, username }, themeCookie)

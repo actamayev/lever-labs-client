@@ -2,6 +2,8 @@
 "use client"
 
 import { observer } from "mobx-react"
+import { useCallback } from "react"
+import { Play } from "lucide-react"
 import learnClass from "../../classes/learn-class"
 import { TactileButton } from "../buttons/tactile-button"
 import LearnMiniSandbox from "./learn-mini-sandbox"
@@ -9,6 +11,8 @@ import usePressEnterQuestionKeyboardHandler from "../../hooks/learn/use-press-en
 import useBlockToFunctionKeyboardHandler from "../../hooks/learn/use-block-to-function-keyboard-handler"
 import useBlockToFunctionEscapeHandler from "../../hooks/learn/use-block-to-function-escape-handler"
 import { cn } from "../../lib/utils"
+import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
+import getCppGenerator from "../../utils/cpp/cpp-generator"
 
 function BlockToFunctionQuestion(): React.ReactNode {
 	const currentQuestionState = learnClass.currentQuestionState
@@ -19,11 +23,21 @@ function BlockToFunctionQuestion(): React.ReactNode {
 	useBlockToFunctionKeyboardHandler()
 	useBlockToFunctionEscapeHandler()
 
-	if (!currentQuestionState?.question.blockToFunctionFlashcard) {
+	const codingBlock = currentQuestionState?.question.blockToFunctionFlashcard?.codingBlock
+
+	const handlePlay = useCallback(async (): Promise<void> => {
+		if (!codingBlock) return
+		const cppCode = await getCppGenerator().generateCppFromJson(codingBlock.codingBlockJson)
+		if (cppCode) {
+			await sendCppToPip(cppCode)
+		}
+	}, [codingBlock])
+
+	if (!currentQuestionState?.question.blockToFunctionFlashcard || !codingBlock) {
 		return null
 	}
 
-	const { codingBlock, blockToFunctionAnswerChoice, questionText } = currentQuestionState.question.blockToFunctionFlashcard
+	const { blockToFunctionAnswerChoice, questionText } = currentQuestionState.question.blockToFunctionFlashcard
 	const { selectedAnswerId } = currentQuestionState
 
 	// Sort answer choices by order
@@ -37,10 +51,21 @@ function BlockToFunctionQuestion(): React.ReactNode {
 			</h2>
 
 			{/* Question: Show the block */}
-			<div className="flex justify-center">
+			<div className="flex justify-center items-center gap-4">
 				<div className="relative h-48 w-96">
-					<LearnMiniSandbox blocklyJson={codingBlock.codingBlockJson} className="w-full h-full" />
+					<LearnMiniSandbox codingBlock={codingBlock} className="w-full h-full" />
 				</div>
+				<TactileButton
+					onClick={handlePlay}
+					shadowClass="shadow-charging-green-2"
+					className={cn(
+						"h-14 w-14 px-4 py-4 rounded-2xl text-standard-background",
+						"bg-charging-green flex items-center justify-center shrink-0"
+					)}
+					shadowHeight={4}
+				>
+					<Play className="size-6 fill-current" />
+				</TactileButton>
 			</div>
 
 			{/* Answer choices: Function descriptions */}

@@ -1,6 +1,6 @@
 import { isNull } from "lodash-es"
 import { action, makeAutoObservable, runInAction } from "mobx"
-import { Lesson } from "@lever-labs/common-ts/types/learn"
+import { CodingBlock, Lesson } from "@lever-labs/common-ts/types/learn"
 import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
 import { soundManager } from "./utility/sound-manager-class"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
@@ -552,7 +552,7 @@ class LearnClass {
 		matchResults: Record<string, boolean>
 		correctlyMatchedBlockIds: number[]
 		correctlyMatchedChoiceIds: number[]
-		shuffledCodingBlocks?: MatchingCodingBlock[]
+		shuffledCodingBlocks?: CodingBlock[]
 		shuffledMatchingChoices?: MatchingTextChoice[]
 	} => {
 		const lesson = Array.from(this.lessonsById.values()).find((l): boolean =>

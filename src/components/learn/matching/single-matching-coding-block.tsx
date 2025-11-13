@@ -5,21 +5,22 @@ import { observer } from "mobx-react"
 import { cn } from "../../../lib/utils"
 import learnClass from "../../../classes/learn-class"
 import LearnMiniSandbox from "../learn-mini-sandbox"
+import { CodingBlock } from "@lever-labs/common-ts/types/learn"
 
 interface SingleMatchingCodingBlockProps {
-	block: MatchingCodingBlock
+	codingBlock: CodingBlock
 	index: number
 }
 
 // eslint-disable-next-line complexity
 function SingleMatchingCodingBlock(props: SingleMatchingCodingBlockProps): React.ReactNode {
-	const { block, index } = props
+	const { codingBlock, index } = props
 	const questionId = learnClass.currentQuestionState?.question.questionId
 	const isInConfirmationStage = learnClass.isInQuestionConfirmationStage
 
 	if (!questionId) return null
 
-	const { codingBlockId, codingBlockJson } = block
+	const { codingBlockId } = codingBlock
 	const cardNumber = index + 1
 
 	const matchingState = learnClass.getMatchingAnswerState(questionId)
@@ -114,7 +115,7 @@ function SingleMatchingCodingBlock(props: SingleMatchingCodingBlockProps): React
 				{cardNumber}
 			</div>
 			<div className="h-10 flex-1 ml-10 rounded-lg overflow-hidden">
-				<LearnMiniSandbox blocklyJson={codingBlockJson} />
+				<LearnMiniSandbox codingBlock={codingBlock} />
 			</div>
 		</div>
 	)

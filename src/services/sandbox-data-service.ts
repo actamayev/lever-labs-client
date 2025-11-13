@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, CreateSandboxProjectResponse, ErrorResponse,
 	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse,
-	UsbBytecodeResponse, ErrorResponses } from "@lever-labs/common-ts/types/api"
+	UsbBytecodeResponse, ErrorResponses, SearchByUsernameResult } from "@lever-labs/common-ts/types/api"
 import { SandboxProjectUUID, PipUUID } from "@lever-labs/common-ts/types/utils"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 import { BaseDataService } from "./base-data-service"
@@ -84,6 +84,30 @@ export default class SandboxDataService extends BaseDataService {
 		return await this.httpClient.http.post<AllCommonResponses>(
 			this.buildUrl("/stop-currently-running-code"),
 			{ pipUUID }
+		)
+	}
+
+	async shareSandboxProject(projectUUID: SandboxProjectUUID, userIdSharedWith: number): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/share-sandbox-project/${projectUUID}`),
+			{ userIdSharedWith }
+		)
+	}
+
+	async removeSandboxProjectShare(
+		projectUUID: SandboxProjectUUID,
+		userIdToUnshareWith: number
+	): Promise<AxiosResponse<AllCommonResponses>> {
+		return await this.httpClient.http.post<AllCommonResponses>(
+			this.buildUrl(`/unshare-sandbox-project/${projectUUID}`),
+			{ userIdToUnshareWith }
+		)
+	}
+
+	async searchByUsername(username: string): Promise<AxiosResponse<SearchByUsernameResult | ErrorResponses>> {
+		return await this.httpClient.http.post<SearchByUsernameResult | ErrorResponses>(
+			this.buildUrl("/search-by-username/"),
+			{ username }
 		)
 	}
 }

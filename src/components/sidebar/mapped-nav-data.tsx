@@ -1,6 +1,6 @@
 "use client"
 
-import { Book, School } from "lucide-react"
+import { Gamepad, Map, School } from "lucide-react"
 import { observer } from "mobx-react"
 import toUpper from "lodash-es/toUpper"
 import { useCallback, useMemo } from "react"
@@ -20,10 +20,10 @@ import teacherClass from "../../classes/teacher-class"
 
 const baseNavData: SidebarNavData[] = [
 	{
-		title: "Learn",
-		url: "/learn",
-		icon: Book,
-		textColor: "text-fox"
+		title: "Quest",
+		url: "/quest",
+		icon: Map,
+		textColor: "text-charging-green-2"
 	},
 	// {
 	// 	title: "Career Quest",
@@ -42,6 +42,12 @@ const baseNavData: SidebarNavData[] = [
 		url: "/garage",
 		icon: CustomGarage,
 		textColor: "text-humpback"
+	},
+	{
+		title: "Arcade",
+		url: "/arcade",
+		icon: Gamepad,
+		textColor: "text-fox"
 	}
 ]
 
@@ -77,8 +83,12 @@ function MappedNavData(): React.ReactNode {
 	// Build navData conditionally
 	const navData = [...baseNavData]
 
-	// Add student nav if user has active classes
+	// Remove arcade nav if user is a student (has active classes)
 	if (hasActiveClasses) {
+		const arcadeIndex = navData.findIndex((item): boolean => item.title === "Arcade")
+		if (arcadeIndex !== -1) {
+			navData.splice(arcadeIndex, 1)
+		}
 		navData.push(studentNavData)
 	}
 

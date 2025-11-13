@@ -74,7 +74,7 @@ function ShowIncorrectAnswerContent(): React.ReactNode {
 				{correctAnswer && typeof correctAnswer === "object" && (
 					<div className="relative h-32 w-96">
 						<LearnMiniSandbox
-							blocklyJson={correctAnswer.codingBlock.codingBlockJson}
+							codingBlock={correctAnswer.codingBlock}
 							className="w-full h-full"
 						/>
 					</div>
@@ -113,7 +113,7 @@ function ShowIncorrectAnswerContent(): React.ReactNode {
 				{correctAnswer && typeof correctAnswer === "object" && (
 					<div className="relative h-32 w-96">
 						<LearnMiniSandbox
-							blocklyJson={correctAnswer.codingBlock.codingBlockJson}
+							codingBlock={correctAnswer.codingBlock}
 							className="w-full h-full"
 						/>
 					</div>
