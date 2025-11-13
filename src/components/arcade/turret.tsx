@@ -3,7 +3,11 @@
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react"
 import { Button } from "@/components/ui/button"
+import { ArrowLeft } from "lucide-react"
 import sensorDataClass from "../../classes/sensor-data-class"
+import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
+import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
+import { CareerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 
 interface Projectile {
 	x: number
@@ -97,6 +101,7 @@ function PipTurretGame (): React.ReactNode {
 		combo: 0,
 		comboTimer: 0,
 		lastKillTime: 0,
+		lastEnterTriggerTime: 0,
 		highScore: parseInt(localStorage.getItem("turretHighScore") || "0", 10)
 	})
 	const animationRef = useRef<number>(0)
@@ -104,6 +109,7 @@ function PipTurretGame (): React.ReactNode {
 	const [score, setScore] = useState(0)
 	const [gameOver, setGameOver] = useState(false)
 	const [gameStarted, setGameStarted] = useState(false)
+	const navigate = useTypedNavigate()
 
 	const fireBullet = useCallback((type: "left" | "right"): void => {
 		if (gameStateRef.current.gameOver || !gameStateRef.current.gameStarted) return
@@ -195,6 +201,13 @@ function PipTurretGame (): React.ReactNode {
 	const updateGame = useCallback((timestamp: number): void => {
 		const state = gameStateRef.current
 		if (state.gameOver || !state.gameStarted) return
+
+		// Send ENTER trigger every 10 seconds while in game
+		const currentTime = Date.now()
+		if (currentTime - state.lastEnterTriggerTime > 10000) {
+			void careerQuestTrigger(CareerType.TURRET_ARCADE, TurretArcadeTriggerType.ENTER_TURRET_ARCADE)
+			state.lastEnterTriggerTime = currentTime
+		}
 
 		// Update difficulty based on score
 		const newDifficulty = 1 + Math.floor(state.score / 100)
@@ -530,6 +543,7 @@ function PipTurretGame (): React.ReactNode {
 			combo: 0,
 			comboTimer: 0,
 			lastKillTime: 0,
+			lastEnterTriggerTime: 0,
 			highScore: newHighScore
 		}
 
@@ -603,8 +617,22 @@ function PipTurretGame (): React.ReactNode {
 		}
 	}, [gameLoop, gameStarted, gameOver])
 
+	const handleBack = useCallback((): void => {
+		// Send EXIT trigger when going back
+		void careerQuestTrigger(CareerType.TURRET_ARCADE, TurretArcadeTriggerType.EXIT_TURRET_ARCADE)
+		navigate("/arcade")
+	}, [navigate])
+
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-[#1a202c] font-sans">
+		<div className="flex flex-col items-center justify-center min-h-screen bg-[#1a202c] font-sans relative">
+			<Button
+				onClick={handleBack}
+				variant="ghost"
+				size="icon"
+				className="absolute top-4 left-4 text-white hover:bg-white/10"
+			>
+				<ArrowLeft className="size-5" />
+			</Button>
 			<h1 className="text-white mb-5 text-2xl">Pip Turret Defense</h1>
 
 			<canvas
@@ -653,7 +681,10 @@ function PipTurretGame (): React.ReactNode {
 
 			<div className="mt-5 text-[#a0aec0] text-center max-w-[600px]">
 				<p><strong className="text-white">How to Play:</strong></p>
-				<p>Tilt Pip left and right to aim the turret. Cover the left sensor for rapid-fire green weapon, right sensor for powerful red weapon.</p>
+				<p>
+					Tilt Pip left and right to aim the turret. Cover the left sensor for rapid-fire green weapon,
+					right sensor for powerful red weapon.
+				</p>
 				<p>Destroy enemies before they hit your turret. Build combos for bonus points!</p>
 				<p>
 					<strong className="text-[#ffd93d]">Yellow</strong> enemies are fast,{" "}

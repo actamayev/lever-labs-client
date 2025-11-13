@@ -7,6 +7,8 @@ import { Play } from "lucide-react"
 import Image from "next/image"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { useCallback } from "react"
+import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
+import { CareerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 
 interface ArcadeGameCardProps {
 	backgroundImage: string
@@ -27,8 +29,13 @@ export function ArcadeGameCard({
 	const navigate = useTypedNavigate()
 	const goToGame = useCallback((e: React.MouseEvent): void => {
 		e.stopPropagation()
+		// Send ENTER trigger when navigating to turret game
+		if (href === "/arcade/turret") {
+			void careerQuestTrigger(CareerType.TURRET_ARCADE, TurretArcadeTriggerType.ENTER_TURRET_ARCADE)
+		}
 		navigate(href)
 	}, [navigate, href])
+
 	return (
 		<div
 			onClick={goToGame}
