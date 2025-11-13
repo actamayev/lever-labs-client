@@ -44,24 +44,26 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 					tooltipContent="SANDBOX"
 				/>
 
-				<EditableProjectTitle project={project} />
-				<CustomTooltip
-					tooltipTrigger={
-						<button
-							onClick={(): Promise<void> => starSandboxProject(project.sandboxProjectUUID)}
-							className={cn(
-								"p-2 rounded-md transition-none hover:bg-polar",
-								project.isStarred ? "text-bee" : ""
-							)}
-						>
-							<Star
-								size={30}
-								className={project.isStarred ? "fill-bee" : ""}
-							/>
-						</button>
-					}
-					tooltipContent="STAR"
-				/>
+				<EditableProjectTitle project={project} isEditable={project.isMyProject} />
+				{project.isMyProject && (
+					<CustomTooltip
+						tooltipTrigger={
+							<button
+								onClick={(): Promise<void> => starSandboxProject(project.sandboxProjectUUID)}
+								className={cn(
+									"p-2 rounded-md transition-none hover:bg-polar",
+									project.isStarred ? "text-bee" : ""
+								)}
+							>
+								<Star
+									size={30}
+									className={project.isStarred ? "fill-bee" : ""}
+								/>
+							</button>
+						}
+						tooltipContent="STAR"
+					/>
+				)}
 			</div>
 			<div className="flex flex-row items-center justify-center space-x-4">
 				{pipClass.selectedPip ? (

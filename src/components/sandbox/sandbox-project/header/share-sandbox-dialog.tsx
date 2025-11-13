@@ -36,15 +36,12 @@ function ShareSandboxDialog(): React.ReactNode {
 	const [userToRemove, setUserToRemove] = useState<{ userId: number; username: string; name?: string | null } | null>(null)
 	const [isRemoveDialogOpen, setIsRemoveDialogOpen] = useState(false)
 
-	// Check if this is the current user's project (if it's in their sandbox projects, they own it)
-	const isMyProject = projectUUID ? sandboxClass.sandboxProjects.has(projectUUID) : false
-	type SharedUser = {
-		userId: number
-		username: string
-		name?: string | null
-		profilePictureUrl?: string | null
-	}
-	const sharedWith = (project as { sharedWith?: SharedUser[] })?.sharedWith || []
+	// Check if this is the current user's project
+	const isMyProject = project?.isMyProject === true
+	const sharedWith = (project as { sharedWith?: SingleSearchByUsernameResult[] })?.sharedWith || []
+	const ownerDetails = (project as {
+		ownerDetails?: { username: string; name: string | null; profilePictureUrl: string | null }
+	})?.ownerDetails
 	const sharedUserIds = new Set(sharedWith.map((u): number => u.userId))
 
 	// Filter out users already shared with
@@ -97,7 +94,7 @@ function ShareSandboxDialog(): React.ReactNode {
 		// TODO: Refresh project data to update sharedWith list
 	}, [projectUUID, userToRemove])
 
-	const openRemoveDialog = useCallback((user: SharedUser): void => {
+	const openRemoveDialog = useCallback((user: SingleSearchByUsernameResult): void => {
 		setUserToRemove({ userId: user.userId, username: user.username, name: user.name || null })
 		setIsRemoveDialogOpen(true)
 	}, [])
@@ -119,66 +116,68 @@ function ShareSandboxDialog(): React.ReactNode {
 				</DialogHeader>
 
 				<div className="space-y-6">
-					<div className="relative">
-						<Input
-							ref={inputRef}
-							type="text"
-							placeholder="Search by username..."
-							value={searchTerm}
-							onChange={(e): void => handleSearchChange(e.target.value)}
-							onFocus={(): void => setIsInputFocused(true)}
-							onBlur={(): void => setIsInputFocused(false)}
-							className="w-full"
-						/>
-						{isInputFocused && searchTerm && filteredSearchResults.length > 0 && (
-							<div className={cn(
-								"absolute z-50 w-full mt-1 bg-background border-2 border-swan rounded-lg",
-								"shadow-lg max-h-60 overflow-y-auto"
-							)}>
-								{filteredSearchResults.map((user): React.ReactNode => (
-									<button
-										key={user.userId}
-										type="button"
-										onMouseDown={(e): void => {
-											e.preventDefault() // Prevent input blur
-											void handleShareUser(user)
-										}}
-										className={cn(
-											"w-full flex items-center gap-3 px-4 py-3 hover:bg-polar transition-colors",
-											"text-left"
-										)}
-									>
-										<Avatar className="w-10 h-10 shrink-0">
-											{!isNull(user.profilePictureUrl) ? (
-												<AvatarImage
-													src={user.profilePictureUrl}
-													alt={user.name || user.username}
-												/>
-											) : null}
-											<AvatarFallback className="bg-standard-background text-question-text">
-												<CustomUserCircle className="w-full h-full" />
-											</AvatarFallback>
-										</Avatar>
-										<div className="flex flex-col min-w-0 flex-1">
-											<span className="text-sm font-medium truncate">
-												{user.name || user.username}
-											</span>
-											<span className="text-xs text-muted-foreground truncate">
-												@{user.username}
-											</span>
-										</div>
-									</button>
-								))}
-							</div>
-						)}
-					</div>
+					{isMyProject && (
+						<div className="relative">
+							<Input
+								ref={inputRef}
+								type="text"
+								placeholder="Search by username..."
+								value={searchTerm}
+								onChange={(e): void => handleSearchChange(e.target.value)}
+								onFocus={(): void => setIsInputFocused(true)}
+								onBlur={(): void => setIsInputFocused(false)}
+								className="w-full"
+							/>
+							{isInputFocused && searchTerm && filteredSearchResults.length > 0 && (
+								<div className={cn(
+									"absolute z-50 w-full mt-1 bg-background border-2 border-swan rounded-lg",
+									"shadow-lg max-h-60 overflow-y-auto"
+								)}>
+									{filteredSearchResults.map((user): React.ReactNode => (
+										<button
+											key={user.userId}
+											type="button"
+											onMouseDown={(e): void => {
+												e.preventDefault() // Prevent input blur
+												void handleShareUser(user)
+											}}
+											className={cn(
+												"w-full flex items-center gap-3 px-4 py-3 hover:bg-polar transition-colors",
+												"text-left"
+											)}
+										>
+											<Avatar className="w-10 h-10 shrink-0">
+												{!isNull(user.profilePictureUrl) ? (
+													<AvatarImage
+														src={user.profilePictureUrl}
+														alt={user.name || user.username}
+													/>
+												) : null}
+												<AvatarFallback className="bg-standard-background text-question-text">
+													<CustomUserCircle className="w-full h-full" />
+												</AvatarFallback>
+											</Avatar>
+											<div className="flex flex-col min-w-0 flex-1">
+												<span className="text-sm font-medium truncate">
+													{user.name || user.username}
+												</span>
+												<span className="text-xs text-muted-foreground truncate">
+													@{user.username}
+												</span>
+											</div>
+										</button>
+									))}
+								</div>
+							)}
+						</div>
+					)}
 
 					{/* People with access section */}
 					<div className="space-y-3">
 						<h3 className="text-lg font-semibold">People with access</h3>
 						<div className="space-y-2">
-							{/* Owner (current user if it's their project) */}
-							{isMyProject && (
+							{/* Owner (current user if it's their project, or project owner if shared) */}
+							{isMyProject ? (
 								<div className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-polar transition-colors">
 									<Avatar className="w-10 h-10 shrink-0">
 										{!isNull(personalInfoClass.profilePictureUrl) ? (
@@ -203,7 +202,30 @@ function ShareSandboxDialog(): React.ReactNode {
 									</div>
 									<span className="text-sm text-muted-foreground shrink-0">Owner</span>
 								</div>
-							)}
+							) : ownerDetails ? (
+								<div className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-polar transition-colors">
+									<Avatar className="w-10 h-10 shrink-0">
+										{!isNull(ownerDetails.profilePictureUrl) ? (
+											<AvatarImage
+												src={ownerDetails.profilePictureUrl}
+												alt={ownerDetails.name || ownerDetails.username}
+											/>
+										) : null}
+										<AvatarFallback className="bg-standard-background text-question-text">
+											<CustomUserCircle className="w-full h-full" />
+										</AvatarFallback>
+									</Avatar>
+									<div className="flex flex-col min-w-0 flex-1">
+										<span className="text-sm font-medium truncate">
+											{ownerDetails.name || ownerDetails.username}
+										</span>
+										<span className="text-xs text-muted-foreground truncate">
+											@{ownerDetails.username}
+										</span>
+									</div>
+									<span className="text-sm text-muted-foreground shrink-0">Owner</span>
+								</div>
+							) : null}
 
 							{/* Shared users */}
 							{sharedWith.map((user): React.ReactNode => (
@@ -230,7 +252,7 @@ function ShareSandboxDialog(): React.ReactNode {
 											@{user.username}
 										</span>
 									</div>
-									{isMyProject && (
+									{isMyProject ? (
 										<DropdownMenu>
 											<DropdownMenuTrigger asChild>
 												<button
@@ -253,6 +275,8 @@ function ShareSandboxDialog(): React.ReactNode {
 												</DropdownMenuItem>
 											</DropdownMenuContent>
 										</DropdownMenu>
+									) : (
+										<span className="text-sm text-muted-foreground shrink-0">Editor</span>
 									)}
 								</div>
 							))}
