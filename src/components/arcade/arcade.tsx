@@ -18,7 +18,7 @@ export default function Arcade(): React.ReactNode {
 				{/* Full Width Game Card */}
 				<div className="w-full">
 					<ArcadeGameCard
-						backgroundImage="/og-default.jpg"
+						backgroundImage="/turret1.png"
 						gameIcon={<Gamepad2 className="size-8" />}
 						gameName="Pip Turret Defense"
 						description={
