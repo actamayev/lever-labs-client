@@ -14,7 +14,6 @@ export default async function retrieveAllSandboxProjects(): Promise<void> {
 			sandboxClass.hasRetrievedAllSandboxProjects === true
 		) return
 
-
 		sandboxClass.setIsRetrievingAllSandboxProjects(true)
 
 		const sandboxProjectsResponse = await leverLabsApiClient.sandboxDataService.retrieveAllSandboxProjects()

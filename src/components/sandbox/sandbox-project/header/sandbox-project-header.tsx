@@ -4,7 +4,7 @@ import Link from "next/link"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
 import { SandboxProject } from "@lever-labs/common-ts/types/sandbox"
-import { ArrowLeft, Star, NotebookPen } from "lucide-react"
+import { ArrowLeft, Star, NotebookPen, Share2 } from "lucide-react"
 import { cn } from "../../../../lib/utils"
 import CustomTooltip from "../../../custom-tooltip"
 import EditableProjectTitle from "./editable-project-title"
@@ -18,6 +18,8 @@ import pipClass from "../../../../classes/pip-class"
 import ConnectToPipButton from "../../../connect-pip/connect-to-pip-button"
 import SandboxBatterySection from "./sandbox-battery-section"
 import NetworkWorkbench from "../../../workbench/network/network-workbench"
+import ShareSandboxDialog from "./share-sandbox-dialog"
+import sandboxClass from "../../../../classes/sandbox-class"
 
 function SandboxProjectHeader({ project } : { project: SandboxProject }): React.ReactNode {
 	const leaveSandbox = useCallback((): void => {
@@ -79,6 +81,17 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 				<CustomTooltip
 					tooltipTrigger={
 						<button
+							onClick={(): void => sandboxClass.openShareDialog(project.sandboxProjectUUID)}
+							className="p-2 rounded-md transition-none border-2 text-question-text hover:bg-polar border-swan"
+						>
+							<Share2 size={30} />
+						</button>
+					}
+					tooltipContent="SHARE"
+				/>
+				<CustomTooltip
+					tooltipTrigger={
+						<button
 							onClick={setSandboxNotesOpenStatus}
 							className={`p-2 rounded-md transition-none border-2 ${
 								personalInfoClass.sandboxNotesOpen
@@ -93,6 +106,7 @@ function SandboxProjectHeader({ project } : { project: SandboxProject }): React.
 					tooltipContent={personalInfoClass.sandboxNotesOpen ? "CLOSE SIDE PANEL" : "OPEN SIDE PANEL"}
 				/>
 			</div>
+			<ShareSandboxDialog />
 		</div>
 	)
 }
