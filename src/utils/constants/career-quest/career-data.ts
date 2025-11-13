@@ -34,7 +34,6 @@ export const meetPipData: CareerData = {
 		"Side Distance Sensors",
 		"Buttons",
 		"Color Sensor",
-		"IR Sensors",
 		"Motors + Encoders",
 	],
 	codingConcepts: [ ],
@@ -68,7 +67,6 @@ export const careerData: CareerData[] = [
 		backgroundColor: "macaw",
 		expectedCompletionTime: "1.5 HOURS",
 		componentsUsed: [
-			"IR Sensors",
 			"Motors + Encoders",
 		],
 		codingConcepts: [
@@ -105,7 +103,7 @@ export const careerData: CareerData[] = [
 		careerIcon: Square,
 		backgroundColor: "bee",
 		expectedCompletionTime: "1 HOUR",
-		componentsUsed: [ "IR Sensors",
+		componentsUsed: [
 			"Motors + Encoders",
 		],
 		codingConcepts: [
@@ -142,7 +140,7 @@ export const careerData: CareerData[] = [
 		careerIcon: Flag,
 		backgroundColor: "beak-inner",
 		expectedCompletionTime: "2.5 HOURS",
-		componentsUsed: [ "Motors + Encoders", "IMU", "IR Sensors"],
+		componentsUsed: [ "Motors + Encoders", "IMU"],
 		codingConcepts: [
 			"Variables",
 			"Loops",
@@ -160,7 +158,6 @@ export const careerData: CareerData[] = [
 		backgroundColor: "humpback",
 		expectedCompletionTime: "3 HOURS",
 		componentsUsed: [
-			"IR Sensors",
 			"Multizone Distance Sensor",
 			"Motors + Encoders",
 		],

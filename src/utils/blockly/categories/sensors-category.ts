@@ -27,15 +27,6 @@ const distanceSensorsCategory: CustomCategoryInfo = {
 	]
 }
 
-// const irSensorsCategory: CustomCategoryInfo = {
-// 	...baseCategory,
-// 	name: "IR Sensors",
-// 	colour: sensorsCategoryColour,
-// 	contents: [
-// 		{ kind: "block", type: SENSORS_BLOCK_TYPES.IR_READ }
-// 	]
-// }
-
 const colorSensorCategory: CustomCategoryInfo = {
 	...baseCategory,
 	name: "Color Sensor",
