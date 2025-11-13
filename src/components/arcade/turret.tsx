@@ -67,14 +67,14 @@ const TURRET_LENGTH = 40
 
 // Weapon configurations
 const WEAPONS = {
-	left: { speed: 8, damage: 1, color: "#00ff00", fireRate: 200 },
-	right: { speed: 6, damage: 3, color: "#ff0000", fireRate: 400 }
+	left: { speed: 3, damage: 3, color: "#00ff00", fireRate: 400 },
+	right: { speed: 6, damage: 0.5, color: "#ff0000", fireRate: 200 }
 }
 
 // Enemy configurations
 const ENEMY_TYPES = {
-	basic: { health: 1, speed: 2, size: 20, color: "#ff6b6b", points: 10 },
-	fast: { health: 1, speed: 2.5, size: 15, color: "#ffd93d", points: 20 },
+	basic: { health: 1, speed: 1, size: 20, color: "#ff6b6b", points: 10 },
+	fast: { health: 1, speed: 1.5, size: 15, color: "#ffd93d", points: 20 },
 	tank: { health: 5, speed: 1, size: 30, color: "#6c5ce7", points: 50 }
 }
 
@@ -216,7 +216,7 @@ function PipTurretGame (): React.ReactNode {
 		}
 
 		// Wave system: spawn enemies in waves
-		const enemiesPerWave = 10 + state.wave * 2
+		const enemiesPerWave = 5 + state.wave * 2
 		const waveComplete = state.waveEnemiesSpawned >= enemiesPerWave && state.enemies.length === 0
 
 		if (waveComplete) {
@@ -580,7 +580,7 @@ function PipTurretGame (): React.ReactNode {
 			// Check left ToF for firing
 			if (leftTofData.length > 0) {
 				const latestLeftTof = leftTofData[leftTofData.length - 1]
-				if (latestLeftTof > 250) {
+				if (latestLeftTof > 2000) {
 					if (now - gameStateRef.current.lastLeftFire > WEAPONS.left.fireRate) {
 						fireBullet("left")
 						gameStateRef.current.lastLeftFire = now
@@ -591,7 +591,7 @@ function PipTurretGame (): React.ReactNode {
 			// Check right ToF for firing
 			if (rightTofData.length > 0) {
 				const latestRightTof = rightTofData[rightTofData.length - 1]
-				if (latestRightTof > 250) {
+				if (latestRightTof > 2000) {
 					if (now - gameStateRef.current.lastRightFire > WEAPONS.right.fireRate) {
 						fireBullet("right")
 						gameStateRef.current.lastRightFire = now
