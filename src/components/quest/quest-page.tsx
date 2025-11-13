@@ -1,0 +1,76 @@
+"use client"
+import { observer } from "mobx-react"
+import { useEffect, useMemo } from "react"
+import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { Lesson } from "@lever-labs/common-ts/types/quest"
+import questClass from "../../classes/quest-class"
+import retrieveDetailedLesson from "../../utils/quest/retrieve-detailed-lesson"
+import LessonHeader from "./lesson-header"
+import LessonFooter from "./lesson-footer/lesson-footer"
+import LessonQuestions from "./lesson-questions"
+import LessonCompletionScreen from "./lesson-completion-screen"
+import { soundManager } from "../../classes/utility/sound-manager-class"
+import authClass from "../../classes/auth-class"
+
+function QuestPage({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {
+	useEffect((): void => {
+		void retrieveDetailedLesson(lessonId)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [lessonId, authClass.isFinishedWithSignup])
+
+	const isLoading = questClass.isRetrievingDetailedData(lessonId)
+	useEffect((): void => soundManager.initialize(), [])
+
+	const lesson = useMemo((): Lesson | undefined => {
+		return questClass.getLesson(lessonId)
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [lessonId, questClass.lessonsById.size])
+
+	if (isLoading) {
+		return (
+			<div className="h-screen flex flex-col">
+				<LessonHeader lessonId={lessonId} />
+				<div className="flex-1 flex items-center justify-center">
+					<h1 className="text-xl">Loading...</h1>
+				</div>
+				<LessonFooter lessonId={lessonId} />
+			</div>
+		)
+	}
+
+	if (!lesson) {
+		return (
+			<div className="h-screen flex flex-col">
+				<LessonHeader lessonId={lessonId} />
+				<div className="flex-1 flex items-center justify-center">
+					<h1 className="text-xl">Lesson not found</h1>
+				</div>
+				<LessonFooter lessonId={lessonId} />
+			</div>
+		)
+	}
+
+	// Show completion screen if lesson is completed or navigating away
+	if (questClass.isLessonCompleted || questClass.isNavigatingAway) {
+		return (
+			<div className="h-screen flex flex-col">
+				<main className="flex-1 overflow-auto">
+					<LessonCompletionScreen lessonId={lessonId} />
+				</main>
+				<LessonFooter lessonId={lessonId} />
+			</div>
+		)
+	}
+
+	return (
+		<div className="h-screen flex flex-col">
+			<LessonHeader lessonId={lessonId} />
+			<main className="flex-1 overflow-auto px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 2xl:px-24 min-h-0 flex flex-col">
+				<LessonQuestions lessonId={lessonId} />
+			</main>
+			<LessonFooter lessonId={lessonId} />
+		</div>
+	)
+}
+
+export default observer(QuestPage)
