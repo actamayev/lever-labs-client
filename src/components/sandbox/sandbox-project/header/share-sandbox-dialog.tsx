@@ -110,7 +110,7 @@ function ShareSandboxDialog(): React.ReactNode {
 				}
 			}}
 		>
-			<DialogContent className="sm:max-w-xl max-h-[80vh] overflow-y-auto">
+			<DialogContent className="sm:max-w-xl">
 				<DialogHeader>
 					<DialogTitle className="text-2xl">Share "{project.projectName || "Untitled Project"}"</DialogTitle>
 				</DialogHeader>
@@ -126,7 +126,7 @@ function ShareSandboxDialog(): React.ReactNode {
 								onChange={(e): void => handleSearchChange(e.target.value)}
 								onFocus={(): void => setIsInputFocused(true)}
 								onBlur={(): void => setIsInputFocused(false)}
-								className="w-full"
+								className="w-full h-14 text-xl!"
 							/>
 							{isInputFocused && searchTerm && filteredSearchResults.length > 0 && (
 								<div className={cn(
@@ -177,7 +177,7 @@ function ShareSandboxDialog(): React.ReactNode {
 						<h3 className="text-lg font-semibold">People with access</h3>
 						<div className="space-y-2">
 							{/* Owner (current user if it's their project, or project owner if shared) */}
-							{isMyProject ? (
+							{isMyProject && (
 								<div className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-polar transition-colors">
 									<Avatar className="w-10 h-10 shrink-0">
 										{!isNull(personalInfoClass.profilePictureUrl) ? (
@@ -202,7 +202,8 @@ function ShareSandboxDialog(): React.ReactNode {
 									</div>
 									<span className="text-sm text-muted-foreground shrink-0">Owner</span>
 								</div>
-							) : ownerDetails ? (
+							)}
+							{!isMyProject && ownerDetails && (
 								<div className="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-polar transition-colors">
 									<Avatar className="w-10 h-10 shrink-0">
 										{!isNull(ownerDetails.profilePictureUrl) ? (
@@ -225,7 +226,7 @@ function ShareSandboxDialog(): React.ReactNode {
 									</div>
 									<span className="text-sm text-muted-foreground shrink-0">Owner</span>
 								</div>
-							) : null}
+							)}
 
 							{/* Shared users */}
 							{sharedWith.map((user): React.ReactNode => (
