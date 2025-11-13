@@ -20,10 +20,12 @@ export default function Arcade(): React.ReactNode {
 					<ArcadeGameCard
 						backgroundImage="/og-default.jpg"
 						gameIcon={<Gamepad2 className="size-8" />}
-						gameName="Robotics Adventure"
-						description="Explore the world of robotics and coding through interactive challenges and missions."
+						gameName="Pip Turret Defense"
+						description={
+							"Defend your turret from waves of enemies! Tilt Pip left and right to aim, " +
+							"and cover the sensors to fire weapons. Build combos for bonus points and see how long you can survive!"
+						}
 						href="/arcade/turret"
-						className="w-full"
 					/>
 				</div>
 			</div>

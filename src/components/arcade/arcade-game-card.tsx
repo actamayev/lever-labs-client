@@ -5,22 +5,15 @@ import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Play } from "lucide-react"
 import Image from "next/image"
+import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
+import { useCallback } from "react"
 
-export interface ArcadeGameCardProps {
-	/** Background image URL or path */
+interface ArcadeGameCardProps {
 	backgroundImage: string
-	/** Game icon component or image URL */
-	gameIcon: React.ReactNode | string
-	/** Name of the game */
+	gameIcon: React.ReactNode
 	gameName: string
-	/** Description of the game */
 	description: string
-	/** Callback when play button is clicked */
-	onPlay?: () => void
-	/** Optional className for custom styling */
-	className?: string
-	/** Optional href for navigation */
-	href?: string
+	href: PageNames
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -29,24 +22,19 @@ export function ArcadeGameCard({
 	gameIcon,
 	gameName,
 	description,
-	onPlay,
-	className,
-	href,
+	href
 }: ArcadeGameCardProps): React.ReactNode {
-	const handlePlay = (): void => {
-		if (href) {
-			window.location.href = href
-		} else if (onPlay) {
-			onPlay()
-		}
-	}
-
+	const navigate = useTypedNavigate()
+	const goToGame = useCallback((e: React.MouseEvent): void => {
+		e.stopPropagation()
+		navigate(href)
+	}, [navigate, href])
 	return (
 		<div
+			onClick={goToGame}
 			className={cn(
 				"group relative overflow-hidden rounded-xl shadow-lg transition-all duration-300",
-				"border-4 border-fox hover:shadow-xl",
-				className
+				"border-4 border-fox hover:shadow-xl w-full cursor-pointer",
 			)}
 		>
 			{/* Background Image */}
@@ -69,8 +57,13 @@ export function ArcadeGameCard({
 
 				{/* Bottom Section with Icon, Name, Description, and Button */}
 				<div className="flex flex-col gap-4">
-					{/* Icon and Name Row */}
-					<div className="flex items-end gap-4">
+					{/* Description */}
+					<p className="text-white/90 text-sm leading-relaxed drop-shadow-md max-w-2xl">
+						{description}
+					</p>
+
+					{/* Bottom Row: Icon, Title, and Play Button */}
+					<div className="flex items-center gap-4">
 						{/* Game Icon */}
 						<div className="shrink-0">
 							{typeof gameIcon === "string" ? (
@@ -101,26 +94,21 @@ export function ArcadeGameCard({
 								{gameName}
 							</h3>
 						</div>
-					</div>
 
-					{/* Description */}
-					<p className="text-white/90 text-sm leading-relaxed drop-shadow-md max-w-2xl">
-						{description}
-					</p>
-
-					{/* Play Button */}
-					<div className="pt-2">
-						<Button
-							onClick={handlePlay}
-							size="lg"
-							className={cn(
-								"bg-white text-black hover:bg-white/90 font-semibold",
-								"shadow-lg hover:shadow-xl transition-all duration-200"
-							)}
-						>
-							<Play className="mr-2 size-5" />
-							Play
-						</Button>
+						{/* Play Button */}
+						<div className="shrink-0">
+							<Button
+								onClick={goToGame}
+								size="lg"
+								className={cn(
+									"bg-white text-black hover:bg-white/90 font-semibold",
+									"shadow-lg hover:shadow-xl transition-all duration-200"
+								)}
+							>
+								<Play className="mr-2 size-5" />
+								Play
+							</Button>
+						</div>
 					</div>
 				</div>
 			</div>
