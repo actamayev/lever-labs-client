@@ -1,7 +1,9 @@
 "use client"
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useRef, useState } from "react"
+import { observer } from "mobx-react"
 import { Button } from "@/components/ui/button"
+import sensorDataClass from "../../classes/sensor-data-class"
 
 interface Projectile {
 	x: number
@@ -68,12 +70,12 @@ const WEAPONS = {
 // Enemy configurations
 const ENEMY_TYPES = {
 	basic: { health: 1, speed: 2, size: 20, color: "#ff6b6b", points: 10 },
-	fast: { health: 1, speed: 4, size: 15, color: "#ffd93d", points: 20 },
+	fast: { health: 1, speed: 2.5, size: 15, color: "#ffd93d", points: 20 },
 	tank: { health: 5, speed: 1, size: 30, color: "#6c5ce7", points: 50 }
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function PipTurretGame(): React.ReactNode {
+function PipTurretGame (): React.ReactNode {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const gameStateRef = useRef({
 		turretAngle: 0,
@@ -97,7 +99,6 @@ export default function PipTurretGame(): React.ReactNode {
 		lastKillTime: 0,
 		highScore: parseInt(localStorage.getItem("turretHighScore") || "0", 10)
 	})
-	const wsRef = useRef<WebSocket | null>(null)
 	const animationRef = useRef<number>(0)
 
 	const [score, setScore] = useState(0)
@@ -485,8 +486,8 @@ export default function PipTurretGame(): React.ReactNode {
 		// Draw controls hint
 		ctx.fillStyle = "rgba(255, 255, 255, 0.5)"
 		ctx.font = "14px Arial"
-		const controlsText = "Move mouse to aim | A/← for left weapon | D/→ for right weapon"
-		ctx.fillText(controlsText, CANVAS_WIDTH / 2 - 200, CANVAS_HEIGHT - 20)
+		const controlsText = "Tilt Pip to aim | Cover sensors to fire"
+		ctx.fillText(controlsText, CANVAS_WIDTH / 2 - 150, CANVAS_HEIGHT - 20)
 	}, [])
 
 	const gameLoop = useCallback((timestamp: number): void => {
@@ -542,86 +543,51 @@ export default function PipTurretGame(): React.ReactNode {
 
 	}, [])
 
-	// WebSocket connection
+	// Read sensor data and update game state
 	useEffect((): (() => void) => {
-		// Simulate WebSocket for demo - replace with your actual WebSocket connection
-		const simulateRobotData = (): (() => void) => {
-			// For demo: Use mouse position for turret angle
-			const handleMouseMove = (e: MouseEvent): void => {
-				const rect = canvasRef.current?.getBoundingClientRect()
-				if (rect && gameStateRef.current.gameStarted) {
-					const mouseX = e.clientX - rect.left
-					// Map mouse position to -90 to +90 degrees (full horizontal range)
-					const angle = ((mouseX / CANVAS_WIDTH) - 0.5) * 180
-					gameStateRef.current.turretAngle = angle
-				}
+		const intervalId = setInterval((): void => {
+			if (!gameStateRef.current.gameStarted || gameStateRef.current.gameOver) return
+
+			// Get latest roll value from sensor data
+			const rollData = sensorDataClass.roll
+			if (rollData.length > 0) {
+				const latestRoll = rollData[rollData.length - 1]
+				// Map roll to turret angle: -90 to +90 degrees
+				// Clamp to ensure it doesn't exceed bounds
+				gameStateRef.current.turretAngle = Math.max(-90, Math.min(90, latestRoll * 2))
 			}
 
-			// For demo: Use keyboard for firing
-			const handleKeyDown = (e: KeyboardEvent): void => {
-				if (!gameStateRef.current.gameStarted) return
-				const now = Date.now()
-				if (e.key === "a" || e.key === "ArrowLeft") {
+			// Get latest ToF counts
+			const leftTofData = sensorDataClass.leftSideTofCounts
+			const rightTofData = sensorDataClass.rightSideTofCounts
+
+			const now = Date.now()
+
+			// Check left ToF for firing
+			if (leftTofData.length > 0) {
+				const latestLeftTof = leftTofData[leftTofData.length - 1]
+				if (latestLeftTof > 250) {
 					if (now - gameStateRef.current.lastLeftFire > WEAPONS.left.fireRate) {
 						fireBullet("left")
 						gameStateRef.current.lastLeftFire = now
 					}
 				}
-				if (e.key === "d" || e.key === "ArrowRight") {
+			}
+
+			// Check right ToF for firing
+			if (rightTofData.length > 0) {
+				const latestRightTof = rightTofData[rightTofData.length - 1]
+				if (latestRightTof > 250) {
 					if (now - gameStateRef.current.lastRightFire > WEAPONS.right.fireRate) {
 						fireBullet("right")
 						gameStateRef.current.lastRightFire = now
 					}
 				}
 			}
-
-			window.addEventListener("mousemove", handleMouseMove)
-			window.addEventListener("keydown", handleKeyDown)
-
-			return (): void => {
-				window.removeEventListener("mousemove", handleMouseMove)
-				window.removeEventListener("keydown", handleKeyDown)
-			}
-		}
-
-		// For production: Connect to your WebSocket
-		/*
-		const ws = new WebSocket('ws://your-pip-url');
-		ws.onmessage = (event) => {
-			const data = JSON.parse(event.data);
-
-			// Update turret angle from roll (-45 to +45 maps to -90 to +90 degrees tilt)
-			if (data.roll !== undefined) {
-				gameStateRef.current.turretAngle = data.roll;
-			}
-
-			// Fire left weapon if ToF > 250 counts
-			if (data.leftToF > 250) {
-				const now = Date.now();
-				if (now - gameStateRef.current.lastLeftFire > WEAPONS.left.fireRate) {
-					fireBullet('left');
-					gameStateRef.current.lastLeftFire = now;
-				}
-			}
-
-			// Fire right weapon if ToF > 250 counts
-			if (data.rightToF > 250) {
-				const now = Date.now();
-				if (now - gameStateRef.current.lastRightFire > WEAPONS.right.fireRate) {
-					fireBullet('right');
-					gameStateRef.current.lastRightFire = now;
-				}
-			}
-		};
-		wsRef.current = ws;
-		*/
-
-		const cleanup = simulateRobotData()
-		const ws = wsRef.current
+		}, 16) // ~60fps
 
 		return (): void => {
-			cleanup()
-			ws?.close()
+			clearInterval(intervalId)
 		}
 	}, [fireBullet])
 
@@ -653,7 +619,7 @@ export default function PipTurretGame(): React.ReactNode {
 				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/90 p-10 rounded-xl text-center border-4 border-[#48bb78]">
 					<h2 className="text-[#48bb78] text-4xl m-0 mb-5">Ready to Defend?</h2>
 					<p className="text-white text-lg m-0 mb-8 max-w-md">
-						Defend your turret from waves of enemies! Build combos for bonus points.
+						Defend your turret from waves of enemies! Tilt Pip to aim and cover the sensors to fire!
 					</p>
 					<Button
 						onClick={startGame}
@@ -687,8 +653,8 @@ export default function PipTurretGame(): React.ReactNode {
 
 			<div className="mt-5 text-[#a0aec0] text-center max-w-[600px]">
 				<p><strong className="text-white">How to Play:</strong></p>
-				<p>Move your mouse to aim the turret. Use A/← for rapid-fire green weapon, D/→ for powerful red weapon.</p>
-				<p>Destroy enemies before they reach the bottom. Build combos for bonus points!</p>
+				<p>Tilt Pip left and right to aim the turret. Cover the left sensor for rapid-fire green weapon, right sensor for powerful red weapon.</p>
+				<p>Destroy enemies before they hit your turret. Build combos for bonus points!</p>
 				<p>
 					<strong className="text-[#ffd93d]">Yellow</strong> enemies are fast,{" "}
 					<strong className="text-[#6c5ce7]">Purple</strong> enemies are tanks.
@@ -697,3 +663,5 @@ export default function PipTurretGame(): React.ReactNode {
 		</div>
 	)
 }
+
+export default observer(PipTurretGame)
