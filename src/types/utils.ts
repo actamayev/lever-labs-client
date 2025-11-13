@@ -8,7 +8,7 @@ declare global {
 		| "/career-quest"
 		| "/chat"
 		| "/misc"
-		| "/learn"
+		| "/quest"
 		| "/garage"
 		| "/pip"
 		| "/personal-info"

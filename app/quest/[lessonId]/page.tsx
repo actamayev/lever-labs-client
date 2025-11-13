@@ -3,7 +3,7 @@ import { notFound } from "next/navigation"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import AuthenticatedLayout from "../../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../../src/utils/seo/create-metadata"
-import QuestPage from "../../../src/components/learn/learn-page"
+import QuestPage from "../../../src/components/quest/quest-page"
 
 interface QuestPageProps {
 	params: Promise<{

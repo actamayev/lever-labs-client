@@ -12,18 +12,18 @@ import TeacherDataService from "../services/teacher-data-service"
 import WorkbenchDataService from "../services/workbench-data-service"
 import PersonalInfoDataService from "../services/personal-info-data-service"
 import CareerQuestDataService from "../services/career-quest-data-service"
-import LearnDataService from "../services/learn-data-service"
+import QuestDataService from "../services/quest-data-service"
 
 class LeverLabsApiClient {
 	public httpClient: LeverLabsHttpClient = new LeverLabsHttpClient()
 	public authDataService: AuthDataService = new AuthDataService(this.httpClient, "/auth")
 	public careerQuestDataService: CareerQuestDataService = new CareerQuestDataService(this.httpClient, "/career-quest")
 	public chatDataService: ChatDataService = new ChatDataService(this.httpClient, "/chat")
-	public learnDataService: LearnDataService = new LearnDataService(this.httpClient, "/learn")
 	public miscDataService: MiscDataService = new MiscDataService(this.httpClient, "/misc")
 	public garageDataService: GarageDataService = new GarageDataService(this.httpClient, "/garage")
 	public personalInfoDataService: PersonalInfoDataService = new PersonalInfoDataService(this.httpClient, "/personal-info")
 	public pipDataService: PipDataService = new PipDataService(this.httpClient, "/pip")
+	public questDataService: QuestDataService = new QuestDataService(this.httpClient, "/quest")
 	public sandboxDataService: SandboxDataService = new SandboxDataService(this.httpClient, "/sandbox")
 	public studentDataService: StudentDataService = new StudentDataService(this.httpClient, "/student")
 	public teacherDataService: TeacherDataService = new TeacherDataService(this.httpClient, "/teacher")

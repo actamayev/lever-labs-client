@@ -13,7 +13,6 @@ declare global {
 	| "IMU"
 	| "LED"
 	| "Speaker"
-	| "IR Sensors"
 	| "Color Sensor"
 	| "Screen"
 	| "Buttons"

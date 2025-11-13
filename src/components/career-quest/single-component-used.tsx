@@ -6,7 +6,6 @@ import { cn } from "../../lib/utils"
 import CustomTooltip from "../custom-tooltip"
 import { CustomMotor } from "../../icons/custom-motor"
 import { CustomRuler } from "../../icons/custom-ruler"
-import { CustomRemote } from "../../icons/custom-remote"
 import { CustomButton } from "../../icons/custom-button"
 import { CustomCompass } from "../../icons/custom-compass"
 import { CustomPalette } from "../../icons/custom-palette"
@@ -21,7 +20,6 @@ const componentIcons: Record<ComponentName, React.ReactNode> = {
 	"IMU": <CustomCompass />,
 	"LED": <CustomLightbulb />,
 	"Speaker": <Volume2 />,
-	"IR Sensors": <CustomRemote />,
 	"Color Sensor": <CustomPalette />,
 	"Screen": <TvMinimal />,
 	"Buttons": <CustomButton />

@@ -1,4 +1,4 @@
-import { LessonQuestionMap, Question, Lesson, QuestionType, CodingBlock } from "@lever-labs/common-ts/types/learn"
+import { LessonQuestionMap, Question, Lesson, QuestionType, CodingBlock } from "@lever-labs/common-ts/types/quest"
 import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
 
 declare global {
