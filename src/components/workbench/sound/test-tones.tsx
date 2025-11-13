@@ -21,7 +21,7 @@ import { ToneType } from "@lever-labs/common-ts/protocol"
 
 // Helper function to convert ToneType enum value to letter
 const getToneLetter = (tone: ToneType): string => {
-	const toneToLetter: Record<ToneType, string> = {
+	const toneToLetter: Record<Exclude<ToneType, ToneType.OFF>, string> = {
 		[ToneType.A]: "A",
 		[ToneType.B]: "B",
 		[ToneType.C]: "C",
@@ -30,7 +30,7 @@ const getToneLetter = (tone: ToneType): string => {
 		[ToneType.F]: "F",
 		[ToneType.G]: "G",
 	}
-	return toneToLetter[tone] || tone.toString()
+	return toneToLetter[tone as Exclude<ToneType, ToneType.OFF>] || tone.toString()
 }
 
 // Helper function to get button tooltip content

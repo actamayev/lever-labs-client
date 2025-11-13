@@ -1,5 +1,7 @@
-import { LucideIcon, Book, Brain, Repeat, Puzzle, Sparkles, Search, Beaker, Smile, Trophy } from "lucide-react"
+import { LucideIcon, Brain, Repeat, Puzzle, Sparkles, Search, Beaker, Smile, Trophy, Map } from "lucide-react"
 import { CustomFriend } from "../../icons/custom-friend"
+import { CustomSandbox } from "../../icons/custom-sandbox"
+import { CustomGarage } from "../../icons/custom-garage"
 
 type TabContent = {
 	id: string
@@ -14,16 +16,16 @@ type TabContent = {
 		title: string
 	}>
 	imagePlaceholder: string
-	themeColor: "lever-red" | "lever-yellow" | "lever-blue"
+	themeColor: "lever-red" | "charging-green-2" | "lever-blue"
 }
 
 export const platformTabs: TabContent[] = [
 	{
-		id: "learn",
-		label: "Learn",
-		icon: Book,
+		id: "quest",
+		label: "Quest",
+		icon: Map,
 		useCustomIcon: false,
-		title: "Learn",
+		title: "Quest",
 		subtitle: "Learn by doing",
 		bullets: [
 			"Quick, bite-sized lessons designed to keep you motivated",
@@ -45,12 +47,12 @@ export const platformTabs: TabContent[] = [
 			}
 		],
 		imagePlaceholder: "/images/career-quest/meet-pip/s1_p1.png",
-		themeColor: "lever-yellow"
+		themeColor: "charging-green-2"
 	},
 	{
 		id: "sandbox",
 		label: "Sandbox",
-		icon: Book, // Will be replaced by CustomSandbox
+		icon: CustomSandbox,
 		useCustomIcon: true,
 		title: "Sandbox",
 		subtitle: "Your imagination is the limit",
@@ -79,7 +81,7 @@ export const platformTabs: TabContent[] = [
 	{
 		id: "garage",
 		label: "Garage",
-		icon: Book, // Will be replaced by CustomGarage
+		icon: CustomGarage,
 		useCustomIcon: true,
 		title: "Garage",
 		subtitle: "Just for fun",

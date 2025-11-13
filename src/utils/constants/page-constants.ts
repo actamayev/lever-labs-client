@@ -8,7 +8,8 @@ export const PrivatePageNames: PageNames[] = [
 	"/class-manager",
 	"/whiteboard",
 	"/scoreboard",
-	"/learn",
+	"/quest",
+	"/arcade"
 ]
 
 // These are pages that you can view if you're logged in or not.
@@ -34,7 +35,8 @@ export const staticPages = [
 	"/settings/profile",
 	"/settings/schools",
 	"/scoreboard",
-	"/learn",
+	"/quest",
+	"/arcade",
 
 	"/career-quest",
 	"/career-quest/meet-pip",
@@ -59,4 +61,4 @@ export const careerQuestPages = [
 
 export const allPages = [...staticPages, ...careerQuestPages] as const
 
-export const PageToNavigateAfterLogin = "/learn"
+export const PageToNavigateAfterLogin = "/quest"

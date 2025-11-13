@@ -3,7 +3,7 @@
 import isUndefined from "lodash-es/isUndefined"
 import { action, makeAutoObservable } from "mobx"
 import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
-import { BlocklyJson, SandboxProject } from "@lever-labs/common-ts/types/sandbox"
+import { BlocklyJson, SandboxProject, SingleSearchByUsernameResult } from "@lever-labs/common-ts/types/sandbox"
 import { SandboxChatMessage, SandboxChatbotStreamChunkEvent,
 	SandboxChatbotStreamStartOrCompleteEvent } from "@lever-labs/common-ts/types/chat"
 
@@ -16,6 +16,10 @@ class SandboxClass {
 	public isRenameDialogOpen = false
 	public renameDialogProjectUUID: SandboxProjectUUID | null = null
 	public newProjectName = ""
+	public isShareDialogOpen = false
+	public shareDialogProjectUUID: SandboxProjectUUID | null = null
+	public usernameSearchResults: SingleSearchByUsernameResult[] = []
+	public usernameSearchTerm = ""
 
 	constructor() {
 		makeAutoObservable(this)
@@ -260,6 +264,64 @@ class SandboxClass {
 		this.newProjectName = name
 	})
 
+	// Share dialog management
+	public openShareDialog = action((projectUUID: SandboxProjectUUID): void => {
+		this.shareDialogProjectUUID = projectUUID
+		this.isShareDialogOpen = true
+		this.usernameSearchTerm = ""
+		this.usernameSearchResults = []
+	})
+
+	public closeShareDialog = action((): void => {
+		this.isShareDialogOpen = false
+		this.shareDialogProjectUUID = null
+		this.usernameSearchTerm = ""
+		this.usernameSearchResults = []
+	})
+
+	public setUsernameSearchTerm = action((term: string): void => {
+		this.usernameSearchTerm = term
+	})
+
+	public setUsernameSearchResults = action((results: SingleSearchByUsernameResult[]): void => {
+		this.usernameSearchResults = results
+	})
+
+	// Share management methods
+	public addSharedUser = action((projectUUID: SandboxProjectUUID, user: SingleSearchByUsernameResult): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+
+		// Ensure sharedWith array exists
+		if (!("sharedWith" in project)) {
+			(project as { sharedWith: SingleSearchByUsernameResult[] }).sharedWith = []
+		}
+
+		const sharedWith = (project as { sharedWith: SingleSearchByUsernameResult[] }).sharedWith
+
+		// Check if user is already in the list
+		if (sharedWith.some((u): boolean => u.userId === user.userId)) return
+
+		// Add user to sharedWith array
+		sharedWith.push(user)
+	})
+
+	public removeSharedUser = action((projectUUID: SandboxProjectUUID, userId: number): void => {
+		const project = this.sandboxProjects.get(projectUUID)
+		if (isUndefined(project)) return
+
+		// Ensure sharedWith array exists
+		if (!("sharedWith" in project)) return
+
+		const sharedWith = (project as { sharedWith: SingleSearchByUsernameResult[] }).sharedWith
+
+		// Remove user from sharedWith array
+		const index = sharedWith.findIndex((u): boolean => u.userId === userId)
+		if (index !== -1) {
+			sharedWith.splice(index, 1)
+		}
+	})
+
 	// Update logout method to clear stream IDs:
 	public logout(): void {
 		this.setIsRetrievingAllSandboxProjects(false)
@@ -270,6 +332,10 @@ class SandboxClass {
 		this.isRenameDialogOpen = false
 		this.renameDialogProjectUUID = null
 		this.newProjectName = ""
+		this.isShareDialogOpen = false
+		this.shareDialogProjectUUID = null
+		this.usernameSearchResults = []
+		this.usernameSearchTerm = ""
 	}
 }
 

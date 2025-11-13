@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import isUndefined from "lodash-es/isUndefined"
 import { useCallback, useEffect, useState } from "react"
 import { SandboxProject } from "@lever-labs/common-ts/types/sandbox"
-import { Folder, PlusCircle, Star, Search } from "lucide-react"
+import { Folder, PlusCircle, Star, Search, Users } from "lucide-react"
 import { Input } from "../../ui/input"
 import SingleProjectCard from "./single-project-card"
 import RenameProjectDialog from "./rename-project-dialog"
@@ -16,6 +16,7 @@ import retrieveAllSandboxProjects from "../../../utils/sandbox/retrieve-all-sand
 import { TactileButton } from "../../buttons/tactile-button"
 import { cn } from "../../../lib/utils"
 import getDuolingoColors from "../../../utils/get-duolingo-colors"
+import { Tabs, TabsList, TabsTrigger, TabsContent, TabsContents } from "../../ui/shadcn-io/tabs"
 import {
 	Empty,
 	EmptyContent,
@@ -26,7 +27,7 @@ import {
 } from "@/components/ui/empty"
 import authClass from "../../../classes/auth-class"
 
-// eslint-disable-next-line max-lines-per-function
+// eslint-disable-next-line max-lines-per-function, complexity
 function TheSandboxPage(): React.ReactNode {
 	useEffect((): void => {
 		void retrieveAllSandboxProjects()
@@ -63,13 +64,16 @@ function TheSandboxPage(): React.ReactNode {
 	const allProjects = Array.from(sandboxClass.sandboxProjects.values())
 		.sort((a, b): number => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
 
-	// Filter all projects based on search query
-	const filteredAllProjects = filterProjects(allProjects)
+	// Separate projects into my projects and shared with me
+	const myProjects = allProjects.filter((project): boolean => project.isMyProject === true)
+	const sharedWithMeProjects = allProjects.filter((project): boolean => project.isMyProject === false)
 
-	// Filter starred projects
-	const starredProjects = allProjects.filter((project): boolean => project.isStarred)
+	// Filter projects based on search query
+	const filteredMyProjects = filterProjects(myProjects)
+	const filteredSharedWithMeProjects = filterProjects(sharedWithMeProjects)
 
-	// Filter starred projects based on search query
+	// Filter starred projects (from my projects)
+	const starredProjects = myProjects.filter((project): boolean => project.isStarred)
 	const filteredStarredProjects = filterProjects(starredProjects)
 
 	return (
@@ -129,65 +133,109 @@ function TheSandboxPage(): React.ReactNode {
 						</div>
 					)}
 
-					<div>
-						<div className="flex flex-row space-x-2 items-center mb-4">
-							<Folder
-								size={30}
-								className="fill-fox text-fox"
-							/>
-							<h2 className="text-3xl font-semibold">All Projects</h2>
-							{searchQuery && (
-								<span className="ml-2 text-gray-500">
-									({filteredAllProjects.length} result{filteredAllProjects.length === 1 ? "" : "s"})
-								</span>
-							)}
-						</div>
-						{filteredAllProjects.length > 0 ? (
-							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								{filteredAllProjects.map((project): React.ReactNode => (
-									<SingleProjectCard key={project.sandboxProjectUUID} project={project} />
-								))}
-							</div>
-						) : (
-							!sandboxClass.isRetrievingAllSandboxProjects && (
-								<div className="text-center py-12">
-									{searchQuery ? (
-										<p className="text-hare mb-4">No projects match your search</p>
-									) : (
-										<Empty>
-											<EmptyHeader>
-												<EmptyMedia variant="icon">
-													<Folder />
-												</EmptyMedia>
-												<EmptyTitle>No Projects Yet</EmptyTitle>
-												<EmptyDescription>
-													You haven&apos;t created any projects yet. Get started by creating
-													your first project.
-												</EmptyDescription>
-											</EmptyHeader>
-											<EmptyContent>
-												<div className="flex gap-2">
-													<TactileButton
-														onClick={handleCreateProject}
-														className={cn(
-															"flex-1 px-4 py-2 mb-10 h-10 rounded-xl text-lg text-white",
-															colors.bg
-														)}
-														shadowHeight={4}
-														shadowClass={colors.shadow2}
-														disabled={isCreating}
-														size="lg"
-													>
-														Create Project
-													</TactileButton>
-												</div>
-											</EmptyContent>
-										</Empty>
-									)}
-								</div>
-							)
-						)}
-					</div>
+					{/* Projects Tabs */}
+					<Tabs defaultValue="my-projects" className="w-full">
+						<TabsList className="mb-4 bg-polar w-full grid grid-cols-2">
+							<TabsTrigger value="my-projects" className="flex items-center justify-center gap-2">
+								<Folder className="h-4 w-4" />
+								My Projects
+								{searchQuery && (
+									<span className="ml-1 text-xs">
+										({filteredMyProjects.length})
+									</span>
+								)}
+							</TabsTrigger>
+							<TabsTrigger value="shared-with-me" className="flex items-center justify-center gap-2">
+								<Users className="h-4 w-4" />
+								Shared with me
+								{searchQuery && (
+									<span className="ml-1 text-xs">
+										({filteredSharedWithMeProjects.length})
+									</span>
+								)}
+							</TabsTrigger>
+						</TabsList>
+
+						<TabsContents className="w-full">
+							<TabsContent value="my-projects" className="w-full">
+								{filteredMyProjects.length > 0 ? (
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+										{filteredMyProjects.map((project): React.ReactNode => (
+											<SingleProjectCard key={project.sandboxProjectUUID} project={project} />
+										))}
+									</div>
+								) : (
+									!sandboxClass.isRetrievingAllSandboxProjects && (
+										<div className="text-center py-12">
+											{searchQuery ? (
+												<p className="text-hare mb-4">No projects match your search</p>
+											) : (
+												<Empty>
+													<EmptyHeader>
+														<EmptyMedia variant="icon">
+															<Folder />
+														</EmptyMedia>
+														<EmptyTitle>No Projects Yet</EmptyTitle>
+														<EmptyDescription>
+															You haven&apos;t created any projects yet. Get started by creating
+															your first project.
+														</EmptyDescription>
+													</EmptyHeader>
+													<EmptyContent>
+														<div className="flex gap-2">
+															<TactileButton
+																onClick={handleCreateProject}
+																className={cn(
+																	"flex-1 px-4 py-2 mb-10 h-10 rounded-xl text-lg text-white",
+																	colors.bg
+																)}
+																shadowHeight={4}
+																shadowClass={colors.shadow2}
+																disabled={isCreating}
+																size="lg"
+															>
+																Create Project
+															</TactileButton>
+														</div>
+													</EmptyContent>
+												</Empty>
+											)}
+										</div>
+									)
+								)}
+							</TabsContent>
+
+							<TabsContent value="shared-with-me" className="w-full">
+								{filteredSharedWithMeProjects.length > 0 ? (
+									<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+										{filteredSharedWithMeProjects.map((project): React.ReactNode => (
+											<SingleProjectCard key={project.sandboxProjectUUID} project={project} />
+										))}
+									</div>
+								) : (
+									!sandboxClass.isRetrievingAllSandboxProjects && (
+										<div className="text-center py-12">
+											{searchQuery ? (
+												<p className="text-hare mb-4">No projects match your search</p>
+											) : (
+												<Empty>
+													<EmptyHeader>
+														<EmptyMedia variant="icon">
+															<Users />
+														</EmptyMedia>
+														<EmptyTitle>No Shared Projects</EmptyTitle>
+														<EmptyDescription>
+															No one has shared any projects with you yet.
+														</EmptyDescription>
+													</EmptyHeader>
+												</Empty>
+											)}
+										</div>
+									)
+								)}
+							</TabsContent>
+						</TabsContents>
+					</Tabs>
 
 					{/* Loading state */}
 					{sandboxClass.isRetrievingAllSandboxProjects && (

@@ -347,7 +347,7 @@ const MEET_PIP: CareerQuestData = {
 					content: "meet-pip-5-4",
 					rightSideContent: {
 						type: "component",
-						component: MeetPipS5P4ImuViz
+						component: (): React.ReactNode => <MeetPipS5P4ImuViz />
 					}
 				},
 				{
@@ -411,7 +411,7 @@ const MEET_PIP: CareerQuestData = {
 					content: "meet-pip-6-4",
 					rightSideContent: {
 						type: "component",
-						component: MeetPipS6P4MzViz
+						component: (): React.ReactNode => <MeetPipS6P4MzViz />
 					}
 				},
 				{
@@ -428,7 +428,7 @@ const MEET_PIP: CareerQuestData = {
 					content: "meet-pip-6-6",
 					rightSideContent: {
 						type: "component",
-						component: MeetPipS6P6TofsViz
+						component: (): React.ReactNode => <MeetPipS6P6TofsViz />
 					}
 				},
 				{

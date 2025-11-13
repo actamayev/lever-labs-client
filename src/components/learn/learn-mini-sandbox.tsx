@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
-import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import { CodingBlock } from "@lever-labs/common-ts/types/learn"
 import { cn } from "../../lib/utils"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"
@@ -13,12 +13,12 @@ import getWorkspaceConfig, { darkTheme, lightTheme } from "../../utils/blockly/w
 import { toolboxConfig } from "../../utils/blockly/toolbox-config"
 
 interface LearnMiniSandboxProps {
-	blocklyJson: BlocklyJson
+	codingBlock: CodingBlock
 	className?: string
 }
 
 // eslint-disable-next-line max-lines-per-function
-function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps): React.ReactNode {
+function LearnMiniSandbox({ codingBlock, className = "" }: LearnMiniSandboxProps): React.ReactNode {
 	const isDarkMode = personalInfoClass.defaultSiteTheme === "dark"
 	const containerRef = useRef<HTMLDivElement>(null)
 	const workspaceRef = useRef<Blockly.WorkspaceSvg | null>(null)
@@ -162,7 +162,7 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 
 	useEffect((): void => {
 		setIsCentered(false)
-	}, [blocklyJson])
+	}, [codingBlock])
 
 	// Reset isCentered when pathname changes (navigation)
 	useEffect((): void => {
@@ -205,7 +205,7 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 		}, 300) // Initial delay to ensure blocks are rendered
 
 		return (): void => clearTimeout(timer)
-	}, [centerWorkspace, blocklyJson, isCentered, isCentering, pathname, blocksInitialized])
+	}, [centerWorkspace, codingBlock, isCentered, isCentering, pathname, blocksInitialized])
 
 	useEffect((): void => {
 		if (workspaceRef.current) {
@@ -267,8 +267,8 @@ function LearnMiniSandbox({ blocklyJson, className = "" }: LearnMiniSandboxProps
 			className={cn("relative z-0 rounded-3xl overflow-hidden h-full flex-1", className)}
 		>
 			<BlocklyWorkspace
-				key={`${blocksInitialized}-${JSON.stringify(blocklyJson)}`}
-				initialJson={blocklyJson}
+				key={`${blocksInitialized}-${JSON.stringify(codingBlock.codingBlockJson)}`}
+				initialJson={codingBlock.codingBlockJson}
 				toolboxConfiguration={toolboxConfig}
 				workspaceConfiguration={workspaceConfiguration}
 				className="h-full duration-0"

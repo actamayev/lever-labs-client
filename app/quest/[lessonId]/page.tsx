@@ -3,26 +3,26 @@ import { notFound } from "next/navigation"
 import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 import AuthenticatedLayout from "../../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../../src/utils/seo/create-metadata"
-import LearnPage from "../../../src/components/learn/learn-page"
+import QuestPage from "../../../src/components/learn/learn-page"
 
-interface LearnPageProps {
+interface QuestPageProps {
 	params: Promise<{
 		lessonId: LessonUUID
 	}>
 }
 
-export async function generateMetadata({ params }: LearnPageProps): Promise<Metadata> {
+export async function generateMetadata({ params }: QuestPageProps): Promise<Metadata> {
 	const { lessonId } = await params
 	return createMetadata({
-		title: "Learn",
+		title: "Quest",
 		// eslint-disable-next-line max-len
 		description: "Guide Pip through coding challenges like line-following and maze-solving to discover its purpose in a robotics adventure.",
-		path: `/learn/${lessonId}`,
+		path: `/quest/${lessonId}`,
 		keywords: ["robotics adventure", "coding challenges", "purpose discovery"]
 	})
 }
 
-export default async function CustomSandboxProjectPage({ params }: LearnPageProps): Promise<React.ReactNode> {
+export default async function CustomQuestPage({ params }: QuestPageProps): Promise<React.ReactNode> {
 	const { lessonId } = await params
 
 	if (!lessonId || !/^[a-fA-F0-9-]{36}$/.test(lessonId)) {
@@ -32,7 +32,7 @@ export default async function CustomSandboxProjectPage({ params }: LearnPageProp
 
 	return (
 		<AuthenticatedLayout>
-			<LearnPage lessonId={lessonId} />
+			<QuestPage lessonId={lessonId} />
 		</AuthenticatedLayout>
 	)
 }

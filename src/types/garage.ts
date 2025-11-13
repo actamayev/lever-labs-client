@@ -19,6 +19,8 @@ declare global {
 	type GarageStatusType = "driving" | "lights" | "tones" | "display"
 
 	type GarageStatusValue = "none" | "all-on" | "all-off" | "mixed"
+
+	type SensorDataTab = "imu" | "side-distance" | "front-distance" | "color" | "motors"
 }
 
 export {}
