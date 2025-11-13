@@ -37,6 +37,7 @@ export const staticPages = [
 	"/scoreboard",
 	"/quest",
 	"/arcade",
+	"/arcade/turret",
 
 	"/career-quest",
 	"/career-quest/meet-pip",
