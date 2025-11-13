@@ -1,36 +1,56 @@
 "use client"
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef, useState } from "react"
+import { Button } from "@/components/ui/button"
 
 interface Projectile {
-	x: number;
-	y: number;
-	vx: number;
-	vy: number;
-	type: "left" | "right";
-	damage: number;
+	x: number
+	y: number
+	vx: number
+	vy: number
+	type: "left" | "right"
+	damage: number
 }
 
 interface Enemy {
-	x: number;
-	y: number;
-	vx: number;
-	vy: number;
-	type: "basic" | "fast" | "tank";
-	health: number;
-	maxHealth: number;
-	size: number;
+	x: number
+	y: number
+	vx: number
+	vy: number
+	type: "basic" | "fast" | "tank"
+	health: number
+	maxHealth: number
+	size: number
+	zigzagPhase: number
+	zigzagSpeed: number
 }
 
 interface Particle {
-	x: number;
-	y: number;
-	vx: number;
-	vy: number;
-	life: number;
-	maxLife: number;
-	color: string;
-	size: number;
+	x: number
+	y: number
+	vx: number
+	vy: number
+	life: number
+	maxLife: number
+	color: string
+	size: number
+}
+
+interface MuzzleFlash {
+	x: number
+	y: number
+	angle: number
+	life: number
+	type: "left" | "right"
+}
+
+interface CollisionParams {
+	x1: number
+	y1: number
+	size1: number
+	x2: number
+	y2: number
+	size2: number
 }
 
 const CANVAS_WIDTH = 800
@@ -53,109 +73,39 @@ const ENEMY_TYPES = {
 }
 
 // eslint-disable-next-line max-lines-per-function
-export default function PipTurretGame() : React.ReactNode {
+export default function PipTurretGame(): React.ReactNode {
 	const canvasRef = useRef<HTMLCanvasElement>(null)
 	const gameStateRef = useRef({
 		turretAngle: 0,
 		projectiles: [] as Projectile[],
 		enemies: [] as Enemy[],
 		particles: [] as Particle[],
+		muzzleFlashes: [] as MuzzleFlash[],
 		score: 0,
 		gameOver: false,
+		gameStarted: false,
 		lastSpawnTime: 0,
 		difficulty: 1,
+		wave: 1,
+		enemiesInWave: 0,
+		waveEnemiesSpawned: 0,
 		lastLeftFire: 0,
 		lastRightFire: 0,
-		screenShake: 0
+		screenShake: 0,
+		combo: 0,
+		comboTimer: 0,
+		lastKillTime: 0,
+		highScore: parseInt(localStorage.getItem("turretHighScore") || "0", 10)
 	})
 	const wsRef = useRef<WebSocket | null>(null)
 	const animationRef = useRef<number>(0)
 
 	const [score, setScore] = useState(0)
 	const [gameOver, setGameOver] = useState(false)
+	const [gameStarted, setGameStarted] = useState(false)
 
-	// WebSocket connection
-	useEffect(() => {
-		// Simulate WebSocket for demo - replace with your actual WebSocket connection
-		const simulateRobotData = () => {
-			// For demo: Use mouse position for turret angle
-			const handleMouseMove = (e: MouseEvent) => {
-				const rect = canvasRef.current?.getBoundingClientRect()
-				if (rect) {
-					const mouseX = e.clientX - rect.left
-					// Map mouse position to -90 to +90 degrees (full horizontal range)
-					const angle = ((mouseX / CANVAS_WIDTH) - 0.5) * 180
-					gameStateRef.current.turretAngle = angle
-				}
-			}
-
-			// For demo: Use keyboard for firing
-			const handleKeyDown = (e: KeyboardEvent) => {
-				const now = Date.now()
-				if (e.key === "a" || e.key === "ArrowLeft") {
-					if (now - gameStateRef.current.lastLeftFire > WEAPONS.left.fireRate) {
-						fireBullet("left")
-						gameStateRef.current.lastLeftFire = now
-					}
-				}
-				if (e.key === "d" || e.key === "ArrowRight") {
-					if (now - gameStateRef.current.lastRightFire > WEAPONS.right.fireRate) {
-						fireBullet("right")
-						gameStateRef.current.lastRightFire = now
-					}
-				}
-			}
-
-			window.addEventListener("mousemove", handleMouseMove)
-			window.addEventListener("keydown", handleKeyDown)
-
-			return () => {
-				window.removeEventListener("mousemove", handleMouseMove)
-				window.removeEventListener("keydown", handleKeyDown)
-			}
-		}
-
-		// For production: Connect to your WebSocket
-		/*
-    const ws = new WebSocket('ws://your-pip-url');
-    ws.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-
-      // Update turret angle from roll (-45 to +45 maps to -90 to +90 degrees tilt)
-      if (data.roll !== undefined) {
-        gameStateRef.current.turretAngle = data.roll;
-      }
-
-      // Fire left weapon if ToF > 250 counts
-      if (data.leftToF > 250) {
-        const now = Date.now();
-        if (now - gameStateRef.current.lastLeftFire > WEAPONS.left.fireRate) {
-          fireBullet('left');
-          gameStateRef.current.lastLeftFire = now;
-        }
-      }
-
-      // Fire right weapon if ToF > 250 counts
-      if (data.rightToF > 250) {
-        const now = Date.now();
-        if (now - gameStateRef.current.lastRightFire > WEAPONS.right.fireRate) {
-          fireBullet('right');
-          gameStateRef.current.lastRightFire = now;
-        }
-      }
-    };
-    wsRef.current = ws;
-    */
-
-		const cleanup = simulateRobotData()
-		return () => {
-			cleanup()
-			wsRef.current?.close()
-		}
-	}, [])
-
-	const fireBullet = (type: "left" | "right") => {
-		if (gameStateRef.current.gameOver) return
+	const fireBullet = useCallback((type: "left" | "right"): void => {
+		if (gameStateRef.current.gameOver || !gameStateRef.current.gameStarted) return
 
 		const angle = (gameStateRef.current.turretAngle * Math.PI) / 180
 		const weapon = WEAPONS[type]
@@ -173,12 +123,18 @@ export default function PipTurretGame() : React.ReactNode {
 			damage: weapon.damage
 		})
 
-		// Play sound effect (add audio element if desired)
-	}
+		// Add muzzle flash
+		gameStateRef.current.muzzleFlashes.push({
+			x: startX,
+			y: startY,
+			angle,
+			life: 5,
+			type
+		})
+	}, [])
 
-	const spawnEnemy = () => {
+	const spawnEnemy = useCallback((): void => {
 		const state = gameStateRef.current
-		const types = ["basic", "fast", "tank"] as const
 
 		// Increase variety with difficulty
 		let type: "basic" | "fast" | "tank" = "basic"
@@ -189,22 +145,28 @@ export default function PipTurretGame() : React.ReactNode {
 		const config = ENEMY_TYPES[type]
 		const x = Math.random() * (CANVAS_WIDTH - config.size * 2) + config.size
 
-		// Some enemies drift horizontally
-		const vx = (Math.random() - 0.5) * 1 * state.difficulty
+		// Some enemies drift horizontally with zigzag pattern
+		const baseVx = (Math.random() - 0.5) * 1 * state.difficulty
+		const zigzagSpeed = type === "fast" ? 0.15 : 0.1
 
 		state.enemies.push({
 			x,
 			y: -config.size,
-			vx,
+			vx: baseVx,
 			vy: config.speed * state.difficulty,
 			type,
 			health: config.health,
 			maxHealth: config.health,
-			size: config.size
+			size: config.size,
+			zigzagPhase: Math.random() * Math.PI * 2,
+			zigzagSpeed
 		})
-	}
 
-	const createParticles = (x: number, y: number, color: string, count: number = 8) => {
+		state.enemiesInWave++
+		state.waveEnemiesSpawned++
+	}, [])
+
+	const createParticles = useCallback((x: number, y: number, color: string, count: number = 8): void => {
 		for (let i = 0; i < count; i++) {
 			const angle = (Math.PI * 2 * i) / count
 			const speed = 2 + Math.random() * 3
@@ -219,52 +181,72 @@ export default function PipTurretGame() : React.ReactNode {
 				size: 3 + Math.random() * 3
 			})
 		}
-	}
+	}, [])
 
-	const checkCollision = (
-		x1: number, y1: number, size1: number,
-		x2: number, y2: number, size2: number
-	): boolean => {
+	const checkCollision = ({ x1, y1, size1, x2, y2, size2 }: CollisionParams): boolean => {
 		const dx = x1 - x2
 		const dy = y1 - y2
 		const distance = Math.sqrt(dx * dx + dy * dy)
 		return distance < (size1 + size2) / 2
 	}
 
-	const updateGame = (timestamp: number) => {
+	// eslint-disable-next-line max-lines-per-function, complexity
+	const updateGame = useCallback((timestamp: number): void => {
 		const state = gameStateRef.current
-		if (state.gameOver) return
+		if (state.gameOver || !state.gameStarted) return
 
-		const deltaTime = 16 // Assume 60fps
+		// Update difficulty based on score
+		const newDifficulty = 1 + Math.floor(state.score / 100)
+		if (newDifficulty !== state.difficulty) {
+			state.difficulty = newDifficulty
+		}
 
-		// Update difficulty over time
-		state.difficulty = 1 + Math.floor(state.score / 100)
+		// Wave system: spawn enemies in waves
+		const enemiesPerWave = 10 + state.wave * 2
+		const waveComplete = state.waveEnemiesSpawned >= enemiesPerWave && state.enemies.length === 0
+
+		if (waveComplete) {
+			// Start next wave
+			state.wave++
+			state.enemiesInWave = 0
+			state.waveEnemiesSpawned = 0
+		}
 
 		// Spawn enemies
 		const spawnRate = Math.max(500 - state.difficulty * 50, 200)
-		if (timestamp - state.lastSpawnTime > spawnRate) {
+		if (timestamp - state.lastSpawnTime > spawnRate && state.waveEnemiesSpawned < enemiesPerWave) {
 			spawnEnemy()
 			state.lastSpawnTime = timestamp
 		}
 
+		// Update combo timer
+		if (state.comboTimer > 0) {
+			state.comboTimer--
+			if (state.comboTimer === 0) {
+				state.combo = 0
+			}
+		}
+
 		// Update projectiles
-		state.projectiles = state.projectiles.filter(p => {
+		state.projectiles = state.projectiles.filter((p): boolean => {
 			p.x += p.vx
 			p.y += p.vy
 			return p.y > -10 && p.x > -10 && p.x < CANVAS_WIDTH + 10
 		})
 
-		// Update enemies
-		state.enemies = state.enemies.filter(e => {
-			e.x += e.vx
+		// Update enemies with zigzag movement
+		state.enemies = state.enemies.filter((e): boolean => {
+			// Zigzag pattern
+			e.zigzagPhase += e.zigzagSpeed
+			e.x += e.vx + Math.sin(e.zigzagPhase) * 0.5
 			e.y += e.vy
 
 			// Check if enemy hit the turret
-			if (checkCollision(e.x, e.y, e.size, TURRET_X, TURRET_Y, 25)) {
+			if (checkCollision({ x1: e.x, y1: e.y, size1: e.size, x2: TURRET_X, y2: TURRET_Y, size2: 25 })) {
 				state.gameOver = true
 				setGameOver(true)
-				createParticles(TURRET_X, TURRET_Y, "#ff0000", 20)
-				state.screenShake = 15
+				createParticles(TURRET_X, TURRET_Y, "#ff0000", 30)
+				state.screenShake = 20
 				return false
 			}
 
@@ -277,7 +259,7 @@ export default function PipTurretGame() : React.ReactNode {
 		})
 
 		// Update particles
-		state.particles = state.particles.filter(p => {
+		state.particles = state.particles.filter((p): boolean => {
 			p.x += p.vx
 			p.y += p.vy
 			p.life--
@@ -285,10 +267,23 @@ export default function PipTurretGame() : React.ReactNode {
 			return p.life > 0
 		})
 
+		// Update muzzle flashes
+		state.muzzleFlashes = state.muzzleFlashes.filter((flash): boolean => {
+			flash.life--
+			return flash.life > 0
+		})
+
 		// Check collisions
-		state.projectiles.forEach((proj, projIndex) => {
-			state.enemies.forEach((enemy, enemyIndex) => {
-				if (checkCollision(proj.x, proj.y, 5, enemy.x, enemy.y, enemy.size)) {
+		state.projectiles.forEach((proj, projIndex): void => {
+			state.enemies.forEach((enemy, enemyIndex): void => {
+				if (checkCollision({
+					x1: proj.x,
+					y1: proj.y,
+					size1: 5,
+					x2: enemy.x,
+					y2: enemy.y,
+					size2: enemy.size
+				})) {
 					enemy.health -= proj.damage
 					state.projectiles.splice(projIndex, 1)
 
@@ -296,9 +291,25 @@ export default function PipTurretGame() : React.ReactNode {
 
 					if (enemy.health <= 0) {
 						const config = ENEMY_TYPES[enemy.type]
-						state.score += config.points
+						const now = Date.now()
+
+						// Combo system: increase combo if kills are close together
+						if (now - state.lastKillTime < 1000) {
+							state.combo++
+							state.comboTimer = 60 // 1 second at 60fps
+						} else {
+							state.combo = 1
+							state.comboTimer = 60
+						}
+						state.lastKillTime = now
+
+						// Score with combo multiplier
+						const comboMultiplier = 1 + state.combo * 0.1
+						const points = Math.floor(config.points * comboMultiplier)
+						state.score += points
 						setScore(state.score)
-						createParticles(enemy.x, enemy.y, config.color, 12)
+
+						createParticles(enemy.x, enemy.y, config.color, 15)
 						state.enemies.splice(enemyIndex, 1)
 						state.screenShake = 5
 					}
@@ -308,12 +319,13 @@ export default function PipTurretGame() : React.ReactNode {
 
 		// Decay screen shake
 		if (state.screenShake > 0) {
-			state.screenShake *= 0.8
+			state.screenShake *= 0.85
 			if (state.screenShake < 0.1) state.screenShake = 0
 		}
-	}
+	}, [spawnEnemy, createParticles])
 
-	const draw = () => {
+	// eslint-disable-next-line max-lines-per-function
+	const draw = useCallback((): void => {
 		const canvas = canvasRef.current
 		if (!canvas) return
 
@@ -335,19 +347,24 @@ export default function PipTurretGame() : React.ReactNode {
 		ctx.fillStyle = "#0a0e27"
 		ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT)
 
-		// Draw stars background
+		// Draw animated stars background
 		ctx.fillStyle = "rgba(255, 255, 255, 0.3)"
+		const time = Date.now() * 0.001
 		for (let i = 0; i < 50; i++) {
 			const x = (i * 37) % CANVAS_WIDTH
-			const y = (i * 59) % CANVAS_HEIGHT
-			ctx.fillRect(x, y, 2, 2)
+			const y = ((i * 59) + Math.sin(time + i) * 10) % CANVAS_HEIGHT
+			const size = 1 + Math.sin(time * 2 + i) * 0.5
+			ctx.fillRect(x, y, size, size)
 		}
 
-		// Draw turret base
+		// Draw turret base with glow
+		ctx.shadowBlur = 10
+		ctx.shadowColor = "#4a5568"
 		ctx.fillStyle = "#4a5568"
 		ctx.beginPath()
 		ctx.arc(TURRET_X, TURRET_Y, 25, 0, Math.PI * 2)
 		ctx.fill()
+		ctx.shadowBlur = 0
 
 		// Draw turret barrel
 		ctx.save()
@@ -365,29 +382,48 @@ export default function PipTurretGame() : React.ReactNode {
 
 		ctx.restore()
 
-		// Draw projectiles
-		state.projectiles.forEach(p => {
+		// Draw muzzle flashes
+		state.muzzleFlashes.forEach((flash): void => {
+			ctx.save()
+			ctx.translate(flash.x, flash.y)
+			ctx.rotate(flash.angle - Math.PI / 2)
+
+			const alpha = flash.life / 5
+			const weapon = WEAPONS[flash.type]
+			ctx.fillStyle = weapon.color + Math.floor(alpha * 200).toString(16).padStart(2, "0")
+			ctx.fillRect(-6, -TURRET_LENGTH - 10, 12, 15)
+
+			ctx.restore()
+		})
+
+		// Draw projectiles with glow
+		state.projectiles.forEach((p): void => {
+			ctx.shadowBlur = 8
+			ctx.shadowColor = WEAPONS[p.type].color
 			ctx.fillStyle = WEAPONS[p.type].color
 			ctx.beginPath()
 			ctx.arc(p.x, p.y, 5, 0, Math.PI * 2)
 			ctx.fill()
 
 			// Trail effect
+			ctx.shadowBlur = 0
 			ctx.fillStyle = WEAPONS[p.type].color + "44"
 			ctx.beginPath()
 			ctx.arc(p.x - p.vx, p.y - p.vy, 4, 0, Math.PI * 2)
 			ctx.fill()
 		})
 
-		// Draw enemies
-		state.enemies.forEach(e => {
+		// Draw enemies with glow
+		state.enemies.forEach((e): void => {
 			const config = ENEMY_TYPES[e.type]
 
-			// Enemy body
+			ctx.shadowBlur = 5
+			ctx.shadowColor = config.color
 			ctx.fillStyle = config.color
 			ctx.beginPath()
 			ctx.arc(e.x, e.y, e.size / 2, 0, Math.PI * 2)
 			ctx.fill()
+			ctx.shadowBlur = 0
 
 			// Health bar for tanks
 			if (e.type === "tank") {
@@ -400,7 +436,7 @@ export default function PipTurretGame() : React.ReactNode {
 		})
 
 		// Draw particles
-		state.particles.forEach(p => {
+		state.particles.forEach((p): void => {
 			const alpha = p.life / p.maxLife
 			ctx.fillStyle = p.color + Math.floor(alpha * 255).toString(16).padStart(2, "0")
 			ctx.beginPath()
@@ -414,7 +450,22 @@ export default function PipTurretGame() : React.ReactNode {
 		ctx.fillStyle = "#ffffff"
 		ctx.font = "bold 24px Arial"
 		ctx.fillText(`Score: ${state.score}`, 20, 40)
-		ctx.fillText(`Level: ${state.difficulty}`, 20, 70)
+		ctx.fillText(`Wave: ${state.wave}`, 20, 70)
+		ctx.fillText(`Level: ${state.difficulty}`, 20, 100)
+
+		// Draw combo
+		if (state.combo > 1) {
+			ctx.fillStyle = "#ffd93d"
+			ctx.font = "bold 32px Arial"
+			const comboText = `${state.combo}x COMBO!`
+			const comboWidth = ctx.measureText(comboText).width
+			ctx.fillText(comboText, CANVAS_WIDTH / 2 - comboWidth / 2, 50)
+		}
+
+		// Draw high score
+		ctx.fillStyle = "rgba(255, 255, 255, 0.6)"
+		ctx.font = "16px Arial"
+		ctx.fillText(`High Score: ${state.highScore}`, CANVAS_WIDTH - 200, 40)
 
 		// Draw weapon cooldown indicators
 		const now = Date.now()
@@ -434,115 +485,214 @@ export default function PipTurretGame() : React.ReactNode {
 		// Draw controls hint
 		ctx.fillStyle = "rgba(255, 255, 255, 0.5)"
 		ctx.font = "14px Arial"
-		ctx.fillText("Move mouse to aim | A/← for left weapon | D/→ for right weapon", CANVAS_WIDTH / 2 - 200, CANVAS_HEIGHT - 20)
-	}
+		const controlsText = "Move mouse to aim | A/← for left weapon | D/→ for right weapon"
+		ctx.fillText(controlsText, CANVAS_WIDTH / 2 - 200, CANVAS_HEIGHT - 20)
+	}, [])
 
-	const gameLoop = (timestamp: number) => {
+	const gameLoop = useCallback((timestamp: number): void => {
 		updateGame(timestamp)
 		draw()
 
-		if (!gameStateRef.current.gameOver) {
+		if (!gameStateRef.current.gameOver && gameStateRef.current.gameStarted) {
 			animationRef.current = requestAnimationFrame(gameLoop)
 		}
-	}
+	}, [updateGame, draw])
 
-	const resetGame = () => {
+	const startGame = useCallback((): void => {
+		gameStateRef.current.gameStarted = true
+		setGameStarted(true)
+		animationRef.current = requestAnimationFrame(gameLoop)
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [])
+
+	const resetGame = useCallback((): void => {
+		const state = gameStateRef.current
+		const newHighScore = Math.max(state.score, state.highScore)
+
 		gameStateRef.current = {
 			turretAngle: 0,
 			projectiles: [],
 			enemies: [],
 			particles: [],
+			muzzleFlashes: [],
 			score: 0,
 			gameOver: false,
+			gameStarted: false,
 			lastSpawnTime: 0,
 			difficulty: 1,
+			wave: 1,
+			enemiesInWave: 0,
+			waveEnemiesSpawned: 0,
 			lastLeftFire: 0,
 			lastRightFire: 0,
-			screenShake: 0
+			screenShake: 0,
+			combo: 0,
+			comboTimer: 0,
+			lastKillTime: 0,
+			highScore: newHighScore
 		}
+
+		if (newHighScore > state.highScore) {
+			localStorage.setItem("turretHighScore", newHighScore.toString())
+		}
+
 		setScore(0)
 		setGameOver(false)
-		animationRef.current = requestAnimationFrame(gameLoop)
-	}
+		setGameStarted(false)
 
-	useEffect(() => {
-		animationRef.current = requestAnimationFrame(gameLoop)
+	}, [])
 
-		return () => {
+	// WebSocket connection
+	useEffect((): (() => void) => {
+		// Simulate WebSocket for demo - replace with your actual WebSocket connection
+		const simulateRobotData = (): (() => void) => {
+			// For demo: Use mouse position for turret angle
+			const handleMouseMove = (e: MouseEvent): void => {
+				const rect = canvasRef.current?.getBoundingClientRect()
+				if (rect && gameStateRef.current.gameStarted) {
+					const mouseX = e.clientX - rect.left
+					// Map mouse position to -90 to +90 degrees (full horizontal range)
+					const angle = ((mouseX / CANVAS_WIDTH) - 0.5) * 180
+					gameStateRef.current.turretAngle = angle
+				}
+			}
+
+			// For demo: Use keyboard for firing
+			const handleKeyDown = (e: KeyboardEvent): void => {
+				if (!gameStateRef.current.gameStarted) return
+				const now = Date.now()
+				if (e.key === "a" || e.key === "ArrowLeft") {
+					if (now - gameStateRef.current.lastLeftFire > WEAPONS.left.fireRate) {
+						fireBullet("left")
+						gameStateRef.current.lastLeftFire = now
+					}
+				}
+				if (e.key === "d" || e.key === "ArrowRight") {
+					if (now - gameStateRef.current.lastRightFire > WEAPONS.right.fireRate) {
+						fireBullet("right")
+						gameStateRef.current.lastRightFire = now
+					}
+				}
+			}
+
+			window.addEventListener("mousemove", handleMouseMove)
+			window.addEventListener("keydown", handleKeyDown)
+
+			return (): void => {
+				window.removeEventListener("mousemove", handleMouseMove)
+				window.removeEventListener("keydown", handleKeyDown)
+			}
+		}
+
+		// For production: Connect to your WebSocket
+		/*
+		const ws = new WebSocket('ws://your-pip-url');
+		ws.onmessage = (event) => {
+			const data = JSON.parse(event.data);
+
+			// Update turret angle from roll (-45 to +45 maps to -90 to +90 degrees tilt)
+			if (data.roll !== undefined) {
+				gameStateRef.current.turretAngle = data.roll;
+			}
+
+			// Fire left weapon if ToF > 250 counts
+			if (data.leftToF > 250) {
+				const now = Date.now();
+				if (now - gameStateRef.current.lastLeftFire > WEAPONS.left.fireRate) {
+					fireBullet('left');
+					gameStateRef.current.lastLeftFire = now;
+				}
+			}
+
+			// Fire right weapon if ToF > 250 counts
+			if (data.rightToF > 250) {
+				const now = Date.now();
+				if (now - gameStateRef.current.lastRightFire > WEAPONS.right.fireRate) {
+					fireBullet('right');
+					gameStateRef.current.lastRightFire = now;
+				}
+			}
+		};
+		wsRef.current = ws;
+		*/
+
+		const cleanup = simulateRobotData()
+		const ws = wsRef.current
+
+		return (): void => {
+			cleanup()
+			ws?.close()
+		}
+	}, [fireBullet])
+
+	useEffect((): (() => void) => {
+		if (gameStarted && !gameOver) {
+			animationRef.current = requestAnimationFrame(gameLoop)
+		}
+
+		return (): void => {
 			if (animationRef.current) {
 				cancelAnimationFrame(animationRef.current)
 			}
 		}
-	}, [])
+	}, [gameLoop, gameStarted, gameOver])
 
 	return (
-		<div style={{
-			display: "flex",
-			flexDirection: "column",
-			alignItems: "center",
-			justifyContent: "center",
-			minHeight: "100vh",
-			backgroundColor: "#1a202c",
-			fontFamily: "Arial, sans-serif"
-		}}>
-			<h1 style={{ color: "#ffffff", marginBottom: "20px" }}>Pip Turret Defense</h1>
+		<div className="flex flex-col items-center justify-center min-h-screen bg-[#1a202c] font-sans">
+			<h1 className="text-white mb-5 text-2xl">Pip Turret Defense</h1>
 
 			<canvas
 				ref={canvasRef}
 				width={CANVAS_WIDTH}
 				height={CANVAS_HEIGHT}
-				style={{
-					border: "2px solid #4a5568",
-					borderRadius: "8px",
-					boxShadow: "0 4px 6px rgba(0, 0, 0, 0.3)"
-				}}
+				className="border-2 border-[#4a5568] rounded-lg shadow-lg"
 			/>
 
-			{gameOver && (
-				<div style={{
-					position: "absolute",
-					top: "50%",
-					left: "50%",
-					transform: "translate(-50%, -50%)",
-					backgroundColor: "rgba(0, 0, 0, 0.9)",
-					padding: "40px",
-					borderRadius: "12px",
-					textAlign: "center",
-					border: "3px solid #ff6b6b"
-				}}>
-					<h2 style={{ color: "#ff6b6b", fontSize: "48px", margin: "0 0 20px 0" }}>GAME OVER</h2>
-					<p style={{ color: "#ffffff", fontSize: "24px", margin: "0 0 30px 0" }}>
-						Final Score: {score}
+			{!gameStarted && !gameOver && (
+				// eslint-disable-next-line max-len
+				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/90 p-10 rounded-xl text-center border-4 border-[#48bb78]">
+					<h2 className="text-[#48bb78] text-4xl m-0 mb-5">Ready to Defend?</h2>
+					<p className="text-white text-lg m-0 mb-8 max-w-md">
+						Defend your turret from waves of enemies! Build combos for bonus points.
 					</p>
-					<button
-						onClick={resetGame}
-						style={{
-							padding: "15px 40px",
-							fontSize: "20px",
-							backgroundColor: "#48bb78",
-							color: "#ffffff",
-							border: "none",
-							borderRadius: "8px",
-							cursor: "pointer",
-							fontWeight: "bold"
-						}}
+					<Button
+						onClick={startGame}
+						size="lg"
+						className="bg-[#48bb78] hover:bg-[#48bb78]/90 text-white font-bold"
 					>
-						Play Again
-					</button>
+						Start Game
+					</Button>
 				</div>
 			)}
 
-			<div style={{
-				marginTop: "20px",
-				color: "#a0aec0",
-				textAlign: "center",
-				maxWidth: "600px"
-			}}>
-				<p><strong style={{ color: "#ffffff" }}>How to Play:</strong></p>
-				<p>Move your mouse to aim the turret. Use A/← for rapid-fire green weapon, D/→ for powerful red weapon.</p>
-				<p>Destroy enemies before they reach the bottom. Each level increases difficulty.</p>
+			{gameOver && (
 				// eslint-disable-next-line max-len
-				<p><strong style={{ color: "#ffd93d" }}>Yellow</strong> enemies are fast, <strong style={{ color: "#6c5ce7" }}>Purple</strong> enemies are tanks.</p>
+				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/90 p-10 rounded-xl text-center border-4 border-[#ff6b6b]">
+					<h2 className="text-[#ff6b6b] text-5xl m-0 mb-5">GAME OVER</h2>
+					<p className="text-white text-2xl m-0 mb-2">
+						Final Score: {score}
+					</p>
+					{score >= gameStateRef.current.highScore && score > 0 && (
+						<p className="text-[#ffd93d] text-lg m-0 mb-8">🎉 New High Score! 🎉</p>
+					)}
+					<Button
+						onClick={resetGame}
+						size="lg"
+						className="bg-[#48bb78] hover:bg-[#48bb78]/90 text-white font-bold"
+					>
+						Play Again
+					</Button>
+				</div>
+			)}
+
+			<div className="mt-5 text-[#a0aec0] text-center max-w-[600px]">
+				<p><strong className="text-white">How to Play:</strong></p>
+				<p>Move your mouse to aim the turret. Use A/← for rapid-fire green weapon, D/→ for powerful red weapon.</p>
+				<p>Destroy enemies before they reach the bottom. Build combos for bonus points!</p>
+				<p>
+					<strong className="text-[#ffd93d]">Yellow</strong> enemies are fast,{" "}
+					<strong className="text-[#6c5ce7]">Purple</strong> enemies are tanks.
+				</p>
 			</div>
 		</div>
 	)
