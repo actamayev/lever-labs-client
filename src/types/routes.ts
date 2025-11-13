@@ -25,6 +25,7 @@ declare global {
 
 	type ArcadePages =
 	| "/arcade"
+	| "/arcade/turret"
 
 	type CareerQuestPages = (typeof careerQuestPages)[number];
 
