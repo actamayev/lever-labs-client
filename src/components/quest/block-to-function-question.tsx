@@ -55,7 +55,7 @@ function BlockToFunctionQuestion(): React.ReactNode {
 				<div className="relative h-48 w-96">
 					<QuestMiniSandbox codingBlock={codingBlock} className="w-full h-full" />
 				</div>
-				<TactileButton
+				{/* <TactileButton
 					onClick={handlePlay}
 					shadowClass="shadow-charging-green-2"
 					className={cn(
@@ -65,7 +65,7 @@ function BlockToFunctionQuestion(): React.ReactNode {
 					shadowHeight={4}
 				>
 					<Play className="size-6 fill-current" />
-				</TactileButton>
+				</TactileButton> */}
 			</div>
 
 			{/* Answer choices: Function descriptions */}
