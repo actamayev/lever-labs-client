@@ -12,7 +12,7 @@ import { LessonUUID } from "@lever-labs/common-ts/types/utils"
 function LessonList(): React.ReactNode {
 	const allLessons = Array.from(questClass.lessonsById.values()).sort((a, b): number => a.lessonOrder - b.lessonOrder)
 	const isStudent = !isEmpty(studentClass.classroomData)
-	const lessons = isStudent ? allLessons : allLessons.filter((lesson): boolean => lesson.lessonOrder >= 5)
+	const lessons = isStudent ? allLessons.filter((lesson): boolean => lesson.lessonOrder < 5) : allLessons.filter((lesson): boolean => lesson.lessonOrder >= 5)
 	const navigate = useTypedNavigate()
 	// currentQuestionIndex no longer needed for triggering enter here
 
