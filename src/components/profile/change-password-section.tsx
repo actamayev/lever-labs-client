@@ -56,7 +56,7 @@ function ChangePasswordSection(): React.ReactNode {
 	const colors = getDuolingoColors("humpback")
 
 	return (
-		<Card className="mb-8 max-w-xl w-full border-2">
+		<Card className="mb-8 max-w-xl w-full border-2 shadow-none">
 			<CardHeader className="px-4 md:px-6">
 				<CardTitle className="text-xl md:text-2xl">Change Password</CardTitle>
 			</CardHeader>
