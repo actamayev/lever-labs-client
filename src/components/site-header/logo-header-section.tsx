@@ -29,7 +29,7 @@ function LogoHeaderSection(): React.ReactNode {
 		>
 			<Link
 				href={whereToNavigate}
-				className="flex items-center font-semibold text-3xl sm:text-3xl shrink-0 text-humpbackText duration-0"
+				className="flex items-center font-semibold text-3xl sm:text-3xl shrink-0 duration-0"
 			>
 				<Image
 					src="/favicon.svg"

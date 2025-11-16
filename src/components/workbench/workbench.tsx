@@ -65,10 +65,10 @@ function Workbench(): React.ReactNode {
 					{/* Middle section content goes here */}
 					<div className="text-center p-4">
 						<Image
-							src="/charge-logo-01.svg"
-							alt="Charge Logo"
-							width={250}
-							height={250}
+							src="/HAFTR logo.png"
+							alt="HAFTR Logo"
+							width={300}
+							height={300}
 							className="max-w-full max-h-full object-contain"
 							priority
 						/>
