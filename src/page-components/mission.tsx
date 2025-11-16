@@ -27,7 +27,7 @@ export default function Mission(): React.ReactNode {
 				<SupportSection sectionTitle="How we got here" extraClasses="mt-10">
 					<div className="flex flex-col space-y-4">
 						<div>
-							We're a small team of Mechanical Engineers from top U.S. engineering schools, with backgrounds at companies like SpaceX and fast-paced trading platforms.
+							We're a small team of Mechanical Engineers from leading U.S. engineering schools, with experience at SpaceX and in fast-paced trading firms.
 						</div>
 						<div>
 							After purchasing several educational robots and finding the same problems we faced growing up – difficult setup and static curricula – we realized innovation in robotics education had stagnated.

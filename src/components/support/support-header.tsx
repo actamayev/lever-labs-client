@@ -22,8 +22,8 @@ function SupportLink({ page } : { page: "mission" | "contact" }): React.ReactNod
 			<Link
 				href={page}
 				className={cn(
-					"text-hare hover:text-humpbackText! duration-0 text-base px-4 py-2 flex flex-col items-center",
-					active ? "text-humpbackText!" : ""
+					"text-hare hover:text-humpback! duration-0 text-base px-4 py-2 flex flex-col items-center",
+					active ? "text-humpback!" : ""
 				)}
 			>
 				<span>{toUpper(page)}</span>
