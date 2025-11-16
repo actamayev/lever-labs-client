@@ -43,7 +43,7 @@ function LessonList(): React.ReactNode {
 				<div
 					key={lesson.lessonId}
 					onClick={(): void => goToQuestPage(lesson.lessonId)}
-					className="bg-standard-background rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer p-4 border border-swan flex items-center justify-between"
+					className="bg-standard-background rounded-lg shadow-none hover:shadow-md transition-shadow cursor-pointer p-4 border border-swan flex items-center justify-between"
 				>
 					<h3 className="text-lg font-semibold text-gray-900 dark:text-white">
 						{lesson.lessonName}
