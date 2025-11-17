@@ -124,7 +124,7 @@ function ToneActionButton(props: ToneActionButtonProps): React.ReactNode {
 	// Release button when sounds are disabled
 	useEffect((): void => {
 		if (!garageClass.garageTonesStatus && garageClass.tonePlaying === tone) {
-			garageClass.setTonePlaying(null)
+			playFunTone(null)
 		}
 	}, [tone])
 
@@ -138,9 +138,9 @@ function ToneActionButton(props: ToneActionButtonProps): React.ReactNode {
 
 	// Handle button release for action buttons
 	const handleButtonUp = (): void => {
-		// Reset the sound playing state when button is released
+		// Stop the sound when button is released
 		if (garageClass.tonePlaying === tone) {
-			garageClass.setTonePlaying(null)
+			playFunTone(null)
 		}
 	}
 
