@@ -19,7 +19,6 @@ class SerialConnectionManagerClass {
 	// eslint-disable-next-line max-len
 	public pipTurnedOn: boolean = false // This is to track if Pip has fully turned on (waits until Pip's button has been pressed for 1 second)
 	public detectedDevices: DetectedDevice[] = []
-	public isScanning: boolean = false
 	private keepAliveInterval: ReturnType<typeof setInterval> | null = null
 
 	// Web Worker for background keepalives
