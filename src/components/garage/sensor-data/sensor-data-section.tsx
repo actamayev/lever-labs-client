@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { Gauge, Radar, ScanLine, Palette, GaugeCircle } from "lucide-react"
+import { Gauge, Radar, ScanLine, Palette } from "lucide-react"
 import { Tabs, TabsList, TabsTrigger } from "../../ui/shadcn-io/tabs"
 import { WORKBENCH_ROUNDING_RADIUS } from "../../../utils/constants/constants"
 import garageClass from "../../../classes/garage-class"
@@ -10,6 +10,7 @@ import MeetPipS6P4MzViz from "../../career-quest/cq-right-components/meet-pip/me
 import MeetPipS6P6TofsViz from "../../career-quest/cq-right-components/meet-pip/meet-pip-s6-p6-tofs-viz"
 import MeetPipS8P3ColorViz from "../../career-quest/cq-right-components/meet-pip/meet-pip-s8-p3-color-viz"
 import MeetPipS9P6EncoderViz from "../../career-quest/cq-right-components/meet-pip/meet-pip-s9-p6-encoder-viz"
+import { CustomWheel } from "../../../icons/custom-wheel"
 
 function SensorDataSection(): React.ReactNode {
 
@@ -47,7 +48,7 @@ function SensorDataSection(): React.ReactNode {
 							Color Sensor
 						</TabsTrigger>
 						<TabsTrigger value="motors" className="flex items-center justify-center gap-2 text-xs">
-							<GaugeCircle className="h-4 w-4" />
+							<CustomWheel className="h-4 w-4" />
 							Motors
 						</TabsTrigger>
 					</TabsList>
