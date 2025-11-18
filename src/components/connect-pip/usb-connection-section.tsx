@@ -18,9 +18,6 @@ function ConnectToPipDialog(): React.ReactNode {
 		if (serialConnectionManagerClass.pipTurnedOn) {
 			return "bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300"
 		}
-		if (serialConnectionManagerClass.isScanning) {
-			return "bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300"
-		}
 		return "text-white bg-humpback"
 	}
 
@@ -77,20 +74,16 @@ function ConnectToPipDialog(): React.ReactNode {
 						)}
 						shadowHeight={4}
 						shadowClass={colors.shadow2}
-						disabled={serialConnectionManagerClass.pipTurnedOn || serialConnectionManagerClass.isScanning}
+						disabled={serialConnectionManagerClass.pipTurnedOn}
 					>
 						<div className="flex items-center justify-center gap-2">
 							<CustomUsb />
 							<span>
 								{((): string => {
 									if (serialConnectionManagerClass.pipTurnedOn) return "CONNECTED"
-									if (serialConnectionManagerClass.isScanning) return "SCANNING..."
 									return "CONNECT"
 								})()}
 							</span>
-							{serialConnectionManagerClass.isScanning && (
-								<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-current"></div>
-							)}
 						</div>
 					</TactileButton>
 				</>

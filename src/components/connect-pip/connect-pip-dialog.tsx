@@ -35,11 +35,11 @@ function ConnectToPipDialog(): React.ReactNode {
 					</TabsList>
 
 					<TabsContents className="w-full">
-						<TabsContent value="wifi" className="w-full">
+						<TabsContent value="wifi" className="w-full pb-2">
 							<WifiConnectionSection />
 						</TabsContent>
 
-						<TabsContent value="usb" className="w-full">
+						<TabsContent value="usb" className="w-full pb-2">
 							<UsbConnectionSection />
 						</TabsContent>
 					</TabsContents>
