@@ -39,6 +39,7 @@ export const staticPages = [
 	"/arcade",
 	"/arcade/turret",
 	"/arcade/flappy",
+	"/arcade/city-driver",
 
 	"/career-quest",
 	"/career-quest/meet-pip",

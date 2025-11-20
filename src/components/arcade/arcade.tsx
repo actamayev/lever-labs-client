@@ -1,8 +1,8 @@
 "use client"
 
-import WorkbenchLayout from "../layouts/workbench-layout"
+import { Gamepad2, Bird, Car } from "lucide-react"
 import { ArcadeGameCard } from "./arcade-game-card"
-import { Gamepad2, Bird } from "lucide-react"
+import WorkbenchLayout from "../layouts/workbench-layout"
 
 export default function Arcade(): React.ReactNode {
 	return (
@@ -36,6 +36,16 @@ export default function Arcade(): React.ReactNode {
 							"to the sensor. The closer an object is, the higher the bird flies. See how many pipes you can pass!"
 						}
 						href="/arcade/flappy"
+					/>
+					<ArcadeGameCard
+						backgroundImage="/turret1.png"
+						gameIcon={<Car className="size-8" />}
+						gameName="City Driver"
+						description={
+							"Drive through the city avoiding obstacles! Use the left wheel encoder to steer left and right, " +
+							"and the right wheel encoder to control your speed. Navigate through traffic and see how far you can go!"
+						}
+						href="/arcade/city-driver"
 					/>
 				</div>
 			</div>
