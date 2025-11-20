@@ -8,7 +8,8 @@ import Image from "next/image"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { useCallback } from "react"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
-import { CareerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
+import { CareerType, CityDrivingArcadeTriggerType,
+	FlappyBirdArcadeTriggerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 
 interface ArcadeGameCardProps {
 	backgroundImage: string
@@ -16,6 +17,7 @@ interface ArcadeGameCardProps {
 	gameName: string
 	description: string
 	href: PageNames
+	highScore: number
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -24,7 +26,8 @@ export function ArcadeGameCard({
 	gameIcon,
 	gameName,
 	description,
-	href
+	href,
+	highScore
 }: ArcadeGameCardProps): React.ReactNode {
 	const navigate = useTypedNavigate()
 	const goToGame = useCallback((e: React.MouseEvent): void => {
@@ -32,6 +35,10 @@ export function ArcadeGameCard({
 		// Send ENTER trigger when navigating to turret game
 		if (href === "/arcade/turret") {
 			void careerQuestTrigger(CareerType.TURRET_ARCADE, TurretArcadeTriggerType.ENTER_TURRET_ARCADE)
+		} else if (href === "/arcade/flappy") {
+			void careerQuestTrigger(CareerType.FLAPPY_BIRD_ARCADE, FlappyBirdArcadeTriggerType.ENTER_FLAPPY_BIRD_ARCADE)
+		} else if (href === "/arcade/city-driver") {
+			void careerQuestTrigger(CareerType.CITY_DRIVING_ARCADE, CityDrivingArcadeTriggerType.ENTER_CITY_DRIVING_ARCADE)
 		}
 		navigate(href)
 	}, [navigate, href])
@@ -58,7 +65,7 @@ export function ArcadeGameCard({
 			</div>
 
 			{/* Content Container */}
-			<div className="relative flex flex-col min-h-[450px] p-6">
+			<div className="relative flex flex-col min-h-[300px] p-6">
 				{/* Spacer to push content to bottom */}
 				<div className="flex-1" />
 
@@ -69,7 +76,7 @@ export function ArcadeGameCard({
 						{description}
 					</p>
 
-					{/* Bottom Row: Icon, Title, and Play Button */}
+					{/* Bottom Row: Icon, Title, High Score, and Play Button */}
 					<div className="flex items-center gap-4">
 						{/* Game Icon */}
 						<div className="shrink-0">
@@ -95,11 +102,16 @@ export function ArcadeGameCard({
 							)}
 						</div>
 
-						{/* Game Name */}
+						{/* Game Name and High Score */}
 						<div className="flex-1">
 							<h3 className="text-2xl font-bold text-white drop-shadow-lg">
 								{gameName}
 							</h3>
+							{highScore > 0 && (
+								<p className="text-white/70 text-sm mt-1 drop-shadow-md">
+									High Score: {highScore}
+								</p>
+							)}
 						</div>
 
 						{/* Play Button */}

@@ -85,10 +85,6 @@ function MappedNavData(): React.ReactNode {
 
 	// Remove arcade nav if user is a student (has active classes)
 	if (hasActiveClasses) {
-		const arcadeIndex = navData.findIndex((item): boolean => item.title === "Arcade")
-		if (arcadeIndex !== -1) {
-			navData.splice(arcadeIndex, 1)
-		}
 		navData.push(studentNavData)
 	}
 
