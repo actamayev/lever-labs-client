@@ -33,7 +33,7 @@ const CANVAS_HEIGHT = 600
 const BIRD_SIZE = 30
 const BIRD_X = 150
 const PIPE_WIDTH = 80
-const PIPE_GAP = 280 // Increased gap to ensure it's always passable (bird size 30 + margin)
+const PIPE_GAP = 240 // Gap size - bird size 30, balanced to be challenging but passable
 const INITIAL_PIPE_SPEED = 2 // Slower initial speed
 const MAX_PIPE_SPEED = 4 // Maximum speed after progression
 const INITIAL_PIPE_SPACING = 600 // More time between pipes at start
@@ -86,17 +86,39 @@ function FlappyBirdGame(): React.ReactNode {
 	const spawnPipe = useCallback((): void => {
 		const minTopHeight = 50
 		const maxTopHeight = CANVAS_HEIGHT - PIPE_GAP - minTopHeight
-		// Ensure gap is always passable - gap should be at least bird size + margin
+		// Randomly position pipes - ensure pipes can block middle area
+		// This prevents staying in the middle from being always safe
 		const topHeight = minTopHeight + Math.random() * (maxTopHeight - minTopHeight)
 		const bottomY = topHeight + PIPE_GAP
 
-		gameStateRef.current.pipes.push({
-			x: CANVAS_WIDTH,
-			topHeight,
-			bottomY,
-			width: PIPE_WIDTH,
-			passed: false
-		})
+		// Ensure the gap doesn't always include the middle (Y=300)
+		// If the gap would make middle always safe, adjust it
+		const middleY = CANVAS_HEIGHT / 2
+		const gapCenter = topHeight + PIPE_GAP / 2
+		const distanceFromMiddle = Math.abs(gapCenter - middleY)
+
+		// If gap is too centered, shift it slightly to make middle challenging
+		if (distanceFromMiddle < 50) {
+			const shift = (50 - distanceFromMiddle) * (Math.random() > 0.5 ? 1 : -1)
+			const newTopHeight = Math.max(minTopHeight, Math.min(maxTopHeight, topHeight + shift))
+			const newBottomY = newTopHeight + PIPE_GAP
+
+			gameStateRef.current.pipes.push({
+				x: CANVAS_WIDTH,
+				topHeight: newTopHeight,
+				bottomY: newBottomY,
+				width: PIPE_WIDTH,
+				passed: false
+			})
+		} else {
+			gameStateRef.current.pipes.push({
+				x: CANVAS_WIDTH,
+				topHeight,
+				bottomY,
+				width: PIPE_WIDTH,
+				passed: false
+			})
+		}
 	}, [])
 
 	const checkCollision = (birdX: number, birdY: number, birdSize: number, pipe: Pipe): boolean => {
