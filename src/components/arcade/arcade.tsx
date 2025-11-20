@@ -4,6 +4,42 @@ import { Gamepad2, Bird, Car } from "lucide-react"
 import { ArcadeGameCard } from "./arcade-game-card"
 import WorkbenchLayout from "../layouts/workbench-layout"
 
+interface GameData {
+	backgroundImage: string
+	gameIcon: React.ReactNode
+	gameName: string
+	description: string
+	href: PageNames
+	highScoreKey: string
+}
+
+const games: GameData[] = [
+	{
+		backgroundImage: "/turret1.png",
+		gameIcon: <Gamepad2 className="size-8" />,
+		gameName: "Pip Turret Defense",
+		description: "Defend against waves of enemies and see how long you can survive!",
+		href: "/arcade/turret",
+		highScoreKey: "turretHighScore"
+	},
+	{
+		backgroundImage: "/flappy1.png",
+		gameIcon: <Bird className="size-8" />,
+		gameName: "Flappy Bird",
+		description: "Navigate through pipes and test your reflexes!",
+		href: "/arcade/flappy",
+		highScoreKey: "flappyHighScore"
+	},
+	{
+		backgroundImage: "/city-driver.png",
+		gameIcon: <Car className="size-8" />,
+		gameName: "City Driver",
+		description: "Race through the city and avoid obstacles in this high-speed challenge!",
+		href: "/arcade/city-driver",
+		highScoreKey: "cityDriverHighScore"
+	}
+]
+
 export default function Arcade(): React.ReactNode {
 	return (
 		<WorkbenchLayout preventElasticScroll={true}>
@@ -15,38 +51,25 @@ export default function Arcade(): React.ReactNode {
 					</p>
 				</div>
 
-				{/* Full Width Game Cards */}
+				{/* Game Cards */}
 				<div className="flex flex-col gap-6 w-full">
-					<ArcadeGameCard
-						backgroundImage="/turret1.png"
-						gameIcon={<Gamepad2 className="size-8" />}
-						gameName="Pip Turret Defense"
-						description={
-							"Defend your turret from waves of enemies! Tilt Pip left and right to aim, " +
-							"and cover the sensors to fire weapons. Build combos for bonus points and see how long you can survive!"
-						}
-						href="/arcade/turret"
-					/>
-					<ArcadeGameCard
-						backgroundImage="/flappy1.png"
-						gameIcon={<Bird className="size-8" />}
-						gameName="Flappy Bird"
-						description={
-							"Control a bird using distance sensors! Navigate through pipes by adjusting the distance " +
-							"to the sensor. The closer an object is, the higher the bird flies. See how many pipes you can pass!"
-						}
-						href="/arcade/flappy"
-					/>
-					<ArcadeGameCard
-						backgroundImage="/turret1.png"
-						gameIcon={<Car className="size-8" />}
-						gameName="City Driver"
-						description={
-							"Drive through the city avoiding obstacles! Use the left wheel encoder to steer left and right, " +
-							"and the right wheel encoder to control your speed. Navigate through traffic and see how far you can go!"
-						}
-						href="/arcade/city-driver"
-					/>
+					{games.map((game): React.ReactNode => {
+						const highScore = typeof window !== "undefined"
+							? parseInt(localStorage.getItem(game.highScoreKey) || "0", 10)
+							: 0
+
+						return (
+							<ArcadeGameCard
+								key={game.href}
+								backgroundImage={game.backgroundImage}
+								gameIcon={game.gameIcon}
+								gameName={game.gameName}
+								description={game.description}
+								href={game.href}
+								highScore={highScore}
+							/>
+						)
+					})}
 				</div>
 			</div>
 		</WorkbenchLayout>
