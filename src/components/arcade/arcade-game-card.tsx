@@ -8,7 +8,7 @@ import Image from "next/image"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { useCallback } from "react"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
-import { CareerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
+import { CareerType, FlappyBirdArcadeTriggerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 
 interface ArcadeGameCardProps {
 	backgroundImage: string
@@ -32,6 +32,8 @@ export function ArcadeGameCard({
 		// Send ENTER trigger when navigating to turret game
 		if (href === "/arcade/turret") {
 			void careerQuestTrigger(CareerType.TURRET_ARCADE, TurretArcadeTriggerType.ENTER_TURRET_ARCADE)
+		} else if (href === "/arcade/flappy") {
+			void careerQuestTrigger(CareerType.FLAPPY_BIRD_ARCADE, FlappyBirdArcadeTriggerType.ENTER_FLAPPY_BIRD_ARCADE)
 		}
 		navigate(href)
 	}, [navigate, href])

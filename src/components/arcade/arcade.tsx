@@ -2,7 +2,7 @@
 
 import WorkbenchLayout from "../layouts/workbench-layout"
 import { ArcadeGameCard } from "./arcade-game-card"
-import { Gamepad2 } from "lucide-react"
+import { Gamepad2, Bird } from "lucide-react"
 
 export default function Arcade(): React.ReactNode {
 	return (
@@ -15,8 +15,8 @@ export default function Arcade(): React.ReactNode {
 					</p>
 				</div>
 
-				{/* Full Width Game Card */}
-				<div className="w-full">
+				{/* Full Width Game Cards */}
+				<div className="flex flex-col gap-6 w-full">
 					<ArcadeGameCard
 						backgroundImage="/turret1.png"
 						gameIcon={<Gamepad2 className="size-8" />}
@@ -26,6 +26,16 @@ export default function Arcade(): React.ReactNode {
 							"and cover the sensors to fire weapons. Build combos for bonus points and see how long you can survive!"
 						}
 						href="/arcade/turret"
+					/>
+					<ArcadeGameCard
+						backgroundImage="/flappy1.png"
+						gameIcon={<Bird className="size-8" />}
+						gameName="Flappy Bird"
+						description={
+							"Control a bird using distance sensors! Navigate through pipes by adjusting the distance " +
+							"to the sensor. The closer an object is, the higher the bird flies. See how many pipes you can pass!"
+						}
+						href="/arcade/flappy"
 					/>
 				</div>
 			</div>

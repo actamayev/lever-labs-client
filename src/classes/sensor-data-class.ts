@@ -23,6 +23,9 @@ class SensorDataClass {
 	public mZ: number[] = []
 	public leftSideTofCounts: number[] = []
 	public rightSideTofCounts: number[] = []
+	public frontTofDistance: number[] = []
+	public leftWheelEncoderPosition: number[] = []
+	public rightWheelEncoderPosition: number[] = []
 	public distanceGrid: number[][] = Array.from({ length: 8 }, (): number[] => Array(8).fill(0))
 	public dataVersion = 0 // Add this for reactivity
 
@@ -32,12 +35,11 @@ class SensorDataClass {
 
 	public addSensorData = action((sensorData: SensorPayload): void => {
 		Object.entries(sensorData).forEach(([key, value]): void => {
-			if (key !== "irSensorData" && typeof value === "number") {
-				this.addGeneralSensorData(
-					key as keyof Omit<typeof sensorData, "irSensorData">,
-					value
-				)
-			}
+			if (typeof value !== "number") return
+			this.addGeneralSensorData(
+				key as keyof typeof sensorData,
+				value
+			)
 		})
 		// Increment version once per sensor data update for reactivity
 		this.dataVersion++
@@ -89,6 +91,9 @@ class SensorDataClass {
 		this.mZ = []
 		this.leftSideTofCounts = []
 		this.rightSideTofCounts = []
+		this.frontTofDistance = []
+		this.leftWheelEncoderPosition = []
+		this.rightWheelEncoderPosition = []
 		this.distanceGrid = Array.from({ length: 8 }, (): number[] => Array(8).fill(0))
 		this.dataVersion = 0
 	})
