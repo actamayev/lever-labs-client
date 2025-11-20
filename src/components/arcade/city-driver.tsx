@@ -97,17 +97,16 @@ function CityDriverGame(): React.ReactNode {
 			height = 50
 		}
 
-		// Spawn obstacle in one of three lanes
-		const laneWidth = ROAD_WIDTH / 3
-		const lanes = [
-			ROAD_CENTER_X - laneWidth,
-			ROAD_CENTER_X,
-			ROAD_CENTER_X + laneWidth
-		]
-		const lane = lanes[Math.floor(Math.random() * lanes.length)]
+		// Spawn obstacle randomly across the entire road width
+		const roadLeft = ROAD_CENTER_X - ROAD_WIDTH / 2
+		const roadRight = ROAD_CENTER_X + ROAD_WIDTH / 2
+		// Random X position within road bounds, ensuring obstacle doesn't go outside road
+		const minX = roadLeft
+		const maxX = roadRight - width
+		const randomX = minX + Math.random() * (maxX - minX)
 
 		state.obstacles.push({
-			x: lane - width / 2,
+			x: randomX,
 			y: -height,
 			width,
 			height,
