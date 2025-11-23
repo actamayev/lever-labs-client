@@ -114,6 +114,7 @@ function CityDriverGame(): React.ReactNode {
 		})
 	}, [])
 
+	// eslint-disable-next-line max-params
 	const checkCollision = (carX: number, carY: number, carWidth: number, carHeight: number, obstacle: Obstacle): boolean => {
 		return (
 			carX < obstacle.x + obstacle.width &&
