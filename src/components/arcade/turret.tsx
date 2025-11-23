@@ -2,12 +2,11 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import React, { useCallback, useEffect, useRef, useState } from "react"
 import { observer } from "mobx-react"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft } from "lucide-react"
 import sensorDataClass from "../../classes/sensor-data-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 import { CareerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
+import ArcadeGameLayout from "./arcade-game-layout"
 
 interface Projectile {
 	x: number
@@ -555,7 +554,9 @@ function PipTurretGame (): React.ReactNode {
 		setGameOver(false)
 		setGameStarted(false)
 
-	}, [])
+		// Start the game immediately after reset
+		startGame()
+	}, [startGame])
 
 	// Read sensor data and update game state
 	useEffect((): (() => void) => {
@@ -624,74 +625,44 @@ function PipTurretGame (): React.ReactNode {
 	}, [navigate])
 
 	return (
-		<div className="flex flex-col items-center justify-center min-h-screen bg-[#1a202c] font-sans relative">
-			<Button
-				onClick={handleBack}
-				variant="ghost"
-				size="icon"
-				className="absolute top-4 left-4 text-white hover:bg-white/10"
-			>
-				<ArrowLeft className="size-5" />
-			</Button>
-			<h1 className="text-white mb-5 text-2xl">Pip Turret Defense</h1>
-
-			<canvas
-				ref={canvasRef}
-				width={CANVAS_WIDTH}
-				height={CANVAS_HEIGHT}
-				className="border-2 border-[#4a5568] rounded-lg shadow-lg"
-			/>
-
-			{!gameStarted && !gameOver && (
-				// eslint-disable-next-line max-len
-				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/90 p-10 rounded-xl text-center border-4 border-[#48bb78]">
-					<h2 className="text-[#48bb78] text-4xl m-0 mb-5">Ready to Defend?</h2>
-					<p className="text-white text-lg m-0 mb-8 max-w-md">
-						Defend your turret from waves of enemies! Tilt Pip to aim and cover the sensors to fire!
+		<ArcadeGameLayout
+			title="Pip Turret Defense"
+			instructions={
+				<>
+					<p><strong className="text-white">How to Play:</strong></p>
+					<p>
+						Tilt Pip left and right to aim the turret. Cover the left sensor for rapid-fire green weapon,
+						right sensor for powerful red weapon.
 					</p>
-					<Button
-						onClick={startGame}
-						size="lg"
-						className="bg-[#48bb78] hover:bg-[#48bb78]/90 text-white font-bold"
-					>
-						Start Game
-					</Button>
-				</div>
-			)}
-
-			{gameOver && (
-				// eslint-disable-next-line max-len
-				<div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-black/90 p-10 rounded-xl text-center border-4 border-[#ff6b6b]">
-					<h2 className="text-[#ff6b6b] text-5xl m-0 mb-5">GAME OVER</h2>
-					<p className="text-white text-2xl m-0 mb-2">
-						Final Score: {score}
+					<p>Destroy enemies before they hit your turret. Build combos for bonus points!</p>
+					<p>
+						<strong className="text-[#ffd93d]">Yellow</strong> enemies are fast,{" "}
+						<strong className="text-[#6c5ce7]">Purple</strong> enemies are tanks.
 					</p>
-					{score >= gameStateRef.current.highScore && score > 0 && (
-						<p className="text-[#ffd93d] text-lg m-0 mb-8">🎉 New High Score! 🎉</p>
-					)}
-					<Button
-						onClick={resetGame}
-						size="lg"
-						className="bg-[#48bb78] hover:bg-[#48bb78]/90 text-white font-bold"
-					>
-						Play Again
-					</Button>
-				</div>
-			)}
-
-			<div className="mt-5 text-[#a0aec0] text-center max-w-[600px]">
-				<p><strong className="text-white">How to Play:</strong></p>
-				<p>
-					Tilt Pip left and right to aim the turret. Cover the left sensor for rapid-fire green weapon,
-					right sensor for powerful red weapon.
-				</p>
-				<p>Destroy enemies before they hit your turret. Build combos for bonus points!</p>
-				<p>
-					<strong className="text-[#ffd93d]">Yellow</strong> enemies are fast,{" "}
-					<strong className="text-[#6c5ce7]">Purple</strong> enemies are tanks.
-				</p>
-			</div>
-		</div>
+				</>
+			}
+			canvas={
+				<canvas
+					ref={canvasRef}
+					width={CANVAS_WIDTH}
+					height={CANVAS_HEIGHT}
+					className="border-2 border-[#4a5568] rounded-lg shadow-lg"
+				/>
+			}
+			onBack={handleBack}
+			gameStarted={gameStarted}
+			gameOver={gameOver}
+			score={score}
+			highScore={gameStateRef.current.highScore}
+			startScreenContent={{
+				title: "Ready to Defend?",
+				description: "Defend your turret from waves of enemies! Tilt Pip to aim and cover the sensors to fire!",
+				onStart: startGame
+			}}
+			gameOverContent={{
+				onPlayAgain: resetGame
+			}}
+		/>
 	)
 }
 
