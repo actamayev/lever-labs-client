@@ -3,12 +3,12 @@
 import React, { useCallback, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../classes/sensor-data-class"
-import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 import { CareerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 import ArcadeGameLayout from "./arcade-game-layout"
 import { ARCADE_CANVAS_WIDTH, ARCADE_CANVAS_HEIGHT } from "../../utils/constants/constants"
 import arcadeClass from "../../classes/arcade-class"
+import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
 
 interface Projectile {
 	x: number
@@ -102,8 +102,7 @@ function PipTurretGame (): React.ReactNode {
 		lastEnterTriggerTime: 0
 	})
 	const animationRef = useRef<number>(0)
-	const navigate = useTypedNavigate()
-	const gameType = "turret" as const
+	const gameType: ArcadeGameType = "turretDefense"
 
 	// Initialize game on mount
 	useEffect((): (() => void) => {
@@ -261,7 +260,7 @@ function PipTurretGame (): React.ReactNode {
 
 			// Check if enemy hit the turret
 			if (checkCollision({ x1: e.x, y1: e.y, size1: e.size, x2: TURRET_X, y2: TURRET_Y, size2: 25 })) {
-				arcadeClass.setGameOver(gameType, true)
+				arcadeClass.setGameOver(gameType)
 				createParticles(TURRET_X, TURRET_Y, "#ff0000", 30)
 				state.screenShake = 20
 				return false
@@ -465,6 +464,7 @@ function PipTurretGame (): React.ReactNode {
 
 		// Draw UI
 		const gameState = arcadeClass.getGameState(gameType)
+		const personalBest = arcadeClass.getPersonalBest(gameType)
 		ctx.fillStyle = "#ffffff"
 		ctx.font = "bold 24px Arial"
 		ctx.fillText(`Score: ${gameState.score}`, 20, 40)
@@ -483,7 +483,7 @@ function PipTurretGame (): React.ReactNode {
 		// Draw high score
 		ctx.fillStyle = "rgba(255, 255, 255, 0.6)"
 		ctx.font = "16px Arial"
-		ctx.fillText(`High Score: ${gameState.highScore}`, CANVAS_WIDTH - 200, 40)
+		ctx.fillText(`High Score: ${personalBest}`, CANVAS_WIDTH - 200, 40)
 
 		// Draw weapon cooldown indicators
 		const now = Date.now()
@@ -611,11 +611,6 @@ function PipTurretGame (): React.ReactNode {
 		}
 	}, [gameLoop, gameType])
 
-	const handleBack = useCallback((): void => {
-		// Send EXIT trigger when going back
-		void careerQuestTrigger(CareerType.TURRET_ARCADE, TurretArcadeTriggerType.EXIT_TURRET_ARCADE)
-		navigate("/arcade")
-	}, [navigate])
 
 	return (
 		<ArcadeGameLayout
@@ -627,7 +622,6 @@ function PipTurretGame (): React.ReactNode {
 					className="border-2 border-[#4a5568] rounded-lg shadow-lg"
 				/>
 			}
-			onBack={handleBack}
 			onStart={startGame}
 			onPlayAgain={resetGame}
 		/>

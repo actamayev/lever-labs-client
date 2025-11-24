@@ -3,12 +3,12 @@
 import React, { useCallback, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../classes/sensor-data-class"
-import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
-import { CareerType, CityDrivingArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 import ArcadeGameLayout from "./arcade-game-layout"
 import { ARCADE_CANVAS_WIDTH, ARCADE_CANVAS_HEIGHT } from "../../utils/constants/constants"
 import arcadeClass from "../../classes/arcade-class"
+import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
+import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
+import { CareerType, CityDrivingArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 
 interface Obstacle {
 	x: number
@@ -53,11 +53,11 @@ function CityDriverGame(): React.ReactNode {
 		screenShake: 0,
 		lastLeftEncoder: 0,
 		lastRightEncoder: 0,
-		obstacleSpacing: 400
+		obstacleSpacing: 400,
+		lastEnterTriggerTime: 0
 	})
 	const animationRef = useRef<number>(0)
-	const navigate = useTypedNavigate()
-	const gameType = "cityDriver" as const
+	const gameType: ArcadeGameType = "cityDriver"
 
 	// Initialize game on mount
 	useEffect((): (() => void) => {
@@ -132,6 +132,13 @@ function CityDriverGame(): React.ReactNode {
 		const gameState = arcadeClass.getGameState(gameType)
 		if (gameState.gameOver || !gameState.gameStarted) return
 
+		// Send ENTER trigger every 10 seconds while in game
+		const currentTime = Date.now()
+		if (currentTime - state.lastEnterTriggerTime > 10000) {
+			void careerQuestTrigger(CareerType.CITY_DRIVING_ARCADE, CityDrivingArcadeTriggerType.ENTER_CITY_DRIVING_ARCADE)
+			state.lastEnterTriggerTime = currentTime
+		}
+
 		// Update car position based on left encoder (delta-based)
 		const leftEncoderData = sensorDataClass.leftWheelEncoderPosition
 		if (leftEncoderData.length > 0) {
@@ -178,7 +185,7 @@ function CityDriverGame(): React.ReactNode {
 
 			// Check collision
 			if (checkCollision(state.carX, CAR_Y, CAR_WIDTH, CAR_HEIGHT, obstacle)) {
-				arcadeClass.setGameOver(gameType, true)
+				arcadeClass.setGameOver(gameType)
 				createParticles(state.carX + CAR_WIDTH / 2, CAR_Y + CAR_HEIGHT / 2, "#ff0000", 30)
 				state.screenShake = 20
 				return false
@@ -331,6 +338,7 @@ function CityDriverGame(): React.ReactNode {
 
 		// Draw UI
 		const uiGameState = arcadeClass.getGameState(gameType)
+		const personalBest = arcadeClass.getPersonalBest(gameType)
 		ctx.fillStyle = "#ffffff"
 		ctx.font = "bold 24px Arial"
 		ctx.fillText(`Score: ${uiGameState.score}`, 20, 40)
@@ -339,7 +347,7 @@ function CityDriverGame(): React.ReactNode {
 		// Draw high score
 		ctx.fillStyle = "rgba(255, 255, 255, 0.6)"
 		ctx.font = "16px Arial"
-		ctx.fillText(`High Score: ${uiGameState.highScore}`, CANVAS_WIDTH - 200, 40)
+		ctx.fillText(`High Score: ${personalBest}`, CANVAS_WIDTH - 200, 40)
 
 		// Draw speed indicator
 		const speedBarWidth = 200
@@ -394,7 +402,8 @@ function CityDriverGame(): React.ReactNode {
 			screenShake: 0,
 			lastLeftEncoder: 0,
 			lastRightEncoder: 0,
-			obstacleSpacing: 400
+			obstacleSpacing: 400,
+			lastEnterTriggerTime: 0
 		}
 
 		// Reset and start game immediately
@@ -415,11 +424,6 @@ function CityDriverGame(): React.ReactNode {
 		}
 	}, [gameLoop, gameType])
 
-	const handleBack = useCallback((): void => {
-		void careerQuestTrigger(CareerType.CITY_DRIVING_ARCADE, CityDrivingArcadeTriggerType.EXIT_CITY_DRIVING_ARCADE)
-		navigate("/arcade")
-	}, [navigate])
-
 	return (
 		<ArcadeGameLayout
 			canvas={
@@ -430,7 +434,6 @@ function CityDriverGame(): React.ReactNode {
 					className="border-2 border-[#4a5568] rounded-lg shadow-lg"
 				/>
 			}
-			onBack={handleBack}
 			onStart={startGame}
 			onPlayAgain={resetGame}
 		/>

@@ -1,13 +1,21 @@
 "use client"
-import React, { ReactNode } from "react"
+import React, { ReactNode, useCallback } from "react"
 import { observer } from "mobx-react"
+import { usePathname } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
 import arcadeClass from "../../classes/arcade-class"
+import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
+import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
+import {
+	CareerType,
+	CityDrivingArcadeTriggerType,
+	FlappyBirdArcadeTriggerType,
+	TurretArcadeTriggerType
+} from "@lever-labs/common-ts/protocol"
 
 interface ArcadeGameLayoutProps {
 	canvas: ReactNode
-	onBack: () => void
 	onStart: () => void
 	onPlayAgain: () => void
 }
@@ -15,25 +23,38 @@ interface ArcadeGameLayoutProps {
 // eslint-disable-next-line max-lines-per-function
 function ArcadeGameLayout({
 	canvas,
-	onBack,
 	onStart,
 	onPlayAgain
 }: ArcadeGameLayoutProps): React.ReactNode {
+	const pathname = usePathname()
+	const navigate = useTypedNavigate()
+
+	const handleBack = useCallback((): void => {
+		// Determine which career quest trigger to send based on pathname
+		if (pathname === "/arcade/turret") {
+			void careerQuestTrigger(CareerType.TURRET_ARCADE, TurretArcadeTriggerType.EXIT_TURRET_ARCADE)
+		} else if (pathname === "/arcade/flappy") {
+			void careerQuestTrigger(CareerType.FLAPPY_BIRD_ARCADE, FlappyBirdArcadeTriggerType.EXIT_FLAPPY_BIRD_ARCADE)
+		} else if (pathname === "/arcade/city-driver") {
+			void careerQuestTrigger(CareerType.CITY_DRIVING_ARCADE, CityDrivingArcadeTriggerType.EXIT_CITY_DRIVING_ARCADE)
+		}
+		navigate("/arcade")
+	}, [pathname, navigate])
+
 	const metadata = arcadeClass.getCurrentGameMetadata()
 	const gameState = arcadeClass.getCurrentGameState()
 
-	if (!metadata || !gameState) {
-		return null
-	}
+	if (!metadata || !gameState) return null
 
 	const { title, instructions, startScreenTitle, startScreenDescription } = metadata
-	const { gameStarted, gameOver, score, highScore } = gameState
+	const { gameStarted, gameOver, score } = gameState
+	const highScore = arcadeClass.currentGame ? arcadeClass.getPersonalBest(arcadeClass.currentGame) : 0
 
 	return (
 		<div className="flex flex-col min-h-screen bg-[#1a202c] font-sans relative">
 			{/* Back Button */}
 			<Button
-				onClick={onBack}
+				onClick={handleBack}
 				variant="ghost"
 				size="icon"
 				className="absolute top-4 left-4 text-white hover:bg-white/10 z-10"

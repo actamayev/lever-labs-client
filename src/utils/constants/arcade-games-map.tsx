@@ -1,5 +1,7 @@
+import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
+
 export const arcadeGamesMap: Record<ArcadeGameType, ArcadeGameMetadata> = {
-	flappy: {
+	flappyBird: {
 		title: "Flappy Bird",
 		instructions: (
 			<>
@@ -13,7 +15,6 @@ export const arcadeGamesMap: Record<ArcadeGameType, ArcadeGameMetadata> = {
 		),
 		startScreenTitle: "Ready to Fly?",
 		startScreenDescription: "Use the distance sensor to control the bird's height! Navigate through pipes and see how far you can go!",
-		localStorageKey: "flappyHighScore"
 	},
 	cityDriver: {
 		title: "City Driver",
@@ -29,9 +30,8 @@ export const arcadeGamesMap: Record<ArcadeGameType, ArcadeGameMetadata> = {
 		startScreenTitle: "Ready to Drive?",
 		// eslint-disable-next-line max-len
 		startScreenDescription: "Use the left encoder to steer left and right, and the right encoder to control your speed! Navigate through obstacles and see how far you can go!",
-		localStorageKey: "cityDriverHighScore"
 	},
-	turret: {
+	turretDefense: {
 		title: "Pip Turret Defense",
 		instructions: (
 			<>
@@ -49,6 +49,5 @@ export const arcadeGamesMap: Record<ArcadeGameType, ArcadeGameMetadata> = {
 		),
 		startScreenTitle: "Ready to Defend?",
 		startScreenDescription: "Defend your turret from waves of enemies! Tilt Pip to aim and cover the sensors to fire!",
-		localStorageKey: "turretHighScore"
 	}
 }

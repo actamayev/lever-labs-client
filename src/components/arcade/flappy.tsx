@@ -3,12 +3,12 @@
 import React, { useCallback, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../classes/sensor-data-class"
-import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import { CareerType, FlappyBirdArcadeTriggerType } from "@lever-labs/common-ts/protocol"
-import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 import ArcadeGameLayout from "./arcade-game-layout"
 import { ARCADE_CANVAS_WIDTH, ARCADE_CANVAS_HEIGHT } from "../../utils/constants/constants"
 import arcadeClass from "../../classes/arcade-class"
+import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
+import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
+import { CareerType, FlappyBirdArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 
 interface Pipe {
 	x: number
@@ -54,11 +54,11 @@ function FlappyBirdGame(): React.ReactNode {
 		lastPipeTime: 0,
 		screenShake: 0,
 		currentPipeSpeed: INITIAL_PIPE_SPEED,
-		currentPipeSpacing: INITIAL_PIPE_SPACING
+		currentPipeSpacing: INITIAL_PIPE_SPACING,
+		lastEnterTriggerTime: 0
 	})
 	const animationRef = useRef<number>(0)
-	const navigate = useTypedNavigate()
-	const gameType = "flappy" as const
+	const gameType: ArcadeGameType = "flappyBird"
 
 	// Initialize game on mount
 	useEffect((): (() => void) => {
@@ -152,6 +152,13 @@ function FlappyBirdGame(): React.ReactNode {
 		const gameState = arcadeClass.getGameState(gameType)
 		if (gameState.gameOver || !gameState.gameStarted) return
 
+		// Send ENTER trigger every 10 seconds while in game
+		const currentTime = Date.now()
+		if (currentTime - state.lastEnterTriggerTime > 10000) {
+			void careerQuestTrigger(CareerType.FLAPPY_BIRD_ARCADE, FlappyBirdArcadeTriggerType.ENTER_FLAPPY_BIRD_ARCADE)
+			state.lastEnterTriggerTime = currentTime
+		}
+
 		// Gradually increase difficulty based on score
 		// Speed increases every 5 points, spacing decreases every 10 points
 		const speedIncrease = Math.floor(gameState.score / 5)
@@ -193,13 +200,13 @@ function FlappyBirdGame(): React.ReactNode {
 		// Keep bird in bounds
 		if (state.birdY - BIRD_SIZE / 2 < 0) {
 			state.birdY = BIRD_SIZE / 2
-			arcadeClass.setGameOver(gameType, true)
+			arcadeClass.setGameOver(gameType)
 			createParticles(BIRD_X, state.birdY, "#ff0000", 20)
 			state.screenShake = 20
 		}
 		if (state.birdY + BIRD_SIZE / 2 > CANVAS_HEIGHT) {
 			state.birdY = CANVAS_HEIGHT - BIRD_SIZE / 2
-			arcadeClass.setGameOver(gameType, true)
+			arcadeClass.setGameOver(gameType)
 			createParticles(BIRD_X, state.birdY, "#ff0000", 20)
 			state.screenShake = 20
 		}
@@ -210,7 +217,7 @@ function FlappyBirdGame(): React.ReactNode {
 
 			// Check collision
 			if (checkCollision(BIRD_X, state.birdY, BIRD_SIZE, pipe)) {
-				arcadeClass.setGameOver(gameType, true)
+				arcadeClass.setGameOver(gameType)
 				createParticles(BIRD_X, state.birdY, "#ff0000", 20)
 				state.screenShake = 20
 				return false
@@ -345,6 +352,7 @@ function FlappyBirdGame(): React.ReactNode {
 
 		// Draw UI
 		const gameState = arcadeClass.getGameState(gameType)
+		const personalBest = arcadeClass.getPersonalBest(gameType)
 		ctx.fillStyle = "#000000"
 		ctx.font = "bold 24px Arial"
 		ctx.fillText(`Score: ${gameState.score}`, 20, 40)
@@ -352,7 +360,7 @@ function FlappyBirdGame(): React.ReactNode {
 		// Draw high score
 		ctx.fillStyle = "rgba(0, 0, 0, 0.6)"
 		ctx.font = "16px Arial"
-		ctx.fillText(`High Score: ${gameState.highScore}`, CANVAS_WIDTH - 200, 40)
+		ctx.fillText(`High Score: ${personalBest}`, CANVAS_WIDTH - 200, 40)
 
 		// Draw controls hint
 		ctx.fillStyle = "rgba(0, 0, 0, 0.5)"
@@ -386,7 +394,8 @@ function FlappyBirdGame(): React.ReactNode {
 			lastPipeTime: 0,
 			screenShake: 0,
 			currentPipeSpeed: INITIAL_PIPE_SPEED,
-			currentPipeSpacing: INITIAL_PIPE_SPACING
+			currentPipeSpacing: INITIAL_PIPE_SPACING,
+			lastEnterTriggerTime: 0
 		}
 
 		// Reset and start game immediately
@@ -407,10 +416,6 @@ function FlappyBirdGame(): React.ReactNode {
 		}
 	}, [gameLoop, gameType])
 
-	const handleBack = useCallback((): void => {
-		void careerQuestTrigger(CareerType.FLAPPY_BIRD_ARCADE, FlappyBirdArcadeTriggerType.EXIT_FLAPPY_BIRD_ARCADE)
-		navigate("/arcade")
-	}, [navigate])
 
 	return (
 		<ArcadeGameLayout
@@ -422,7 +427,6 @@ function FlappyBirdGame(): React.ReactNode {
 					className="border-2 border-[#4a5568] rounded-lg shadow-lg"
 				/>
 			}
-			onBack={handleBack}
 			onStart={startGame}
 			onPlayAgain={resetGame}
 		/>
