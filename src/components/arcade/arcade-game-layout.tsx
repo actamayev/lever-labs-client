@@ -1,39 +1,34 @@
 "use client"
 import React, { ReactNode } from "react"
+import { observer } from "mobx-react"
 import { Button } from "@/components/ui/button"
 import { ArrowLeft } from "lucide-react"
+import arcadeClass from "../../classes/arcade-class"
 
 interface ArcadeGameLayoutProps {
-	title: string
-	instructions: ReactNode
 	canvas: ReactNode
 	onBack: () => void
-	gameStarted: boolean
-	gameOver: boolean
-	score: number
-	highScore: number
-	startScreenContent?: {
-		title: string
-		description: string
-		onStart: () => void
-	}
-	gameOverContent?: {
-		onPlayAgain: () => void
-	}
+	onStart: () => void
+	onPlayAgain: () => void
 }
 
-export default function ArcadeGameLayout({
-	title,
-	instructions,
+// eslint-disable-next-line max-lines-per-function
+function ArcadeGameLayout({
 	canvas,
 	onBack,
-	gameStarted,
-	gameOver,
-	score,
-	highScore,
-	startScreenContent,
-	gameOverContent
+	onStart,
+	onPlayAgain
 }: ArcadeGameLayoutProps): React.ReactNode {
+	const metadata = arcadeClass.getCurrentGameMetadata()
+	const gameState = arcadeClass.getCurrentGameState()
+
+	if (!metadata || !gameState) {
+		return null
+	}
+
+	const { title, instructions, startScreenTitle, startScreenDescription } = metadata
+	const { gameStarted, gameOver, score, highScore } = gameState
+
 	return (
 		<div className="flex flex-col min-h-screen bg-[#1a202c] font-sans relative">
 			{/* Back Button */}
@@ -67,19 +62,19 @@ export default function ArcadeGameLayout({
 					{canvas}
 
 					{/* Start Screen Overlay */}
-					{!gameStarted && !gameOver && startScreenContent && (
+					{!gameStarted && !gameOver && (
 						<div
 							className={
 								"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 " +
 								"bg-black/90 p-10 rounded-xl text-center border-4 border-[#48bb78] z-20 max-w-md w-full"
 							}
 						>
-							<h2 className="text-[#48bb78] text-4xl m-0 mb-5">{startScreenContent.title}</h2>
+							<h2 className="text-[#48bb78] text-4xl m-0 mb-5">{startScreenTitle}</h2>
 							<p className="text-white text-lg m-0 mb-8 max-w-md">
-								{startScreenContent.description}
+								{startScreenDescription}
 							</p>
 							<Button
-								onClick={startScreenContent.onStart}
+								onClick={onStart}
 								size="lg"
 								className="bg-[#48bb78] hover:bg-[#48bb78]/90 text-white font-bold"
 							>
@@ -89,7 +84,7 @@ export default function ArcadeGameLayout({
 					)}
 
 					{/* Game Over Overlay */}
-					{gameOver && gameOverContent && (
+					{gameOver && (
 						<div
 							className={
 								"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 " +
@@ -104,7 +99,7 @@ export default function ArcadeGameLayout({
 								<p className="text-[#ffd93d] text-lg m-0 mb-8">🎉 New High Score! 🎉</p>
 							)}
 							<Button
-								onClick={gameOverContent.onPlayAgain}
+								onClick={onPlayAgain}
 								size="lg"
 								className="bg-[#48bb78] hover:bg-[#48bb78]/90 text-white font-bold"
 							>
@@ -117,4 +112,6 @@ export default function ArcadeGameLayout({
 		</div>
 	)
 }
+
+export default observer(ArcadeGameLayout)
 

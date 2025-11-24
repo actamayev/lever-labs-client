@@ -1,12 +1,14 @@
 "use client"
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../classes/sensor-data-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { CareerType, FlappyBirdArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 import ArcadeGameLayout from "./arcade-game-layout"
+import { ARCADE_CANVAS_WIDTH, ARCADE_CANVAS_HEIGHT } from "../../utils/constants/constants"
+import arcadeClass from "../../classes/arcade-class"
 
 interface Pipe {
 	x: number
@@ -27,8 +29,8 @@ interface Particle {
 	size: number
 }
 
-const CANVAS_WIDTH = 800
-const CANVAS_HEIGHT = 600
+const CANVAS_WIDTH = ARCADE_CANVAS_WIDTH
+const CANVAS_HEIGHT = ARCADE_CANVAS_HEIGHT
 const BIRD_SIZE = 30
 const BIRD_X = 150
 const PIPE_WIDTH = 80
@@ -49,21 +51,22 @@ function FlappyBirdGame(): React.ReactNode {
 		prevBirdY: CANVAS_HEIGHT / 2,
 		pipes: [] as Pipe[],
 		particles: [] as Particle[],
-		score: 0,
-		gameOver: false,
-		gameStarted: false,
 		lastPipeTime: 0,
 		screenShake: 0,
-		highScore: parseInt(localStorage.getItem("flappyHighScore") || "0", 10),
 		currentPipeSpeed: INITIAL_PIPE_SPEED,
 		currentPipeSpacing: INITIAL_PIPE_SPACING
 	})
 	const animationRef = useRef<number>(0)
-
-	const [score, setScore] = useState(0)
-	const [gameOver, setGameOver] = useState(false)
-	const [gameStarted, setGameStarted] = useState(false)
 	const navigate = useTypedNavigate()
+	const gameType = "flappy" as const
+
+	// Initialize game on mount
+	useEffect((): (() => void) => {
+		arcadeClass.setCurrentGame(gameType)
+		return (): void => {
+			arcadeClass.setCurrentGame(null)
+		}
+	}, [])
 
 	const createParticles = useCallback((x: number, y: number, color: string, count: number = 8): void => {
 		for (let i = 0; i < count; i++) {
@@ -146,12 +149,13 @@ function FlappyBirdGame(): React.ReactNode {
 	// eslint-disable-next-line complexity
 	const updateGame = useCallback((timestamp: number): void => {
 		const state = gameStateRef.current
-		if (state.gameOver || !state.gameStarted) return
+		const gameState = arcadeClass.getGameState(gameType)
+		if (gameState.gameOver || !gameState.gameStarted) return
 
 		// Gradually increase difficulty based on score
 		// Speed increases every 5 points, spacing decreases every 10 points
-		const speedIncrease = Math.floor(state.score / 5)
-		const spacingDecrease = Math.floor(state.score / 10)
+		const speedIncrease = Math.floor(gameState.score / 5)
+		const spacingDecrease = Math.floor(gameState.score / 10)
 		state.currentPipeSpeed = Math.min(INITIAL_PIPE_SPEED + speedIncrease * 0.2, MAX_PIPE_SPEED)
 		state.currentPipeSpacing = Math.max(INITIAL_PIPE_SPACING - spacingDecrease * 20, MIN_PIPE_SPACING)
 
@@ -189,15 +193,13 @@ function FlappyBirdGame(): React.ReactNode {
 		// Keep bird in bounds
 		if (state.birdY - BIRD_SIZE / 2 < 0) {
 			state.birdY = BIRD_SIZE / 2
-			state.gameOver = true
-			setGameOver(true)
+			arcadeClass.setGameOver(gameType, true)
 			createParticles(BIRD_X, state.birdY, "#ff0000", 20)
 			state.screenShake = 20
 		}
 		if (state.birdY + BIRD_SIZE / 2 > CANVAS_HEIGHT) {
 			state.birdY = CANVAS_HEIGHT - BIRD_SIZE / 2
-			state.gameOver = true
-			setGameOver(true)
+			arcadeClass.setGameOver(gameType, true)
 			createParticles(BIRD_X, state.birdY, "#ff0000", 20)
 			state.screenShake = 20
 		}
@@ -208,8 +210,7 @@ function FlappyBirdGame(): React.ReactNode {
 
 			// Check collision
 			if (checkCollision(BIRD_X, state.birdY, BIRD_SIZE, pipe)) {
-				state.gameOver = true
-				setGameOver(true)
+				arcadeClass.setGameOver(gameType, true)
 				createParticles(BIRD_X, state.birdY, "#ff0000", 20)
 				state.screenShake = 20
 				return false
@@ -218,8 +219,8 @@ function FlappyBirdGame(): React.ReactNode {
 			// Score when passing pipe
 			if (!pipe.passed && pipe.x + pipe.width < BIRD_X) {
 				pipe.passed = true
-				state.score++
-				setScore(state.score)
+				const currentScore = arcadeClass.getGameState(gameType).score
+				arcadeClass.setScore(gameType, currentScore + 1)
 				createParticles(pipe.x + pipe.width / 2, pipe.topHeight + PIPE_GAP / 2, "#00ff00", 10)
 			}
 
@@ -343,14 +344,15 @@ function FlappyBirdGame(): React.ReactNode {
 		ctx.restore()
 
 		// Draw UI
+		const gameState = arcadeClass.getGameState(gameType)
 		ctx.fillStyle = "#000000"
 		ctx.font = "bold 24px Arial"
-		ctx.fillText(`Score: ${state.score}`, 20, 40)
+		ctx.fillText(`Score: ${gameState.score}`, 20, 40)
 
 		// Draw high score
 		ctx.fillStyle = "rgba(0, 0, 0, 0.6)"
 		ctx.font = "16px Arial"
-		ctx.fillText(`High Score: ${state.highScore}`, CANVAS_WIDTH - 200, 40)
+		ctx.fillText(`High Score: ${gameState.highScore}`, CANVAS_WIDTH - 200, 40)
 
 		// Draw controls hint
 		ctx.fillStyle = "rgba(0, 0, 0, 0.5)"
@@ -363,51 +365,38 @@ function FlappyBirdGame(): React.ReactNode {
 		updateGame(timestamp)
 		draw()
 
-		if (!gameStateRef.current.gameOver && gameStateRef.current.gameStarted) {
+		const gameState = arcadeClass.getGameState(gameType)
+		if (!gameState.gameOver && gameState.gameStarted) {
 			animationRef.current = requestAnimationFrame(gameLoop)
 		}
-	}, [updateGame, draw])
+	}, [updateGame, draw, gameType])
 
 	const startGame = useCallback((): void => {
-		gameStateRef.current.gameStarted = true
-		setGameStarted(true)
+		arcadeClass.startGame(gameType)
 		animationRef.current = requestAnimationFrame(gameLoop)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [gameType])
 
 	const resetGame = useCallback((): void => {
-		const state = gameStateRef.current
-		const newHighScore = Math.max(state.score, state.highScore)
-
 		gameStateRef.current = {
 			birdY: CANVAS_HEIGHT / 2,
 			prevBirdY: CANVAS_HEIGHT / 2,
 			pipes: [],
 			particles: [],
-			score: 0,
-			gameOver: false,
-			gameStarted: false,
 			lastPipeTime: 0,
 			screenShake: 0,
-			highScore: newHighScore,
 			currentPipeSpeed: INITIAL_PIPE_SPEED,
 			currentPipeSpacing: INITIAL_PIPE_SPACING
 		}
 
-		if (newHighScore > state.highScore) {
-			localStorage.setItem("flappyHighScore", newHighScore.toString())
-		}
-
-		setScore(0)
-		setGameOver(false)
-		setGameStarted(false)
-
-		// Start the game immediately after reset
+		// Reset and start game immediately
+		arcadeClass.resetAndStartGame(gameType)
 		startGame()
-	}, [startGame])
+	}, [startGame, gameType])
 
 	useEffect((): (() => void) => {
-		if (gameStarted && !gameOver) {
+		const gameState = arcadeClass.getGameState(gameType)
+		if (gameState.gameStarted && !gameState.gameOver) {
 			animationRef.current = requestAnimationFrame(gameLoop)
 		}
 
@@ -416,7 +405,7 @@ function FlappyBirdGame(): React.ReactNode {
 				cancelAnimationFrame(animationRef.current)
 			}
 		}
-	}, [gameLoop, gameStarted, gameOver])
+	}, [gameLoop, gameType])
 
 	const handleBack = useCallback((): void => {
 		void careerQuestTrigger(CareerType.FLAPPY_BIRD_ARCADE, FlappyBirdArcadeTriggerType.EXIT_FLAPPY_BIRD_ARCADE)
@@ -425,17 +414,6 @@ function FlappyBirdGame(): React.ReactNode {
 
 	return (
 		<ArcadeGameLayout
-			title="Flappy Bird"
-			instructions={
-				<>
-					<p><strong className="text-white">How to Play:</strong></p>
-					<p>
-						Use the distance sensor to control the bird's height. The closer an object is to the sensor,
-						the higher the bird flies. Navigate through the pipes without hitting them!
-					</p>
-					<p>Score points by passing through pipes. See how far you can go!</p>
-				</>
-			}
 			canvas={
 				<canvas
 					ref={canvasRef}
@@ -445,18 +423,8 @@ function FlappyBirdGame(): React.ReactNode {
 				/>
 			}
 			onBack={handleBack}
-			gameStarted={gameStarted}
-			gameOver={gameOver}
-			score={score}
-			highScore={gameStateRef.current.highScore}
-			startScreenContent={{
-				title: "Ready to Fly?",
-				description: "Use the distance sensor to control the bird's height! Navigate through pipes and see how far you can go!",
-				onStart: startGame
-			}}
-			gameOverContent={{
-				onPlayAgain: resetGame
-			}}
+			onStart={startGame}
+			onPlayAgain={resetGame}
 		/>
 	)
 }

@@ -1,12 +1,14 @@
 "use client"
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../classes/sensor-data-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 import { CareerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 import ArcadeGameLayout from "./arcade-game-layout"
+import { ARCADE_CANVAS_WIDTH, ARCADE_CANVAS_HEIGHT } from "../../utils/constants/constants"
+import arcadeClass from "../../classes/arcade-class"
 
 interface Projectile {
 	x: number
@@ -58,8 +60,8 @@ interface CollisionParams {
 	size2: number
 }
 
-const CANVAS_WIDTH = 800
-const CANVAS_HEIGHT = 600
+const CANVAS_WIDTH = ARCADE_CANVAS_WIDTH
+const CANVAS_HEIGHT = ARCADE_CANVAS_HEIGHT
 const TURRET_X = CANVAS_WIDTH / 2
 const TURRET_Y = CANVAS_HEIGHT - 50
 const TURRET_LENGTH = 40
@@ -86,9 +88,6 @@ function PipTurretGame (): React.ReactNode {
 		enemies: [] as Enemy[],
 		particles: [] as Particle[],
 		muzzleFlashes: [] as MuzzleFlash[],
-		score: 0,
-		gameOver: false,
-		gameStarted: false,
 		lastSpawnTime: 0,
 		difficulty: 1,
 		wave: 1,
@@ -100,18 +99,23 @@ function PipTurretGame (): React.ReactNode {
 		combo: 0,
 		comboTimer: 0,
 		lastKillTime: 0,
-		lastEnterTriggerTime: 0,
-		highScore: parseInt(localStorage.getItem("turretHighScore") || "0", 10)
+		lastEnterTriggerTime: 0
 	})
 	const animationRef = useRef<number>(0)
-
-	const [score, setScore] = useState(0)
-	const [gameOver, setGameOver] = useState(false)
-	const [gameStarted, setGameStarted] = useState(false)
 	const navigate = useTypedNavigate()
+	const gameType = "turret" as const
+
+	// Initialize game on mount
+	useEffect((): (() => void) => {
+		arcadeClass.setCurrentGame(gameType)
+		return (): void => {
+			arcadeClass.setCurrentGame(null)
+		}
+	}, [])
 
 	const fireBullet = useCallback((type: "left" | "right"): void => {
-		if (gameStateRef.current.gameOver || !gameStateRef.current.gameStarted) return
+		const gameState = arcadeClass.getGameState(gameType)
+		if (gameState.gameOver || !gameState.gameStarted) return
 
 		const angle = (gameStateRef.current.turretAngle * Math.PI) / 180
 		const weapon = WEAPONS[type]
@@ -199,7 +203,8 @@ function PipTurretGame (): React.ReactNode {
 	// eslint-disable-next-line max-lines-per-function, complexity
 	const updateGame = useCallback((timestamp: number): void => {
 		const state = gameStateRef.current
-		if (state.gameOver || !state.gameStarted) return
+		const gameState = arcadeClass.getGameState(gameType)
+		if (gameState.gameOver || !gameState.gameStarted) return
 
 		// Send ENTER trigger every 10 seconds while in game
 		const currentTime = Date.now()
@@ -209,7 +214,7 @@ function PipTurretGame (): React.ReactNode {
 		}
 
 		// Update difficulty based on score
-		const newDifficulty = 1 + Math.floor(state.score / 100)
+		const newDifficulty = 1 + Math.floor(gameState.score / 100)
 		if (newDifficulty !== state.difficulty) {
 			state.difficulty = newDifficulty
 		}
@@ -256,8 +261,7 @@ function PipTurretGame (): React.ReactNode {
 
 			// Check if enemy hit the turret
 			if (checkCollision({ x1: e.x, y1: e.y, size1: e.size, x2: TURRET_X, y2: TURRET_Y, size2: 25 })) {
-				state.gameOver = true
-				setGameOver(true)
+				arcadeClass.setGameOver(gameType, true)
 				createParticles(TURRET_X, TURRET_Y, "#ff0000", 30)
 				state.screenShake = 20
 				return false
@@ -319,8 +323,8 @@ function PipTurretGame (): React.ReactNode {
 						// Score with combo multiplier
 						const comboMultiplier = 1 + state.combo * 0.1
 						const points = Math.floor(config.points * comboMultiplier)
-						state.score += points
-						setScore(state.score)
+						const currentScore = arcadeClass.getGameState(gameType).score
+						arcadeClass.setScore(gameType, currentScore + points)
 
 						createParticles(enemy.x, enemy.y, config.color, 15)
 						state.enemies.splice(enemyIndex, 1)
@@ -460,9 +464,10 @@ function PipTurretGame (): React.ReactNode {
 		ctx.restore()
 
 		// Draw UI
+		const gameState = arcadeClass.getGameState(gameType)
 		ctx.fillStyle = "#ffffff"
 		ctx.font = "bold 24px Arial"
-		ctx.fillText(`Score: ${state.score}`, 20, 40)
+		ctx.fillText(`Score: ${gameState.score}`, 20, 40)
 		ctx.fillText(`Wave: ${state.wave}`, 20, 70)
 		ctx.fillText(`Level: ${state.difficulty}`, 20, 100)
 
@@ -478,7 +483,7 @@ function PipTurretGame (): React.ReactNode {
 		// Draw high score
 		ctx.fillStyle = "rgba(255, 255, 255, 0.6)"
 		ctx.font = "16px Arial"
-		ctx.fillText(`High Score: ${state.highScore}`, CANVAS_WIDTH - 200, 40)
+		ctx.fillText(`High Score: ${gameState.highScore}`, CANVAS_WIDTH - 200, 40)
 
 		// Draw weapon cooldown indicators
 		const now = Date.now()
@@ -506,31 +511,25 @@ function PipTurretGame (): React.ReactNode {
 		updateGame(timestamp)
 		draw()
 
-		if (!gameStateRef.current.gameOver && gameStateRef.current.gameStarted) {
+		const gameState = arcadeClass.getGameState(gameType)
+		if (!gameState.gameOver && gameState.gameStarted) {
 			animationRef.current = requestAnimationFrame(gameLoop)
 		}
-	}, [updateGame, draw])
+	}, [updateGame, draw, gameType])
 
 	const startGame = useCallback((): void => {
-		gameStateRef.current.gameStarted = true
-		setGameStarted(true)
+		arcadeClass.startGame(gameType)
 		animationRef.current = requestAnimationFrame(gameLoop)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [gameType])
 
 	const resetGame = useCallback((): void => {
-		const state = gameStateRef.current
-		const newHighScore = Math.max(state.score, state.highScore)
-
 		gameStateRef.current = {
 			turretAngle: 0,
 			projectiles: [],
 			enemies: [],
 			particles: [],
 			muzzleFlashes: [],
-			score: 0,
-			gameOver: false,
-			gameStarted: false,
 			lastSpawnTime: 0,
 			difficulty: 1,
 			wave: 1,
@@ -542,26 +541,19 @@ function PipTurretGame (): React.ReactNode {
 			combo: 0,
 			comboTimer: 0,
 			lastKillTime: 0,
-			lastEnterTriggerTime: 0,
-			highScore: newHighScore
+			lastEnterTriggerTime: 0
 		}
 
-		if (newHighScore > state.highScore) {
-			localStorage.setItem("turretHighScore", newHighScore.toString())
-		}
-
-		setScore(0)
-		setGameOver(false)
-		setGameStarted(false)
-
-		// Start the game immediately after reset
+		// Reset and start game immediately
+		arcadeClass.resetAndStartGame(gameType)
 		startGame()
-	}, [startGame])
+	}, [startGame, gameType])
 
 	// Read sensor data and update game state
 	useEffect((): (() => void) => {
 		const intervalId = setInterval((): void => {
-			if (!gameStateRef.current.gameStarted || gameStateRef.current.gameOver) return
+			const gameState = arcadeClass.getGameState(gameType)
+			if (!gameState.gameStarted || gameState.gameOver) return
 
 			// Get latest roll value from sensor data
 			const rollData = sensorDataClass.roll
@@ -604,10 +596,11 @@ function PipTurretGame (): React.ReactNode {
 		return (): void => {
 			clearInterval(intervalId)
 		}
-	}, [fireBullet])
+	}, [fireBullet, gameType])
 
 	useEffect((): (() => void) => {
-		if (gameStarted && !gameOver) {
+		const gameState = arcadeClass.getGameState(gameType)
+		if (gameState.gameStarted && !gameState.gameOver) {
 			animationRef.current = requestAnimationFrame(gameLoop)
 		}
 
@@ -616,7 +609,7 @@ function PipTurretGame (): React.ReactNode {
 				cancelAnimationFrame(animationRef.current)
 			}
 		}
-	}, [gameLoop, gameStarted, gameOver])
+	}, [gameLoop, gameType])
 
 	const handleBack = useCallback((): void => {
 		// Send EXIT trigger when going back
@@ -626,21 +619,6 @@ function PipTurretGame (): React.ReactNode {
 
 	return (
 		<ArcadeGameLayout
-			title="Pip Turret Defense"
-			instructions={
-				<>
-					<p><strong className="text-white">How to Play:</strong></p>
-					<p>
-						Tilt Pip left and right to aim the turret. Cover the left sensor for rapid-fire green weapon,
-						right sensor for powerful red weapon.
-					</p>
-					<p>Destroy enemies before they hit your turret. Build combos for bonus points!</p>
-					<p>
-						<strong className="text-[#ffd93d]">Yellow</strong> enemies are fast,{" "}
-						<strong className="text-[#6c5ce7]">Purple</strong> enemies are tanks.
-					</p>
-				</>
-			}
 			canvas={
 				<canvas
 					ref={canvasRef}
@@ -650,18 +628,8 @@ function PipTurretGame (): React.ReactNode {
 				/>
 			}
 			onBack={handleBack}
-			gameStarted={gameStarted}
-			gameOver={gameOver}
-			score={score}
-			highScore={gameStateRef.current.highScore}
-			startScreenContent={{
-				title: "Ready to Defend?",
-				description: "Defend your turret from waves of enemies! Tilt Pip to aim and cover the sensors to fire!",
-				onStart: startGame
-			}}
-			gameOverContent={{
-				onPlayAgain: resetGame
-			}}
+			onStart={startGame}
+			onPlayAgain={resetGame}
 		/>
 	)
 }

@@ -60,3 +60,7 @@ export const PIP_ROBOT_USB_ID = {
 }
 
 export const DEFAULT_TRANSITION_DURATION = 1500
+
+// Arcade game constants
+export const ARCADE_CANVAS_WIDTH = 800
+export const ARCADE_CANVAS_HEIGHT = 600

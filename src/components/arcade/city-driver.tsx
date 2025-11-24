@@ -1,12 +1,14 @@
 "use client"
 /* eslint-disable @typescript-eslint/naming-convention */
-import React, { useCallback, useEffect, useRef, useState } from "react"
+import React, { useCallback, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../classes/sensor-data-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 import { CareerType, CityDrivingArcadeTriggerType } from "@lever-labs/common-ts/protocol"
 import ArcadeGameLayout from "./arcade-game-layout"
+import { ARCADE_CANVAS_WIDTH, ARCADE_CANVAS_HEIGHT } from "../../utils/constants/constants"
+import arcadeClass from "../../classes/arcade-class"
 
 interface Obstacle {
 	x: number
@@ -28,8 +30,8 @@ interface Particle {
 	size: number
 }
 
-const CANVAS_WIDTH = 800
-const CANVAS_HEIGHT = 600
+const CANVAS_WIDTH = ARCADE_CANVAS_WIDTH
+const CANVAS_HEIGHT = ARCADE_CANVAS_HEIGHT
 const CAR_WIDTH = 50
 const CAR_HEIGHT = 80
 const CAR_Y = CANVAS_HEIGHT - 100 // Fixed vertical position
@@ -47,22 +49,23 @@ function CityDriverGame(): React.ReactNode {
 		speed: INITIAL_SPEED,
 		obstacles: [] as Obstacle[],
 		particles: [] as Particle[],
-		score: 0,
-		gameOver: false,
-		gameStarted: false,
 		lastObstacleTime: 0,
 		screenShake: 0,
-		highScore: typeof window !== "undefined" ? parseInt(localStorage.getItem("cityDriverHighScore") || "0", 10) : 0,
 		lastLeftEncoder: 0,
 		lastRightEncoder: 0,
 		obstacleSpacing: 400
 	})
 	const animationRef = useRef<number>(0)
-
-	const [score, setScore] = useState(0)
-	const [gameOver, setGameOver] = useState(false)
-	const [gameStarted, setGameStarted] = useState(false)
 	const navigate = useTypedNavigate()
+	const gameType = "cityDriver" as const
+
+	// Initialize game on mount
+	useEffect((): (() => void) => {
+		arcadeClass.setCurrentGame(gameType)
+		return (): void => {
+			arcadeClass.setCurrentGame(null)
+		}
+	}, [])
 
 	const createParticles = useCallback((x: number, y: number, color: string, count: number = 8): void => {
 		for (let i = 0; i < count; i++) {
@@ -126,7 +129,8 @@ function CityDriverGame(): React.ReactNode {
 
 	const updateGame = useCallback((timestamp: number): void => {
 		const state = gameStateRef.current
-		if (state.gameOver || !state.gameStarted) return
+		const gameState = arcadeClass.getGameState(gameType)
+		if (gameState.gameOver || !gameState.gameStarted) return
 
 		// Update car position based on left encoder (delta-based)
 		const leftEncoderData = sensorDataClass.leftWheelEncoderPosition
@@ -174,8 +178,7 @@ function CityDriverGame(): React.ReactNode {
 
 			// Check collision
 			if (checkCollision(state.carX, CAR_Y, CAR_WIDTH, CAR_HEIGHT, obstacle)) {
-				state.gameOver = true
-				setGameOver(true)
+				arcadeClass.setGameOver(gameType, true)
 				createParticles(state.carX + CAR_WIDTH / 2, CAR_Y + CAR_HEIGHT / 2, "#ff0000", 30)
 				state.screenShake = 20
 				return false
@@ -184,8 +187,8 @@ function CityDriverGame(): React.ReactNode {
 			// Score when passing obstacle
 			if (!obstacle.passed && obstacle.y > CAR_Y + CAR_HEIGHT) {
 				obstacle.passed = true
-				state.score++
-				setScore(state.score)
+				const currentScore = arcadeClass.getGameState(gameType).score
+				arcadeClass.setScore(gameType, currentScore + 1)
 				createParticles(obstacle.x + obstacle.width / 2, obstacle.y + obstacle.height / 2, "#00ff00", 10)
 			}
 
@@ -246,7 +249,8 @@ function CityDriverGame(): React.ReactNode {
 		ctx.strokeStyle = "#ffff00"
 		ctx.lineWidth = 4
 		const markingSpacing = 50
-		const markingOffset = (state.score * markingSpacing) % markingSpacing
+		const currentGameState = arcadeClass.getGameState(gameType)
+		const markingOffset = (currentGameState.score * markingSpacing) % markingSpacing
 		for (let y = CANVAS_HEIGHT / 2 + markingOffset; y < CANVAS_HEIGHT; y += markingSpacing) {
 			ctx.beginPath()
 			ctx.moveTo(ROAD_CENTER_X - 10, y)
@@ -326,15 +330,16 @@ function CityDriverGame(): React.ReactNode {
 		ctx.restore()
 
 		// Draw UI
+		const uiGameState = arcadeClass.getGameState(gameType)
 		ctx.fillStyle = "#ffffff"
 		ctx.font = "bold 24px Arial"
-		ctx.fillText(`Score: ${state.score}`, 20, 40)
+		ctx.fillText(`Score: ${uiGameState.score}`, 20, 40)
 		ctx.fillText(`Speed: ${state.speed.toFixed(1)}`, 20, 70)
 
 		// Draw high score
 		ctx.fillStyle = "rgba(255, 255, 255, 0.6)"
 		ctx.font = "16px Arial"
-		ctx.fillText(`High Score: ${state.highScore}`, CANVAS_WIDTH - 200, 40)
+		ctx.fillText(`High Score: ${uiGameState.highScore}`, CANVAS_WIDTH - 200, 40)
 
 		// Draw speed indicator
 		const speedBarWidth = 200
@@ -357,10 +362,11 @@ function CityDriverGame(): React.ReactNode {
 		updateGame(timestamp)
 		draw()
 
-		if (!gameStateRef.current.gameOver && gameStateRef.current.gameStarted) {
+		const gameState = arcadeClass.getGameState(gameType)
+		if (!gameState.gameOver && gameState.gameStarted) {
 			animationRef.current = requestAnimationFrame(gameLoop)
 		}
-	}, [updateGame, draw])
+	}, [updateGame, draw, gameType])
 
 	const startGame = useCallback((): void => {
 		// Initialize encoder positions
@@ -373,46 +379,32 @@ function CityDriverGame(): React.ReactNode {
 			gameStateRef.current.lastRightEncoder = rightEncoderData[rightEncoderData.length - 1]
 		}
 
-		gameStateRef.current.gameStarted = true
-		setGameStarted(true)
+		arcadeClass.startGame(gameType)
 		animationRef.current = requestAnimationFrame(gameLoop)
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [])
+	}, [gameType])
 
 	const resetGame = useCallback((): void => {
-		const state = gameStateRef.current
-		const newHighScore = Math.max(state.score, state.highScore)
-
 		gameStateRef.current = {
 			carX: ROAD_CENTER_X,
 			speed: INITIAL_SPEED,
 			obstacles: [],
 			particles: [],
-			score: 0,
-			gameOver: false,
-			gameStarted: false,
 			lastObstacleTime: 0,
 			screenShake: 0,
-			highScore: newHighScore,
 			lastLeftEncoder: 0,
 			lastRightEncoder: 0,
 			obstacleSpacing: 400
 		}
 
-		if (typeof window !== "undefined" && newHighScore > state.highScore) {
-			localStorage.setItem("cityDriverHighScore", newHighScore.toString())
-		}
-
-		setScore(0)
-		setGameOver(false)
-		setGameStarted(false)
-
-		// Start the game immediately after reset
+		// Reset and start game immediately
+		arcadeClass.resetAndStartGame(gameType)
 		startGame()
-	}, [startGame])
+	}, [startGame, gameType])
 
 	useEffect((): (() => void) => {
-		if (gameStarted && !gameOver) {
+		const gameState = arcadeClass.getGameState(gameType)
+		if (gameState.gameStarted && !gameState.gameOver) {
 			animationRef.current = requestAnimationFrame(gameLoop)
 		}
 
@@ -421,7 +413,7 @@ function CityDriverGame(): React.ReactNode {
 				cancelAnimationFrame(animationRef.current)
 			}
 		}
-	}, [gameLoop, gameStarted, gameOver])
+	}, [gameLoop, gameType])
 
 	const handleBack = useCallback((): void => {
 		void careerQuestTrigger(CareerType.CITY_DRIVING_ARCADE, CityDrivingArcadeTriggerType.EXIT_CITY_DRIVING_ARCADE)
@@ -430,16 +422,6 @@ function CityDriverGame(): React.ReactNode {
 
 	return (
 		<ArcadeGameLayout
-			title="City Driver"
-			instructions={
-				<>
-					<p><strong className="text-white">How to Play:</strong></p>
-					<p>
-						Use the left wheel encoder to steer your car left and right. The encoder position delta controls movement.
-						Use the right wheel encoder to control your speed (throttle). Avoid obstacles and score points!
-					</p>
-				</>
-			}
 			canvas={
 				<canvas
 					ref={canvasRef}
@@ -449,19 +431,8 @@ function CityDriverGame(): React.ReactNode {
 				/>
 			}
 			onBack={handleBack}
-			gameStarted={gameStarted}
-			gameOver={gameOver}
-			score={score}
-			highScore={gameStateRef.current.highScore}
-			startScreenContent={{
-				title: "Ready to Drive?",
-				description: "Use the left encoder to steer left and right, and the right encoder to control your speed! " +
-					"Navigate through obstacles and see how far you can go!",
-				onStart: startGame
-			}}
-			gameOverContent={{
-				onPlayAgain: resetGame
-			}}
+			onStart={startGame}
+			onPlayAgain={resetGame}
 		/>
 	)
 }
