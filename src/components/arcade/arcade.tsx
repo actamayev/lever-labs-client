@@ -1,23 +1,12 @@
 "use client"
 
 import { useEffect } from "react"
-import { Gamepad2, Bird, Car } from "lucide-react"
-import { ArcadeGameCard } from "./arcade-game-card"
-import WorkbenchLayout from "../layouts/workbench-layout"
-import arcadeClass from "../../classes/arcade-class"
-import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
-import retrieveAllArcadeScores from "../../utils/arcade/retrieve-all-arcade-scores"
-import authClass from "../../classes/auth-class"
 import { observer } from "mobx-react"
-
-interface GameData {
-	backgroundImage: string
-	gameIcon: React.ReactNode
-	gameName: string
-	description: string
-	href: PageNames
-	gameType: ArcadeGameType
-}
+import { Gamepad2, Bird, Car } from "lucide-react"
+import ArcadeGameCard from "./arcade-game-card"
+import authClass from "../../classes/auth-class"
+import WorkbenchLayout from "../layouts/workbench-layout"
+import retrieveAllArcadeScores from "../../utils/arcade/retrieve-all-arcade-scores"
 
 const games: GameData[] = [
 	{
@@ -62,23 +51,10 @@ function Arcade(): React.ReactNode {
 					</p>
 				</div>
 
-				{/* Game Cards */}
 				<div className="flex flex-col gap-6 w-full">
-					{games.map((game): React.ReactNode => {
-						const highScore = arcadeClass.getPersonalBest(game.gameType)
-
-						return (
-							<ArcadeGameCard
-								key={game.href}
-								backgroundImage={game.backgroundImage}
-								gameIcon={game.gameIcon}
-								gameName={game.gameName}
-								description={game.description}
-								href={game.href}
-								highScore={highScore}
-							/>
-						)
-					})}
+					{games.map((game): React.ReactNode => (
+						<ArcadeGameCard key={game.href} gameData={game} />
+					))}
 				</div>
 			</div>
 		</WorkbenchLayout>
