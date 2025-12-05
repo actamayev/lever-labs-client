@@ -109,7 +109,7 @@ export function ArcadeGameCard({
 							</h3>
 							{highScore > 0 && (
 								<p className="text-white/70 text-sm mt-1 drop-shadow-md">
-									High Score: {highScore}
+									My high Score: {highScore}
 								</p>
 							)}
 						</div>
