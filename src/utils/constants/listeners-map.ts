@@ -10,6 +10,7 @@ import gamesClass from "../../classes/games-class"
 import teacherClass from "../../classes/teacher-class"
 import chatManagerClass from "../../classes/chat-manager-class"
 import garageClass from "../../classes/garage-class"
+import arcadeClass from "../../classes/arcade-class"
 
 type ListenerHandler<E> = (payload: E) => void
 
@@ -41,5 +42,6 @@ export const listenersMap: {
 	"garage-driving-status-update": (payload): void => garageClass.setGarageDrivingStatus(payload.garageDrivingStatus),
 	"garage-tones-status-update": (payload): void => garageClass.setGarageTonesStatus(payload.garageTonesStatus),
 	"garage-lights-status-update": (payload): void => garageClass.setGarageLightsStatus(payload.garageLightsStatus),
-	"garage-display-status-update": (payload): void => garageClass.setGarageDisplayStatus(payload.garageDisplayStatus)
+	"garage-display-status-update": (payload): void => garageClass.setGarageDisplayStatus(payload.garageDisplayStatus),
+	"arcade-score-update": (payload): void => arcadeClass.addPeerHighScore(payload)
 } as const

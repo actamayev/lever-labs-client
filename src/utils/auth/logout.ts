@@ -20,6 +20,7 @@ import navigationManagerClass from "../../classes/navigation-manager-class"
 import { soundManager } from "../../classes/utility/sound-manager-class"
 import questClass from "../../classes/quest-class"
 import gamesClass from "../../classes/games-class"
+import arcadeClass from "../../classes/arcade-class"
 
 export default async function logout(): Promise<void> {
 	authClass.setLoggingOut(true)
@@ -48,6 +49,7 @@ export default async function logout(): Promise<void> {
 		serialMessageManagerClass.logout()
 		studentClass.logout()
 		teacherClass.logout()
+		arcadeClass.logout()
 	} catch (error) {
 		console.error("Logout error:", error)
 		authClass.logout()
@@ -71,6 +73,7 @@ export default async function logout(): Promise<void> {
 		studentClass.logout()
 		teacherClass.logout()
 		await serialConnectionManagerClass.logout()
+		arcadeClass.logout()
 	} finally {
 		authClass.setLoggingOut(false)
 	}

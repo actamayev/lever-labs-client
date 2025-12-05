@@ -13,6 +13,7 @@ import WorkbenchDataService from "../services/workbench-data-service"
 import PersonalInfoDataService from "../services/personal-info-data-service"
 import CareerQuestDataService from "../services/career-quest-data-service"
 import QuestDataService from "../services/quest-data-service"
+import ArcadeDataService from "../services/arcade-data-service"
 
 class LeverLabsApiClient {
 	public httpClient: LeverLabsHttpClient = new LeverLabsHttpClient()
@@ -28,6 +29,7 @@ class LeverLabsApiClient {
 	public studentDataService: StudentDataService = new StudentDataService(this.httpClient, "/student")
 	public teacherDataService: TeacherDataService = new TeacherDataService(this.httpClient, "/teacher")
 	public workbenchDataService: WorkbenchDataService = new WorkbenchDataService(this.httpClient, "/workbench")
+	public arcadeDataService: ArcadeDataService = new ArcadeDataService(this.httpClient, "/arcade")
 
 	constructor() {
 	}
