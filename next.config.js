@@ -44,10 +44,6 @@ const nextConfig = {
 			},
 			{
 				protocol: "https",
-				hostname: "lever-labs-staging-bucket.s3.us-east-1.amazonaws.com",
-			},
-			{
-				protocol: "https",
 				hostname: "lever-labs-production-bucket.s3.us-east-1.amazonaws.com",
 			},
 		],
