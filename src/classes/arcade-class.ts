@@ -92,9 +92,10 @@ class ArcadeClass {
 		const state = this.gameStates.get(gameType)
 		if (!state) return
 
-		// If game is ending (gameOver is being set to true), send score to API
+		// If game is ending (gameOver is being set to true), send score to API and update local high scores
 		if (!state.gameOver && state.score > 0) {
 			void addArcadeScore(gameType, state.score)
+			this.addOwnHighScore(gameType, state.score)
 		}
 
 		state.gameOver = true
@@ -111,18 +112,10 @@ class ArcadeClass {
 		const state = this.gameStates.get(gameType)
 		if (!state) return
 
-		// Capture the final score before resetting
-		const finalScore = state.score
-
 		// Reset game state
 		state.score = 0
 		state.gameOver = false
 		state.gameStarted = false
-
-		// Add score to high scores list (all scores, not just personal bests)
-		if (finalScore > 0) {
-			this.addOwnHighScore(gameType, finalScore)
-		}
 	})
 
 	public resetAndStartGame = action((gameType: ArcadeGameType): void => {
