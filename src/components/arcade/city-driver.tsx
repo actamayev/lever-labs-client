@@ -38,7 +38,7 @@ const CAR_Y = CANVAS_HEIGHT - 100 // Fixed vertical position
 const ROAD_WIDTH = 400
 const ROAD_CENTER_X = CANVAS_WIDTH / 2
 const INITIAL_SPEED = 2
-const MAX_SPEED = 6
+const MAX_SPEED = 15
 const MIN_SPEED = 1
 
 // eslint-disable-next-line max-lines-per-function
