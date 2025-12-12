@@ -249,8 +249,11 @@ function PipTurretGame (): React.ReactNode {
 		// Wave system: spawn enemies in waves
 		const enemiesPerWave = 5 + state.wave * 2
 
+		// Check if all regular enemies for this wave have been spawned
+		const allRegularEnemiesSpawned = state.waveEnemiesSpawned >= enemiesPerWave
+
 		// Check if all regular enemies are killed (no boss enemies in this check)
-		const regularEnemiesKilled = state.waveEnemiesSpawned >= enemiesPerWave &&
+		const regularEnemiesKilled = allRegularEnemiesSpawned &&
 			state.enemies.filter((e): boolean => e.type !== "boss").length === 0
 
 		// Trigger boss warning at the end of each wave when all regular enemies are killed
@@ -259,7 +262,7 @@ function PipTurretGame (): React.ReactNode {
 		}
 
 		// Spawn boss after each wave (when warning time has passed and all regular enemies are killed)
-		const warningDuration = 2000 // 2 seconds warning
+		const warningDuration = 500 // 1 second warning
 		if (state.bossWarningTime > 0 && !state.bossSpawned && regularEnemiesKilled) {
 			if (currentTime - state.bossWarningTime >= warningDuration) {
 				spawnBoss()
@@ -268,7 +271,8 @@ function PipTurretGame (): React.ReactNode {
 			}
 		}
 
-		const waveComplete = state.waveEnemiesSpawned >= enemiesPerWave && state.enemies.length === 0
+		// Wave completes when boss has been spawned and killed (all enemies cleared)
+		const waveComplete = state.bossSpawned && state.enemies.length === 0
 
 		if (waveComplete) {
 			// Start next wave
@@ -540,7 +544,7 @@ function PipTurretGame (): React.ReactNode {
 		// Draw boss warning
 		if (state.bossWarningTime > 0) {
 			const now = Date.now()
-			const warningDuration = 2000
+			const warningDuration = 1000
 			const timeRemaining = warningDuration - (now - state.bossWarningTime)
 			if (timeRemaining > 0) {
 				const pulse = Math.sin((now - state.bossWarningTime) * 0.01) * 0.3 + 0.7
