@@ -242,11 +242,6 @@ function PipTurretGame (): React.ReactNode {
 		// Update difficulty based on score
 		const newDifficulty = 1 + Math.floor(gameState.score / 100)
 		if (newDifficulty !== state.difficulty) {
-			// Level increased - trigger boss warning
-			if (newDifficulty > state.lastDifficulty && state.enemies.filter((e): boolean => e.type !== "boss").length === 0) {
-				state.bossWarningTime = currentTime
-				state.bossSpawned = false
-			}
 			state.difficulty = newDifficulty
 			state.lastDifficulty = newDifficulty
 		}
@@ -258,7 +253,12 @@ function PipTurretGame (): React.ReactNode {
 		const regularEnemiesKilled = state.waveEnemiesSpawned >= enemiesPerWave &&
 			state.enemies.filter((e): boolean => e.type !== "boss").length === 0
 
-		// Spawn boss after each level (when warning time has passed and all regular enemies are killed)
+		// Trigger boss warning at the end of each wave when all regular enemies are killed
+		if (regularEnemiesKilled && !state.bossSpawned && state.bossWarningTime === 0) {
+			state.bossWarningTime = currentTime
+		}
+
+		// Spawn boss after each wave (when warning time has passed and all regular enemies are killed)
 		const warningDuration = 2000 // 2 seconds warning
 		if (state.bossWarningTime > 0 && !state.bossSpawned && regularEnemiesKilled) {
 			if (currentTime - state.bossWarningTime >= warningDuration) {
@@ -275,7 +275,8 @@ function PipTurretGame (): React.ReactNode {
 			state.wave++
 			state.enemiesInWave = 0
 			state.waveEnemiesSpawned = 0
-			// Don't reset bossSpawned here - it resets when level increases
+			state.bossSpawned = false
+			state.bossWarningTime = 0
 		}
 
 		// Spawn regular enemies

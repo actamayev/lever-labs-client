@@ -55,7 +55,7 @@ function AdjustDrivingSpeed(): React.ReactNode {
 				<div className="h-full relative">
 					<Slider
 						defaultValue={[garageClass.motorThrottlePercent]}
-						max={50}
+						max={100}
 						step={1}
 						onValueChange={handleValueChange}
 						className={cn("h-full duration-0", isDisabled && "opacity-50")}
