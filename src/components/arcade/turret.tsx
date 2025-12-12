@@ -77,7 +77,7 @@ const ENEMY_TYPES = {
 	basic: { health: 1, speed: 1, size: 20, color: "#ff6b6b", points: 10 },
 	fast: { health: 1, speed: 1.5, size: 15, color: "#ffd93d", points: 20 },
 	tank: { health: 5, speed: 1, size: 30, color: "#6c5ce7", points: 50 },
-	boss: { health: 20, speed: 0.5, size: 50, color: "#00ff00", points: 200 }
+	boss: { health: 40, speed: 0.5, size: 80, color: "#00ff00", points: 100 }
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -95,6 +95,8 @@ function PipTurretGame (): React.ReactNode {
 		enemiesInWave: 0,
 		waveEnemiesSpawned: 0,
 		bossSpawned: false,
+		bossWarningTime: 0,
+		lastDifficulty: 1,
 		lastLeftFire: 0,
 		lastRightFire: 0,
 		screenShake: 0,
@@ -240,21 +242,30 @@ function PipTurretGame (): React.ReactNode {
 		// Update difficulty based on score
 		const newDifficulty = 1 + Math.floor(gameState.score / 100)
 		if (newDifficulty !== state.difficulty) {
+			// Level increased - trigger boss warning
+			if (newDifficulty > state.lastDifficulty && state.enemies.filter((e): boolean => e.type !== "boss").length === 0) {
+				state.bossWarningTime = currentTime
+				state.bossSpawned = false
+			}
 			state.difficulty = newDifficulty
+			state.lastDifficulty = newDifficulty
 		}
 
 		// Wave system: spawn enemies in waves
 		const enemiesPerWave = 5 + state.wave * 2
-		const isBossWave = state.wave % 3 === 0
 
 		// Check if all regular enemies are killed (no boss enemies in this check)
 		const regularEnemiesKilled = state.waveEnemiesSpawned >= enemiesPerWave &&
 			state.enemies.filter((e): boolean => e.type !== "boss").length === 0
 
-		// Spawn boss at the end of every 3rd wave (after all regular enemies are killed)
-		if (isBossWave && !state.bossSpawned && regularEnemiesKilled) {
-			spawnBoss()
-			state.lastSpawnTime = timestamp
+		// Spawn boss after each level (when warning time has passed and all regular enemies are killed)
+		const warningDuration = 2000 // 2 seconds warning
+		if (state.bossWarningTime > 0 && !state.bossSpawned && regularEnemiesKilled) {
+			if (currentTime - state.bossWarningTime >= warningDuration) {
+				spawnBoss()
+				state.bossWarningTime = 0
+				state.lastSpawnTime = timestamp
+			}
 		}
 
 		const waveComplete = state.waveEnemiesSpawned >= enemiesPerWave && state.enemies.length === 0
@@ -264,7 +275,7 @@ function PipTurretGame (): React.ReactNode {
 			state.wave++
 			state.enemiesInWave = 0
 			state.waveEnemiesSpawned = 0
-			state.bossSpawned = false
+			// Don't reset bossSpawned here - it resets when level increases
 		}
 
 		// Spawn regular enemies
@@ -486,13 +497,13 @@ function PipTurretGame (): React.ReactNode {
 			// Health bar for tanks and boss
 			if (e.type === "tank" || e.type === "boss") {
 				const healthPercent = e.health / e.maxHealth
-				const barWidth = e.type === "boss" ? 60 : 30
-				const barHeight = e.type === "boss" ? 6 : 4
-				const barOffset = e.type === "boss" ? -30 : -15
+				const barWidth = e.type === "boss" ? 100 : 30
+				const barHeight = e.type === "boss" ? 8 : 4
+				const barOffset = e.type === "boss" ? -50 : -15
 				ctx.fillStyle = "#2d3748"
-				ctx.fillRect(e.x + barOffset, e.y - e.size / 2 - 10, barWidth, barHeight)
+				ctx.fillRect(e.x + barOffset, e.y - e.size / 2 - 12, barWidth, barHeight)
 				ctx.fillStyle = e.type === "boss" ? "#00ff00" : "#48bb78"
-				ctx.fillRect(e.x + barOffset, e.y - e.size / 2 - 10, barWidth * healthPercent, barHeight)
+				ctx.fillRect(e.x + barOffset, e.y - e.size / 2 - 12, barWidth * healthPercent, barHeight)
 			}
 		})
 
@@ -523,6 +534,33 @@ function PipTurretGame (): React.ReactNode {
 			const comboText = `${state.combo}x COMBO!`
 			const comboWidth = ctx.measureText(comboText).width
 			ctx.fillText(comboText, CANVAS_WIDTH / 2 - comboWidth / 2, 50)
+		}
+
+		// Draw boss warning
+		if (state.bossWarningTime > 0) {
+			const now = Date.now()
+			const warningDuration = 2000
+			const timeRemaining = warningDuration - (now - state.bossWarningTime)
+			if (timeRemaining > 0) {
+				const pulse = Math.sin((now - state.bossWarningTime) * 0.01) * 0.3 + 0.7
+				ctx.fillStyle = `rgba(255, 0, 0, ${pulse})`
+				ctx.font = "bold 48px Arial"
+				const warningText = "⚠ BOSS INCOMING! ⚠"
+				const warningWidth = ctx.measureText(warningText).width
+				ctx.fillText(warningText, CANVAS_WIDTH / 2 - warningWidth / 2, CANVAS_HEIGHT / 2 - 50)
+
+				// Draw warning triangle
+				ctx.fillStyle = `rgba(255, 255, 0, ${pulse})`
+				ctx.beginPath()
+				ctx.moveTo(CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2 + 20)
+				ctx.lineTo(CANVAS_WIDTH / 2 - 40, CANVAS_HEIGHT / 2 + 60)
+				ctx.lineTo(CANVAS_WIDTH / 2 + 40, CANVAS_HEIGHT / 2 + 60)
+				ctx.closePath()
+				ctx.fill()
+				ctx.strokeStyle = `rgba(255, 0, 0, ${pulse})`
+				ctx.lineWidth = 3
+				ctx.stroke()
+			}
 		}
 
 		// Draw high score
@@ -581,6 +619,8 @@ function PipTurretGame (): React.ReactNode {
 			enemiesInWave: 0,
 			waveEnemiesSpawned: 0,
 			bossSpawned: false,
+			bossWarningTime: 0,
+			lastDifficulty: 1,
 			lastLeftFire: 0,
 			lastRightFire: 0,
 			screenShake: 0,
