@@ -32,16 +32,16 @@ interface HighScoreItem {
 
 function HighScoresPanel({ scores }: { scores: HighScoreItem[] }): React.ReactNode {
 	return (
-		<div className="lg:w-80 shrink-0">
-			<div className="bg-[#2d3748] rounded-lg p-6 h-full">
-				<h2 className="text-white text-xl font-bold mb-4">High Scores</h2>
+		<div className="w-[20%] shrink-0 min-w-0">
+			<div className="bg-[#2d3748] rounded-lg p-6 h-full flex flex-col">
+				<h2 className="text-white text-xl font-bold mb-4 shrink-0">High Scores</h2>
 				{scores.length === 0 ? (
 					<div className="text-[#a0aec0] text-center py-8">
 						<p>No scores yet!</p>
 						<p className="text-sm mt-2">Play to see your scores here.</p>
 					</div>
 				) : (
-					<div className="space-y-2 max-h-[calc(100vh-200px)] overflow-y-auto">
+					<div className="space-y-2 flex-1 overflow-y-auto min-h-0">
 						{scores.map((scoreData, index): React.ReactNode => (
 							<div
 								key={`${scoreData.score}-${scoreData.timestamp.getTime()}-${scoreData.username}`}
@@ -139,7 +139,7 @@ function ArcadeGameLayout({
 	}, [])
 
 	return (
-		<div className="flex flex-col min-h-screen bg-[#1a202c] font-sans relative">
+		<div className="flex flex-col min-h-screen bg-[#1a202c] font-sans relative overflow-x-hidden">
 			{/* Back Button */}
 			<Button
 				onClick={handleBack}
@@ -156,9 +156,9 @@ function ArcadeGameLayout({
 			</div>
 
 			{/* Main Content Area */}
-			<div className="flex-1 flex flex-col lg:flex-row gap-6 px-4 pb-4">
+			<div className="flex-1 flex flex-col lg:flex-row px-4 pb-4 min-w-0">
 				{/* Instructions Panel - Left Side */}
-				<div className="lg:w-80 shrink-0">
+				<div className="w-[20%] shrink-0 min-w-0">
 					<div className="bg-[#2d3748] rounded-lg p-6 h-full">
 						<div className="text-[#a0aec0] space-y-4">
 							{instructions}
@@ -167,7 +167,7 @@ function ArcadeGameLayout({
 				</div>
 
 				{/* Game Canvas - Center */}
-				<div className="flex-1 flex items-center justify-center relative">
+				<div className="w-[60%] flex items-center justify-center relative min-w-0 mx-4">
 					{canvas}
 
 					{/* Start Screen Overlay */}
