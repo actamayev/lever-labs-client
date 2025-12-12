@@ -432,7 +432,6 @@ function CityDriverGame(): React.ReactNode {
 					width={CANVAS_WIDTH}
 					height={CANVAS_HEIGHT}
 					className="border-2 border-[#4a5568] rounded-lg shadow-lg"
-					style={{ maxWidth: "100%", height: "auto" }}
 				/>
 			}
 			onStart={startGame}
