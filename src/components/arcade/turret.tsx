@@ -24,7 +24,7 @@ interface Enemy {
 	y: number
 	vx: number
 	vy: number
-	type: "basic" | "fast" | "tank"
+	type: "basic" | "fast" | "tank" | "boss"
 	health: number
 	maxHealth: number
 	size: number
@@ -76,7 +76,8 @@ const WEAPONS = {
 const ENEMY_TYPES = {
 	basic: { health: 1, speed: 1, size: 20, color: "#ff6b6b", points: 10 },
 	fast: { health: 1, speed: 1.5, size: 15, color: "#ffd93d", points: 20 },
-	tank: { health: 5, speed: 1, size: 30, color: "#6c5ce7", points: 50 }
+	tank: { health: 5, speed: 1, size: 30, color: "#6c5ce7", points: 50 },
+	boss: { health: 20, speed: 0.5, size: 50, color: "#00ff00", points: 200 }
 }
 
 // eslint-disable-next-line max-lines-per-function
@@ -93,6 +94,7 @@ function PipTurretGame (): React.ReactNode {
 		wave: 1,
 		enemiesInWave: 0,
 		waveEnemiesSpawned: 0,
+		bossSpawned: false,
 		lastLeftFire: 0,
 		lastRightFire: 0,
 		screenShake: 0,
@@ -175,6 +177,29 @@ function PipTurretGame (): React.ReactNode {
 		state.waveEnemiesSpawned++
 	}, [])
 
+	const spawnBoss = useCallback((): void => {
+		const state = gameStateRef.current
+		const config = ENEMY_TYPES.boss
+		const x = CANVAS_WIDTH / 2 // Boss spawns in the center
+
+		state.enemies.push({
+			x,
+			y: -config.size,
+			vx: 0, // Boss moves straight down, no horizontal drift
+			vy: config.speed * state.difficulty,
+			type: "boss",
+			health: config.health,
+			maxHealth: config.health,
+			size: config.size,
+			zigzagPhase: 0,
+			zigzagSpeed: 0 // Boss doesn't zigzag
+		})
+
+		state.enemiesInWave++
+		state.waveEnemiesSpawned++
+		state.bossSpawned = true
+	}, [])
+
 	const createParticles = useCallback((x: number, y: number, color: string, count: number = 8): void => {
 		for (let i = 0; i < count; i++) {
 			const angle = (Math.PI * 2 * i) / count
@@ -220,6 +245,18 @@ function PipTurretGame (): React.ReactNode {
 
 		// Wave system: spawn enemies in waves
 		const enemiesPerWave = 5 + state.wave * 2
+		const isBossWave = state.wave % 3 === 0
+
+		// Check if all regular enemies are killed (no boss enemies in this check)
+		const regularEnemiesKilled = state.waveEnemiesSpawned >= enemiesPerWave &&
+			state.enemies.filter((e): boolean => e.type !== "boss").length === 0
+
+		// Spawn boss at the end of every 3rd wave (after all regular enemies are killed)
+		if (isBossWave && !state.bossSpawned && regularEnemiesKilled) {
+			spawnBoss()
+			state.lastSpawnTime = timestamp
+		}
+
 		const waveComplete = state.waveEnemiesSpawned >= enemiesPerWave && state.enemies.length === 0
 
 		if (waveComplete) {
@@ -227,9 +264,10 @@ function PipTurretGame (): React.ReactNode {
 			state.wave++
 			state.enemiesInWave = 0
 			state.waveEnemiesSpawned = 0
+			state.bossSpawned = false
 		}
 
-		// Spawn enemies
+		// Spawn regular enemies
 		const spawnRate = Math.max(500 - state.difficulty * 50, 200)
 		if (timestamp - state.lastSpawnTime > spawnRate && state.waveEnemiesSpawned < enemiesPerWave) {
 			spawnEnemy()
@@ -253,9 +291,13 @@ function PipTurretGame (): React.ReactNode {
 
 		// Update enemies with zigzag movement
 		state.enemies = state.enemies.filter((e): boolean => {
-			// Zigzag pattern
-			e.zigzagPhase += e.zigzagSpeed
-			e.x += e.vx + Math.sin(e.zigzagPhase) * 0.5
+			// Zigzag pattern (boss doesn't zigzag)
+			if (e.type !== "boss") {
+				e.zigzagPhase += e.zigzagSpeed
+				e.x += e.vx + Math.sin(e.zigzagPhase) * 0.5
+			} else {
+				e.x += e.vx
+			}
 			e.y += e.vy
 
 			// Check if enemy hit the turret
@@ -338,7 +380,7 @@ function PipTurretGame (): React.ReactNode {
 			state.screenShake *= 0.85
 			if (state.screenShake < 0.1) state.screenShake = 0
 		}
-	}, [spawnEnemy, createParticles])
+	}, [spawnEnemy, spawnBoss, createParticles])
 
 	// eslint-disable-next-line max-lines-per-function
 	const draw = useCallback((): void => {
@@ -441,13 +483,16 @@ function PipTurretGame (): React.ReactNode {
 			ctx.fill()
 			ctx.shadowBlur = 0
 
-			// Health bar for tanks
-			if (e.type === "tank") {
+			// Health bar for tanks and boss
+			if (e.type === "tank" || e.type === "boss") {
 				const healthPercent = e.health / e.maxHealth
+				const barWidth = e.type === "boss" ? 60 : 30
+				const barHeight = e.type === "boss" ? 6 : 4
+				const barOffset = e.type === "boss" ? -30 : -15
 				ctx.fillStyle = "#2d3748"
-				ctx.fillRect(e.x - 15, e.y - e.size / 2 - 8, 30, 4)
-				ctx.fillStyle = "#48bb78"
-				ctx.fillRect(e.x - 15, e.y - e.size / 2 - 8, 30 * healthPercent, 4)
+				ctx.fillRect(e.x + barOffset, e.y - e.size / 2 - 10, barWidth, barHeight)
+				ctx.fillStyle = e.type === "boss" ? "#00ff00" : "#48bb78"
+				ctx.fillRect(e.x + barOffset, e.y - e.size / 2 - 10, barWidth * healthPercent, barHeight)
 			}
 		})
 
@@ -535,6 +580,7 @@ function PipTurretGame (): React.ReactNode {
 			wave: 1,
 			enemiesInWave: 0,
 			waveEnemiesSpawned: 0,
+			bossSpawned: false,
 			lastLeftFire: 0,
 			lastRightFire: 0,
 			screenShake: 0,
