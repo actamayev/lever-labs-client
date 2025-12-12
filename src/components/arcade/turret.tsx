@@ -188,7 +188,7 @@ function PipTurretGame (): React.ReactNode {
 			x,
 			y: -config.size,
 			vx: 0, // Boss moves straight down, no horizontal drift
-			vy: config.speed * state.difficulty,
+			vy: config.speed, // Boss speed doesn't scale with difficulty
 			type: "boss",
 			health: config.health,
 			maxHealth: config.health,
