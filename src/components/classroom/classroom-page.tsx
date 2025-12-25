@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { useEffect } from "react"
 import { ArrowLeft } from "lucide-react"
-import { ClassCode } from "@lever-labs/common-ts/types/utils"
+import { ClassCode } from "@actamayev/lever-labs-common-ts/types/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import teacherClass from "../../classes/teacher-class"

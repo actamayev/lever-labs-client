@@ -3,9 +3,9 @@
 import * as Blockly from "blockly"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
-import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
-import { BlockNames } from "@lever-labs/common-ts/types/blockly/blockly"
-import { createChallengeToolbox } from "@lever-labs/common-ts/types/utils/blockly-helpers"
+import { BlocklyJson } from "@actamayev/lever-labs-common-ts/types/sandbox"
+import { BlockNames } from "@actamayev/lever-labs-common-ts/types/blockly/blockly"
+import { createChallengeToolbox } from "@actamayev/lever-labs-common-ts/types/utils/blockly-helpers"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { RotateCcw } from "lucide-react"
 import { cn } from "../../lib/utils"
@@ -22,7 +22,7 @@ import isEmpty from "lodash-es/isEmpty"
 // @ts-expect-error - No type definitions available for this plugin
 import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
 import StopCodeButton from "../buttons/stop-code-button"
-import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
+import { QuestionUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 
 interface QuestionData {
 	questionText: string

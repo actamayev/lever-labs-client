@@ -2,7 +2,7 @@
 
 import { Target } from "lucide-react"
 import { useMemo } from "react"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import questClass from "../../classes/quest-class"
 import { cn } from "../../lib/utils"
 import { observer } from "mobx-react"

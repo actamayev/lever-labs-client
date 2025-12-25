@@ -22,7 +22,7 @@ import searchByUsername from "../../../../utils/sandbox/search-by-username"
 import shareSandboxProject from "../../../../utils/sandbox/share-sandbox-project"
 import removeSandboxProjectShare from "../../../../utils/sandbox/remove-sandbox-project-share"
 import { cn } from "../../../../lib/utils"
-import { SingleSearchByUsernameResult } from "@lever-labs/common-ts/types/sandbox"
+import { SingleSearchByUsernameResult } from "@actamayev/lever-labs-common-ts/types/sandbox"
 
 // eslint-disable-next-line max-lines-per-function, complexity
 function ShareSandboxDialog(): React.ReactNode {

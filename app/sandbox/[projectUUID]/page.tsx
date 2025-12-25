@@ -1,6 +1,6 @@
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
-import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
+import { SandboxProjectUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import AuthenticatedLayout from "../../../src/components/layouts/authenticated-layout"
 import { createMetadata } from "../../../src/utils/seo/create-metadata"
 import SandboxProjectPage from "../../../src/components/sandbox/sandbox-project/sandbox-project-page"

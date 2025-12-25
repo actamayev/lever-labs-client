@@ -2,13 +2,13 @@
 
 import { observer } from "mobx-react"
 import { Play } from "lucide-react"
-import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import { BlocklyJson } from "@actamayev/lever-labs-common-ts/types/sandbox"
 import { cn } from "../../lib/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import questClass from "../../classes/quest-class"
 import sendCppToPip from "../../utils/sandbox/send-cpp-to-pip"
 import OpenEndedQuestion from "./open-ended-question"
-import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
+import { QuestionUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 
 function ActionToCodeOpenEndedQuestion(): React.ReactNode {
 	const currentQuestionState = questClass.currentQuestionState

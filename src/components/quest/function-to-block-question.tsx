@@ -1,7 +1,7 @@
 "use client"
 import { observer } from "mobx-react"
 import { useCallback, useRef } from "react"
-import { CodingBlock } from "@lever-labs/common-ts/types/quest"
+import { CodingBlock } from "@actamayev/lever-labs-common-ts/types/quest"
 import questClass from "../../classes/quest-class"
 // import { TactileButton } from "../shadcn/ui/tactile-button"
 import QuestMiniSandbox from "./quest-mini-sandbox"

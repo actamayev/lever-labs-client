@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useState, useRef, useEffect, useCallback } from "react"
-import { CareerUUID } from "@lever-labs/common-ts/types/utils"
+import { CareerUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import ChatTextArea from "../../chat/chat-text-area"
 import stopChatStream from "../../../utils/chat/stop-chat-stream"
 import careerQuestClass from "../../../classes/career-quest-class"

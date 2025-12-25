@@ -4,7 +4,7 @@
 
 import { observer } from "mobx-react"
 import { TactileButton } from "../../buttons/tactile-button"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import questClass from "../../../classes/quest-class"
 import { useCallback, useState } from "react"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"

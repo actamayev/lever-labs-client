@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
-import { AllCommonResponses } from "@lever-labs/common-ts/types/api"
+import { AllCommonResponses } from "@actamayev/lever-labs-common-ts/types/api"
 import { BaseDataService } from "./base-data-service"
 
 export default class MiscDataService extends BaseDataService {

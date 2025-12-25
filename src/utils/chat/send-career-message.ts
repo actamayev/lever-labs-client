@@ -6,8 +6,8 @@ import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"
 import chatManagerClass from "../../classes/chat-manager-class"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
-import { CareerUUID } from "@lever-labs/common-ts/types/utils"
-import { OutgoingCareerMessage } from "@lever-labs/common-ts/types/chat"
+import { CareerUUID } from "@actamayev/lever-labs-common-ts/types/utils"
+import { OutgoingCareerMessage } from "@actamayev/lever-labs-common-ts/types/chat"
 
 export default async function sendCareerMessage(careerUUID: CareerUUID, careerData: OutgoingCareerMessage): Promise<void> {
 	try {

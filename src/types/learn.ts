@@ -1,5 +1,5 @@
-import { LessonQuestionMap, Question, Lesson, QuestionType, CodingBlock } from "@lever-labs/common-ts/types/quest"
-import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import { LessonQuestionMap, Question, Lesson, QuestionType, CodingBlock } from "@actamayev/lever-labs-common-ts/types/quest"
+import { BlocklyJson } from "@actamayev/lever-labs-common-ts/types/sandbox"
 
 declare global {
 	interface LocalQuestion extends Omit<Question, "questionType"> {

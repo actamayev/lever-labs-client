@@ -1,5 +1,5 @@
 import { headers } from 'next/headers'
-import { SiteThemes } from "@lever-labs/common-ts/types/utils"
+import { SiteThemes } from "@actamayev/lever-labs-common-ts/types/utils"
 
 export interface AuthState {
 	isAuthenticated: boolean

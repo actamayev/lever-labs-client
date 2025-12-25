@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useCallback, useEffect, useMemo } from "react"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import pipClass from "../../classes/pip-class"
 import questClass from "../../classes/quest-class"
 import ExitLessonDialog from "./exit-lesson-dialog"

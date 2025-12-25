@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios"
 import { SuccessResponse, ErrorResponses, StartChatSuccess,
-	AllCommonResponses, CheckCodeResponse, NonSuccessResponse } from "@lever-labs/common-ts/types/api"
-import { ChallengeUUID, CareerUUID, SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
+	AllCommonResponses, CheckCodeResponse, NonSuccessResponse } from "@actamayev/lever-labs-common-ts/types/api"
+import { ChallengeUUID, CareerUUID, SandboxProjectUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { OutgoingChallengeGeneralMessage, OutgoingChallengeCheckCodeMessage,
-	OutgoingChallengeHintMessage, OutgoingCareerMessage, OutgoingSandboxChatData } from "@lever-labs/common-ts/types/chat"
+	OutgoingChallengeHintMessage, OutgoingCareerMessage, OutgoingSandboxChatData } from "@actamayev/lever-labs-common-ts/types/chat"
 import { BaseDataService } from "./base-data-service"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 

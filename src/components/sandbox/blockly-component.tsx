@@ -7,7 +7,7 @@ import { usePathname } from "next/navigation"
 import { BlocklyWorkspace } from "react-blockly"
 // @ts-expect-error - No type definitions available for this plugin
 import { Multiselect } from "@mit-app-inventor/blockly-plugin-workspace-multiselect"
-import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import { BlocklyJson } from "@actamayev/lever-labs-common-ts/types/sandbox"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import personalInfoClass from "../../classes/personal-info-class"
 import initializeBlocks from "../../utils/blockly/initialize-blocks"

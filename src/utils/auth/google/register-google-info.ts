@@ -2,7 +2,7 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { NewGoogleInfoRequest } from "@lever-labs/common-ts/types/api"
+import { NewGoogleInfoRequest } from "@actamayev/lever-labs-common-ts/types/api"
 import authClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import personalInfoClass from "../../../classes/personal-info-class"

@@ -1,6 +1,6 @@
 "use client"
 
-import { LoginRequest } from "@lever-labs/common-ts/types/api"
+import { LoginRequest } from "@actamayev/lever-labs-common-ts/types/api"
 import isEmpty from "lodash-es/isEmpty"
 
 export default function confirmLoginFields(credentials: LoginRequest, setError: (error: string) => void): boolean {

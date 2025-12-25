@@ -9,7 +9,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { LightAnimation } from "@lever-labs/common-ts/types/garage"
+import { LightAnimation } from "@actamayev/lever-labs-common-ts/types/garage"
 import { Rainbow, Siren, ChevronDown, Circle } from "lucide-react"
 import { cn } from "../../../lib/utils"
 import { CustomYoga } from "../../../icons/custom-yoga"

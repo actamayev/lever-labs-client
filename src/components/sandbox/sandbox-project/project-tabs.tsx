@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import debounce from "lodash-es/debounce"
 import { useRef, useEffect, useState, useMemo } from "react"
-import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
+import { SandboxProjectUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { Textarea } from "../../ui/textarea"
 import SandboxChatInterface from "./sandbox-chat-interface"
 import sandboxClass from "../../../classes/sandbox-class"

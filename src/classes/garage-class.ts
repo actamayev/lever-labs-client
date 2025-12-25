@@ -2,12 +2,12 @@
 
 import { RgbaColor } from "@uiw/color-convert"
 import { action, makeAutoObservable } from "mobx"
-import { LightAnimation, MotorControlInput } from "@lever-labs/common-ts/types/garage"
+import { LightAnimation, MotorControlInput } from "@actamayev/lever-labs-common-ts/types/garage"
 import { applyTextToBuffer } from "../utils/display/export-display"
 import { DISPLAY_HEIGHT, DISPLAY_WIDTH,
 	PRE_DEFINED_DESIGNS, Point, PreDefinedDesignName } from "../utils/constants/display-constants"
 import createDisplayMessage from "../utils/garage/create-display-message"
-import { ToneType } from "@lever-labs/common-ts/protocol"
+import { ToneType } from "@actamayev/lever-labs-common-ts/protocol"
 
 class GarageClass {
 	public selectedColorRgba: RgbaColor = { r: 255, g: 255, b: 255, a: 1 }

@@ -7,7 +7,7 @@ import {
 	SocketEvents,
 	ClientSocketEvents,
 	ClientSocketEventPayloadMap,
-} from "@lever-labs/common-ts/types/socket"
+} from "@actamayev/lever-labs-common-ts/types/socket"
 import { listenersMap } from "../utils/constants/listeners-map"
 import pipClass from "./pip-class"
 import garageClass from "./garage-class"

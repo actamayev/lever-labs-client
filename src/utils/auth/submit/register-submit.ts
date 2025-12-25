@@ -2,7 +2,7 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { RegisterRequest } from "@lever-labs/common-ts/types/api"
+import { RegisterRequest } from "@actamayev/lever-labs-common-ts/types/api"
 import authClass from "../../../classes/auth-class"
 import { isNonSuccessResponse } from "../../type-checks"
 import confirmRegisterFields from "../confirm-register-fields"

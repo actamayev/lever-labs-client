@@ -1,4 +1,4 @@
-import { CodingBlock } from "@lever-labs/common-ts/types/quest"
+import { CodingBlock } from "@actamayev/lever-labs-common-ts/types/quest"
 
 /**
  * Random shuffle function using Fisher-Yates algorithm

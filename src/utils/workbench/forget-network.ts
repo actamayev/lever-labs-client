@@ -1,6 +1,6 @@
 "use client"
 
-import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
+import { MessageBuilder } from "@actamayev/lever-labs-common-ts/message-builder"
 import toastClass from "../../classes/toast-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import serialMessageManagerClass from "../../classes/serial-message-manager-class"

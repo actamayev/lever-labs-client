@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
+import { SandboxProjectUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isNonSuccessResponse } from "../type-checks"
 import toastClass from "../../classes/toast-class"

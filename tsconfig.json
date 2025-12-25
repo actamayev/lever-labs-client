@@ -32,8 +32,8 @@
         "./src/*"
       ],
       // Add explicit path mapping for your package (fallback)
-      "@lever-labs/common-ts/*": [
-        "./node_modules/@lever-labs/common-ts/dist/src/*"
+      "@actamayev/lever-labs-common-ts/*": [
+        "./node_modules/@actamayev/lever-labs-common-ts/dist/src/*"
       ]
     },
     "allowSyntheticDefaultImports": true,

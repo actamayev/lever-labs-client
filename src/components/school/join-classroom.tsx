@@ -8,7 +8,7 @@ import getDuolingoColors from "../../utils/get-duolingo-colors"
 import joinClassroom from "../../utils/student/join-classroom"
 import { isValidClassCode } from "../../utils/validate-class-code"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import { ACCEPTABLE_CLASS_CODE_CHARACTERS } from "@lever-labs/common-ts/types/utils/constants"
+import { ACCEPTABLE_CLASS_CODE_CHARACTERS } from "@actamayev/lever-labs-common-ts/types/utils/constants"
 
 export default function JoinClassroom(): React.ReactNode {
 	const navigate = useTypedNavigate()

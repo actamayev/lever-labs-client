@@ -4,7 +4,7 @@
 import { observer } from "mobx-react"
 import { useState, SetStateAction } from "react"
 import { Hash, Rocket, Plus, Trophy } from "lucide-react"
-import { ClassCode } from "@lever-labs/common-ts/types/utils"
+import { ClassCode } from "@actamayev/lever-labs-common-ts/types/utils"
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card"
 import { cn } from "../../lib/utils"
 import CreateHubDialog from "./create-hub-dialog"

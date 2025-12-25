@@ -1,8 +1,8 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
-import { ToneType } from "@lever-labs/common-ts/protocol"
+import { MessageBuilder } from "@actamayev/lever-labs-common-ts/message-builder"
+import { ToneType } from "@actamayev/lever-labs-common-ts/protocol"
 import toastClass from "../../classes/toast-class"
 import garageClass from "../../classes/garage-class"
 import pipClass from "../../classes/pip-class"

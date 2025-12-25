@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
+import { ArcadeGameType } from "@actamayev/lever-labs-common-ts/types/arcade"
 
 declare global {
 	interface ArcadeGameMetadata {

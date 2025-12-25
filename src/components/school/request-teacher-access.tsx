@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { useState, useCallback, useEffect } from "react"
 import { AlertCircle, CheckCircle, Info } from "lucide-react"
-import { IncomingTeacherRequestData } from "@lever-labs/common-ts/types/api"
+import { IncomingTeacherRequestData } from "@actamayev/lever-labs-common-ts/types/api"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"
 import { cn } from "../../lib/utils"

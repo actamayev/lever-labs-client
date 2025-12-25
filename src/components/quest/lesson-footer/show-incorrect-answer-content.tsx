@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import questClass from "../../../classes/quest-class"
 import { X } from "lucide-react"
 import QuestMiniSandbox from "../quest-mini-sandbox"
-import { CodingBlock } from "@lever-labs/common-ts/types/quest"
+import { CodingBlock } from "@actamayev/lever-labs-common-ts/types/quest"
 
 // eslint-disable-next-line max-lines-per-function
 function ShowIncorrectAnswerContent(): React.ReactNode {

@@ -1,6 +1,6 @@
 "use client"
 
-import { ClassCode } from "@lever-labs/common-ts/types/utils"
+import { ClassCode } from "@actamayev/lever-labs-common-ts/types/utils"
 import { Dispatch, SetStateAction, useCallback, useState } from "react"
 import {
 	Dialog,

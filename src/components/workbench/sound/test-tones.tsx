@@ -17,7 +17,7 @@ import workbenchClass from "../../../classes/workbench-class"
 import garageClass from "../../../classes/garage-class"
 import { Button, buttonVariants } from "../../ui/button"
 import CustomTooltip from "../../custom-tooltip"
-import { ToneType } from "@lever-labs/common-ts/protocol"
+import { ToneType } from "@actamayev/lever-labs-common-ts/protocol"
 
 // Helper function to convert ToneType enum value to letter
 const getToneLetter = (tone: ToneType): string => {

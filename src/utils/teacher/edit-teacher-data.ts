@@ -2,8 +2,8 @@
 
 import isEqual from "lodash-es/isEqual"
 import { Dispatch, SetStateAction } from "react"
-import { IncomingTeacherRequestData } from "@lever-labs/common-ts/types/api"
-import { TeacherName } from "@lever-labs/common-ts/types/teacher"
+import { IncomingTeacherRequestData } from "@actamayev/lever-labs-common-ts/types/api"
+import { TeacherName } from "@actamayev/lever-labs-common-ts/types/teacher"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import toastClass from "../../classes/toast-class"

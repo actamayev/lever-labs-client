@@ -2,8 +2,8 @@
 
 import { Dispatch, SetStateAction, useCallback, useState } from "react"
 import { AlertTriangle } from "lucide-react"
-import { ClassCode } from "@lever-labs/common-ts/types/utils"
-import { TeacherViewHubData } from "@lever-labs/common-ts/types/hub"
+import { ClassCode } from "@actamayev/lever-labs-common-ts/types/utils"
+import { TeacherViewHubData } from "@actamayev/lever-labs-common-ts/types/hub"
 import {
 	Dialog,
 	DialogContent,

@@ -3,7 +3,7 @@
 import * as Blockly from "blockly"
 import { Order } from "../order"
 import { SENSORS_BLOCK_TYPES, SENSORS_FIELD_VALUES,
-	SENSOR_TYPES, IMUSensorType, LeftRightSensorType, ColorSensorReadColorsType } from "@lever-labs/common-ts/types/blockly/sensor"
+	SENSOR_TYPES, IMUSensorType, LeftRightSensorType, ColorSensorReadColorsType } from "@actamayev/lever-labs-common-ts/types/blockly/sensor"
 import { sensorsCategoryColour } from "../../constants/constants"
 import { upperFirst } from "lodash-es"
 

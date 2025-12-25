@@ -4,7 +4,7 @@ import careerQuestClass from '../career-quest-class'
 import chatManagerClass from '../chat-manager-class'
 import navigationManagerClass from '../navigation-manager-class'
 import { TEST_CAREER_UUID, mockCareerQuestData } from '../../../test/fixtures/career-quest-data'
-import { CareerUUID, ChallengeUUID } from '@lever-labs/common-ts/types/utils'
+import { CareerUUID, ChallengeUUID } from '@actamayev/lever-labs-common-ts/types/utils'
 
 // Mock dependencies
 vi.mock('../chat-manager-class', () => ({

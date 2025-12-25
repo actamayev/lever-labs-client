@@ -7,7 +7,7 @@ import questClass from "../../classes/quest-class"
 import studentClass from "../../classes/student-class"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { useCallback } from "react"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 
 function LessonList(): React.ReactNode {
 	const allLessons = Array.from(questClass.lessonsById.values()).sort((a, b): number => a.lessonOrder - b.lessonOrder)

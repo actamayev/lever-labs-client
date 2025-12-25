@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useCallback } from "react"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
-import { CareerType, ValidTriggerMessageType } from "@lever-labs/common-ts/protocol"
+import { CareerType, ValidTriggerMessageType } from "@actamayev/lever-labs-common-ts/protocol"
 import isPipConnected from "../../utils/career-quest/is-pip-connected"
 import pipClass from "../../classes/pip-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"

@@ -3,7 +3,7 @@
 import isEqual from "lodash-es/isEqual"
 import { isErrorResponses } from "../type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
-import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
+import { QuestionUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { soundManager } from "../../classes/utility/sound-manager-class"
 
 export default async function submitFillInBlankAnswer(

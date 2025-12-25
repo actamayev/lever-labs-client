@@ -1,7 +1,7 @@
 "use client"
 
 // src/utils/cookies/theme-helpers.ts
-import { SiteThemes } from "@lever-labs/common-ts/types/utils"
+import { SiteThemes } from "@actamayev/lever-labs-common-ts/types/utils"
 
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const THEME_COOKIE_NAME = "site_theme"

@@ -1,8 +1,8 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
-import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
+import { BlocklyJson } from "@actamayev/lever-labs-common-ts/types/sandbox"
+import { QuestionUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import questClass from "../../classes/quest-class"
 import OpenEndedQuestion from "./open-ended-question"
 

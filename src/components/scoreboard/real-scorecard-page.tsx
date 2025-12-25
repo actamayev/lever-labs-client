@@ -1,6 +1,6 @@
 "use client"
 
-import { ClassCode, ScoreboardUUID } from "@lever-labs/common-ts/types/utils"
+import { ClassCode, ScoreboardUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { observer } from "mobx-react"
 import { useState, useEffect, useCallback } from "react"
 import { ArrowLeft, Play, Pause, Car, Lightbulb, Plus, Minus, Users, RotateCcw } from "lucide-react"

@@ -4,7 +4,7 @@
 
 import { baseCategory } from "./base-category"
 import { sensorsCategoryColour } from "../../constants/constants"
-import { SENSORS_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/sensor"
+import { SENSORS_BLOCK_TYPES } from "@actamayev/lever-labs-common-ts/types/blockly/sensor"
 
 // First define the sub-categories
 const imuSensorsCategory: CustomCategoryInfo = {

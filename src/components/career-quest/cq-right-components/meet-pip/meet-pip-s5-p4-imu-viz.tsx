@@ -12,7 +12,7 @@ import {
 	ResponsiveContainer,
 } from "recharts"
 import sensorDataClass from "../../../../classes/sensor-data-class"
-import { MeetPipTriggerType, CareerType } from "@lever-labs/common-ts/protocol"
+import { MeetPipTriggerType, CareerType } from "@actamayev/lever-labs-common-ts/protocol"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
 interface MeetPipS5P4ImuVizProps {

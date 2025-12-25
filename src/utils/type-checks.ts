@@ -1,7 +1,7 @@
 "use client"
 
 import { ErrorResponse, ErrorResponses, MessageResponse,
-	NonSuccessResponse, ValidationErrorResponse } from "@lever-labs/common-ts/types/api"
+	NonSuccessResponse, ValidationErrorResponse } from "@actamayev/lever-labs-common-ts/types/api"
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function isErrorResponse(data: any): data is ErrorResponse {

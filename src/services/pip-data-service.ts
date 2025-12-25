@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, NonSuccessResponse,
-	RetrieveIsPipUUIDValidResponse, SuccessResponse, ErrorResponses } from "@lever-labs/common-ts/types/api"
-import { PipUUID } from "@lever-labs/common-ts/types/utils"
+	RetrieveIsPipUUIDValidResponse, SuccessResponse, ErrorResponses } from "@actamayev/lever-labs-common-ts/types/api"
+import { PipUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 

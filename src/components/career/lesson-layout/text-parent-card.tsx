@@ -4,7 +4,7 @@
 import { observer } from "mobx-react"
 import { toJS } from "mobx"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { CareerUUID } from "@lever-labs/common-ts/types/utils"
+import { CareerUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import careerQuestClass from "../../../classes/career-quest-class"
 import { NavigationMorphingText } from "../morphing-text/navigation-morphing-text"
 import { getLeftContentComponent } from "../../../utils/career-quest/career-quest-left-content/all-career-quest-left-content"

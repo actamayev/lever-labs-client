@@ -2,7 +2,7 @@
 
 import isNull from "lodash-es/isNull"
 import isEqual from "lodash-es/isEqual"
-import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
+import { MessageBuilder } from "@actamayev/lever-labs-common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import toastClass from "../../classes/toast-class"
 import { isErrorResponse } from "../../utils/type-checks"

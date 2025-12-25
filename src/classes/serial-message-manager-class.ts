@@ -1,9 +1,9 @@
 "use client"
 
 import { action, makeAutoObservable, runInAction } from "mobx"
-import { ESPToSerialMessage, SavedWiFiNetwork, ScannedWiFiNetworkItem } from "@lever-labs/common-ts/types/pip"
-import { WiFiConnectionStatus } from "@lever-labs/common-ts/protocol"
-import { PipUUID } from "@lever-labs/common-ts/types/utils"
+import { ESPToSerialMessage, SavedWiFiNetwork, ScannedWiFiNetworkItem } from "@actamayev/lever-labs-common-ts/types/pip"
+import { WiFiConnectionStatus } from "@actamayev/lever-labs-common-ts/protocol"
+import { PipUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import pipClass from "./pip-class"
 import toastClass from "./toast-class"
 import gamesClass from "./games-class"

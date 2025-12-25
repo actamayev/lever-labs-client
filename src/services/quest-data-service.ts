@@ -2,8 +2,8 @@ import { AxiosResponse } from "axios"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 import { BaseDataService } from "./base-data-service"
 import { ErrorResponses, SuccessResponse, LessonsResponse,
-	DetailedLessonResponse, CheckCodeResponse, CheckMCQResponse } from "@lever-labs/common-ts/types/api"
-import { LessonUUID, QuestionUUID } from "@lever-labs/common-ts/types/utils"
+	DetailedLessonResponse, CheckCodeResponse, CheckMCQResponse } from "@actamayev/lever-labs-common-ts/types/api"
+import { LessonUUID, QuestionUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 
 export default class QuestDataService extends BaseDataService {
 	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {

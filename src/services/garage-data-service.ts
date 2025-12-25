@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios"
-import { AllCommonResponses } from "@lever-labs/common-ts/types/api"
-import { PipUUID } from "@lever-labs/common-ts/types/utils"
-import { LightAnimation } from "@lever-labs/common-ts/types/garage"
+import { AllCommonResponses } from "@actamayev/lever-labs-common-ts/types/api"
+import { PipUUID } from "@actamayev/lever-labs-common-ts/types/utils"
+import { LightAnimation } from "@actamayev/lever-labs-common-ts/types/garage"
 import { BaseDataService } from "./base-data-service"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 

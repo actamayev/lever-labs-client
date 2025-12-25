@@ -3,8 +3,8 @@
 import { observer } from "mobx-react"
 import { useCallback } from "react"
 import { Trophy, Clock, Users, EllipsisVertical, Trash2 } from "lucide-react"
-import { ClassCode } from "@lever-labs/common-ts/types/utils"
-import { Scoreboard } from "@lever-labs/common-ts/types/scoreboard"
+import { ClassCode } from "@actamayev/lever-labs-common-ts/types/utils"
+import { Scoreboard } from "@actamayev/lever-labs-common-ts/types/scoreboard"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { TactileButton } from "../buttons/tactile-button"
 import {

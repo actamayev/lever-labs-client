@@ -1,6 +1,6 @@
 "use client"
 
-import { CareerUUID } from "@lever-labs/common-ts/types/utils"
+import { CareerUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import authClass from "../../classes/auth-class"
 import teacherClass from "../../classes/teacher-class"

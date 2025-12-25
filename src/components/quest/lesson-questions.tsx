@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useEffect } from "react"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import questClass from "../../classes/quest-class"
 import LessonQuestion from "./lesson-question"
 

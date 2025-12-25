@@ -3,7 +3,7 @@
 import Link from "next/link"
 import { useCallback } from "react"
 import { observer } from "mobx-react"
-import { SandboxProject } from "@lever-labs/common-ts/types/sandbox"
+import { SandboxProject } from "@actamayev/lever-labs-common-ts/types/sandbox"
 import { ArrowLeft, Star, NotebookPen, Share2 } from "lucide-react"
 import { cn } from "../../../../lib/utils"
 import CustomTooltip from "../../../custom-tooltip"

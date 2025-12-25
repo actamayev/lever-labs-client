@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
+import { ArcadeGameType } from "@actamayev/lever-labs-common-ts/types/arcade"
 import { isNonSuccessResponse } from "../type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import toastClass from "../../classes/toast-class"

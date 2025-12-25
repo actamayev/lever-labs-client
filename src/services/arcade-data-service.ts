@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios"
-import { ArcadeScoreRequest, ErrorResponse, SuccessResponse, ErrorResponses } from "@lever-labs/common-ts/types/api"
+import { ArcadeScoreRequest, ErrorResponse, SuccessResponse, ErrorResponses } from "@actamayev/lever-labs-common-ts/types/api"
 import { BaseDataService } from "./base-data-service"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
-import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
+import { ArcadeGameType } from "@actamayev/lever-labs-common-ts/types/arcade"
 
 export default class ArcadeDataService extends BaseDataService {
 	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {

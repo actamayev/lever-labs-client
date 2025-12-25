@@ -1,7 +1,7 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { SensorPayload, SensorPayloadMZ } from "@lever-labs/common-ts/types/pip"
+import { SensorPayload, SensorPayloadMZ } from "@actamayev/lever-labs-common-ts/types/pip"
 
 class SensorDataClass {
 	public leftWheelRPM: number[] = []

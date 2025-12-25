@@ -1,6 +1,6 @@
 "use client"
 
-import { QuestionUUID } from "@lever-labs/common-ts/types/utils"
+import { QuestionUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import questClass from "../../classes/quest-class"
 

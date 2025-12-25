@@ -1,13 +1,13 @@
 "use client"
 
-import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
+import { MessageBuilder } from "@actamayev/lever-labs-common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import garageClass from "../../classes/garage-class"
 import socketClass from "../../classes/socket-class"
 import serialConnectionManagerClass from "../../classes/serial-connection-manager-class"
 import toastClass from "../../classes/toast-class"
 import { isNull } from "lodash-es"
-import { ToneType } from "@lever-labs/common-ts/protocol"
+import { ToneType } from "@actamayev/lever-labs-common-ts/protocol"
 
 // eslint-disable-next-line max-lines-per-function
 export default function garageActions(): {

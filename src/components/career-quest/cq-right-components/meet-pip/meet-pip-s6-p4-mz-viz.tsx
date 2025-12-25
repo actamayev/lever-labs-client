@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
-import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
+import { CareerType, MeetPipTriggerType } from "@actamayev/lever-labs-common-ts/protocol"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
 interface MeetPipS6P4MzVizProps {

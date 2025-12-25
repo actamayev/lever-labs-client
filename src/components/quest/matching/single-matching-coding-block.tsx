@@ -5,7 +5,7 @@ import { observer } from "mobx-react"
 import { cn } from "../../../lib/utils"
 import questClass from "../../../classes/quest-class"
 import QuestMiniSandbox from "../quest-mini-sandbox"
-import { CodingBlock } from "@lever-labs/common-ts/types/quest"
+import { CodingBlock } from "@actamayev/lever-labs-common-ts/types/quest"
 
 interface SingleMatchingCodingBlockProps {
 	codingBlock: CodingBlock

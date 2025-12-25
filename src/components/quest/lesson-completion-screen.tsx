@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect } from "react"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { soundManager } from "../../classes/utility/sound-manager-class"
 import ScoreAnalyticsCard from "./score-analytics-card"
 

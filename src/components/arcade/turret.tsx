@@ -4,11 +4,11 @@ import React, { useCallback, useEffect, useRef } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../classes/sensor-data-class"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
-import { CareerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
+import { CareerType, TurretArcadeTriggerType } from "@actamayev/lever-labs-common-ts/protocol"
 import ArcadeGameLayout from "./arcade-game-layout"
 import { ARCADE_CANVAS_WIDTH, ARCADE_CANVAS_HEIGHT } from "../../utils/constants/constants"
 import arcadeClass from "../../classes/arcade-class"
-import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
+import { ArcadeGameType } from "@actamayev/lever-labs-common-ts/types/arcade"
 
 interface Projectile {
 	x: number

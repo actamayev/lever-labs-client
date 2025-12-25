@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import SoundActionButton from "./tone-action-button"
 import useGarageTonesUseEffect from "../../../../hooks/garage/use-effect-garage-tones"
-import { ToneType } from "@lever-labs/common-ts/protocol"
+import { ToneType } from "@actamayev/lever-labs-common-ts/protocol"
 
 function TonesSection(): React.ReactNode {
 	useGarageTonesUseEffect(true)

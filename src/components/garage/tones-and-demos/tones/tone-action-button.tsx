@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { useRef, useEffect } from "react"
-import { ToneType } from "@lever-labs/common-ts/protocol"
+import { ToneType } from "@actamayev/lever-labs-common-ts/protocol"
 import { cn } from "../../../../lib/utils"
 import CustomTooltip from "../../../custom-tooltip"
 import garageClass from "../../../../classes/garage-class"

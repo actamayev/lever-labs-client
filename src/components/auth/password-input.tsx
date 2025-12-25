@@ -6,7 +6,7 @@ import { Control, FieldPath } from "react-hook-form"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { LoginRequest } from "@lever-labs/common-ts/types/api"
+import { LoginRequest } from "@actamayev/lever-labs-common-ts/types/api"
 
 interface PasswordFieldProps<T extends LoginRequest | RegisterFormValues> {
 	control: Control<T>

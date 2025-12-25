@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { ChevronDown, RotateCcw, X } from "lucide-react"
-import { CqChallengeData } from "@lever-labs/common-ts/types/career-quest"
+import { CqChallengeData } from "@actamayev/lever-labs-common-ts/types/career-quest"
 import { motion, AnimatePresence } from "framer-motion"
 import CustomTooltip from "../../custom-tooltip"
 import { TactileButton } from "../../buttons/tactile-button"

@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useCallback } from "react"
-import { ClassCode } from "@lever-labs/common-ts/types/utils"
+import { ClassCode } from "@actamayev/lever-labs-common-ts/types/utils"
 import { AlertCircle, CheckCircle } from "lucide-react"
 import { Input } from "../ui/input"
 import { Label } from "../ui/label"

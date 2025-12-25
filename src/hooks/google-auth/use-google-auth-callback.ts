@@ -14,7 +14,7 @@ import serialConnectionManagerClass from "../../classes/serial-connection-manage
 import { isNull } from "lodash-es"
 import garageClass from "../../classes/garage-class"
 import pipClass from "../../classes/pip-class"
-import { GoogleAuthSuccess } from "@lever-labs/common-ts/types/api"
+import { GoogleAuthSuccess } from "@actamayev/lever-labs-common-ts/types/api"
 
 export default function useGoogleAuthCallback(): (successResponse: CredentialResponse) => Promise<GoogleAuthSuccess | null> {
 	return useCallback(async (successResponse: CredentialResponse): Promise<GoogleAuthSuccess | null> => {

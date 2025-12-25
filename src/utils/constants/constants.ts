@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import rgbToBlocklyColor from "../blockly/rgb-to-hex"
-import { ToneType } from "@lever-labs/common-ts/protocol"
+import { ToneType } from "@actamayev/lever-labs-common-ts/protocol"
 
 export const logicCategoryColour = rgbToBlocklyColor(28, 176, 246) // macaw
 export const sensorsCategoryColour = rgbToBlocklyColor(255, 75, 75) //cardinal

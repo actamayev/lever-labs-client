@@ -3,7 +3,7 @@
 import { observer } from "mobx-react"
 import SoundActionButton from "../../../garage/tones-and-demos/tones/tone-action-button"
 import useGarageTonesUseEffect from "../../../../hooks/garage/use-effect-garage-tones"
-import { CareerType, MeetPipTriggerType, ToneType } from "@lever-labs/common-ts/protocol"
+import { CareerType, MeetPipTriggerType, ToneType } from "@actamayev/lever-labs-common-ts/protocol"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
 interface FunToneWithClasses {

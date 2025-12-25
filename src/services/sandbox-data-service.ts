@@ -1,9 +1,9 @@
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, CreateSandboxProjectResponse, ErrorResponse,
 	RetrieveSandboxProjectResponse, RetrieveSandboxProjectsResponse,
-	UsbBytecodeResponse, ErrorResponses, SearchByUsernameResult } from "@lever-labs/common-ts/types/api"
-import { SandboxProjectUUID, PipUUID } from "@lever-labs/common-ts/types/utils"
-import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+	UsbBytecodeResponse, ErrorResponses, SearchByUsernameResult } from "@actamayev/lever-labs-common-ts/types/api"
+import { SandboxProjectUUID, PipUUID } from "@actamayev/lever-labs-common-ts/types/utils"
+import { BlocklyJson } from "@actamayev/lever-labs-common-ts/types/sandbox"
 import { BaseDataService } from "./base-data-service"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
 

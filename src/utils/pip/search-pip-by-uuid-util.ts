@@ -1,6 +1,6 @@
 "use client"
 
-import { PipUUID } from "@lever-labs/common-ts/types/utils"
+import { PipUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { isString } from "lodash-es"
 import pipClass from "../../classes/pip-class"
 import searchForPipByUUID from "./search-for-pip-by-uuid"

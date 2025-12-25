@@ -1,4 +1,4 @@
-import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
+import { ArcadeGameType } from "@actamayev/lever-labs-common-ts/types/arcade"
 
 export const arcadeGamesMap: Record<ArcadeGameType, ArcadeGameMetadata> = {
 	flappyBird: {

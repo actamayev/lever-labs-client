@@ -5,7 +5,7 @@ import { isErrorResponses } from "../type-checks"
 import authClass from "../../classes/auth-class"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import questClass from "../../classes/quest-class"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 
 export default async function markLessonComplete(lessonUuid: LessonUUID): Promise<void> {
 	try {

@@ -12,7 +12,7 @@ import { TactileButton } from "../buttons/tactile-button"
 import questClass from "../../classes/quest-class"
 import { observer } from "mobx-react"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
-import { LessonUUID } from "@lever-labs/common-ts/types/utils"
+import { LessonUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import stopCurrentlyRunningCode from "../../utils/sandbox/stop-currently-running-code"
 
 function ExitLessonDialog({ lessonId }: { lessonId: LessonUUID }): React.ReactNode {

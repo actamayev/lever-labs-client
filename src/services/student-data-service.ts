@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios"
 import { AllCommonResponses, ErrorResponse,
-	NonSuccessResponse, StudentClassroomData } from "@lever-labs/common-ts/types/api"
-import { ClassCode, HubUUID } from "@lever-labs/common-ts/types/utils"
+	NonSuccessResponse, StudentClassroomData } from "@actamayev/lever-labs-common-ts/types/api"
+import { ClassCode, HubUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
-import { StudentViewHubData } from "@lever-labs/common-ts/types/hub"
+import { StudentViewHubData } from "@actamayev/lever-labs-common-ts/types/hub"
 
 export default class StudentDataService extends BaseDataService {
 	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {

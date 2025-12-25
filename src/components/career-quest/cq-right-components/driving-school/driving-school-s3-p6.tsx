@@ -7,7 +7,7 @@ import getDuolingoColors from "../../../../utils/get-duolingo-colors"
 import { cn } from "../../../../lib/utils"
 import careerQuestClass from "../../../../classes/career-quest-class"
 import navigationManagerClass from "../../../../classes/navigation-manager-class"
-import { CareerUUID } from "@lever-labs/common-ts/types/utils"
+import { CareerUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 type AnswerChoice = "time" | "distance" | null
 
 interface Props {

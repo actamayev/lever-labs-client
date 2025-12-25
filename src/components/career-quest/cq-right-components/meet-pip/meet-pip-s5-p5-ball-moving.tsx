@@ -4,7 +4,7 @@ import { observer } from "mobx-react"
 import { useEffect, useRef, useState } from "react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
-import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
+import { CareerType, MeetPipTriggerType } from "@actamayev/lever-labs-common-ts/protocol"
 
 type Vec2 = { x: number; y: number }
 

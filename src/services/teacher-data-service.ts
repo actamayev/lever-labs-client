@@ -1,11 +1,11 @@
 import { AxiosResponse } from "axios"
-import { TeacherName } from "@lever-labs/common-ts/types/teacher"
+import { TeacherName } from "@actamayev/lever-labs-common-ts/types/teacher"
 import { AllCommonResponses, BasicTeacherClassroomData, ClassCodeResponse, DetailedClassroomData,
-	IncomingTeacherRequestData, NonSuccessResponse, CreateHubRequest } from "@lever-labs/common-ts/types/api"
-import { ClassCode, CareerUUID, HubUUID, ScoreboardUUID } from "@lever-labs/common-ts/types/utils"
+	IncomingTeacherRequestData, NonSuccessResponse, CreateHubRequest } from "@actamayev/lever-labs-common-ts/types/api"
+import { ClassCode, CareerUUID, HubUUID, ScoreboardUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { BaseDataService } from "./base-data-service"
 import LeverLabsHttpClient from "../classes/lever-labs-http-client"
-import { Scoreboard } from "@lever-labs/common-ts/types/scoreboard"
+import { Scoreboard } from "@actamayev/lever-labs-common-ts/types/scoreboard"
 
 export default class TeacherDataService extends BaseDataService {
 	constructor(httpClient: LeverLabsHttpClient, pathHeader: EndpointHeaders) {

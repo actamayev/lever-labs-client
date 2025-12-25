@@ -52,7 +52,7 @@ import { observer } from "mobx-react"
 import { useState } from "react"
 
 // Internal utilities & types
-import { CareerUUID } from "@lever-labs/common-ts/types/utils" 
+import { CareerUUID } from "@actamayev/lever-labs-common-ts/types/utils" 
 import { Button } from "@/components/shadcn/ui/button"
 
 // Classes & services  
@@ -96,7 +96,7 @@ pnpm run analyze        # Bundle analysis
 - **MobX Classes**: Follow singleton pattern in `/src/classes/`
 - **Serial Safety**: Hardware communication is handled through established utility functions
 - **shadcn/ui**: Don't modify components in `/src/components/shadcn/ui/` - extend them instead
-- **Common Package**: Shared types/constants come from `@lever-labs/common-ts`
+- **Common Package**: Shared types/constants come from `@actamayev/lever-labs-common-ts`
 
 ## ESLint Rules
 - Filenames must match their directory structure

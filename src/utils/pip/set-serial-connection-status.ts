@@ -3,7 +3,7 @@
 import isEqual from "lodash-es/isEqual"
 import { isNonSuccessResponse } from "../type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
-import { PipUUID } from "@lever-labs/common-ts/types/utils"
+import { PipUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 
 export default async function setSerialConnectionStatus(pipUUID: PipUUID, connected: boolean): Promise<void> {
 	try {

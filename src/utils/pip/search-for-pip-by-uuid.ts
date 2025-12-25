@@ -1,10 +1,10 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { PipUUID } from "@lever-labs/common-ts/types/utils"
+import { PipUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { isMessageResponse, isNonSuccessResponse } from "../type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
-import { RetrieveIsPipUUIDValidResponse } from "@lever-labs/common-ts/types/api"
+import { RetrieveIsPipUUIDValidResponse } from "@actamayev/lever-labs-common-ts/types/api"
 import { AxiosError } from "axios"
 
 export default async function searchForPipByUUID(pipUUID: PipUUID): Promise<RetrieveIsPipUUIDValidResponse | string> {

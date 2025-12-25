@@ -1,9 +1,9 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { PipUUID } from "@lever-labs/common-ts/types/utils"
-import { PipConnectionUpdate } from "@lever-labs/common-ts/types/socket"
-import { ClientPipConnectionStatus } from "@lever-labs/common-ts/types/pip"
+import { PipUUID } from "@actamayev/lever-labs-common-ts/types/utils"
+import { PipConnectionUpdate } from "@actamayev/lever-labs-common-ts/types/socket"
+import { ClientPipConnectionStatus } from "@actamayev/lever-labs-common-ts/types/pip"
 import { isNull } from "lodash-es"
 import sensorDataClass from "./sensor-data-class"
 

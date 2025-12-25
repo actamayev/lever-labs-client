@@ -1,8 +1,8 @@
 "use client"
 
 import { action, makeAutoObservable } from "mobx"
-import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, BatteryMonitorKey } from "@lever-labs/common-ts/types/pip"
-import { ToneType } from "@lever-labs/common-ts/protocol"
+import { BatteryMonitorData, BatteryMonitorDataFull, BatteryMonitorDataItem, BatteryMonitorKey } from "@actamayev/lever-labs-common-ts/types/pip"
+import { ToneType } from "@actamayev/lever-labs-common-ts/protocol"
 
 class WorkbenchClass {
 	public batteryData: BatteryMonitorData | null = null

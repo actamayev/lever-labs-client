@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { CqChallengeData } from "@lever-labs/common-ts/types/career-quest"
+import { CqChallengeData } from "@actamayev/lever-labs-common-ts/types/career-quest"
 import { TactileButton } from "../buttons/tactile-button"
 import { CustomLightbulb } from "../../icons/custom-lightbulb"
 import requestCareerQuestHint from "../../utils/chat/request-cq-hint"

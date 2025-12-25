@@ -1,7 +1,7 @@
 "use client"
 
 import { observer } from "mobx-react"
-import { StudentClassroomData } from "@lever-labs/common-ts/types/api"
+import { StudentClassroomData } from "@actamayev/lever-labs-common-ts/types/api"
 import { Card, CardHeader, CardTitle } from "../ui/card"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 

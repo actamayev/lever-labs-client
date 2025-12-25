@@ -2,7 +2,7 @@
 
 import { observer } from "mobx-react"
 import { Edit, EllipsisVertical } from "lucide-react"
-import { BasicTeacherClassroomData } from "@lever-labs/common-ts/types/api"
+import { BasicTeacherClassroomData } from "@actamayev/lever-labs-common-ts/types/api"
 import { Card, CardHeader, CardTitle } from "../ui/card"
 import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "../ui/dropdown-menu"

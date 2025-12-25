@@ -2,9 +2,9 @@
 
 import { action, makeAutoObservable } from "mobx"
 import { arcadeGamesMap } from "../utils/constants/arcade-games-map"
-import { ArcadeGameType, ArcadeScore } from "@lever-labs/common-ts/types/arcade"
+import { ArcadeGameType, ArcadeScore } from "@actamayev/lever-labs-common-ts/types/arcade"
 import personalInfoClass from "./personal-info-class"
-import { ArcadeScoreUpdateAllPeers } from "@lever-labs/common-ts/types/socket"
+import { ArcadeScoreUpdateAllPeers } from "@actamayev/lever-labs-common-ts/types/socket"
 import addArcadeScore from "../utils/arcade/add-arcade-score"
 import { isEmpty } from "lodash-es"
 

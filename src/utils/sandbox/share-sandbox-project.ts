@@ -2,13 +2,13 @@
 
 import isEqual from "lodash-es/isEqual"
 import isUndefined from "lodash-es/isUndefined"
-import { SandboxProjectUUID } from "@lever-labs/common-ts/types/utils"
+import { SandboxProjectUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import toastClass from "../../classes/toast-class"
 import sandboxClass from "../../classes/sandbox-class"
 import { isNonSuccessResponse } from "../type-checks"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
-import { SingleSearchByUsernameResult } from "@lever-labs/common-ts/types/sandbox"
+import { SingleSearchByUsernameResult } from "@actamayev/lever-labs-common-ts/types/sandbox"
 
 export default async function shareSandboxProject(
 	projectUUID: SandboxProjectUUID,

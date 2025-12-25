@@ -4,7 +4,7 @@
 import { isEqual } from "lodash-es"
 import { AxiosResponse } from "axios"
 import isNull from "lodash-es/isNull"
-import { AllCommonResponses } from "@lever-labs/common-ts/types/api"
+import { AllCommonResponses } from "@actamayev/lever-labs-common-ts/types/api"
 import pipClass from "../classes/pip-class"
 import toastClass from "../classes/toast-class"
 import { isNonSuccessResponse } from "./type-checks"

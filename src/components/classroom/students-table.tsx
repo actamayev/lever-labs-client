@@ -4,7 +4,7 @@
 import { observer } from "mobx-react"
 import { useCallback } from "react"
 import { Users, Car, Lightbulb, Volume2, Monitor } from "lucide-react"
-import { ClassCode } from "@lever-labs/common-ts/types/utils"
+import { ClassCode } from "@actamayev/lever-labs-common-ts/types/utils"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table"
 import { TactileButton } from "../buttons/tactile-button"

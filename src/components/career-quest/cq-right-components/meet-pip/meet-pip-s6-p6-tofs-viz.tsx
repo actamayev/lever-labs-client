@@ -12,7 +12,7 @@ import {
 import { useMemo } from "react"
 import { observer } from "mobx-react"
 import sensorDataClass from "../../../../classes/sensor-data-class"
-import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
+import { CareerType, MeetPipTriggerType } from "@actamayev/lever-labs-common-ts/protocol"
 import useCareerQuestTrigger from "../../../../hooks/career-quest/use-career-quest-trigger"
 
 // eslint-disable-next-line max-lines-per-function

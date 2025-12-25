@@ -2,7 +2,7 @@
 
 import * as Blockly from "blockly"
 import { buttonsCategoryColour } from "../../constants/constants"
-import { BUTTON_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/button-block-types"
+import { BUTTON_BLOCK_TYPES } from "@actamayev/lever-labs-common-ts/types/blockly/button-block-types"
 import { Order } from "../order"
 
 export const buttonBlocks: Record<BUTTON_BLOCK_TYPES, CustomBlock> = {

@@ -1,6 +1,6 @@
 "use client"
 
-import { SocketEventPayloadMap, SocketEvents } from "@lever-labs/common-ts/types/socket"
+import { SocketEventPayloadMap, SocketEvents } from "@actamayev/lever-labs-common-ts/types/socket"
 import sandboxClass from "../../classes/sandbox-class"
 import studentClass from "../../classes/student-class"
 import workbenchClass from "../../classes/workbench-class"

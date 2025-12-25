@@ -4,7 +4,7 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import { isEmpty } from "lodash-es"
 import { useCallback, useEffect, useRef } from "react"
-import { CareerUUID } from "@lever-labs/common-ts/types/utils"
+import { CareerUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import careerQuestClass from "../../classes/career-quest-class"
 import { handleForwardNavigation, handleBackwardNavigation, shouldBlockNavigation } from "../../utils/career-quest/navigation-helpers"
 import studentClass from "../../classes/student-class"

@@ -3,7 +3,7 @@
 import * as Blockly from "blockly"
 import { observer } from "mobx-react"
 import { BlocklyWorkspace } from "react-blockly"
-import { BlocklyJson } from "@lever-labs/common-ts/types/sandbox"
+import { BlocklyJson } from "@actamayev/lever-labs-common-ts/types/sandbox"
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { Menu, X } from "lucide-react"
 import { cn } from "../../../lib/utils"

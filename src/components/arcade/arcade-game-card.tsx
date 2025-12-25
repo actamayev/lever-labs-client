@@ -10,7 +10,7 @@ import useTypedNavigate from "../../hooks/navigate/use-typed-navigate"
 import { useCallback } from "react"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
 import { CareerType, CityDrivingArcadeTriggerType,
-	FlappyBirdArcadeTriggerType, TurretArcadeTriggerType } from "@lever-labs/common-ts/protocol"
+	FlappyBirdArcadeTriggerType, TurretArcadeTriggerType } from "@actamayev/lever-labs-common-ts/protocol"
 import arcadeClass from "../../classes/arcade-class"
 import relativeDateFormatter from "../../utils/sandbox/date-formatting"
 

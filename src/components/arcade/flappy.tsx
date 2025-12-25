@@ -6,9 +6,9 @@ import sensorDataClass from "../../classes/sensor-data-class"
 import ArcadeGameLayout from "./arcade-game-layout"
 import { ARCADE_CANVAS_WIDTH, ARCADE_CANVAS_HEIGHT } from "../../utils/constants/constants"
 import arcadeClass from "../../classes/arcade-class"
-import { ArcadeGameType } from "@lever-labs/common-ts/types/arcade"
+import { ArcadeGameType } from "@actamayev/lever-labs-common-ts/types/arcade"
 import careerQuestTrigger from "../../utils/career-quest/career-quest-trigger"
-import { CareerType, FlappyBirdArcadeTriggerType } from "@lever-labs/common-ts/protocol"
+import { CareerType, FlappyBirdArcadeTriggerType } from "@actamayev/lever-labs-common-ts/protocol"
 
 interface Pipe {
 	x: number

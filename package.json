@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
-    "@lever-labs/common-ts": "^1.0.377",
+    "@actamayev/lever-labs-common-ts": "^1.0.377",
     "@mit-app-inventor/blockly-plugin-workspace-multiselect": "^1.0.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-avatar": "^1.1.11",
@@ -96,7 +96,7 @@
     "validate": "pnpm run lint && pnpm run type-check && pnpm test",
     "analyze": "ANALYZE=true next build",
     "postinstall": "next telemetry disable",
-    "updateCommon": "pnpm add @lever-labs/common-ts@latest",
+    "updateCommon": "pnpm add @actamayev/lever-labs-common-ts@latest",
     "check-unused": "ts-unused-exports tsconfig.json --excludePathsFromReport=\"test|spec|\\.next|proxy\\.ts|app/(manifest|robots|sitemap).ts|app/(layout|not-found).tsx|src/components/ui|app/.*/page\\.tsx\""
   },
   "browserslist": {

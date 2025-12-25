@@ -5,7 +5,7 @@ import { loopBlocks } from "./loop-blocks"
 import { startBlocks } from "./start-blocks"
 import { variableBlocks } from "./variable-blocks"
 import { conditionalBlocks } from "./conditional-blocks"
-import { LOGIC_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/logic"
+import { LOGIC_BLOCK_TYPES } from "@actamayev/lever-labs-common-ts/types/blockly/logic"
 
 export const logicBlocks: Record<LOGIC_BLOCK_TYPES, CustomBlock> = {
 	...startBlocks,

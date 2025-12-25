@@ -12,7 +12,7 @@ import careerQuestClass from "../../../classes/career-quest-class"
 import { observer } from "mobx-react"
 import { useCallback } from "react"
 import useTypedNavigate from "../../../hooks/navigate/use-typed-navigate"
-import { CareerType, MeetPipTriggerType } from "@lever-labs/common-ts/protocol"
+import { CareerType, MeetPipTriggerType } from "@actamayev/lever-labs-common-ts/protocol"
 import careerQuestTrigger from "../../../utils/career-quest/career-quest-trigger"
 
 function FrontMeetPipCard({ flipCard } : {flipCard: () => void}): React.ReactNode {

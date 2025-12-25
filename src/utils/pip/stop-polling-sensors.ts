@@ -1,12 +1,12 @@
 "use client"
 
 import isNull from "lodash-es/isNull"
-import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
+import { MessageBuilder } from "@actamayev/lever-labs-common-ts/message-builder"
 import pipClass from "../../classes/pip-class"
 import leverLabsApiClient from "../../classes/lever-labs-api-client-class"
 import sendDataToSerialOrApiTemplate from "../send-data-to-serial-or-api-template"
 import { AxiosResponse } from "axios"
-import { AllCommonResponses } from "@lever-labs/common-ts/types/api"
+import { AllCommonResponses } from "@actamayev/lever-labs-common-ts/types/api"
 
 export default async function stopPollingSensors(): Promise<void> {
 	const buffer = MessageBuilder.createStopSensorPollingMessage()

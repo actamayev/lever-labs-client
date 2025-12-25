@@ -1,6 +1,6 @@
 "use client"
 
-import { ClassCode, ScoreboardUUID } from "@lever-labs/common-ts/types/utils"
+import { ClassCode, ScoreboardUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import { Dispatch, SetStateAction, useCallback, useMemo, useState } from "react"
 import { Users, X, Plus } from "lucide-react"
 import {
@@ -18,7 +18,7 @@ import getDuolingoColors from "../../utils/get-duolingo-colors"
 import teacherClass from "../../classes/teacher-class"
 import addStudentToScoreboard from "../../utils/teacher/scoreboard/add-student-to-scoreboard"
 import removeStudentFromScoreboard from "../../utils/teacher/scoreboard/remove-student-from-scoreboard"
-import { StudentJoinedScoreboardData } from "@lever-labs/common-ts/types/scoreboard"
+import { StudentJoinedScoreboardData } from "@actamayev/lever-labs-common-ts/types/scoreboard"
 import { observer } from "mobx-react"
 
 interface Props {

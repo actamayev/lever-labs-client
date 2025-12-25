@@ -13,7 +13,7 @@ import {
 	CityDrivingArcadeTriggerType,
 	FlappyBirdArcadeTriggerType,
 	TurretArcadeTriggerType
-} from "@lever-labs/common-ts/protocol"
+} from "@actamayev/lever-labs-common-ts/protocol"
 import authClass from "../../classes/auth-class"
 import retrieveAllArcadeScores from "../../utils/arcade/retrieve-all-arcade-scores"
 

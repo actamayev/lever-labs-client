@@ -3,7 +3,7 @@
 import { baseCategory } from "./base-category"
 import { logicCategoryColour } from "../../constants/constants"
 import { CONDITIONAL_BLOCK_TYPES, LOOP_BLOCK_TYPES, MATH_BLOCK_TYPES,
-	START_BLOCK_TYPES, VARIABLE_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/logic"
+	START_BLOCK_TYPES, VARIABLE_BLOCK_TYPES } from "@actamayev/lever-labs-common-ts/types/blockly/logic"
 
 const variableCategory: CustomCategoryInfo = {
 	...baseCategory,

@@ -1,7 +1,7 @@
 "use client"
 
 import isEqual from "lodash-es/isEqual"
-import { CareerUUID, ChallengeUUID } from "@lever-labs/common-ts/types/utils"
+import { CareerUUID, ChallengeUUID } from "@actamayev/lever-labs-common-ts/types/utils"
 import authClass from "../../classes/auth-class"
 import { isErrorResponses } from "../type-checks"
 import careerQuestClass from "../../classes/career-quest-class"

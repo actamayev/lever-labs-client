@@ -2,7 +2,7 @@
 "use client"
 
 import { Car, Lightbulb, Volume2, Monitor } from "lucide-react"
-import { ClassCode } from "@lever-labs/common-ts/types/utils"
+import { ClassCode } from "@actamayev/lever-labs-common-ts/types/utils"
 import { TactileButton } from "../buttons/tactile-button"
 import { cn } from "../../lib/utils"
 import teacherClass from "../../classes/teacher-class"

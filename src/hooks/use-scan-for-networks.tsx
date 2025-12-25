@@ -1,7 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useRef } from "react"
-import { MessageBuilder } from "@lever-labs/common-ts/message-builder"
+import { MessageBuilder } from "@actamayev/lever-labs-common-ts/message-builder"
 import serialMessageManagerClass from "../classes/serial-message-manager-class"
 import serialConnectionManagerClass from "../classes/serial-connection-manager-class"
 

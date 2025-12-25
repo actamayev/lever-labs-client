@@ -2,9 +2,9 @@ import { describe, test, expect, beforeEach, vi } from 'vitest'
 import { runInAction } from 'mobx'
 import studentClass from '../student-class'
 import careerQuestClass from '../career-quest-class'
-import { ClassCode, HubUUID } from '@lever-labs/common-ts/types/utils'
-import { UpdatedHubSlideId } from '@lever-labs/common-ts/types/socket'
-import { StudentViewHubData } from '@lever-labs/common-ts/types/hub'
+import { ClassCode, HubUUID } from '@actamayev/lever-labs-common-ts/types/utils'
+import { UpdatedHubSlideId } from '@actamayev/lever-labs-common-ts/types/socket'
+import { StudentViewHubData } from '@actamayev/lever-labs-common-ts/types/hub'
 
 // Mock career quest class
 vi.mock('../career-quest-class', () => ({

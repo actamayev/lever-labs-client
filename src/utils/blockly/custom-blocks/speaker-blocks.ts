@@ -3,8 +3,8 @@
 import * as Blockly from "blockly"
 import { speakerCategoryColour } from "../../constants/constants"
 import { upperFirst } from "lodash-es"
-import { SENSOR_TYPES } from "@lever-labs/common-ts/types/blockly/sensor"
-import { SPEAKER_BLOCK_TYPES } from "@lever-labs/common-ts/types/blockly/speaker"
+import { SENSOR_TYPES } from "@actamayev/lever-labs-common-ts/types/blockly/sensor"
+import { SPEAKER_BLOCK_TYPES } from "@actamayev/lever-labs-common-ts/types/blockly/speaker"
 
 export const speakerBlocks: Record<SPEAKER_BLOCK_TYPES, CustomBlock> = {
 	[SPEAKER_BLOCK_TYPES.PLAY_TONE]: {

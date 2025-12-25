@@ -4,7 +4,7 @@ import * as Blockly from "blockly"
 import { Order } from "../../order"
 import { logicCategoryColour } from "../../../constants/constants"
 import getCppGenerator from "../../../cpp/cpp-generator"
-import { MATH_BLOCK_TYPES, MATH_FIELD_VALUES } from "@lever-labs/common-ts/types/blockly/logic"
+import { MATH_BLOCK_TYPES, MATH_FIELD_VALUES } from "@actamayev/lever-labs-common-ts/types/blockly/logic"
 
 export const mathBlocks: Record<MATH_BLOCK_TYPES, CustomBlock> = {
 	[MATH_BLOCK_TYPES.COMPARE]: {
