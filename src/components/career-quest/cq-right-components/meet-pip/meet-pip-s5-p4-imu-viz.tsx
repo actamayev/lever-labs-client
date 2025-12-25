@@ -111,7 +111,10 @@ function MeetPipS5P4ImuViz({ chartHeight = 224, yAxisWidth = 36 }: MeetPipS5P4Im
 									domain={[-180, 180]}
 								/>
 								<Tooltip
-									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Yaw"]}
+									formatter={(value: number | undefined): string[] => [
+										`${value !== undefined ? value.toFixed(1) : "N/A"}°`,
+										"Yaw",
+									]}
 									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
@@ -163,7 +166,10 @@ function MeetPipS5P4ImuViz({ chartHeight = 224, yAxisWidth = 36 }: MeetPipS5P4Im
 									domain={[-180, 180]}
 								/>
 								<Tooltip
-									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Pitch"]}
+									formatter={(value: number | undefined): string[] => [
+										`${value !== undefined ? value.toFixed(1) : "N/A"}°`,
+										"Pitch",
+									]}
 									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
@@ -215,7 +221,10 @@ function MeetPipS5P4ImuViz({ chartHeight = 224, yAxisWidth = 36 }: MeetPipS5P4Im
 									domain={[-180, 180]}
 								/>
 								<Tooltip
-									formatter={(value: number): string[] => [`${value.toFixed(1)}°`, "Roll"]}
+									formatter={(value: number | undefined): string[] => [
+										`${value !== undefined ? value.toFixed(1) : "N/A"}°`,
+										"Roll",
+									]}
 									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
@@ -266,7 +275,10 @@ function MeetPipS5P4ImuViz({ chartHeight = 224, yAxisWidth = 36 }: MeetPipS5P4Im
 									}}
 								/>
 								<Tooltip
-									formatter={(value: number): string[] => [`${value.toFixed(2)} m/s²`, "Shake"]}
+									formatter={(value: number | undefined): string[] => [
+										`${value !== undefined ? value.toFixed(2) : "N/A"} m/s²`,
+										"Shake",
+									]}
 									labelFormatter={(): string => "Sample"}
 								/>
 								<Line
