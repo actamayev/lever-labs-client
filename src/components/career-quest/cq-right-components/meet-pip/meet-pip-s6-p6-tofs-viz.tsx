@@ -78,10 +78,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 									mirror={true}
 								/>
 								<Tooltip
-									formatter={(value: number | undefined): string[] => [
-										value !== undefined ? value.toLocaleString() : "N/A",
-										"Value",
-									]}
+									formatter={(value: number): string[] => [`${value.toFixed(1)}`, "Value"]}
 									labelFormatter={(): string => "Left TOF"}
 								/>
 								<Bar
@@ -116,10 +113,7 @@ function MeetPipS6P6TofsViz(): React.ReactNode {
 									mirror={true}
 								/>
 								<Tooltip
-									formatter={(value: number | undefined): string[] => [
-										value !== undefined ? value.toLocaleString() : "N/A",
-										"Value",
-									]}
+									formatter={(value: number): string[] => [`${value.toFixed(1)}`, "Value"]}
 									labelFormatter={(): string => "Right TOF"}
 								/>
 								<Bar
