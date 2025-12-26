@@ -88,56 +88,77 @@ function FlappyBirdGame(): React.ReactNode {
 	const spawnPipe = useCallback((): void => {
 		const minTopHeight = 50
 		const maxTopHeight = CANVAS_HEIGHT - PIPE_GAP - minTopHeight
-		// Randomly position pipes - ensure pipes can block middle area
-		// This prevents staying in the middle from being always safe
-		const topHeight = minTopHeight + Math.random() * (maxTopHeight - minTopHeight)
+		const middleY = CANVAS_HEIGHT / 2
+
+		// Force gaps to be either high or low - never centered
+		// This prevents players from staying in the middle
+		const pipes = gameStateRef.current.pipes
+		const lastPipe = pipes[pipes.length - 1]
+
+		let topHeight: number
+
+		if (!lastPipe) {
+			// First pipe: randomly high or low
+			topHeight = Math.random() > 0.5 ? minTopHeight : maxTopHeight
+		} else {
+			// Determine if last gap was high or low
+			const lastGapCenter = lastPipe.topHeight + PIPE_GAP / 2
+			const lastWasHigh = lastGapCenter < middleY
+
+			// Alternate with some randomness - 70% chance to switch, 30% chance to stay
+			const shouldSwitch = Math.random() < 0.7
+
+			if (shouldSwitch) {
+				// Switch to opposite side
+				if (lastWasHigh) {
+					// Last was high (gap near top), now go low (gap near bottom)
+					topHeight = maxTopHeight - Math.random() * 40
+				} else {
+					// Last was low (gap near bottom), now go high (gap near top)
+					topHeight = minTopHeight + Math.random() * 40
+				}
+			} else {
+				// Stay on same side with slight variation
+				if (lastWasHigh) {
+					topHeight = minTopHeight + Math.random() * 60
+				} else {
+					topHeight = maxTopHeight - Math.random() * 60
+				}
+			}
+		}
+
+		// Clamp to valid range
+		topHeight = Math.max(minTopHeight, Math.min(maxTopHeight, topHeight))
 		const bottomY = topHeight + PIPE_GAP
 
-		// Ensure the gap doesn't always include the middle (Y=300)
-		// If the gap would make middle always safe, adjust it
-		const middleY = CANVAS_HEIGHT / 2
-		const gapCenter = topHeight + PIPE_GAP / 2
-		const distanceFromMiddle = Math.abs(gapCenter - middleY)
-
-		// If gap is too centered, shift it slightly to make middle challenging
-		if (distanceFromMiddle < 50) {
-			const shift = (50 - distanceFromMiddle) * (Math.random() > 0.5 ? 1 : -1)
-			const newTopHeight = Math.max(minTopHeight, Math.min(maxTopHeight, topHeight + shift))
-			const newBottomY = newTopHeight + PIPE_GAP
-
-			gameStateRef.current.pipes.push({
-				x: CANVAS_WIDTH,
-				topHeight: newTopHeight,
-				bottomY: newBottomY,
-				width: PIPE_WIDTH,
-				passed: false
-			})
-		} else {
-			gameStateRef.current.pipes.push({
-				x: CANVAS_WIDTH,
-				topHeight,
-				bottomY,
-				width: PIPE_WIDTH,
-				passed: false
-			})
-		}
+		gameStateRef.current.pipes.push({
+			x: CANVAS_WIDTH,
+			topHeight,
+			bottomY,
+			width: PIPE_WIDTH,
+			passed: false
+		})
 	}, [])
 
 	const checkCollision = (birdX: number, birdY: number, birdSize: number, pipe: Pipe): boolean => {
+		// Use a smaller hitbox than visual size for forgiving gameplay
+		// Hitbox is 60% of visual size - only collide when bird clearly hits pipe
+		const hitboxRadius = (birdSize / 2) * 0.6
+
 		// Check collision with top pipe
 		if (
-			birdX + birdSize / 2 > pipe.x &&
-			birdX - birdSize / 2 < pipe.x + pipe.width &&
-			birdY - birdSize / 2 < pipe.topHeight
+			birdX + hitboxRadius > pipe.x &&
+			birdX - hitboxRadius < pipe.x + pipe.width &&
+			birdY - hitboxRadius < pipe.topHeight
 		) {
 			return true
 		}
 
 		// Check collision with bottom pipe
 		if (
-			birdX + birdSize / 2 > pipe.x &&
-			birdX - birdSize / 2 < pipe.x + pipe.width &&
-			birdY + birdSize / 2 > pipe.bottomY
+			birdX + hitboxRadius > pipe.x &&
+			birdX - hitboxRadius < pipe.x + pipe.width &&
+			birdY + hitboxRadius > pipe.bottomY
 		) {
 			return true
 		}
