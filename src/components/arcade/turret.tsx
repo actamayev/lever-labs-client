@@ -75,7 +75,7 @@ const WEAPONS = {
 // Enemy configurations
 const ENEMY_TYPES = {
 	basic: { health: 1, speed: 1, size: 20, color: "#ff6b6b", points: 10 },
-	fast: { health: 1, speed: 1.5, size: 15, color: "#ffd93d", points: 20 },
+	fast: { health: 1, speed: 1.2, size: 15, color: "#ffd93d", points: 20 },
 	tank: { health: 5, speed: 1, size: 30, color: "#6c5ce7", points: 50 },
 	boss: { health: 40, speed: 0.5, size: 80, color: "#00ff00", points: 100 }
 }
