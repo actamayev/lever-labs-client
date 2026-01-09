@@ -17,14 +17,14 @@ const games: GameData[] = [
 		href: "/arcade/turret",
 		gameType: "turretDefense"
 	},
-	{
-		backgroundImage: "/flappy1.png",
-		gameIcon: <Bird className="size-8" />,
-		gameName: "Flappy Bird",
-		description: "Navigate through pipes and test your reflexes!",
-		href: "/arcade/flappy",
-		gameType: "flappyBird"
-	},
+	// {
+	// 	backgroundImage: "/flappy1.png",
+	// 	gameIcon: <Bird className="size-8" />,
+	// 	gameName: "Flappy Bird",
+	// 	description: "Navigate through pipes and test your reflexes!",
+	// 	href: "/arcade/flappy",
+	// 	gameType: "flappyBird"
+	// },
 	{
 		backgroundImage: "/city-driver.png",
 		gameIcon: <Car className="size-8" />,

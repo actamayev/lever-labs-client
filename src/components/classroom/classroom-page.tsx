@@ -31,7 +31,6 @@ function ClassroomPage({ classCode }: { classCode: ClassCode }): React.ReactNode
 
 	const handleBackClick = (): void => navigate("/class-manager")
 
-
 	if (teacherClass.isRetrievingDetailedData) {
 		return (
 			<div className="p-6">
