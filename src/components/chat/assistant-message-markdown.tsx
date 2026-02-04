@@ -1,6 +1,7 @@
 
 "use client"
 
+import React from "react"
 import { observer } from "mobx-react"
 import ReactMarkdown from "react-markdown"
 import { Highlight, themes } from "prism-react-renderer"

@@ -9,6 +9,9 @@ const nextConfig = {
 	reactStrictMode: true,
 	poweredByHeader: false, // Remove X-Powered-By header for security
 	compress: true, // Enable gzip compression
+	
+	// Transpile packages that need to be processed by Next.js
+	transpilePackages: ["react-markdown"],
 
 	// Performance optimizations
 	// Note: swcMinify is now default in Next.js 15, so removed
